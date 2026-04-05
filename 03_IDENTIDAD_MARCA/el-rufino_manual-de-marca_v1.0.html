@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manual de Marca — El Rufino</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rojo: #c0271b;
+    --negro: #1a1a1a;
+    --blanco: #ffffff;
+    --crema: #f5f0e8;
+    --gris: #6b6b6b;
+    --gris-claro: #e8e8e8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    background: var(--crema);
+    color: var(--negro);
+    line-height: 1.7;
+  }
+
+  /* PORTADA */
+  .portada {
+    background: var(--negro);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .portada::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 40%;
+    height: 100%;
+    background: var(--rojo);
+    opacity: 0.08;
+  }
+
+  .portada-linea {
+    width: 60px;
+    height: 4px;
+    background: var(--rojo);
+    margin-bottom: 40px;
+  }
+
+  .portada-eyebrow {
+    font-family: 'Source Serif 4', serif;
+    font-size: 13px;
+    letter-spacing: 4px;
+    color: var(--rojo);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .portada-titulo {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(60px, 10vw, 120px);
+    font-weight: 900;
+    color: var(--blanco);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .portada-subtitulo {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(18px, 3vw, 28px);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--crema);
+    opacity: 0.7;
+    margin-bottom: 60px;
+  }
+
+  .portada-meta {
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--gris);
+    text-transform: uppercase;
+  }
+
+  /* NAVEGACIÓN */
+  .nav {
+    background: var(--blanco);
+    border-bottom: 3px solid var(--rojo);
+    padding: 0 80px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .nav ul {
+    display: flex;
+    gap: 0;
+    list-style: none;
+    overflow-x: auto;
+  }
+
+  .nav a {
+    display: block;
+    padding: 18px 24px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--negro);
+    text-decoration: none;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -3px;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+
+  .nav a:hover { color: var(--rojo); border-bottom-color: var(--rojo); }
+
+  /* SECCIONES */
+  .seccion {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 80px 40px;
+    border-bottom: 1px solid var(--gris-claro);
+  }
+
+  .seccion-numero {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--rojo);
+    margin-bottom: 12px;
+  }
+
+  .seccion-titulo {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 40px;
+  }
+
+  .seccion-titulo span {
+    display: block;
+    width: 40px;
+    height: 3px;
+    background: var(--rojo);
+    margin-top: 16px;
+  }
+
+  /* PALETA */
+  .paleta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+
+  .color-card {
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+  }
+
+  .color-muestra {
+    height: 140px;
+  }
+
+  .color-info {
+    background: var(--blanco);
+    padding: 16px;
+  }
+
+  .color-nombre {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .color-hex {
+    font-size: 13px;
+    font-family: 'Courier New', monospace;
+    color: var(--gris);
+    margin-bottom: 4px;
+  }
+
+  .color-uso {
+    font-size: 12px;
+    color: var(--gris);
+    font-style: italic;
+  }
+
+  /* TIPOGRAFÍA */
+  .tipo-bloque {
+    margin-bottom: 48px;
+    padding: 40px;
+    background: var(--blanco);
+    border-left: 4px solid var(--rojo);
+  }
+
+  .tipo-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gris);
+    margin-bottom: 16px;
+  }
+
+  .tipo-display {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 6vw, 64px);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+
+  .tipo-display-italic {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4vw, 48px);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--gris);
+    margin-bottom: 16px;
+  }
+
+  .tipo-cuerpo {
+    font-family: 'Source Serif 4', serif;
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--negro);
+  }
+
+  .tipo-meta {
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gris);
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--gris-claro);
+  }
+
+  /* TONO EDITORIAL */
+  .tono-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+
+  .tono-si {
+    background: var(--blanco);
+    border-top: 4px solid #2a7a2a;
+    padding: 32px;
+  }
+
+  .tono-no {
+    background: var(--blanco);
+    border-top: 4px solid var(--rojo);
+    padding: 32px;
+  }
+
+  .tono-header {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+
+  .tono-item {
+    font-size: 15px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--gris-claro);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .tono-item:last-child { border-bottom: none; }
+
+  .dot-si { color: #2a7a2a; font-size: 18px; }
+  .dot-no { color: var(--rojo); font-size: 18px; }
+
+  /* EJEMPLOS TONO */
+  .ejemplo {
+    background: var(--blanco);
+    padding: 32px;
+    margin-bottom: 16px;
+  }
+
+  .ejemplo-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+
+  .ejemplo-mal { color: var(--rojo); }
+  .ejemplo-bien { color: #2a7a2a; }
+
+  .ejemplo-texto {
+    font-size: 16px;
+    line-height: 1.6;
+    padding: 16px;
+    border-left: 3px solid;
+  }
+
+  .ejemplo-texto.mal { border-color: var(--rojo); background: #fff5f5; color: var(--gris); }
+  .ejemplo-texto.bien { border-color: #2a7a2a; background: #f5fff5; }
+
+  /* PILARES */
+  .pilares-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .pilar-card {
+    background: var(--blanco);
+    padding: 28px;
+    border-top: 4px solid var(--rojo);
+  }
+
+  .pilar-numero {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--rojo);
+    opacity: 0.2;
+    line-height: 1;
+    margin-bottom: -8px;
+  }
+
+  .pilar-nombre {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .pilar-desc {
+    font-size: 14px;
+    color: var(--gris);
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+
+  .pilar-formatos {
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: var(--rojo);
+    text-transform: uppercase;
+  }
+
+  /* REGLA DOS CAPAS */
+  .dos-capas {
+    background: var(--negro);
+    color: var(--blanco);
+    padding: 48px;
+    margin-bottom: 40px;
+  }
+
+  .dos-capas-titulo {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 32px;
+    color: var(--crema);
+  }
+
+  .capa {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 24px;
+    align-items: flex-start;
+  }
+
+  .capa-numero {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--rojo);
+    line-height: 1;
+    min-width: 48px;
+  }
+
+  .capa-contenido h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    color: var(--crema);
+    margin-bottom: 6px;
+  }
+
+  .capa-contenido p {
+    font-size: 15px;
+    color: #999;
+  }
+
+  /* SPECS PLATAFORMAS */
+  .plataformas-tabla {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--blanco);
+    margin-bottom: 32px;
+  }
+
+  .plataformas-tabla th {
+    background: var(--negro);
+    color: var(--crema);
+    padding: 14px 20px;
+    text-align: left;
+    font-family: 'Source Serif 4', serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .plataformas-tabla td {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--gris-claro);
+    font-size: 14px;
+    vertical-align: top;
+  }
+
+  .plataformas-tabla tr:hover td { background: var(--crema); }
+
+  .plataforma-nombre {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 16px;
+  }
+
+  .spec-dim {
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    color: var(--rojo);
+  }
+
+  /* PROMPTS GEMINI */
+  .prompt-bloque {
+    background: var(--negro);
+    border-radius: 4px;
+    margin-bottom: 24px;
+    overflow: hidden;
+  }
+
+  .prompt-header {
+    background: var(--rojo);
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .prompt-plataforma {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--blanco);
+  }
+
+  .prompt-tipo {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--crema);
+    opacity: 0.8;
+  }
+
+  .prompt-texto {
+    padding: 24px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    color: #ccc;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  /* PROTOCOLO */
+  .protocolo {
+    background: var(--blanco);
+    padding: 32px;
+    margin-bottom: 20px;
+    border-left: 4px solid var(--rojo);
+  }
+
+  .protocolo h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+
+  .protocolo p, .protocolo li {
+    font-size: 15px;
+    color: var(--gris);
+    margin-bottom: 8px;
+    line-height: 1.6;
+  }
+
+  .protocolo ul { padding-left: 20px; }
+
+  /* FOOTER */
+  .footer-manual {
+    background: var(--negro);
+    color: var(--crema);
+    padding: 60px 80px;
+    text-align: center;
+  }
+
+  .footer-manual h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    margin-bottom: 12px;
+  }
+
+  .footer-manual p {
+    font-size: 14px;
+    color: var(--gris);
+    max-width: 400px;
+    margin: 0 auto 8px;
+  }
+
+  .footer-version {
+    margin-top: 40px;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #555;
+  }
+
+  @media (max-width: 768px) {
+    .portada { padding: 40px 24px; }
+    .nav { padding: 0 24px; }
+    .seccion { padding: 48px 24px; }
+    .tono-grid { grid-template-columns: 1fr; }
+    .footer-manual { padding: 40px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- PORTADA -->
+<div class="portada">
+  <div class="portada-linea"></div>
+  <div class="portada-eyebrow">Manual de Marca · Versión 1.0 · Abril 2026</div>
+  <div class="portada-titulo">El Rufino</div>
+  <div class="portada-subtitulo">Lo que pasa y lo que significa</div>
+  <div class="portada-meta">Rufino · Santa Fe · Argentina · elrufino.ar</div>
+</div>
+
+<!-- NAVEGACIÓN -->
+<nav class="nav">
+  <ul>
+    <li><a href="#identidad">Identidad</a></li>
+    <li><a href="#paleta">Paleta</a></li>
+    <li><a href="#tipografia">Tipografía</a></li>
+    <li><a href="#tono">Tono editorial</a></li>
+    <li><a href="#pilares">Pilares</a></li>
+    <li><a href="#plataformas">Plataformas</a></li>
+    <li><a href="#prompts">Prompts Gemini</a></li>
+    <li><a href="#protocolos">Protocolos</a></li>
+  </ul>
+</nav>
+
+<!-- 1. IDENTIDAD -->
+<section class="seccion" id="identidad">
+  <div class="seccion-numero">01 — Identidad</div>
+  <h2 class="seccion-titulo">Quiénes somos<span></span></h2>
+
+  <div class="dos-capas">
+    <div class="dos-capas-titulo">La regla que define todo</div>
+    <div class="capa">
+      <div class="capa-numero">1</div>
+      <div class="capa-contenido">
+        <h4>Lo que pasó</h4>
+        <p>El hecho verificado, concreto, con fuente identificable. Sin esto no hay nota.</p>
+      </div>
+    </div>
+    <div class="capa">
+      <div class="capa-numero">2</div>
+      <div class="capa-contenido">
+        <h4>Lo que significa</h4>
+        <p>El contexto, la pregunta que nadie hizo, lo que falta saber, las consecuencias. Sin esto no hay diferencia.</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:var(--blanco); padding:32px; margin-bottom:24px;">
+    <p style="font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--gris);margin-bottom:16px;">Definición</p>
+    <p style="font-family:'Playfair Display',serif;font-size:22px;line-height:1.4;margin-bottom:20px;">El Rufino es un medio digital local con noticias, contexto y seguimiento. Nace en Rufino, Santa Fe, Argentina, en 2026.</p>
+    <p style="font-size:15px;color:var(--gris);">No es un portal total. No es un aparato partidario. No compite en velocidad con quien llega primero. Compite en profundidad con quien explica mejor.</p>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+    <div style="background:var(--blanco);padding:24px;border-top:3px solid #2a7a2a;">
+      <p style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#2a7a2a;margin-bottom:12px;">El Rufino ES</p>
+      <ul style="padding-left:16px;font-size:15px;line-height:2;">
+        <li>Medio digital local con contexto</li>
+        <li>Sistema de seguimiento de promesas</li>
+        <li>Voz del campo y los barrios</li>
+        <li>Verificación antes que velocidad</li>
+        <li>Cobertura en profundidad</li>
+      </ul>
+    </div>
+    <div style="background:var(--blanco);padding:24px;border-top:3px solid var(--rojo);">
+      <p style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--rojo);margin-bottom:12px;">El Rufino NO ES</p>
+      <ul style="padding-left:16px;font-size:15px;line-height:2;">
+        <li>Portal total desde el día 1</li>
+        <li>Competidor en breaking news</li>
+        <li>Panfleto político o partidario</li>
+        <li>Comunicado oficial sin análisis</li>
+        <li>Amplificador de rumores</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 2. PALETA -->
+<section class="seccion" id="paleta">
+  <div class="seccion-numero">02 — Paleta de colores</div>
+  <h2 class="seccion-titulo">Los colores del medio<span></span></h2>
+
+  <div class="paleta-grid">
+    <div class="color-card">
+      <div class="color-muestra" style="background:#c0271b;"></div>
+      <div class="color-info">
+        <div class="color-nombre">Rojo El Rufino</div>
+        <div class="color-hex">#c0271b</div>
+        <div class="color-uso">Cabecera, masthead, acentos, líneas destacadas</div>
+      </div>
+    </div>
+    <div class="color-card">
+      <div class="color-muestra" style="background:#1a1a1a;"></div>
+      <div class="color-info">
+        <div class="color-nombre">Negro editorial</div>
+        <div class="color-hex">#1a1a1a</div>
+        <div class="color-uso">Texto principal, fondos oscuros, titulares</div>
+      </div>
+    </div>
+    <div class="color-card">
+      <div class="color-muestra" style="background:#ffffff;border:1px solid #e8e8e8;"></div>
+      <div class="color-info">
+        <div class="color-nombre">Blanco limpio</div>
+        <div class="color-hex">#ffffff</div>
+        <div class="color-uso">Fondos primarios, texto sobre oscuro</div>
+      </div>
+    </div>
+    <div class="color-card">
+      <div class="color-muestra" style="background:#f5f0e8;"></div>
+      <div class="color-info">
+        <div class="color-nombre">Crema pampeana</div>
+        <div class="color-hex">#f5f0e8</div>
+        <div class="color-uso">Fondos secundarios, clima editorial, papel</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:var(--blanco);padding:28px;">
+    <p style="font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--gris);margin-bottom:20px;">Reglas de uso</p>
+    <ul style="font-size:15px;line-height:2.2;padding-left:20px;color:var(--negro);">
+      <li>El rojo <strong>nunca</strong> en texto corrido — solo en acentos, líneas y cabeceras</li>
+      <li>El negro siempre como base de texto, nunca gris puro</li>
+      <li>El crema reemplaza al blanco en fondos de cuerpo de nota</li>
+      <li>Nunca mezclar rojo con fondos de color — solo sobre negro, blanco o crema</li>
+      <li>No agregar colores adicionales sin decisión editorial explícita</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 3. TIPOGRAFÍA -->
+<section class="seccion" id="tipografia">
+  <div class="seccion-numero">03 — Tipografía</div>
+  <h2 class="seccion-titulo">Las letras del medio<span></span></h2>
+
+  <div class="tipo-bloque">
+    <div class="tipo-label">Tipografía de titulares — Playfair Display</div>
+    <div class="tipo-display">El campo sostiene.</div>
+    <div class="tipo-display-italic">Lo que nadie quiso preguntar.</div>
+    <div class="tipo-meta">Uso: Títulos de notas · Nombre del medio · Cabeceras · Portadas</div>
+  </div>
+
+  <div class="tipo-bloque">
+    <div class="tipo-label">Tipografía de cuerpo — Source Serif 4</div>
+    <div class="tipo-cuerpo">El municipio anunció el inicio de las obras en la Ruta 33. Lo que no dijo es cuándo empiezan, quién las hace y cuánto cuestan. El Rufino hizo las preguntas.</div>
+    <div class="tipo-meta">Uso: Cuerpo de nota · Bajadas · Descripciones · Texto de redes</div>
+  </div>
+
+  <div style="background:var(--blanco);padding:28px;">
+    <p style="font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--gris);margin-bottom:20px;">Jerarquía tipográfica</p>
+    <div style="border-bottom:1px solid var(--gris-claro);padding:12px 0;display:flex;justify-content:space-between;align-items:baseline;">
+      <span style="font-family:'Playfair Display',serif;font-size:36px;font-weight:700;">Título nota</span>
+      <span style="font-size:12px;color:var(--gris);font-family:'Courier New',monospace;">Playfair Display · 700 · 36–52px</span>
+    </div>
+    <div style="border-bottom:1px solid var(--gris-claro);padding:12px 0;display:flex;justify-content:space-between;align-items:baseline;">
+      <span style="font-family:'Playfair Display',serif;font-size:22px;font-style:italic;">Bajada de nota</span>
+      <span style="font-size:12px;color:var(--gris);font-family:'Courier New',monospace;">Playfair Display · Italic · 20–24px</span>
+    </div>
+    <div style="border-bottom:1px solid var(--gris-claro);padding:12px 0;display:flex;justify-content:space-between;align-items:baseline;">
+      <span style="font-size:17px;">Cuerpo de nota, párrafos y texto corrido</span>
+      <span style="font-size:12px;color:var(--gris);font-family:'Courier New',monospace;">Source Serif 4 · 400 · 16–18px</span>
+    </div>
+    <div style="border-bottom:1px solid var(--gris-claro);padding:12px 0;display:flex;justify-content:space-between;align-items:baseline;">
+      <span style="font-size:12px;letter-spacing:3px;text-transform:uppercase;">Etiquetas · Secciones · Metadatos</span>
+      <span style="font-size:12px;color:var(--gris);font-family:'Courier New',monospace;">Source Serif 4 · 300 · 11–13px · CAPS</span>
+    </div>
+  </div>
+</section>
+
+<!-- 4. TONO EDITORIAL -->
+<section class="seccion" id="tono">
+  <div class="seccion-numero">04 — Tono editorial</div>
+  <h2 class="seccion-titulo">Cómo habla El Rufino<span></span></h2>
+
+  <div class="tono-grid">
+    <div class="tono-si">
+      <div class="tono-header" style="color:#2a7a2a;">✓ El Rufino habla así</div>
+      <div class="tono-item"><span class="dot-si">·</span> Directo sin ser agresivo</div>
+      <div class="tono-item"><span class="dot-si">·</span> Verificado antes de publicar</div>
+      <div class="tono-item"><span class="dot-si">·</span> Local sin ser localista</div>
+      <div class="tono-item"><span class="dot-si">·</span> Humano sin ser amarillista</div>
+      <div class="tono-item"><span class="dot-si">·</span> Con datos cuando hay datos</div>
+      <div class="tono-item"><span class="dot-si">·</span> Con segunda capa siempre</div>
+    </div>
+    <div class="tono-no">
+      <div class="tono-header" style="color:var(--rojo);">✗ El Rufino nunca habla así</div>
+      <div class="tono-item"><span class="dot-no">·</span> Burocrático o institucional</div>
+      <div class="tono-item"><span class="dot-no">·</span> Sensacionalista</div>
+      <div class="tono-item"><span class="dot-no">·</span> Opinión sin sustento</div>
+      <div class="tono-item"><span class="dot-no">·</span> Comunicado oficial sin análisis</div>
+      <div class="tono-item"><span class="dot-no">·</span> Técnico sin necesidad</div>
+      <div class="tono-item"><span class="dot-no">·</span> Rumor amplificado</div>
+    </div>
+  </div>
+
+  <div class="ejemplo">
+    <div class="ejemplo-label ejemplo-mal">✗ Así no</div>
+    <div class="ejemplo-texto mal">"Autoridades municipales procedieron a la apertura del expediente licitatorio correspondiente a la obra de pavimentación del sector norte del ejido urbano."</div>
+  </div>
+  <div class="ejemplo">
+    <div class="ejemplo-label ejemplo-bien">✓ Así sí</div>
+    <div class="ejemplo-texto bien">"El municipio abrió el proceso para licitar el asfalto de la zona Norte. ¿Cuándo arranca? Eso todavía no está claro."</div>
+  </div>
+
+  <div class="ejemplo" style="margin-top:24px;">
+    <div class="ejemplo-label ejemplo-mal">✗ Así no</div>
+    <div class="ejemplo-texto mal">"Brutal choque en la Ruta 33: dos muertos y caos total en la zona"</div>
+  </div>
+  <div class="ejemplo">
+    <div class="ejemplo-label ejemplo-bien">✓ Así sí</div>
+    <div class="ejemplo-texto bien">"Dos personas murieron en un accidente en la Ruta 33 a la altura del km 340. Según la policía, el choque ocurrió cerca de las 6 de la mañana. Hasta ahora no se conocen las causas."</div>
+  </div>
+</section>
+
+<!-- 5. PILARES -->
+<section class="seccion" id="pilares">
+  <div class="seccion-numero">05 — Pilares editoriales</div>
+  <h2 class="seccion-titulo">Los seis ejes del medio<span></span></h2>
+
+  <div class="pilares-grid">
+    <div class="pilar-card">
+      <div class="pilar-numero">P01</div>
+      <div class="pilar-nombre">Rufino real</div>
+      <div class="pilar-desc">Noticias verificadas con contexto. El antídoto contra el rumor de WhatsApp.</div>
+      <div class="pilar-formatos">Nota · Hilo · Infografía</div>
+    </div>
+    <div class="pilar-card">
+      <div class="pilar-numero">P02</div>
+      <div class="pilar-nombre">El campo habla</div>
+      <div class="pilar-desc">Rutas, costos, cosecha, política agraria. Audiencia de peso, no nicho decorativo.</div>
+      <div class="pilar-formatos">Entrevista · Dato · WhatsApp</div>
+    </div>
+    <div class="pilar-card">
+      <div class="pilar-numero">P03</div>
+      <div class="pilar-nombre">Barrio a barrio</div>
+      <div class="pilar-desc">Infraestructura, agua, cloacas, reclamos. Con continuidad y mapa.</div>
+      <div class="pilar-formatos">Seguimiento · Mapa · Vecinos</div>
+    </div>
+    <div class="pilar-card">
+      <div class="pilar-numero">P04</div>
+      <div class="pilar-nombre">Generación Rufino</div>
+      <div class="pilar-desc">Jóvenes, artistas, emprendedores. La tensión entre quedarse e irse.</div>
+      <div class="pilar-formatos">Reels · Perfil · TikTok</div>
+    </div>
+    <div class="pilar-card">
+      <div class="pilar-numero">P05</div>
+      <div class="pilar-nombre">Poder y gestión</div>
+      <div class="pilar-desc">Promesas, obras, presupuesto, decisiones. Verificación sin editorializar.</div>
+      <div class="pilar-formatos">Fact-check · Seguimiento · Archivo</div>
+    </div>
+    <div class="pilar-card">
+      <div class="pilar-numero">P06</div>
+      <div class="pilar-nombre">Rufino en datos</div>
+      <div class="pilar-desc">Números locales que ordenan la conversación: INDEC, salud, educación.</div>
+      <div class="pilar-formatos">Datos · Placas · Explicador</div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. PLATAFORMAS -->
+<section class="seccion" id="plataformas">
+  <div class="seccion-numero">06 — Plataformas digitales</div>
+  <h2 class="seccion-titulo">Especificaciones técnicas<span></span></h2>
+
+  <table class="plataformas-tabla">
+    <thead>
+      <tr>
+        <th>Plataforma</th>
+        <th>Foto de perfil</th>
+        <th>Portada / Banner</th>
+        <th>Formato</th>
+        <th>Rol</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><div class="plataforma-nombre">Facebook</div></td>
+        <td><span class="spec-dim">170 × 170 px</span><br><span style="font-size:12px;color:var(--gris);">Se muestra circular</span></td>
+        <td><span class="spec-dim">820 × 312 px</span><br><span style="font-size:12px;color:var(--gris);">Se recorta en mobile</span></td>
+        <td>JPG / PNG</td>
+        <td>Base y credibilidad</td>
+      </tr>
+      <tr>
+        <td><div class="plataforma-nombre">Instagram</div></td>
+        <td><span class="spec-dim">320 × 320 px</span><br><span style="font-size:12px;color:var(--gris);">Se muestra circular</span></td>
+        <td><span style="color:var(--gris);font-size:13px;">No tiene portada</span></td>
+        <td>JPG / PNG</td>
+        <td>Marca visual</td>
+      </tr>
+      <tr>
+        <td><div class="plataforma-nombre">TikTok</div></td>
+        <td><span class="spec-dim">200 × 200 px</span><br><span style="font-size:12px;color:var(--gris);">Se muestra circular</span></td>
+        <td><span style="color:var(--gris);font-size:13px;">No tiene portada</span></td>
+        <td>JPG / PNG</td>
+        <td>Audiencia joven</td>
+      </tr>
+      <tr>
+        <td><div class="plataforma-nombre">YouTube</div></td>
+        <td><span class="spec-dim">800 × 800 px</span><br><span style="font-size:12px;color:var(--gris);">Se muestra circular</span></td>
+        <td><span class="spec-dim">2560 × 1440 px</span><br><span style="font-size:12px;color:var(--gris);">Zona segura: 1546 × 423 px</span></td>
+        <td>JPG / PNG</td>
+        <td>Video largo / archivo</td>
+      </tr>
+      <tr>
+        <td><div class="plataforma-nombre">WordPress</div></td>
+        <td><span class="spec-dim">512 × 512 px</span><br><span style="font-size:12px;color:var(--gris);">Favicon del sitio</span></td>
+        <td><span style="color:var(--gris);font-size:13px;">Logo cabecera: 300px ancho</span></td>
+        <td>PNG / SVG</td>
+        <td>Sitio web principal</td>
+      </tr>
+      <tr>
+        <td><div class="plataforma-nombre">WhatsApp</div></td>
+        <td><span class="spec-dim">500 × 500 px</span><br><span style="font-size:12px;color:var(--gris);">Se muestra circular</span></td>
+        <td><span style="color:var(--gris);font-size:13px;">No aplica</span></td>
+        <td>JPG / PNG</td>
+        <td>Canal broadcast</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="background:var(--blanco);padding:24px;border-left:4px solid var(--rojo);">
+    <p style="font-size:13px;font-weight:600;margin-bottom:8px;">Nota importante</p>
+    <p style="font-size:14px;color:var(--gris);">La foto de perfil es la misma imagen para todas las plataformas — solo cambia el tamaño. El logo circular del medio funciona en todas. Las portadas (Facebook y YouTube) son piezas distintas porque tienen proporciones muy diferentes.</p>
+  </div>
+</section>
+
+<!-- 7. PROMPTS GEMINI -->
+<section class="seccion" id="prompts">
+  <div class="seccion-numero">07 — Prompts para Gemini</div>
+  <h2 class="seccion-titulo">Cómo generar cada imagen<span></span></h2>
+
+  <p style="font-size:15px;color:var(--gris);margin-bottom:40px;">Copiá cada prompt en Gemini (gemini.google.com) para generar las imágenes de cada plataforma por separado. Pedí una imagen a la vez.</p>
+
+  <div class="prompt-bloque">
+    <div class="prompt-header">
+      <span class="prompt-plataforma">Logo · Foto de perfil universal</span>
+      <span class="prompt-tipo">Todas las plataformas</span>
+    </div>
+    <div class="prompt-texto">Generá una imagen cuadrada 1:1 con fondo oscuro casi negro (#1a1a1a). Es el logo de "El Rufino", un medio de noticias local de Rufino, Santa Fe, Argentina.
+
+El logo es circular con estos elementos:
+- Sol naciente sobre el horizonte pampeano, con rayos de luz dorada
+- Una espiga de trigo estilizada en el centro, color crema/dorado
+- Texto "EL RUFINO" en tipografía serif clásica, color blanco, con la palabra "EL" más pequeña arriba
+- Una línea divisoria fina en rojo (#c0271b) separando texto del símbolo
+- El claim "Lo que pasa y lo que significa" en itálica pequeña abajo
+
+Colores: rojo #c0271b, negro #1a1a1a, blanco #ffffff, crema/dorado #f5f0e8.
+Estilo: periodismo clásico argentino, diario editorial, sobrio y elegante.
+Sin marcos de dispositivos, sin fondos adicionales. Solo el logo sobre fondo negro.</div>
+  </div>
+
+  <div class="prompt-bloque">
+    <div class="prompt-header">
+      <span class="prompt-plataforma">Facebook</span>
+      <span class="prompt-tipo">Portada · 820 × 312 px</span>
+    </div>
+    <div class="prompt-texto">Generá una imagen horizontal muy ancha (proporción 8:3). Es la portada de Facebook de "El Rufino", medio de noticias de Rufino, Santa Fe, Argentina.
+
+Escena: paisaje fotorrealista de la llanura pampeana al atardecer. Una ruta nacional recta (Ruta 33) se extiende hacia el horizonte en perspectiva. A los costados, silos agroindustriales y siluetas de edificios bajos. El cielo tiene gradiente de negro arriba hacia rojo-naranja-dorado en el horizonte. El sol está justo en la línea del horizonte.
+
+Sobre la mitad izquierda de la imagen, un overlay oscuro semitransparente. Sobre ese overlay:
+- Texto grande: "EL RUFINO" en tipografía serif bold blanca
+- Línea roja horizontal (#c0271b) debajo del título
+- Texto: "Lo que pasa y lo que significa" en itálica blanca más pequeña
+- Texto muy pequeño: "RUFINO · SANTA FE · ARGENTINA"
+
+La mitad derecha muestra el paisaje sin texto.
+Sin marcos de dispositivos. Imagen directa lista para subir a Facebook.</div>
+  </div>
+
+  <div class="prompt-bloque">
+    <div class="prompt-header">
+      <span class="prompt-plataforma">YouTube</span>
+      <span class="prompt-tipo">Banner · 2560 × 1440 px</span>
+    </div>
+    <div class="prompt-texto">Generá una imagen horizontal muy grande (2560x1440 px, proporción 16:9). Es el banner de YouTube de "El Rufino", medio de noticias de Rufino, Santa Fe, Argentina.
+
+La zona central (aproximadamente 1546x423 px en el centro) debe tener el contenido principal visible porque es lo que se ve en todos los dispositivos.
+
+Diseño: fondo negro con textura sutil de trama tipográfica. En el centro:
+- El logo circular de El Rufino (sol naciente, espiga, texto "EL RUFINO" en serif blanco)
+- Claim "Lo que pasa y lo que significa" en itálica blanca debajo
+- Dos líneas rojas (#c0271b) flanqueando el logo horizontalmente
+
+A los costados (zonas que solo se ven en pantallas grandes): horizonte pampeano desaturado, silos y ruta, muy tenue como textura de fondo.
+
+Colores: rojo #c0271b, negro #1a1a1a, blanco #ffffff.
+Sin marcos de dispositivos. Imagen directa.</div>
+  </div>
+
+  <div class="prompt-bloque">
+    <div class="prompt-header">
+      <span class="prompt-plataforma">Instagram · TikTok · WhatsApp</span>
+      <span class="prompt-tipo">Foto de perfil · misma imagen, distintos tamaños</span>
+    </div>
+    <div class="prompt-texto">Usá el mismo logo generado para "Foto de perfil universal" (primer prompt).
+
+Para subir:
+- Instagram: redimensionarlo a 320×320 px (cualquier conversor online)
+- TikTok: redimensionarlo a 200×200 px
+- WhatsApp: redimensionarlo a 500×500 px
+
+Conversor recomendado: squoosh.app (gratuito, sin registro)</div>
+  </div>
+
+  <div class="prompt-bloque">
+    <div class="prompt-header">
+      <span class="prompt-plataforma">WordPress · Favicon</span>
+      <span class="prompt-tipo">512 × 512 px</span>
+    </div>
+    <div class="prompt-texto">Generá una imagen cuadrada 512×512 px. Es el favicon (ícono del sitio) de El Rufino.
+
+Versión simplificada del logo, diseñada para verse bien muy pequeña (16×16 px):
+- Fondo rojo #c0271b
+- Solo el símbolo: sol naciente sobre horizonte con una espiga estilizada, color blanco/crema
+- Sin texto (el texto no se lee a tamaños pequeños)
+- Formas geométricas simples y limpias
+- Sin sombras ni degradados complejos
+
+El resultado debe ser reconocible incluso a 16×16 px.</div>
+  </div>
+</section>
+
+<!-- 8. PROTOCOLOS -->
+<section class="seccion" id="protocolos">
+  <div class="seccion-numero">08 — Protocolos de contenido</div>
+  <h2 class="seccion-titulo">Cómo manejamos cada tema<span></span></h2>
+
+  <div class="protocolo">
+    <h4>Noticias policiales</h4>
+    <ul>
+      <li>La versión policial no es la verdad cerrada — siempre aclarar qué está confirmado</li>
+      <li>No usar imágenes humillantes como recurso automático</li>
+      <li>Agregar contexto y cuidado de posible daño a personas involucradas</li>
+      <li>Nombrar detenidos con presunción de inocencia hasta sentencia</li>
+    </ul>
+  </div>
+
+  <div class="protocolo">
+    <h4>Comunicados oficiales</h4>
+    <ul>
+      <li>Nunca publicar un comunicado sin segunda capa de análisis</li>
+      <li>Si hay promesa → abrir ficha de seguimiento inmediatamente con fecha y datos</li>
+      <li>Si el comunicado no dice cuándo, cuánto ni quién → eso es la segunda capa</li>
+    </ul>
+  </div>
+
+  <div class="protocolo">
+    <h4>Rumores de WhatsApp</h4>
+    <ul>
+      <li>Detectar, no replicar en bruto</li>
+      <li>Confirmar con fuente antes de publicar cualquier versión</li>
+      <li>Si es falso: desactivar con claridad y rapidez — eso también es información</li>
+    </ul>
+  </div>
+
+  <div class="protocolo">
+    <h4>Sistema de seguimiento de promesas</h4>
+    <p>Cada anuncio oficial abre una ficha con:</p>
+    <ul>
+      <li><strong>Fecha</strong> del anuncio</li>
+      <li><strong>Promesa exacta</strong> (cita textual)</li>
+      <li><strong>Fuente</strong> (quién, en qué contexto)</li>
+      <li><strong>Estado actual</strong> (pendiente / en curso / cumplido / incumplido)</li>
+      <li><strong>Próxima revisión</strong> (fecha de seguimiento)</li>
+    </ul>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div class="footer-manual">
+  <h3>El Rufino</h3>
+  <p>Lo que pasa y lo que significa</p>
+  <p style="margin-top:8px;">Rufino · Santa Fe · Argentina · elrufino.ar</p>
+  <div class="footer-version">Manual de Marca v1.0 · Abril 2026 · Documento vivo</div>
+</div>
+
+</body>
+</html>
