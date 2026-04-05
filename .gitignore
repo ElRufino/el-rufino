@@ -1,0 +1,14 @@
+﻿# Archivos temporales Windows
+Thumbs.db
+desktop.ini
+*.tmp
+*.lnk
+
+# Archivos obsoletos ya archivados
+_ARCHIVO/
+
+# Scripts de reorganizacion
+reorganizar-el-rufino*.ps1
+
+# Carpetas de sistema
+.git/

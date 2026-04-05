@@ -1,0 +1,717 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Dashboard estratégico · Medio digital Rufino</title>
+<style>
+  :root{
+    --bg:#0b1020;
+    --panel:#121a2d;
+    --panel2:#18223b;
+    --soft:#223153;
+    --line:rgba(255,255,255,.09);
+    --text:#eef3ff;
+    --muted:#9fb0d3;
+    --accent:#52b3ff;
+    --accent2:#7ce0a6;
+    --accent3:#ffc36b;
+    --danger:#ff7d7d;
+    --shadow:0 12px 40px rgba(0,0,0,.28);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    background:
+      radial-gradient(1200px 600px at 10% -10%, rgba(82,179,255,.18), transparent 50%),
+      radial-gradient(1000px 500px at 100% 0%, rgba(124,224,166,.12), transparent 45%),
+      linear-gradient(180deg,#07101f,#0b1020 32%,#0c1324);
+    color:var(--text);
+    line-height:1.5;
+  }
+  .layout{
+    display:grid;
+    grid-template-columns: 280px 1fr;
+    min-height:100vh;
+  }
+  aside{
+    position:sticky; top:0; align-self:start;
+    height:100vh;
+    border-right:1px solid var(--line);
+    background:rgba(7,12,24,.78);
+    backdrop-filter: blur(18px);
+    padding:24px 18px;
+  }
+  .brand{
+    padding:8px 10px 18px;
+    border-bottom:1px solid var(--line);
+    margin-bottom:18px;
+  }
+  .brand .eyebrow{
+    font-size:11px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--accent3);
+    margin-bottom:8px;
+  }
+  .brand h1{
+    margin:0;
+    font-size:1.25rem;
+    line-height:1.1;
+  }
+  .brand p{
+    margin:10px 0 0;
+    color:var(--muted);
+    font-size:.92rem;
+  }
+  nav a{
+    display:block;
+    color:var(--muted);
+    text-decoration:none;
+    padding:10px 12px;
+    border-radius:12px;
+    margin:4px 0;
+    transition:.18s ease;
+    font-size:.95rem;
+  }
+  nav a:hover{background:var(--panel2); color:var(--text)}
+  .meta-box{
+    margin-top:22px;
+    padding:14px;
+    border:1px solid var(--line);
+    border-radius:16px;
+    background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));
+  }
+  .meta-box h3{
+    margin:0 0 10px;
+    font-size:.9rem;
+  }
+  .meta-box ul{
+    margin:0; padding-left:16px;
+    color:var(--muted); font-size:.88rem;
+  }
+  main{padding:26px 28px 60px}
+  .hero{
+    display:grid;
+    grid-template-columns:1.4fr .9fr;
+    gap:18px;
+    margin-bottom:18px;
+  }
+  .card{
+    background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.018));
+    border:1px solid var(--line);
+    border-radius:22px;
+    box-shadow:var(--shadow);
+  }
+  .hero-main{padding:30px}
+  .tag{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:7px 12px;
+    border-radius:999px;
+    background:rgba(82,179,255,.1);
+    border:1px solid rgba(82,179,255,.24);
+    color:#cce8ff;
+    font-size:.8rem;
+    margin-bottom:16px;
+  }
+  .hero-main h2{
+    margin:0 0 12px;
+    font-size:clamp(2rem,4vw,3.3rem);
+    line-height:1.02;
+  }
+  .hero-main p{
+    max-width:760px;
+    margin:0;
+    color:var(--muted);
+    font-size:1rem;
+  }
+  .hero-side{
+    padding:24px;
+    display:grid;
+    gap:12px;
+  }
+  .mini-stat{
+    padding:16px;
+    border-radius:18px;
+    background:rgba(255,255,255,.025);
+    border:1px solid var(--line);
+  }
+  .mini-stat .n{
+    font-size:1.7rem;
+    font-weight:700;
+    margin-bottom:4px;
+  }
+  .mini-stat .l{
+    color:var(--muted);
+    font-size:.92rem;
+  }
+  .grid{
+    display:grid;
+    gap:18px;
+    margin-top:18px;
+  }
+  .grid.two{grid-template-columns:1fr 1fr}
+  .grid.three{grid-template-columns:repeat(3,1fr)}
+  section.panel{padding:24px}
+  section.panel h3{
+    margin:0 0 6px;
+    font-size:1.3rem;
+  }
+  .sub{
+    color:var(--muted);
+    margin:0 0 18px;
+    font-size:.96rem;
+  }
+  .kpi-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+  }
+  .kpi{
+    padding:16px;
+    border-radius:18px;
+    background:var(--panel);
+    border:1px solid var(--line);
+  }
+  .kpi .num{font-size:1.55rem; font-weight:700; margin-bottom:4px}
+  .kpi .lab{font-size:.88rem; color:var(--muted)}
+  .stack{
+    display:grid; gap:12px;
+  }
+  .item{
+    padding:16px 18px;
+    border-radius:18px;
+    background:var(--panel);
+    border:1px solid var(--line);
+  }
+  .item h4{margin:0 0 6px; font-size:1rem}
+  .item p{margin:0; color:var(--muted); font-size:.93rem}
+  .pill{
+    display:inline-block;
+    margin:4px 6px 0 0;
+    padding:6px 10px;
+    border-radius:999px;
+    background:rgba(255,255,255,.04);
+    border:1px solid var(--line);
+    color:#d9e7ff;
+    font-size:.78rem;
+  }
+  .matrix{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:12px;
+  }
+  .matrix .cell{
+    padding:16px;
+    border-radius:18px;
+    border:1px solid var(--line);
+    background:var(--panel);
+  }
+  .matrix h4{margin:0 0 8px}
+  .matrix ul{margin:0; padding-left:18px; color:var(--muted); font-size:.92rem}
+  table{
+    width:100%;
+    border-collapse:collapse;
+    overflow:hidden;
+    border-radius:18px;
+    border:1px solid var(--line);
+  }
+  th,td{
+    padding:12px 14px;
+    text-align:left;
+    border-bottom:1px solid var(--line);
+    vertical-align:top;
+  }
+  th{
+    background:rgba(255,255,255,.03);
+    font-size:.85rem;
+    color:#d4def2;
+    letter-spacing:.02em;
+  }
+  td{
+    font-size:.92rem;
+    color:var(--muted);
+    background:rgba(18,26,45,.72);
+  }
+  tr:last-child td{border-bottom:none}
+  .good{color:var(--accent2)}
+  .warn{color:var(--accent3)}
+  .bad{color:var(--danger)}
+  .roadmap{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+  }
+  .phase{
+    padding:18px;
+    border-radius:18px;
+    background:var(--panel);
+    border:1px solid var(--line);
+    position:relative;
+  }
+  .phase .top{
+    font-size:.8rem;
+    color:var(--accent3);
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    margin-bottom:8px;
+  }
+  .phase h4{margin:0 0 8px}
+  .phase ul{margin:0; padding-left:18px; color:var(--muted); font-size:.9rem}
+  .quote{
+    padding:18px 20px;
+    border-left:4px solid var(--accent);
+    border-radius:16px;
+    background:rgba(82,179,255,.07);
+    color:#dbefff;
+    font-size:1rem;
+  }
+  .footer-note{
+    margin-top:20px;
+    color:var(--muted);
+    font-size:.88rem;
+  }
+  .decision{
+    border:1px dashed rgba(124,224,166,.38);
+    background:rgba(124,224,166,.06);
+  }
+  .legend{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px}
+  .legend span{
+    font-size:.78rem; padding:6px 10px; border-radius:999px; border:1px solid var(--line);
+    background:rgba(255,255,255,.03); color:var(--muted);
+  }
+  .note{
+    margin-top:12px;
+    padding:12px 14px;
+    border-radius:14px;
+    font-size:.86rem;
+    color:var(--muted);
+    background:rgba(255,255,255,.025);
+    border:1px solid var(--line);
+  }
+  @media (max-width: 1080px){
+    .layout{grid-template-columns:1fr}
+    aside{position:relative; height:auto; border-right:none; border-bottom:1px solid var(--line)}
+    .hero, .grid.two, .grid.three, .roadmap, .matrix, .kpi-grid{grid-template-columns:1fr}
+    main{padding:18px}
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside>
+    <div class="brand">
+      <div class="eyebrow">Consolidación visual</div>
+      <h1>Dashboard estratégico<br>Nuevo medio digital · Rufino</h1>
+      <p>Síntesis ejecutiva y operativa de todo lo conversado: medio, portal, comunidad organizada, audiencias, modelo editorial y hoja de ruta.</p>
+    </div>
+    <nav>
+      <a href="#nucleo">Núcleo del proyecto</a>
+      <a href="#tension">Tensión estratégica</a>
+      <a href="#territorio">Territorio y problema</a>
+      <a href="#competencia">Competencia</a>
+      <a href="#audiencias">Audiencias</a>
+      <a href="#editorial">Modelo editorial</a>
+      <a href="#comunidad">Comunidad organizada</a>
+      <a href="#monetizacion">Monetización</a>
+      <a href="#campanas">Campañas</a>
+      <a href="#roadmap">Hoja de ruta</a>
+      <a href="#riesgos">Riesgos y pendientes</a>
+    </nav>
+    <div class="meta-box">
+      <h3>Entregable</h3>
+      <ul>
+        <li>Documento visual tipo dashboard</li>
+        <li>Base para otra IA o equipo humano</li>
+        <li>Enfoque: claridad, trazabilidad y uso real</li>
+      </ul>
+    </div>
+  </aside>
+
+  <main>
+    <div class="hero">
+      <div class="card hero-main">
+        <div class="tag">Rufino · Santa Fe · Medio digital / portal / infraestructura territorial</div>
+        <h2>El proyecto no es solo un sitio.<br>Puede convertirse en un sistema de visibilidad, coordinación y memoria local.</h2>
+        <p>
+          La conversación acumulada dibuja una idea más ambiciosa que un portal de noticias: un medio digital con identidad propia,
+          inserto en la lógica de la comunidad organizada, capaz de articular información pública, reclamos vecinales, economía local,
+          voces juveniles, proyectos comunitarios y trazabilidad territorial.
+        </p>
+      </div>
+      <div class="card hero-side">
+        <div class="mini-stat">
+          <div class="n">3</div>
+          <div class="l">capas coexistentes del proyecto: medio, portal y hub territorial</div>
+        </div>
+        <div class="mini-stat">
+          <div class="n">6</div>
+          <div class="l">pilares editoriales ya identificados y desarrollables</div>
+        </div>
+        <div class="mini-stat">
+          <div class="n">1</div>
+          <div class="l">ventaja fuerte: contexto + seguimiento + campo + TikTok local</div>
+        </div>
+      </div>
+    </div>
+
+    <section id="nucleo" class="panel card">
+      <h3>Núcleo del proyecto</h3>
+      <p class="sub">Lo central que aparece una y otra vez en la conversación.</p>
+      <div class="kpi-grid">
+        <div class="kpi"><div class="num">Medio</div><div class="lab">informar con contexto, tono propio y seguimiento</div></div>
+        <div class="kpi"><div class="num">Portal</div><div class="lab">ordenar servicios, oportunidades, agenda y actores</div></div>
+        <div class="kpi"><div class="num">Hub</div><div class="lab">articular proyectos, instituciones y memoria local</div></div>
+        <div class="kpi"><div class="num">Marca</div><div class="lab">construir identidad territorial sostenible y financiada por suscriptores</div></div>
+      </div>
+      <div class="note">
+        Supuesto fuerte detrás del proyecto: la ciudad no necesita solo más publicaciones; necesita una estructura digital que reduzca fragmentación,
+        haga visible quién hace qué y construya confianza operativa.
+      </div>
+    </section>
+
+    <div class="grid two">
+      <section id="tension" class="panel card">
+        <h3>Tensión estratégica principal</h3>
+        <p class="sub">La conversación deja una ambigüedad fecunda, pero peligrosa si no se ordena.</p>
+        <div class="matrix">
+          <div class="cell">
+            <h4>Como medio</h4>
+            <ul>
+              <li>Prioriza agenda, cobertura y credibilidad</li>
+              <li>Compite por atención y confianza</li>
+              <li>Modelo: audiencia, sponsors, membresías</li>
+            </ul>
+          </div>
+          <div class="cell">
+            <h4>Como portal</h4>
+            <ul>
+              <li>Prioriza servicios, clasificados, guías y utilidad</li>
+              <li>Compite por recurrencia y resolución de problemas</li>
+              <li>Modelo: pauta local, servicios premium, verticales</li>
+            </ul>
+          </div>
+          <div class="cell decision">
+            <h4>Como infraestructura territorial</h4>
+            <ul>
+              <li>Prioriza visibilidad estructural y coordinación</li>
+              <li>No solo cuenta qué pasa: ordena relaciones</li>
+              <li>Modelo más complejo: comunidad, datos y gobernanza</li>
+            </ul>
+          </div>
+        </div>
+        <div class="note">
+          Resolución sugerida: no elegir una sola identidad desde el día uno. Diseñar una secuencia por fases:
+          primero <strong>medio</strong>, luego <strong>portal de servicios</strong>, y recién después <strong>infraestructura territorial</strong>.
+        </div>
+      </section>
+
+      <section id="territorio" class="panel card">
+        <h3>Territorio y problema a resolver</h3>
+        <p class="sub">La oportunidad no nace de una moda, sino de un vacío local muy concreto.</p>
+        <div class="stack">
+          <div class="item">
+            <h4>Fragmentación informativa</h4>
+            <p>La información circula dispersa entre Facebook, radios, WhatsApp, comentarios y rumores. Mucho dato, poca estructura.</p>
+          </div>
+          <div class="item">
+            <h4>Falta de contexto</h4>
+            <p>Los medios cubren el hecho; casi nadie explica el porqué, el historial o las consecuencias.</p>
+          </div>
+          <div class="item">
+            <h4>Desatención de nichos clave</h4>
+            <p>Campo, jóvenes y emprendedoras aparecen como audiencias activas pero subatendidas editorialmente.</p>
+          </div>
+          <div class="item">
+            <h4>Déficit de memoria y seguimiento</h4>
+            <p>Promesas, obras, reclamos y procesos quedan sin archivo accesible ni trazabilidad pública.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <section id="competencia" class="panel card">
+      <h3>Mapa competitivo y ventaja diferencial</h3>
+      <p class="sub">La ventaja no es ser el primero. Es ser el que vuelve inteligible lo que está pasando.</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Actor</th>
+            <th>Fortaleza</th>
+            <th>Límite</th>
+            <th>Ventana para el proyecto</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Sucesos</strong></td>
+            <td>Velocidad, reflejo de breaking news</td>
+            <td>No capitaliza contexto ni seguimiento sistemático</td>
+            <td class="good">Llegar después, pero con lectura, historial y consecuencias</td>
+          </tr>
+          <tr>
+            <td><strong>FM Rufino</strong></td>
+            <td>Presencia tradicional, llegada a 45+</td>
+            <td>El contenido oral se pierde, no se archiva ni se busca</td>
+            <td class="good">Transformar lo oral y coyuntural en piezas perdurables</td>
+          </tr>
+          <tr>
+            <td><strong>Portales clásicos</strong></td>
+            <td>Rutina informativa y hábito lector</td>
+            <td>Poca diferenciación multiplataforma real</td>
+            <td class="good">Diseño multiplataforma, verticales y segmentación por audiencia</td>
+          </tr>
+          <tr>
+            <td><strong>WhatsApp vecinal</strong></td>
+            <td>Velocidad de circulación y capilaridad social</td>
+            <td>Rumor, baja verificación y nula trazabilidad</td>
+            <td class="warn">Posicionarse como filtro confiable, no como eco del rumor</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="legend">
+        <span>Regla central: no competir por primicia</span>
+        <span>Ventaja diferencial: contexto + seguimiento</span>
+        <span>Nicho potente: campo agropecuario</span>
+        <span>Expansión orgánica: TikTok / Reels</span>
+      </div>
+    </section>
+
+    <div class="grid two">
+      <section id="audiencias" class="panel card">
+        <h3>Audiencias prioritarias</h3>
+        <p class="sub">No hay una sola audiencia. Hay públicos con usos, lenguajes y dolores distintos.</p>
+        <div class="stack">
+          <div class="item"><h4>25–44 años</h4><p>Segmento más activo en debate local y política práctica. Busca argumentos, lectura y utilidad.</p></div>
+          <div class="item"><h4>Jóvenes 13–24</h4><p>Alta sensibilidad a la narrativa del desarraigo. Necesitan formatos nativos, no sermón institucional.</p></div>
+          <div class="item"><h4>Campo 40–65</h4><p>Audiencia rentable, poco atendida y con agenda propia: rutas, logística, costos, clima político-económico.</p></div>
+          <div class="item"><h4>Emprendedoras y comercios</h4><p>Buscan visibilidad, comunidad, circulación y legitimación local.</p></div>
+          <div class="item"><h4>45+ y 60+</h4><p>Consumen Facebook y WhatsApp como diario de proximidad. Valoran claridad, confianza y frecuencia.</p></div>
+        </div>
+      </section>
+
+      <section class="panel card">
+        <h3>Canales y función real</h3>
+        <p class="sub">Cada plataforma debe cumplir una tarea, no replicar el mismo contenido.</p>
+        <div class="stack">
+          <div class="item"><h4>Facebook</h4><p>Base de credibilidad, conversación y agenda pública.</p></div>
+          <div class="item"><h4>Instagram</h4><p>Marca visual, comunidad, perfiles y narrativas más humanas.</p></div>
+          <div class="item"><h4>TikTok / Reels</h4><p>Explicación, tono joven, circulación orgánica y conquista de territorio vacío.</p></div>
+          <div class="item"><h4>WhatsApp</h4><p>Distribución directa, hábito cotidiano y canal de síntesis.</p></div>
+          <div class="item"><h4>Web / portal</h4><p>Archivo, búsqueda, trazabilidad, verticales de servicio y memoria pública.</p></div>
+        </div>
+      </section>
+    </div>
+
+    <section id="editorial" class="panel card">
+      <h3>Modelo editorial consolidado</h3>
+      <p class="sub">Los pilares ya aparecen bastante definidos y permiten bajar la marca a contenidos concretos.</p>
+      <div class="grid three">
+        <div class="item"><h4>Rufino real</h4><p>Noticias verificadas con contexto. Antídoto al rumor y a la publicación hueca.</p></div>
+        <div class="item"><h4>El campo habla</h4><p>Cobertura económica regional seria. Segmento poco atendido y con poder de fidelización.</p></div>
+        <div class="item"><h4>Barrio a barrio</h4><p>Reclamos, infraestructura, inundaciones, servicios, seguimiento territorial.</p></div>
+        <div class="item"><h4>Generación Rufino</h4><p>Jóvenes, artistas, emprendedores, deportistas y relatos de arraigo o expulsión.</p></div>
+        <div class="item"><h4>Poder y gestión</h4><p>Promesas, obras, presupuesto, plazos, responsables y control público.</p></div>
+        <div class="item"><h4>Rufino en datos</h4><p>Visualización y explicación de números locales para convertir intuiciones en evidencia.</p></div>
+      </div>
+      <div class="quote" style="margin-top:18px">
+        Regla editorial madre: cada pieza debe tener al menos dos capas —
+        <strong>qué pasó</strong> + <strong>qué significa, qué faltó decir o qué debería seguirse</strong>.
+      </div>
+    </section>
+
+    <section id="comunidad" class="panel card">
+      <h3>Traducción a “comunidad organizada”</h3>
+      <p class="sub">La conversación propone que el proyecto no sea solo medio: también una interfaz digital de articulación social.</p>
+      <div class="grid two">
+        <div class="stack">
+          <div class="item">
+            <h4>Lógica conceptual</h4>
+            <p>Persona → organización → comunidad → territorio. El sistema debería volver visibles esas relaciones, no esconderlas.</p>
+          </div>
+          <div class="item">
+            <h4>Traducción operativa</h4>
+            <p>Usuario → proyecto / institución → actividad → resultado → archivo → métrica → decisión.</p>
+          </div>
+          <div class="item">
+            <h4>Requisito de verdad</h4>
+            <p>Si no hay información estructurada, seguimiento y capacidad de decisión, “comunidad organizada” queda como narrativa, no como función real.</p>
+          </div>
+        </div>
+        <div class="stack">
+          <div class="item">
+            <h4>Lo que el portal debería poder mostrar</h4>
+            <p>
+              <span class="pill">actores</span>
+              <span class="pill">proyectos</span>
+              <span class="pill">agendas</span>
+              <span class="pill">reclamos</span>
+              <span class="pill">documentos</span>
+              <span class="pill">historial</span>
+              <span class="pill">oportunidades</span>
+              <span class="pill">mapas</span>
+            </p>
+          </div>
+          <div class="item">
+            <h4>Punto crítico</h4>
+            <p>La plataforma solo se vuelve infraestructura territorial si la usan organizaciones reales y si produce una ventaja concreta de coordinación.</p>
+          </div>
+          <div class="item">
+            <h4>Prueba brutal</h4>
+            <p>Si mañana desaparece el sitio, ¿se pierde solo un canal de publicación o también capacidad de organización? Esa diferencia define la madurez real del proyecto.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="monetizacion" class="panel card">
+      <h3>Monetización y sostenibilidad</h3>
+      <p class="sub">La conversación ya fijó un principio político-económico importante: no depender de financiadores que condicionen la línea.</p>
+      <div class="grid three">
+        <div class="item">
+          <h4>Base deseada</h4>
+          <p>Suscriptores / lectores colaboradores como principal fuente estructural de independencia.</p>
+        </div>
+        <div class="item">
+          <h4>Ingresos complementarios</h4>
+          <p>Sponsors del resumen matutino, alianzas con PyMEs, verticales premium y servicios de visibilidad local.</p>
+        </div>
+        <div class="item">
+          <h4>Riesgo</h4>
+          <p>Querer escalar marca, verticales y portal de servicios antes de construir una base mínima de confianza y hábito.</p>
+        </div>
+      </div>
+      <div class="stack" style="margin-top:18px">
+        <div class="item"><h4>Lógica sugerida de ingresos</h4><p>Membresías → sponsors locales seleccionados → guías / directorios / clasificados → eventos → productos de datos o informes territoriales.</p></div>
+        <div class="item"><h4>Criterio de compatibilidad</h4><p>No aceptar ingresos que vacíen el posicionamiento del proyecto o lo vuelvan una extensión de actores que luego deba cubrir críticamente.</p></div>
+      </div>
+    </section>
+
+    <section id="campanas" class="panel card">
+      <h3>Ideas de campañas y activación territorial</h3>
+      <p class="sub">No como ocurrencias aisladas, sino como dispositivos para captar atención, hábito y sentido de pertenencia.</p>
+      <div class="grid two">
+        <div class="stack">
+          <div class="item">
+            <h4>Campaña de intriga previa al lanzamiento</h4>
+            <p>Mensajes breves, visuales oscuros / institucionales, promesa de “algo distinto”, sin sobreactuar grandilocuencia.</p>
+          </div>
+          <div class="item">
+            <h4>Registro público de promesas</h4>
+            <p>Una de las piezas más diferenciales: fecha, anuncio, responsable, plazo, estado, evidencia.</p>
+          </div>
+          <div class="item">
+            <h4>Rufino explicado</h4>
+            <p>Serie de microcontenidos: rutas, SAMCO, barrios, escuela agrotécnica, obras, empleo joven, costos de vivir y emprender.</p>
+          </div>
+        </div>
+        <div class="stack">
+          <div class="item">
+            <h4>QR en puntos de tránsito</h4>
+            <p>Hipótesis fuerte para captar curiosidad: postes, comercios, inmediaciones educativas, eventos y clubes. Debe validarse legalidad y permisos antes de ejecutar.</p>
+          </div>
+          <div class="item">
+            <h4>Puerta de entrada para recién llegados</h4>
+            <p>Guía viva: alquiler, habilitación comercial, servicios, mapa barrial, red institucional y calendario local.</p>
+          </div>
+          <div class="item">
+            <h4>Convocatoria de voces</h4>
+            <p>No solo una cara ni una sola voz. Construir un dispositivo escalable con registros masculinos y femeninos, sin caer en artificio corporativo.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="roadmap" class="panel card">
+      <h3>Hoja de ruta operativa</h3>
+      <p class="sub">Orden sugerido para bajar la idea sin mezclar niveles de madurez.</p>
+      <div class="roadmap">
+        <div class="phase">
+          <div class="top">Fase 0</div>
+          <h4>Definición dura</h4>
+          <ul>
+            <li>Nombre final</li>
+            <li>Arquitectura de marca</li>
+            <li>Tono editorial</li>
+            <li>10 contenidos fundacionales</li>
+          </ul>
+        </div>
+        <div class="phase">
+          <div class="top">Fase 1</div>
+          <h4>Medio viable</h4>
+          <ul>
+            <li>Lanzamiento en redes</li>
+            <li>Canal de WhatsApp</li>
+            <li>Primera nota diferencial</li>
+            <li>Rutina semanal visible</li>
+          </ul>
+        </div>
+        <div class="phase">
+          <div class="top">Fase 2</div>
+          <h4>Portal útil</h4>
+          <ul>
+            <li>Web como archivo y búsqueda</li>
+            <li>Verticales de servicio</li>
+            <li>Clasificados / guías</li>
+            <li>Registro de promesas</li>
+          </ul>
+        </div>
+        <div class="phase">
+          <div class="top">Fase 3</div>
+          <h4>Infraestructura</h4>
+          <ul>
+            <li>Actores y proyectos</li>
+            <li>Mapas y métricas</li>
+            <li>Relaciones territoriales</li>
+            <li>Capacidad de coordinación real</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <div class="grid two">
+      <section id="riesgos" class="panel card">
+        <h3>Riesgos estructurales</h3>
+        <p class="sub">Los puntos donde el proyecto puede autoengañarse.</p>
+        <div class="stack">
+          <div class="item"><h4 class="bad">Inflación de identidad</h4><p>Querer ser medio, bolsa de trabajo, digesto, guía de ciudad y sistema de gobernanza al mismo tiempo desde el inicio.</p></div>
+          <div class="item"><h4 class="bad">Narrativa sin función</h4><p>Invocar “comunidad organizada” sin datos, procesos ni actores usando realmente la plataforma.</p></div>
+          <div class="item"><h4 class="bad">Sobrestimar el mercado</h4><p>Tomar estimaciones de audiencia como certezas cerradas y diseñar como si ya existiera demanda comprobada.</p></div>
+          <div class="item"><h4 class="bad">Dependencia de una sola persona</h4><p>Si el proyecto depende de una sola voz, una sola cara o una sola capacidad técnica, la escala queda bloqueada.</p></div>
+        </div>
+      </section>
+
+      <section class="panel card">
+        <h3>Pendientes de definición</h3>
+        <p class="sub">Lo que todavía conviene resolver para evitar contradicciones más adelante.</p>
+        <div class="stack">
+          <div class="item"><h4>Nombre definitivo</h4><p>Elegir si la marca será de medio puro, más institucional o con ambición regional.</p></div>
+          <div class="item"><h4>Secuencia real de producto</h4><p>Confirmar si primero se lanza el medio o si ya nace con verticales tipo alquileres, comercio, guía y servicios.</p></div>
+          <div class="item"><h4>Modelo comercial mínimo</h4><p>Definir la primera oferta monetizable concreta sin comprometer independencia.</p></div>
+          <div class="item"><h4>Gobernanza editorial</h4><p>Establecer qué temas requieren verificación reforzada, criterios de publicación y política de correcciones.</p></div>
+        </div>
+      </section>
+    </div>
+
+    <section class="panel card">
+      <h3>Diagnóstico sintético</h3>
+      <p class="sub">La formulación más corta y más honesta de todo lo conversado.</p>
+      <div class="quote">
+        El proyecto tiene potencial real porque no parte solo de “hacer un portal”, sino de una necesidad más honda:
+        dotar a Rufino de una interfaz digital capaz de <strong>explicar, conectar, archivar y orientar</strong>.
+        Pero para que eso no se diluya, la construcción debe ser secuencial, rigurosa y antiinflacionaria:
+        primero credibilidad, luego utilidad, después infraestructura.
+      </div>
+      <div class="footer-note">
+        Documento de síntesis visual. Puede usarse como base de transferencia, presentación interna, validación estratégica o insumo para otra IA.
+      </div>
+    </section>
+  </main>
+</div>
+</body>
+</html>

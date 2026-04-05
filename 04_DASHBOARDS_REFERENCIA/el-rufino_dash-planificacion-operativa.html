@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Planificación operativa 0–10 · Medio digital Rufino</title>
+<style>
+  :root{
+    --bg:#08111f;
+    --bg2:#0d1729;
+    --panel:#101c31;
+    --panel2:#162642;
+    --line:rgba(255,255,255,.09);
+    --text:#edf4ff;
+    --muted:#9eb2d7;
+    --blue:#5fb7ff;
+    --green:#67d99a;
+    --amber:#ffc66e;
+    --red:#ff8080;
+    --cyan:#73e3ff;
+    --shadow:0 16px 50px rgba(0,0,0,.28);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    color:var(--text);
+    background:
+      radial-gradient(1000px 540px at 0% -10%, rgba(95,183,255,.18), transparent 52%),
+      radial-gradient(900px 500px at 100% 0%, rgba(103,217,154,.12), transparent 48%),
+      linear-gradient(180deg,#06101d,#08111f 28%,#091425);
+  }
+  .layout{display:grid;grid-template-columns:290px 1fr;min-height:100vh}
+  aside{
+    position:sticky;top:0;height:100vh;align-self:start;
+    padding:24px 18px;background:rgba(6,12,24,.82);
+    backdrop-filter:blur(18px);border-right:1px solid var(--line)
+  }
+  .brand{padding:8px 10px 18px;border-bottom:1px solid var(--line);margin-bottom:18px}
+  .eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
+  .brand h1{margin:0;font-size:1.32rem;line-height:1.1}
+  .brand p{margin:10px 0 0;color:var(--muted);font-size:.93rem;line-height:1.45}
+  nav a{display:block;text-decoration:none;color:var(--muted);padding:10px 12px;border-radius:12px;margin:4px 0;transition:.18s}
+  nav a:hover{background:var(--panel2);color:var(--text)}
+  .aside-box{margin-top:20px;padding:14px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.015))}
+  .aside-box h3{margin:0 0 10px;font-size:.9rem}
+  .aside-box ul{margin:0;padding-left:18px;color:var(--muted);font-size:.88rem;line-height:1.55}
+
+  main{padding:26px 28px 60px}
+  .hero{display:grid;grid-template-columns:1.25fr .9fr;gap:18px;margin-bottom:18px}
+  .card{background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.015));border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow)}
+  .hero-main{padding:30px}
+  .pill{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;background:rgba(95,183,255,.11);border:1px solid rgba(95,183,255,.24);color:#d6ecff;font-size:.82rem;margin-bottom:16px}
+  h1{margin:0 0 12px;font-size:clamp(2rem,4vw,3.45rem);line-height:1.04;letter-spacing:-.03em}
+  .lead{margin:0;color:var(--muted);font-size:1.02rem;max-width:780px;line-height:1.62}
+  .hero-side{padding:22px;display:grid;gap:14px;align-content:start}
+  .score-big{padding:18px;border-radius:20px;background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.015));border:1px solid var(--line)}
+  .score-big .n{font-size:3rem;font-weight:800;line-height:1;color:var(--blue)}
+  .score-big .l{font-size:.93rem;color:var(--muted);margin-top:8px}
+  .badge-row{display:flex;flex-wrap:wrap;gap:8px}
+  .badge{padding:7px 10px;border-radius:999px;font-size:.78rem;border:1px solid var(--line)}
+  .b-red{background:rgba(255,128,128,.12);color:#ffd3d3;border-color:rgba(255,128,128,.22)}
+  .b-amber{background:rgba(255,198,110,.11);color:#ffe6b5;border-color:rgba(255,198,110,.22)}
+  .b-green{background:rgba(103,217,154,.11);color:#d8ffe7;border-color:rgba(103,217,154,.22)}
+
+  .stats{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:18px}
+  .stat{padding:18px 16px}
+  .stat .k{font-size:.77rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+  .stat .v{font-size:1.7rem;font-weight:800;line-height:1.05}
+  .stat .s{margin-top:6px;color:var(--muted);font-size:.9rem;line-height:1.42}
+
+  .section{margin-top:18px}
+  .section-head{display:flex;align-items:end;justify-content:space-between;gap:14px;margin-bottom:14px}
+  .section-head h2{margin:0;font-size:1.42rem;letter-spacing:-.02em}
+  .section-head p{margin:0;color:var(--muted);font-size:.95rem}
+
+  .score-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+  .score-card{padding:16px}
+  .score-card h3{margin:0 0 10px;font-size:1rem}
+  .meter{height:10px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;margin-bottom:10px}
+  .meter > span{display:block;height:100%;border-radius:999px}
+  .score-num{font-size:1.55rem;font-weight:800;margin-bottom:6px}
+  .score-note{color:var(--muted);font-size:.9rem;line-height:1.45}
+
+  .traffic-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .traffic-card{padding:18px}
+  .traffic-title{display:flex;align-items:center;gap:10px;margin-bottom:12px;font-weight:700}
+  .dot{width:12px;height:12px;border-radius:50%}
+  .red{background:var(--red)} .amber{background:var(--amber)} .green{background:var(--green)}
+  .traffic-card ul{margin:0;padding-left:18px;color:var(--muted);line-height:1.6}
+
+  .priority-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:14px}
+  table{width:100%;border-collapse:collapse}
+  .table-card{padding:0;overflow:hidden}
+  th,td{padding:13px 14px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{font-size:.78rem;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);background:rgba(255,255,255,.02)}
+  td{font-size:.94rem;line-height:1.5}
+  tr:last-child td{border-bottom:none}
+  .p1{color:#ffd7d7}.p2{color:#ffeabf}.p3{color:#ddffea}
+
+  .roadmap{display:grid;gap:14px}
+  .phase{display:grid;grid-template-columns:96px 1.1fr 1.1fr .9fr;gap:14px;padding:18px}
+  .phase-num{display:flex;flex-direction:column;justify-content:center;align-items:center;border-radius:18px;background:rgba(255,255,255,.03);border:1px solid var(--line)}
+  .phase-num .n{font-size:2rem;font-weight:800;line-height:1;color:var(--blue)}
+  .phase-num .t{font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:8px}
+  .phase h3{margin:0 0 8px;font-size:1.08rem}
+  .phase p{margin:0;color:var(--muted);font-size:.92rem;line-height:1.55}
+  .mini-title{font-size:.78rem;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+  .chips{display:flex;flex-wrap:wrap;gap:7px}
+  .chip{padding:6px 9px;border-radius:999px;font-size:.78rem;border:1px solid var(--line);background:rgba(255,255,255,.03)}
+  .done{padding:12px;border-radius:14px;background:rgba(255,255,255,.025);border:1px solid var(--line)}
+  .done ul{margin:0;padding-left:18px;color:var(--muted);line-height:1.55;font-size:.9rem}
+
+  .gates{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .gate{padding:18px}
+  .gate h3{margin:0 0 10px;font-size:1.03rem}
+  .gate ul{margin:0;padding-left:18px;color:var(--muted);line-height:1.62}
+
+  .timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .time-card{padding:18px}
+  .time-card h3{margin:0 0 10px;font-size:1rem}
+  .time-card p{margin:0;color:var(--muted);font-size:.92rem;line-height:1.55}
+
+  .footer-note{margin-top:18px;padding:18px;border-radius:20px;border:1px solid rgba(255,198,110,.25);background:rgba(255,198,110,.07);color:#ffe5b1;line-height:1.6}
+  .footer-note strong{color:#fff3d4}
+
+  @media (max-width:1200px){
+    .score-grid{grid-template-columns:repeat(3,1fr)}
+    .stats{grid-template-columns:repeat(3,1fr)}
+    .phase{grid-template-columns:96px 1fr}
+    .gates,.timeline,.traffic-grid{grid-template-columns:1fr}
+    .priority-grid{grid-template-columns:1fr}
+  }
+  @media (max-width:880px){
+    .layout{grid-template-columns:1fr}
+    aside{position:relative;height:auto;border-right:none;border-bottom:1px solid var(--line)}
+    .hero,.stats,.score-grid{grid-template-columns:1fr}
+    main{padding:18px}
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside>
+    <div class="brand">
+      <div class="eyebrow">Tablero operativo · versión 1.0</div>
+      <h1>Planificación 0–10<br>hasta operativo</h1>
+      <p>Secuencia realista para pasar de idea fuerte a medio funcionando, sin intentar lanzar al mismo tiempo medio, portal de servicios e infraestructura territorial.</p>
+    </div>
+    <nav>
+      <a href="#diagnostico">Diagnóstico</a>
+      <a href="#semaforos">Semáforos</a>
+      <a href="#prioridades">Prioridades</a>
+      <a href="#roadmap">Etapas 0–10</a>
+      <a href="#gates">Puertas de control</a>
+      <a href="#cronograma">Horizonte temporal</a>
+    </nav>
+    <div class="aside-box">
+      <h3>Idea rectora</h3>
+      <ul>
+        <li>Fase 1: medio digital confiable</li>
+        <li>Fase 2: portal útil con servicios</li>
+        <li>Fase 3: capa territorial / infraestructura</li>
+      </ul>
+    </div>
+    <div class="aside-box">
+      <h3>Criterio de éxito mínimo</h3>
+      <ul>
+        <li>Publicación estable 30 días</li>
+        <li>Canales activos y coherentes</li>
+        <li>Rutina editorial sostenible</li>
+        <li>Métrica básica y primer ingreso posible</li>
+      </ul>
+    </div>
+  </aside>
+
+  <main>
+    <section class="hero">
+      <div class="card hero-main">
+        <div class="pill">Diagnóstico ejecutivo</div>
+        <h1>Hoy no estás en 0/10.<br>Pero todavía no estás operativo.</h1>
+        <p class="lead">Mi lectura rigurosa es esta: el proyecto ya tiene una <strong>visión más desarrollada que la media</strong>, pero sigue desbalanceado. Está fuerte en concepto, narrativa y oportunidad editorial; está débil en operación, equipo, rutina, monetización y estructura de salida. En términos prácticos, hoy lo ubico en <strong>4.8/10</strong>. No es poco. Tampoco alcanza para lanzar sin fricciones.</p>
+      </div>
+      <div class="card hero-side">
+        <div class="score-big">
+          <div class="n">4.8 / 10</div>
+          <div class="l">Puntaje actual estimado del proyecto completo</div>
+        </div>
+        <div class="badge-row">
+          <span class="badge b-green">Fuerte: visión</span>
+          <span class="badge b-green">Fuerte: posicionamiento</span>
+          <span class="badge b-amber">Medio: producto</span>
+          <span class="badge b-red">Débil: operación</span>
+          <span class="badge b-red">Débil: monetización</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="stats" id="diagnostico">
+      <div class="card stat"><div class="k">Punto fuerte 1</div><div class="v">Contexto</div><div class="s">La idea del medio tiene razón de ser y una brecha editorial clara.</div></div>
+      <div class="card stat"><div class="k">Punto fuerte 2</div><div class="v">Narrativa</div><div class="s">Ya existe una tesis distintiva: contexto, seguimiento, campo y comunidad.</div></div>
+      <div class="card stat"><div class="k">Punto crítico 1</div><div class="v">Rutina</div><div class="s">Todavía no hay operación diaria definida ni rol-responsable por bloque.</div></div>
+      <div class="card stat"><div class="k">Punto crítico 2</div><div class="v">Salida</div><div class="s">No están cerrados los criterios de lanzamiento beta y operativo.</div></div>
+      <div class="card stat"><div class="k">Riesgo central</div><div class="v">Dispersión</div><div class="s">Querer hacer a la vez medio, bolsa, digesto, portal y sistema territorial.</div></div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Puntaje por dimensión</h2>
+        <p>Escala 0–10 estimativa, usada como herramienta de conducción.</p>
+      </div>
+      <div class="score-grid">
+        <div class="card score-card"><h3>Visión estratégica</h3><div class="meter"><span style="width:82%;background:var(--green)"></span></div><div class="score-num">8.2</div><div class="score-note">Hay hipótesis, diferenciación y tesis editorial.</div></div>
+        <div class="card score-card"><h3>Identidad / marca</h3><div class="meter"><span style="width:68%;background:var(--amber)"></span></div><div class="score-num">6.8</div><div class="score-note">Hay línea y nombres posibles, pero falta cierre ejecutivo.</div></div>
+        <div class="card score-card"><h3>Producto mínimo</h3><div class="meter"><span style="width:54%;background:var(--amber)"></span></div><div class="score-num">5.4</div><div class="score-note">Existe bosquejo de portal, pero no producto operativo probado.</div></div>
+        <div class="card score-card"><h3>Operación diaria</h3><div class="meter"><span style="width:34%;background:var(--red)"></span></div><div class="score-num">3.4</div><div class="score-note">Faltan rutinas, tablero editorial, roles y protocolo de publicación.</div></div>
+        <div class="card score-card"><h3>Tecnología base</h3><div class="meter"><span style="width:58%;background:var(--amber)"></span></div><div class="score-num">5.8</div><div class="score-note">Hay entorno y visuales, pero no stack de salida cerrado.</div></div>
+        <div class="card score-card"><h3>Distribución</h3><div class="meter"><span style="width:42%;background:var(--red)"></span></div><div class="score-num">4.2</div><div class="score-note">Se entiende Facebook/WhatsApp/TikTok, pero no hay sistema ya corriendo.</div></div>
+        <div class="card score-card"><h3>Monetización</h3><div class="meter"><span style="width:26%;background:var(--red)"></span></div><div class="score-num">2.6</div><div class="score-note">Hay intuición correcta, pero no oferta comercial cerrada ni pricing.</div></div>
+        <div class="card score-card"><h3>Métricas y control</h3><div class="meter"><span style="width:28%;background:var(--red)"></span></div><div class="score-num">2.8</div><div class="score-note">Sin tablero KPI mínimo no hay conducción ni ajuste fino.</div></div>
+        <div class="card score-card"><h3>Legal / institucional</h3><div class="meter"><span style="width:41%;background:var(--red)"></span></div><div class="score-num">4.1</div><div class="score-note">Faltan definiciones sobre titularidad, política editorial, datos y avisos.</div></div>
+        <div class="card score-card"><h3>Equipo / capacidad</h3><div class="meter"><span style="width:45%;background:var(--red)"></span></div><div class="score-num">4.5</div><div class="score-note">La visión existe; el cuello de botella es quién produce, publica y sostiene.</div></div>
+      </div>
+    </section>
+
+    <section class="section" id="semaforos">
+      <div class="section-head">
+        <h2>Semáforos de trabajo</h2>
+        <p>Qué está rojo, qué pasa a amarillo y qué recién podría ir a verde.</p>
+      </div>
+      <div class="traffic-grid">
+        <div class="card traffic-card">
+          <div class="traffic-title"><span class="dot red"></span>Rojo · bloquear y resolver</div>
+          <ul>
+            <li>Modelo exacto de salida: medio primero, no todo el ecosistema.</li>
+            <li>Definir nombre principal y claim operativo.</li>
+            <li>Asignar responsables reales de publicación y edición.</li>
+            <li>Cerrar producto mínimo de lanzamiento.</li>
+            <li>Definir protocolo editorial y de verificación.</li>
+            <li>Armar oferta comercial mínima aunque no se active de inmediato.</li>
+          </ul>
+        </div>
+        <div class="card traffic-card">
+          <div class="traffic-title"><span class="dot amber"></span>Amarillo · construir en paralelo</div>
+          <ul>
+            <li>Diseño visual definitivo y coherencia de marca.</li>
+            <li>Calendario de contenidos por 30 días.</li>
+            <li>Plantillas de nota, reel, resumen WhatsApp e infografía.</li>
+            <li>Captación temprana de audiencia y lista de difusión.</li>
+            <li>Tablero simple de métricas semanales.</li>
+            <li>Mapa de aliados locales y primeras fuentes.</li>
+          </ul>
+        </div>
+        <div class="card traffic-card">
+          <div class="traffic-title"><span class="dot green"></span>Verde · activar después</div>
+          <ul>
+            <li>Bolsa de trabajo como módulo formal.</li>
+            <li>Digesto y servicios territoriales expandidos.</li>
+            <li>Infraestructura de comunidad organizada digital.</li>
+            <li>Paneles de datos más complejos.</li>
+            <li>Expansión regional y verticales nuevas.</li>
+            <li>Automatizaciones avanzadas.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="prioridades">
+      <div class="section-head">
+        <h2>Prioridad operativa</h2>
+        <p>P1 mueve la salida. P2 acelera. P3 enriquece pero no define el lanzamiento.</p>
+      </div>
+      <div class="priority-grid">
+        <div class="card table-card">
+          <table>
+            <thead><tr><th>Bloque</th><th>Prioridad</th><th>Por qué importa</th><th>Dependencia</th></tr></thead>
+            <tbody>
+              <tr><td>Definición del producto mínimo</td><td class="p1">P1</td><td>Sin esto se dispersa todo el proyecto.</td><td>Ninguna</td></tr>
+              <tr><td>Identidad final + nombre</td><td class="p1">P1</td><td>Ordena web, redes, tono y presentación comercial.</td><td>Producto mínimo</td></tr>
+              <tr><td>Rutina editorial 30 días</td><td class="p1">P1</td><td>Convierte concepto en operación.</td><td>Roles + plantillas</td></tr>
+              <tr><td>Web base + canales activos</td><td class="p1">P1</td><td>Permite lanzar en beta real.</td><td>Marca + contenido inicial</td></tr>
+              <tr><td>Kit comercial mínimo</td><td class="p2">P2</td><td>Evita arrancar sin salida económica pensada.</td><td>Audiencia objetivo</td></tr>
+              <tr><td>Tablero KPI</td><td class="p2">P2</td><td>Permite corregir rápido.</td><td>Publicación estable</td></tr>
+              <tr><td>Módulos territoriales extra</td><td class="p3">P3</td><td>Agregan valor, pero no definen lanzamiento.</td><td>Operación estabilizada</td></tr>
+              <tr><td>Expansión regional</td><td class="p3">P3</td><td>Antes de escalar, el núcleo local debe respirar solo.</td><td>90 días operativos</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card" style="padding:18px">
+          <div class="mini-title">Secuencia obligatoria</div>
+          <div class="chips">
+            <span class="chip">1. Definir foco</span>
+            <span class="chip">2. Cerrar identidad</span>
+            <span class="chip">3. Diseñar producto mínimo</span>
+            <span class="chip">4. Preparar contenidos</span>
+            <span class="chip">5. Activar canales</span>
+            <span class="chip">6. Lanzar beta</span>
+            <span class="chip">7. Estabilizar 30 días</span>
+          </div>
+          <div class="mini-title" style="margin-top:16px">Error a evitar</div>
+          <p style="margin:0;color:var(--muted);line-height:1.6">No mezclar el deseo estratégico final con el orden de ejecución. Tu horizonte puede ser un ecosistema territorial. Tu primer producto debe ser un medio digital entendible y sostenible.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="roadmap">
+      <div class="section-head">
+        <h2>Planificación 0–10 hasta operativo</h2>
+        <p>Cada etapa tiene objetivo, entregable y condición de cierre.</p>
+      </div>
+      <div class="roadmap">
+
+        <div class="card phase">
+          <div class="phase-num"><div class="n">0</div><div class="t">Aterrizaje</div></div>
+          <div><h3>Definir qué es y qué no es</h3><p>Resolver la ambigüedad principal. El proyecto arranca como <strong>medio digital local</strong> con visión de portal útil, no como infraestructura total desde el día uno.</p></div>
+          <div><div class="mini-title">Entregables</div><div class="chips"><span class="chip">Definición de alcance</span><span class="chip">Frase de posicionamiento</span><span class="chip">Lista de NO hacer</span></div></div>
+          <div class="done"><div class="mini-title">Cierra cuando</div><ul><li>Se puede explicar en 2 frases</li><li>Se descartaron módulos no críticos</li><li>Hay foco para salida beta</li></ul></div>
+        </div>
+
+        <div class="card phase">
+          <div class="phase-num"><div class="n">1</div><div class="t">Identidad</div></div>
+          <div><h3>Cerrar marca, nombre y tono</h3><p>Elegir nombre principal, claim, estética base, paleta y voz. Sin esto, todo lo demás se vuelve inconsistente.</p></div>
+          <div><div class="mini-title">Entregables</div><div class="chips"><span class="chip">Nombre final</span><span class="chip">Claim</span><span class="chip">Manual breve de tono</span><span class="chip">Sistema visual base</span></div></div>
+          <div class="done"><div class="mini-title">Cierra cuando</div><ul><li>Redes y web comparten identidad</li><li>Hay 3 ejemplos de piezas modelo</li><li>La marca ya “suena” definida</li></ul></div>
+        </div>
+
+        <div class="card phase">
+          <div class="phase-num"><div class="n">2</div><div class="t">Producto</div></div>
+          <div><h3>Diseñar el producto mínimo viable</h3><p>Definir exactamente qué ve el usuario al entrar: home, 4–6 secciones, nota modelo, resumen, formulario de contacto y CTA a WhatsApp.</p></div>
+          <div><div class="mini-title">Entregables</div><div class="chips"><span class="chip">Mapa de navegación</span><span class="chip">Wireframe home</span><span class="chip">Arquitectura mínima</span><span class="chip">Secciones fijas</span></div></div>
+          <div class="done"><div class="mini-title">Cierra cuando</div><ul><li>Existe una home clara</li><li>No hay secciones duplicadas</li><li>Se entiende qué hacer en 10 segundos</li></ul></div>
+        </div>
+
+        <div class="card phase">
+          <div class="phase-num"><div class="n">3</div><div class="t">Flujos</div></div>
+          <div><h3>Montar rutina editorial y protocolo</h3><p>Definir cómo entra una noticia, cómo se verifica, quién aprueba, cómo sale a web, Facebook, Instagram, TikTok y WhatsApp.</p></div>
+          <div><div class="mini-title">Entregables</div><div class="chips"><span class="chip">Flujo de nota</span><span class="chip">Checklist de publicación</span><span class="chip">Protocolo de verificación</span><span class="chip">Roles mínimos</span></div></div>
+          <div class="done"><div class="mini-title">Cierra cuando</div><ul><li>Dos personas podrían repetir la rutina</li><li>Hay checklist escrito</li><li>Se evita improvisación total</li></ul></div>
+        </div>
+
+        <div class="card phase">
+          <div class="phase-num"><div class="n">4</div><div class="t">Infraestructura</div></div>
+          <div><h3>Activar web base y canales</h3><p>Dejar andando dominio, sitio, cuentas y canal/broadcast. No perfecto: funcional. Lo perfecto después.</p></div>
+          <div><div class="mini-title">Entregables</div><div class="chips"><span class="chip">Sitio visible</span><span class="chip">Facebook</span><span class="chip">Instagram</span><span class="chip">TikTok</span><span class="chip">WhatsApp</span></div></div>
+          <div class="done"><div class="mini-title">Cierra cuando</div><ul><li>Todo canal tiene branding coherente</li><li>Hay enlaces cruzados</li><li>Existe formulario/contacto real</li></ul></div>
+        </div>
+
+        <div class="card phase">
+          <div class="phase-num"><div class="n">5</div><div class="t">Banco inicial</div></div>
+          <div><h3>Preparar contenido antes de salir</h3><p>No arrancar vacío. Cargar una base previa para que el medio no parezca improvisado: notas, piezas sociales, videos, resumen y dos coberturas fuertes.</p></div>
+          <div><div class="mini-title">Entregables</div><div class="chips"><span class="chip">10 contenidos listos</span><span class="chip">2 notas largas</span><span class="chip">5 piezas redes</span><span class="chip">2 reels/tiktoks</span><span class="chip">1 resumen WA</span></div></div>
+          <div class="done"><div class="mini-title">Cierra cuando</div><ul><li>Hay una semana completa preproducida</li><li>La calidad ya muestra identidad</li><li>No dependés del día cero</li></ul></div>
+        </div>
+
+        <div class="card phase">
+          <div class="phase-num"><div class="n">6</div><div class="t">Beta</div></div>
+          <div><h3>Lanzamiento controlado</h3><p>Salir sin gran épica. Lanzar en beta, observar, corregir, escuchar. Menos anuncio, más prueba en territorio.</p></div>
+          <div><div class="mini-title">Entregables</div><div class="chips"><span class="chip">Home publicada</span><span class="chip">Primera secuencia de redes</span><span class="chip">Canal WA activo</span><span class="chip">Feedback inicial</span></div></div>
+          <div class="done"><div class="mini-title">Cierra cuando</div><ul><li>La audiencia entra y entiende</li><li>No hay fallas críticas de UX</li><li>Podés publicar una semana seguida</li></ul></div>
+        </div>
+
+        <div class="card phase">
+          <div class="phase-num"><div class="n">7</div><div class="t">Ajuste</div></div>
+          <div><h3>Corregir fricciones y ordenar métricas</h3><p>Medir qué funciona y qué no. Ajustar secciones, tono, frecuencia, formatos y procesos. El proyecto deja de ser intuición pura.</p></div>
+          <div><div class="mini-title">Entregables</div><div class="chips"><span class="chip">Tablero KPI básico</span><span class="chip">Reporte semanal</span><span class="chip">Ajustes UX</span><span class="chip">Aprendizajes por formato</span></div></div>
+          <div class="done"><div class="mini-title">Cierra cuando</div><ul><li>Hay 2 semanas medidas</li><li>Sabés qué pieza rinde mejor</li><li>Se recortó lo que distrae</li></ul></div>
+        </div>
+
+        <div class="card phase">
+          <div class="phase-num"><div class="n">8</div><div class="t">Comercial</div></div>
+          <div><h3>Armar salida económica mínima</h3><p>No hace falta monetizar fuerte todavía, pero sí tener armado qué se vende, a quién y con qué formato: sponsor, mención, cobertura, paquete para pymes.</p></div>
+          <div><div class="mini-title">Entregables</div><div class="chips"><span class="chip">Media kit simple</span><span class="chip">3 paquetes</span><span class="chip">Tarifa inicial</span><span class="chip">Argumento comercial</span></div></div>
+          <div class="done"><div class="mini-title">Cierra cuando</div><ul><li>Podés ofrecer algo concreto</li><li>No dependés de improvisar precios</li><li>Hay primer circuito comercial viable</li></ul></div>
+        </div>
+
+        <div class="card phase">
+          <div class="phase-num"><div class="n">9</div><div class="t">Operación</div></div>
+          <div><h3>Sostener 30 días reales</h3><p>Este es el filtro serio. No importa solo salir: importa sostener. Un medio es operativo cuando logra continuidad sin colapsar cada 48 horas.</p></div>
+          <div><div class="mini-title">Entregables</div><div class="chips"><span class="chip">30 días publicados</span><span class="chip">Frecuencia estable</span><span class="chip">Reunión semanal</span><span class="chip">Reporte mensual</span></div></div>
+          <div class="done"><div class="mini-title">Cierra cuando</div><ul><li>La rutina existe sin heroicidad diaria</li><li>El tono es reconocible</li><li>Hay aprendizaje acumulado</li></ul></div>
+        </div>
+
+        <div class="card phase">
+          <div class="phase-num"><div class="n">10</div><div class="t">Operativo</div></div>
+          <div><h3>Declarar el medio operativo</h3><p>Recién acá se considera operativo. A partir de este punto se puede abrir la segunda capa: servicios, bolsa, mapa territorial, comunidad organizada digital.</p></div>
+          <div><div class="mini-title">Entregables</div><div class="chips"><span class="chip">Documento de estado operativo</span><span class="chip">Roadmap fase 2</span><span class="chip">Backlog territorial</span></div></div>
+          <div class="done"><div class="mini-title">Cierra cuando</div><ul><li>Medio funcionando y entendible</li><li>Canales coherentes y activos</li><li>Hay base para escalar sin romper el núcleo</li></ul></div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="section" id="gates">
+      <div class="section-head">
+        <h2>Puertas de control</h2>
+        <p>Tres momentos de decisión: seguir, corregir o frenar.</p>
+      </div>
+      <div class="gates">
+        <div class="card gate">
+          <h3>Gate A · antes de beta</h3>
+          <ul>
+            <li>Nombre y tono cerrados</li>
+            <li>Web mínima entendible</li>
+            <li>10 contenidos preparados</li>
+            <li>Checklist editorial disponible</li>
+          </ul>
+        </div>
+        <div class="card gate">
+          <h3>Gate B · después de 14 días</h3>
+          <ul>
+            <li>Frecuencia sostenible</li>
+            <li>Audiencia entiende la propuesta</li>
+            <li>Primeras métricas comparables</li>
+            <li>Problemas técnicos no críticos</li>
+          </ul>
+        </div>
+        <div class="card gate">
+          <h3>Gate C · operativo</h3>
+          <ul>
+            <li>30 días de continuidad</li>
+            <li>Canales activos sin contradicción</li>
+            <li>Reporte de desempeño</li>
+            <li>Oferta comercial lista o validada</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="cronograma">
+      <div class="section-head">
+        <h2>Horizonte temporal sugerido</h2>
+        <p>No es calendario rígido; es una cadencia razonable para no acelerar mal.</p>
+      </div>
+      <div class="timeline">
+        <div class="card time-card"><h3>Semanas 1–2</h3><p>Etapas 0, 1 y parte de 2. Definición, identidad y producto mínimo. Acá se ganan o se pierden meses.</p></div>
+        <div class="card time-card"><h3>Semanas 3–4</h3><p>Etapas 3, 4 y 5. Flujos, canales, home, contenido prearmado. Debe quedar lista la salida beta.</p></div>
+        <div class="card time-card"><h3>Semanas 5–6</h3><p>Etapas 6 y 7. Beta controlada, correcciones, primeras métricas, ajuste de frecuencia y formatos.</p></div>
+        <div class="card time-card"><h3>Semanas 7–10</h3><p>Etapas 8, 9 y 10. Oferta económica mínima, sostener 30 días, declarar operativo y recién ahí abrir fase 2.</p></div>
+      </div>
+    </section>
+
+    <div class="footer-note">
+      <strong>Conclusión ejecutiva:</strong> el proyecto no necesita más inspiración; necesita secuencia. Tu ventaja no está en acumular ideas nuevas, sino en cerrar foco, construir rutina y llegar al día 30 sin romperte. Recién después conviene injertar bolsa de trabajo, servicios territoriales y capas de comunidad organizada.
+    </div>
+  </main>
+</div>
+</body>
+</html>

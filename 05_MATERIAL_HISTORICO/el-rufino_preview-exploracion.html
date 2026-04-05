@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>El Rufino - Dossier fundacional</title>
+<style>
+:root {
+  --bg: #09111a;
+  --page: #0f1722;
+  --panel: #121d2a;
+  --panel-2: #162334;
+  --ink: #eef3f8;
+  --muted: #a8b5c4;
+  --line: rgba(255,255,255,.10);
+  --sky: #8ab7df;
+  --sky-2: #dce8f4;
+  --gold: #cfa96e;
+  --red: #b84b4b;
+  --green: #5ea17a;
+  --shadow: 0 16px 50px rgba(0,0,0,.35);
+}
+* { box-sizing: border-box; }
+html, body { margin:0; padding:0; background: linear-gradient(180deg,#08111a,#0f1a27 50%,#0b131c); color:var(--ink); font-family: Arimo, Arial, sans-serif; }
+body { overflow-x:auto; overflow-y:hidden; }
+a { color:inherit; text-decoration:none; }
+.topbar { position:fixed; left:0; right:0; top:0; z-index:40; height:58px; display:flex; align-items:center; justify-content:space-between; padding:0 18px; background: rgba(7,12,18,.76); backdrop-filter: blur(12px); border-bottom:1px solid rgba(255,255,255,.08); }
+.brand { font-family: 'Noto Serif', Georgia, serif; font-size: 20px; letter-spacing:-.02em; }
+.brand span { color: var(--sky); }
+.navpages { display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end; max-width:65%; }
+.navpages a { width:30px; height:30px; border-radius:999px; display:grid; place-items:center; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); color:var(--muted); font-size:12px; }
+.navpages a:hover { border-color: rgba(138,183,223,.45); color: var(--ink); }
+.deck { display:flex; gap:22px; padding:82px 28px 28px; align-items:flex-start; scroll-snap-type:x mandatory; }
+.page { position:relative; flex:0 0 auto; width:297mm; height:210mm; max-width:1123px; max-height:794px; background: radial-gradient(1200px 600px at 100% 0%, rgba(138,183,223,.10), transparent 48%), linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)), var(--page); border:1px solid rgba(255,255,255,.08); border-radius:26px; box-shadow: var(--shadow); overflow:hidden; scroll-snap-align:start; }
+.page::after { content:''; position:absolute; inset:auto 0 0 0; height:5px; background: linear-gradient(90deg, rgba(138,183,223,.0), rgba(138,183,223,.65), rgba(207,169,110,.55), rgba(184,75,75,.35)); }
+.page-top { display:grid; grid-template-columns:70px 1fr auto; gap:18px; align-items:end; padding:22px 28px 0; position:relative; z-index:2; }
+.page-no { font-family:'Noto Serif', Georgia, serif; font-size:28px; color: var(--sky); line-height:1; }
+.page-title { font-family:'Noto Serif', Georgia, serif; font-size:22px; line-height:1.08; letter-spacing:-.02em; }
+.page-subtitle { color: var(--muted); font-size:12px; text-align:right; max-width:270px; }
+.page-inner { height: calc(100% - 70px); padding: 18px 28px 28px; position:relative; z-index:2; }
+.cover .page-top, .backcover .page-top { display:none; }
+.cover .page-inner, .backcover .page-inner { height:100%; padding:34px; }
+.hero-grid { display:grid; grid-template-columns: 1.25fr .75fr; gap:28px; height:100%; align-items:stretch; }
+.eyebrow { text-transform:uppercase; letter-spacing:.18em; font-size:11px; color: var(--sky); margin-bottom:14px; }
+.display { font-family:'Noto Serif', Georgia, serif; font-size:60px; line-height:.96; margin: 0 0 18px; letter-spacing:-.04em; }
+.lead { font-size:22px; line-height:1.45; color: var(--sky-2); max-width:760px; }
+.cover-panel { border:1px solid rgba(255,255,255,.10); border-radius:24px; background: linear-gradient(180deg, rgba(9,17,26,.25), rgba(9,17,26,.55)), linear-gradient(130deg, rgba(138,183,223,.22), rgba(255,255,255,.03) 38%, rgba(207,169,110,.12)); padding:26px; display:flex; flex-direction:column; justify-content:space-between; }
+.flag-mood { position:relative; overflow:hidden; }
+.flag-mood::before { content:''; position:absolute; inset:0; background: linear-gradient(180deg, rgba(136,186,225,.18) 0%, rgba(236,242,248,.04) 50%, rgba(181,142,88,.07) 100%); pointer-events:none; }
+.big-number { font-family:'Noto Serif', Georgia, serif; font-size:96px; line-height:1; color: rgba(255,255,255,.08); text-align:right; }
+.signature { color: var(--muted); font-size:14px; }
+.signature strong { color: var(--ink); font-weight:700; }
+.footer-note { position:absolute; left:34px; right:34px; bottom:24px; color: var(--muted); font-size:13px; border-top:1px solid rgba(255,255,255,.08); padding-top:10px; }
+.grid { display:grid; gap:18px; }
+.cols-2 { grid-template-columns:1fr 1fr; }
+.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.cols-4 { grid-template-columns: repeat(4, 1fr); }
+.compact-top { margin-top:18px; }
+.card, .callout, .text-block, .identity-box, .prompt-box, .image-card { background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015)); border:1px solid rgba(255,255,255,.08); border-radius:18px; padding:16px 18px; }
+.card h3, .callout h3, .identity-box h3 { font-family:'Noto Serif', Georgia, serif; font-size:21px; margin:0 0 8px; line-height:1.1; }
+.card .body, .callout, .text-block, .identity-box, .prompt-box, .image-card .caption { font-size:15px; line-height:1.48; color: var(--sky-2); }
+.card ul, .card ol, .identity-box ul, .callout ul { margin: 10px 0 0 18px; padding:0; }
+.card li, .identity-box li, .callout li { margin-bottom:8px; }
+.kicker { color: var(--sky); text-transform:uppercase; letter-spacing:.14em; font-size:11px; margin-bottom:8px; }
+.tone-blue { background: linear-gradient(180deg, rgba(95,153,204,.16), rgba(255,255,255,.02)); }
+.tone-green { background: linear-gradient(180deg, rgba(93,162,123,.15), rgba(255,255,255,.02)); }
+.tone-amber { background: linear-gradient(180deg, rgba(207,169,110,.14), rgba(255,255,255,.02)); }
+.tone-red { background: linear-gradient(180deg, rgba(184,75,75,.15), rgba(255,255,255,.02)); }
+.band { margin-top:18px; border-radius:16px; padding:14px 18px; background: rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08); color: var(--sky-2); font-size:15px; line-height:1.45; }
+.band.light { background: linear-gradient(180deg, rgba(138,183,223,.09), rgba(255,255,255,.02)); }
+.band.soft { background: linear-gradient(180deg, rgba(207,169,110,.10), rgba(255,255,255,.02)); }
+.band.thin { padding:12px 16px; }
+.quote-block { margin: 8px 0 18px; padding: 24px 30px; border-left:4px solid var(--sky); border-radius:0 18px 18px 0; background: rgba(255,255,255,.05); }
+.quote-block p { font-family:'Noto Serif', Georgia, serif; font-size:34px; line-height:1.2; margin:0; }
+.quote-block.small p { font-size:26px; }
+.text-block p { margin:0 0 14px; }
+.stat-row { display:grid; grid-template-columns: repeat(4, 1fr); gap:14px; margin-top: 14px; }
+.stat-row.large .stat .value { font-size:34px; }
+.stat { border:1px solid rgba(255,255,255,.08); border-radius:18px; background: rgba(255,255,255,.03); padding:18px; }
+.stat .value { font-family:'Noto Serif', Georgia, serif; font-size:30px; line-height:1; margin-bottom:8px; color: var(--ink); }
+.stat .label { color: var(--muted); font-size:13px; line-height:1.3; }
+.table { width:100%; border-collapse:separate; border-spacing:0; margin-top:14px; overflow:hidden; border:1px solid rgba(255,255,255,.08); border-radius:18px; }
+.table th { text-align:left; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color: var(--sky); background: rgba(255,255,255,.06); padding:12px 14px; border-bottom:1px solid rgba(255,255,255,.08); }
+.table td { padding:12px 14px; font-size:14px; line-height:1.38; color: var(--sky-2); border-bottom:1px solid rgba(255,255,255,.06); vertical-align:top; }
+.table tr:last-child td { border-bottom:none; }
+.table.small td, .table.small th { padding:10px 12px; font-size:13px; }
+.timeline.horizontal { display:grid; grid-template-columns: repeat(3,1fr); gap:16px; margin-top:8px; }
+.step { display:flex; gap:14px; align-items:center; padding:18px; border-radius:20px; background: rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.08); }
+.step span { width:42px; height:42px; border-radius:999px; display:grid; place-items:center; background: rgba(138,183,223,.18); color: var(--ink); font-family:'Noto Serif', Georgia, serif; font-size:22px; }
+.step.active span { background: linear-gradient(180deg, rgba(138,183,223,.85), rgba(95,153,204,.6)); color:#08111a; }
+.step div strong { display:block; font-size:18px; margin-bottom:4px; }
+.step small { color: var(--muted); font-size:13px; }
+.identity-box.good { background: linear-gradient(180deg, rgba(93,162,123,.12), rgba(255,255,255,.02)); }
+.identity-box.bad { background: linear-gradient(180deg, rgba(184,75,75,.12), rgba(255,255,255,.02)); }
+.chips, .tags { display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
+.chips span, .tags span { font-size:12px; padding:6px 10px; border-radius:999px; background: rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10); color: var(--sky-2); }
+.diagram { display:flex; align-items:center; justify-content:space-between; gap:14px; padding:22px 12px; margin-top:20px; }
+.node { flex:1; text-align:center; padding:20px 14px; border-radius:16px; border:1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.03); }
+.node.major { background: linear-gradient(180deg, rgba(138,183,223,.16), rgba(255,255,255,.03)); }
+.arrow { color: var(--gold); font-size:28px; }
+.prompt-box pre { margin:0; white-space:pre-wrap; font-size:14px; line-height:1.45; color: var(--sky-2); font-family: 'Courier New', monospace; }
+.prompt-box.full pre { font-size:15px; }
+.image-grid { align-items:start; }
+.image-card img { width:100%; height:275px; object-fit:cover; object-position:top center; border-radius:12px; display:block; margin-bottom:10px; }
+.image-card .caption { font-size:13px; color: var(--muted); }
+.platform-grid2 .card h3, .role-grid .card h3, .aud-grid .card h3 { font-size:18px; }
+.tall-cards .card { min-height:215px; }
+.backcover { background:#050a0f; }
+.backdrop-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:72% center; filter: saturate(.92) contrast(1.03) brightness(.9); }
+.back-overlay { position:absolute; inset:0; background: linear-gradient(90deg, rgba(5,10,15,.56) 0%, rgba(5,10,15,.14) 52%, rgba(5,10,15,.40) 100%), linear-gradient(180deg, rgba(104,150,192,.10), transparent 42%, rgba(207,169,110,.06) 100%); }
+.back-content { position:relative; z-index:3; width:58%; padding:26px; display:flex; flex-direction:column; justify-content:flex-end; height:100%; }
+.back-content h2 { font-family:'Noto Serif', Georgia, serif; font-size:54px; line-height:1; margin:0 0 14px; letter-spacing:-.04em; }
+.back-content p { font-size:21px; line-height:1.42; color: var(--sky-2); max-width: 640px; }
+.end { margin-top:18px; font-size:16px; }
+.cover::before { content:''; position:absolute; inset:0; background: linear-gradient(180deg, rgba(136,186,225,.10) 0%, rgba(255,255,255,.02) 38%, rgba(207,169,110,.08) 100%); pointer-events:none; }
+@media print {
+  @page { size: A4 landscape; margin:0; }
+  html, body { overflow: visible; background:#fff; }
+  .topbar { display:none !important; }
+  .deck { display:block; padding:0; }
+  .page { width:297mm; height:210mm; margin:0; border-radius:0; box-shadow:none; border:none; page-break-after:always; break-after:page; }
+  .page:last-child { page-break-after:auto; }
+}
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="brand">El <span>Rufino</span> · dossier maestro</div>
+    <div class="navpages"><a href="#p01">01</a><a href="#p02">02</a><a href="#p03">03</a><a href="#p04">04</a><a href="#p05">05</a><a href="#p06">06</a><a href="#p07">07</a><a href="#p08">08</a><a href="#p09">09</a><a href="#p10">10</a><a href="#p11">11</a><a href="#p12">12</a><a href="#p13">13</a><a href="#p14">14</a><a href="#p15">15</a><a href="#p16">16</a><a href="#p17">17</a><a href="#p18">18</a><a href="#p19">19</a><a href="#p20">20</a><a href="#p21">21</a><a href="#p22">22</a><a href="#p23">23</a><a href="#p24">24</a><a href="#p25">25</a><a href="#p26">26</a><a href="#p27">27</a><a href="#p28">28</a><a href="#p29">29</a><a href="#p30">30</a></div>
+  </div>
+  <main class="deck">
+    <section id="p01" class="page cover">
+      <div class="page-top"><div class="page-no">01</div><div class="page-title">El Rufino</div><div class="page-subtitle">Dossier fundacional · Documento maestro de fundación, operación e identidad</div></div>
+      <div class="page-inner">
+<div class="hero-grid">
+  <div>
+    <div class="eyebrow">PROYECTO EL RUFINO · Rufino, Santa Fe</div>
+    <h1 class="display">Lo que pasa<br>y lo que significa.</h1>
+    <p class="lead">Medio digital local con noticias, contexto y seguimiento. Primera capa: confianza editorial. Segunda capa: portal útil. Tercera capa: infraestructura territorial.</p>
+    <div class="chips"><span>medio confiable</span><span>portal útil</span><span>infraestructura territorial</span><span>territorio</span><span>comunidad</span></div>
+  </div>
+  <div class="cover-panel flag-mood">
+    <div class="big-number">2026</div>
+    <p>Esta pieza fue diseñada para servir a la vez como presentación institucional, guía interna, documento de transferencia para otra IA y marco de conversación para aliados futuros.</p>
+    <div class="signature">Firma institucional: <strong>PROYECTO EL RUFINO</strong></div>
+  </div>
+</div>
+<div class="footer-note">Versión inicial operativa · A4 horizontal · pieza expandible por fases</div>
+</div>
+    </section>
+    
+    <section id="p02" class="page ">
+      <div class="page-top"><div class="page-no">02</div><div class="page-title">Cómo leer este dossier</div><div class="page-subtitle">Cuatro lecturas sin mezclar niveles</div></div>
+      <div class="page-inner">
+<div class="grid cols-2">
+ <div class="card tone-blue"><div class="kicker">Capa externa</div><h3>Lectura 1 · Presentación institucional</h3><div class="body"><p>Sirve para explicar qué es El Rufino, por qué existe y cuál es su promesa pública. Aquí importan claridad, identidad, criterio y legitimidad cultural.</p></div></div>
+ <div class="card tone-green"><div class="kicker">Capa operativa</div><h3>Lectura 2 · Guía interna de trabajo</h3><div class="body"><p>Sirve para ordenar decisiones: qué se publica, cómo se verifica, qué se posterga, qué se mide y qué no debe improvisarse.</p></div></div>
+ <div class="card tone-amber"><div class="kicker">Capa documental</div><h3>Lectura 3 · Transferencia para otra IA</h3><div class="body"><p>Sirve para retomar el proyecto sin reiniciar contexto. Incluye constantes, límites, lenguaje, secuencia estratégica y ejes funcionales.</p></div></div>
+ <div class="card tone-red"><div class="kicker">Capa relacional</div><h3>Lectura 4 · Conversación con socios o aliados</h3><div class="body"><p>Sirve para mostrar que el proyecto tiene espesor pero todavía no cierra cargos rígidos ni organigramas prematuros. Muestra dirección, no aparato.</p></div></div>
+</div>
+<div class="band">
+  <strong>Regla de lectura:</strong> este documento no confunde evidencia, intuición, memoria, diseño y operación. Cada página indica desde qué plano habla.
+</div>
+<div class="stat-row">
+  <div class="stat"><div class="value">30</div><div class="label">páginas en esta primera entrega</div></div>
+  <div class="stat"><div class="value">2</div><div class="label">fases ya definidas</div></div>
+  <div class="stat"><div class="value">4</div><div class="label">lecturas activas del mismo documento</div></div>
+  <div class="stat"><div class="value">1</div><div class="label">decisión estética elegida: variante B</div></div>
+</div>
+</div>
+    </section>
+    
+    <section id="p03" class="page ">
+      <div class="page-top"><div class="page-no">03</div><div class="page-title">Prólogo</div><div class="page-subtitle">Por qué este proyecto no debería nacer apurado ni disperso</div></div>
+      <div class="page-inner">
+<div class="quote-block">
+  <p>El problema local no es la falta de noticias. El problema es la falta de contexto, seguimiento y lectura territorial consistente.</p>
+</div>
+<div class="grid cols-2">
+  <div class="text-block">
+    <p><strong>El Rufino</strong> no nace para sumar ruido a un ecosistema que ya corre detrás del hecho. Nace para ocupar una brecha concreta: llegar con segunda capa, construir hábito, registrar promesas, darle espesor a lo local y no confundir presencia digital con proyecto periodístico.</p>
+    <p>La tentación más peligrosa sería lanzar un “portal de todo” antes de consolidar un medio con criterio. Ese atajo destruye identidad. Primero debe existir una voz reconocible. Después una utilidad reconocida. Solo después una infraestructura territorial.</p>
+  </div>
+  <div class="callout soft">
+    <h3>Definición base</h3>
+    <p>Medio digital local con noticias, contexto y seguimiento.</p>
+    <h3>Qué todavía no es</h3>
+    <p>No es portal total, ni multiservicio integral, ni aparato partidario disfrazado de medio.</p>
+    <h3>Promesa pública</h3>
+    <p>Explicar mejor lo que pasa en Rufino sin sobreactuar neutralidad vacía ni caer en propaganda.</p>
+  </div>
+</div>
+</div>
+    </section>
+    
+    <section id="p04" class="page ">
+      <div class="page-top"><div class="page-no">04</div><div class="page-title">Origen del proyecto</div><div class="page-subtitle">Secuencia estratégica obligatoria</div></div>
+      <div class="page-inner">
+<div class="timeline horizontal">
+  <div class="step active"><span>1</span><div><strong>Medio digital confiable</strong><small>marca, tono, método, hábito</small></div></div>
+  <div class="step"><span>2</span><div><strong>Portal útil</strong><small>servicios, agenda, capas de utilidad</small></div></div>
+  <div class="step"><span>3</span><div><strong>Infraestructura territorial</strong><small>red de voces, trabajo de campo, comunidad</small></div></div>
+</div>
+<div class="grid cols-3 compact-top">
+ <div class="card tone-green"><div class="kicker">Ruta sólida</div><h3>Lo correcto</h3><div class="body"><ul class=""><li>Cerrar identidad editorial primero</li><li>Sostener 30 días coherentes antes de escalar</li><li>Construir un archivo de seguimiento</li><li>Entrar a WhatsApp con disciplina, no con spam</li></ul></div></div>
+ <div class="card tone-red"><div class="kicker">Riesgo temprano</div><h3>Lo que tienta pero daña</h3><div class="body"><ul class=""><li>Lanzar demasiadas secciones de entrada</li><li>Confundir marca con panfleto</li><li>Querer monetizar antes de generar hábito</li><li>Convertir la web en mezcla de bolsa, portal, digesto y agenda desde el día uno</li></ul></div></div>
+ <div class="card tone-blue"><div class="kicker">Núcleo</div><h3>Tesis de fondo</h3><div class="body"><p>La identidad no se declara: se prueba. El Rufino será creíble si su primera tanda de publicaciones demuestra criterio, tono y persistencia.</p></div></div>
+</div>
+</div>
+    </section>
+    
+    <section id="p05" class="page ">
+      <div class="page-top"><div class="page-no">05</div><div class="page-title">Rufino como matriz</div><div class="page-subtitle">Ciudad, escala, clima social y materia periodística</div></div>
+      <div class="page-inner">
+<div class="stat-row large">
+  <div class="stat"><div class="value">19.211</div><div class="label">habitantes · INDEC 2022</div></div>
+  <div class="stat"><div class="value">~7.200</div><div class="label">hogares estimados</div></div>
+  <div class="stat"><div class="value">RN 33 + RN 7</div><div class="label">eje logístico y narrativo</div></div>
+  <div class="stat"><div class="value">interior productivo</div><div class="label">marco económico y cultural</div></div>
+</div>
+<div class="grid cols-2 compact-top">
+  <div class="card "><div class="kicker">Base territorial</div><h3>Lo estructural de la ciudad</h3><div class="body"><ul class=""><li>Nodo agropecuario y logístico</li><li>Vida digital muy marcada por Facebook y WhatsApp</li><li>Economía de comercio local + campo + servicios</li><li>Tensión permanente entre productividad y sensación de abandono</li></ul></div></div>
+  <div class="card tone-blue"><div class="kicker">Agenda madre</div><h3>Materias de alto interés público</h3><div class="body"><ul class=""><li>rutas y seguridad vial</li><li>seguridad y violencia</li><li>obras municipales y promesas</li><li>SAMCO y salud</li><li>empleo / jóvenes / éxodo</li><li>barrios con reclamos históricos</li></ul></div></div>
+</div>
+<div class="band light">
+  <strong>Hipótesis editorial:</strong> en Rufino la demanda no es solo “enterarse”. También es <em>ubicar</em> lo que pasa dentro de una historia local de promesas, frustraciones, trabajo y pertenencia.
+</div>
+</div>
+    </section>
+    
+    <section id="p06" class="page ">
+      <div class="page-top"><div class="page-no">06</div><div class="page-title">Ecosistema de medios local</div><div class="page-subtitle">Competencia real y patrón dominante</div></div>
+      <div class="page-inner">
+<table class="table small"><thead><tr><th>Actor</th><th>Fortaleza</th><th>Debilidad</th><th>Qué deja libre</th></tr></thead><tbody><tr><td>Sucesos</td><td>velocidad y volumen</td><td>publica el hecho, no el contexto</td><td>seguimiento, archivo, campo</td></tr><tr><td>FM Rufino 106.3</td><td>audiencia 45+ y voz en vivo</td><td>el audio no queda ordenado ni buscable</td><td>texto, síntesis, clip nativo</td></tr><tr><td>La Tribuna del Sur</td><td>tradición y reconocimiento</td><td>menos agilidad y menor tono multiplataforma</td><td>actualización explicativa</td></tr><tr><td>Municipalidad</td><td>canal oficial</td><td>comunicado interesado, no cobertura</td><td>lectura crítica y contraste</td></tr><tr><td>Rufino Web</td><td>marca digital visible en Instagram</td><td>perfil menos analítico</td><td>marca visual con más espesor</td></tr><tr><td>El Diferente / otras voces</td><td>trayectoria, memoria y estilo propio</td><td>no ocupan toda la brecha actual</td><td>diálogo intergeneracional del ecosistema</td></tr></tbody></table>
+<div class="grid cols-3 compact-top">
+  <div class="card "><div class="kicker">Diagnóstico</div><h3>Patrón dominante</h3><div class="body"><p>Todos cubren el hecho. Nadie construye una arquitectura pública de contexto, seguimiento y archivo útil.</p></div></div>
+  <div class="card tone-green"><div class="kicker">Ventaja</div><h3>Oportunidad 1</h3><div class="body"><p>Llegar segundo pero mejor. No disputar primicia: disputar interpretación.</p></div></div>
+  <div class="card tone-blue"><div class="kicker">Vacío</div><h3>Oportunidad 2</h3><div class="body"><p>Tomar al campo y a la lectura territorial como audiencias centrales, no laterales.</p></div></div>
+</div>
+</div>
+    </section>
+    
+    <section id="p07" class="page ">
+      <div class="page-top"><div class="page-no">07</div><div class="page-title">Brechas editoriales</div><div class="page-subtitle">Dónde puede volverse imprescindible El Rufino</div></div>
+      <div class="page-inner">
+<div class="grid cols-3">
+  <div class="card tone-blue"><div class="kicker">Regla madre</div><h3>Brecha A · Segunda capa</h3><div class="body"><p>Cada pieza debe responder no solo qué pasó sino qué significa, qué falta saber o qué antecedente la vuelve relevante.</p></div></div>
+  <div class="card tone-green"><div class="kicker">Diferenciación</div><h3>Brecha B · Registro de promesas</h3><div class="body"><p>El ecosistema comenta promesas incumplidas pero no las organiza. Ahí hay un producto editorial de alto valor.</p></div></div>
+  <div class="card tone-amber"><div class="kicker">Renta + fidelidad</div><h3>Brecha C · Campo / agro / logística</h3><div class="body"><p>La conversación existe en privado, sobre todo en WhatsApp. Falta un medio que la tome en serio y la traduzca al espacio público.</p></div></div>
+  <div class="card "><div class="kicker">Expansión joven</div><h3>Brecha D · TikTok local</h3><div class="body"><p>Cancha casi vacía. Puede ser crecimiento orgánico, pero no debe convertirse en dependencia estratégica del arranque.</p></div></div>
+  <div class="card tone-red"><div class="kicker">Territorio</div><h3>Brecha E · Geografía barrial</h3><div class="body"><p>Las zonas y reclamos existen, pero suelen aparecer sin continuidad. El mapeo de barrio a barrio puede construir hábito y legitimidad.</p></div></div>
+  <div class="card tone-blue"><div class="kicker">Activo invisible</div><h3>Brecha F · Archivo útil</h3><div class="body"><p>La ciudad recuerda por comentarios, no por sistema. El medio que archiva bien adquiere autoridad silenciosa.</p></div></div>
+</div>
+</div>
+    </section>
+    
+    <section id="p08" class="page ">
+      <div class="page-top"><div class="page-no">08</div><div class="page-title">Identidad cerrada</div><div class="page-subtitle">Qué es, qué no es y cómo debe sonar</div></div>
+      <div class="page-inner">
+<div class="grid cols-2">
+  <div class="identity-box good">
+    <h3>Sí es</h3>
+    <ul class=""><li>medio digital local</li><li>lector de contexto</li><li>seguimiento de temas públicos</li><li>marca con voz propia</li><li>proyecto escalable sin desordenarse</li></ul>
+  </div>
+  <div class="identity-box bad">
+    <h3>No es todavía</h3>
+    <ul class=""><li>portal total de servicios</li><li>multiservicio integral</li><li>máquina de publicar comunicados</li><li>dispositivo partidario frontal</li><li>marca dependiente solo de un truco visual</li></ul>
+  </div>
+</div>
+<div class="grid cols-2 compact-top">
+  <div class="card "><div class="kicker">Definición verbal</div><h3>Claim principal</h3><div class="body"><p><strong>Lo que pasa y lo que significa.</strong></p><p>El claim funciona porque promete interpretación sin caer en grandilocuencia abstracta.</p></div></div>
+  <div class="card tone-blue"><div class="kicker">Comportamiento de marca</div><h3>Tono editorial</h3><div class="body"><p>Directo sin ser agresivo. Humano sin amarillismo. Verificado antes de publicar. Nunca comunicado sin segunda capa.</p></div></div>
+</div>
+</div>
+    </section>
+    
+    <section id="p09" class="page ">
+      <div class="page-top"><div class="page-no">09</div><div class="page-title">Marco simbólico</div><div class="page-subtitle">Tres variantes posibles · una elegida</div></div>
+      <div class="page-inner">
+<div class="grid cols-3">
+  <div class="card "><div class="kicker">Variante alternativa</div><h3>A · Cívico-institucional</h3><div class="body"><p>Más sobrio, más republicano, más archivo. Útil para credibilidad, pero puede enfriar el proyecto demasiado pronto.</p></div></div>
+  <div class="card tone-blue"><div class="kicker">Variante activa</div><h3>B · Patriótica / territorial / argentina</h3><div class="body"><p><strong>Elegida.</strong> Memoria, trabajo, comunidad, pertenencia, justicia social y guiño peronista sutil. Sin panfleto frontal. Sí a la sensibilidad argentina; no a la bandera literal mal usada.</p></div></div>
+  <div class="card "><div class="kicker">Variante alternativa</div><h3>C · Tecnológica-producto</h3><div class="body"><p>Más SaaS, más sistema, más moderno. Buena para fases posteriores, pero hoy corre el riesgo de quitar ciudad, barro y humanidad.</p></div></div>
+</div>
+<div class="band flag-mood thin compact-top">
+  <strong>Criterio simbólico adoptado:</strong> sugerir lo patriótico desde atmósferas, acentos, texturas y jerarquía; no desde iconografía obvia o collage de símbolos.
+</div>
+<div class="grid cols-2 compact-top">
+ <div class="card "><div class="kicker">Lenguaje visual</div><h3>Símbolos permitidos</h3><div class="body"><ul class=""><li>horizonte, ruta, cielo, ciudad, faro de pantalla</li><li>celestes contenidos, blancos sucios, azules profundos</li><li>trama nocturna, taller, origen desde abajo</li></ul></div></div>
+ <div class="card tone-red"><div class="kicker">Autocontrol</div><h3>Errores a evitar</h3><div class="body"><ul class=""><li>bandera literal como fondo torpe</li><li>estética escolar o patrioterismo vacío</li><li>peronismo explícito en la capa principal</li><li>sobrecargar de escudos, cintas o recursos conmemorativos</li></ul></div></div>
+</div>
+</div>
+    </section>
+    
+    <section id="p10" class="page ">
+      <div class="page-top"><div class="page-no">10</div><div class="page-title">Audiencias prioritarias</div><div class="page-subtitle">A quién le hablamos primero y por qué</div></div>
+      <div class="page-inner">
+<div class="grid cols-4 aud-grid">
+  <div class="card tone-blue"><div class="kicker">Prioridad 1</div><h3>25–44</h3><div class="body"><p>Adultos activos en Facebook. Discuten obras, tarifas, seguridad y gestión. Buscan argumentos.</p></div></div>
+  <div class="card tone-green"><div class="kicker">Prioridad 2</div><h3>45–60</h3><div class="body"><p>Consumidores y redistribuidores. Transforman un post en circulación social. Necesitan confianza diaria.</p></div></div>
+  <div class="card tone-amber"><div class="kicker">Prioridad 3</div><h3>Campo / productores</h3><div class="body"><p>Audiencia desatendida, rentable y leal. Requiere respeto y conocimiento, no oportunismo.</p></div></div>
+  <div class="card tone-red"><div class="kicker">Prioridad 4</div><h3>18–30</h3><div class="body"><p>Segmento de crecimiento. Importa para marca futura y video corto, pero no debe definir solo el arranque.</p></div></div>
+</div>
+<div class="grid cols-2 compact-top">
+  <div class="card "><h3>Qué esperan del medio</h3><div class="body"><ul class=""><li>explicación y no solo alerta</li><li>lectura territorial</li><li>criterio frente al rumor</li><li>sensibilidad local sin cliché</li><li>persistencia y seguimiento</li></ul></div></div>
+  <div class="card tone-red"><div class="kicker">Alertas</div><h3>Qué puede romper el vínculo</h3><div class="body"><ul class=""><li>publicar por ansiedad</li><li>parecer partidario sin admitirlo</li><li>subir policiales humillantes</li><li>prometer más de lo que se sostiene</li><li>parecer un portal confuso</li></ul></div></div>
+</div>
+</div>
+    </section>
+    
+    <section id="p11" class="page ">
+      <div class="page-top"><div class="page-no">11</div><div class="page-title">Pilares editoriales I</div><div class="page-subtitle">Los primeros tres núcleos de identidad</div></div>
+      <div class="page-inner">
+<div class="grid cols-3 tall-cards">
+  <div class="card tone-blue"><div class="kicker">Pilar central</div><h3>01 · Rufino real</h3><div class="body"><p>Noticias verificadas con contexto. Antídoto contra el rumor y contra la nota que no deja huella.</p><div class="tags"><span>nota</span><span>hilo</span><span>infografía</span></div></div></div>
+  <div class="card tone-green"><div class="kicker">Pilar diferencial</div><h3>02 · El campo habla</h3><div class="body"><p>Rutas, costos, cosecha, política agraria, logística y vida rural. No como nicho decorativo sino como audiencia de peso.</p><div class="tags"><span>entrevista</span><span>dato</span><span>WhatsApp</span></div></div></div>
+  <div class="card tone-amber"><div class="kicker">Pilar territorial</div><h3>03 · Barrio a barrio</h3><div class="body"><p>Infraestructura, agua, cloacas, empedrado, viviendas y geografía del reclamo. Con continuidad y mapa.</p><div class="tags"><span>seguimiento</span><span>mapa</span><span>vecinos</span></div></div></div>
+</div>
+<div class="band soft compact-top">Si estos tres pilares funcionan, la marca ya tiene piso narrativo aunque todavía no haya escalado a portal útil.</div>
+</div>
+    </section>
+    
+    <section id="p12" class="page ">
+      <div class="page-top"><div class="page-no">12</div><div class="page-title">Pilares editoriales II</div><div class="page-subtitle">Completamiento del mapa y reglas de tono</div></div>
+      <div class="page-inner">
+<div class="grid cols-3 tall-cards">
+  <div class="card "><div class="kicker">Pilar de crecimiento</div><h3>04 · Generación Rufino</h3><div class="body"><p>Jóvenes, artistas, emprendedores, deportistas y la tensión entre quedarse e irse.</p><div class="tags"><span>reels</span><span>perfil</span><span>TikTok</span></div></div></div>
+  <div class="card tone-red"><div class="kicker">Pilar de control público</div><h3>05 · Poder y gestión</h3><div class="body"><p>Promesas, obras, presupuesto, decisiones, sesiones y seguimiento. Verificación sistemática sin editorializar por reflejo.</p><div class="tags"><span>fact-check</span><span>seguimiento</span><span>archivo</span></div></div></div>
+  <div class="card tone-blue"><div class="kicker">Pilar de comprensión</div><h3>06 · Rufino en datos</h3><div class="body"><p>Números locales que ordenan conversación: población, economía, salud, educación, red vial, presupuesto.</p><div class="tags"><span>datos</span><span>placas</span><span>explicador</span></div></div></div>
+</div>
+<div class="grid cols-2 compact-top">
+  <div class="card "><h3>Sí editorial</h3><div class="body"><ul class=""><li>directo sin agresión</li><li>local sin localismo chico</li><li>datos cuando hay datos</li><li>claro frente a lo que no está confirmado</li></ul></div></div>
+  <div class="card tone-red"><div class="kicker">Prohibiciones</div><h3>No editorial</h3><div class="body"><ul class=""><li>burocrático</li><li>comunicado sin capa 2</li><li>amarillista</li><li>lenguaje técnico innecesario</li><li>opinión sin sustento</li></ul></div></div>
+</div>
+</div>
+    </section>
+    
+    <section id="p13" class="page ">
+      <div class="page-top"><div class="page-no">13</div><div class="page-title">Producto mínimo</div><div class="page-subtitle">Lo indispensable para sostener 30 días coherentes</div></div>
+      <div class="page-inner">
+<div class="grid cols-3">
+  <div class="card "><h3>Soportes</h3><div class="body"><ul class=""><li>sitio base</li><li>Facebook</li><li>Instagram</li><li>WhatsApp canal</li></ul></div></div>
+  <div class="card tone-green"><div class="kicker">Orden interno</div><h3>Sistema editorial</h3><div class="body"><ul class=""><li>tablero editorial</li><li>banco inicial de contenidos</li><li>plantillas visuales</li><li>estructura de seguimiento</li></ul></div></div>
+  <div class="card tone-red"><div class="kicker">Disciplina</div><h3>Capas de seguridad</h3><div class="body"><ul class=""><li>protocolo de publicación sensible</li><li>métricas mínimas</li><li>archivo y evidencia</li><li>reserva de contenidos</li></ul></div></div>
+</div>
+<div class="diagram compact-top">
+  <div class="node major">Publicar</div>
+  <div class="arrow">→</div>
+  <div class="node">medir</div>
+  <div class="arrow">→</div>
+  <div class="node">ajustar</div>
+  <div class="arrow">→</div>
+  <div class="node">archivar</div>
+  <div class="arrow">→</div>
+  <div class="node major">seguir</div>
+</div>
+<div class="band light">Meta explícita: poder sostener 30 días de publicación coherente <strong>sin desordenarse</strong>. No “estar en todos lados”, sino no romperse al primer mes.</div>
+</div>
+    </section>
+    
+    <section id="p14" class="page ">
+      <div class="page-top"><div class="page-no">14</div><div class="page-title">Plataformas y función</div><div class="page-subtitle">Mismo proyecto, roles distintos por canal</div></div>
+      <div class="page-inner">
+<div class="grid cols-4 platform-grid2">
+  <div class="card tone-blue"><div class="kicker">25–60</div><h3>Facebook</h3><div class="body"><p>Canal principal. Base de credibilidad. 3 a 5 piezas por día entre noticias, análisis breve, datos y encuestas.</p></div></div>
+  <div class="card tone-amber"><div class="kicker">18–40</div><h3>Instagram</h3><div class="body"><p>Marca visual y comunidad. Reels, historias, emprendedores, placas limpias, detrás de escena y identidad.</p></div></div>
+  <div class="card tone-green"><div class="kicker">todos</div><h3>WhatsApp</h3><div class="body"><p>Distribución directa. Canal de broadcast con resumen fijo. No grupo caótico.</p></div></div>
+  <div class="card tone-red"><div class="kicker">14–30</div><h3>TikTok / Reels</h3><div class="body"><p>Canal de crecimiento y experimentación joven. Importante, pero no debe absorber toda la energía inicial.</p></div></div>
+</div>
+<table class="table small"><thead><tr><th>Canal</th><th>Función</th><th>Frecuencia inicial</th><th>Medida mínima</th></tr></thead><tbody><tr><td>Facebook</td><td>presencia + discusión</td><td>3-5/día</td><td>interacción y guardados</td></tr><tr><td>Instagram</td><td>marca + proximidad</td><td>1 post + stories</td><td>retención visual y respuestas</td></tr><tr><td>WhatsApp</td><td>hábito diario</td><td>1 resumen fijo</td><td>suscriptores + aperturas</td></tr><tr><td>TikTok/Reels</td><td>descubrimiento</td><td>3-4/semana</td><td>alcance + retención</td></tr></tbody></table>
+</div>
+    </section>
+    
+    <section id="p15" class="page ">
+      <div class="page-top"><div class="page-no">15</div><div class="page-title">Tablero editorial</div><div class="page-subtitle">La operación no puede depender de memoria difusa</div></div>
+      <div class="page-inner">
+<div class="grid cols-2">
+  <div class="card "><h3>Columnas del tablero</h3><div class="body"><ul class=""><li>tema</li><li>estado</li><li>fuente primaria</li><li>segunda capa pendiente</li><li>pieza derivada</li><li>fecha de seguimiento</li><li>responsable funcional</li></ul></div></div>
+  <div class="card tone-blue"><div class="kicker">Principio</div><h3>Regla de oro del tablero</h3><div class="body"><p>Todo tema importante debe dejar rastro. Si no deja rastro, el proyecto repite el caos del ecosistema que quiere corregir.</p></div></div>
+</div>
+<div class="grid cols-3 compact-top">
+  <div class="card "><div class="kicker">1</div><h3>Entrada</h3><div class="body"><p>hecho, rumor detectado, reclamo, anuncio, efeméride o dato</p></div></div>
+  <div class="card tone-green"><div class="kicker">2</div><h3>Proceso</h3><div class="body"><p>verificación, contraste, contextualización, formato y decisión de timing</p></div></div>
+  <div class="card tone-amber"><div class="kicker">3</div><h3>Salida</h3><div class="body"><p>publicación, archivo, seguimiento, derivado y aprendizaje</p></div></div>
+</div>
+<div class="footer-note">Un buen tablero baja ansiedad porque convierte intuición en proceso visible.</div>
+</div>
+    </section>
+    
+    <section id="p16" class="page ">
+      <div class="page-top"><div class="page-no">16</div><div class="page-title">Protocolos sensibles</div><div class="page-subtitle">Policiales, comunicados, rumores y embeds</div></div>
+      <div class="page-inner">
+<div class="grid cols-2">
+  <div class="card tone-red"><div class="kicker">Regla crítica</div><h3>Policiales</h3><div class="body"><ul class=""><li>versión policial ≠ verdad cerrada</li><li>aclarar qué está confirmado y qué no</li><li>no usar imágenes humillantes como reflejo automático</li><li>sumar contexto y cuidado de daño</li></ul></div></div>
+  <div class="card tone-blue"><div class="kicker">Regla crítica</div><h3>Comunicados oficiales</h3><div class="body"><ul class=""><li>nunca publicar sin segunda capa</li><li>explicar qué se sabe, qué falta y qué antecedente importa</li><li>si hay promesa, abrir ficha de seguimiento</li></ul></div></div>
+  <div class="card tone-amber"><div class="kicker">Regla crítica</div><h3>Rumores de WhatsApp</h3><div class="body"><ul class=""><li>detectar, no replicar en bruto</li><li>confirmar antes de amplificar</li><li>si es falso, desactivar con claridad y rapidez</li></ul></div></div>
+  <div class="card tone-green"><div class="kicker">Regla crítica</div><h3>Embeds de Facebook</h3><div class="body"><ul class=""><li>sirven como evidencia o fuente</li><li>no sustituyen cobertura propia</li><li>el medio debe agregar valor, no incrustar y salir corriendo</li></ul></div></div>
+</div>
+<div class="band">Un medio local serio no confunde cercanía con impunidad narrativa.</div>
+</div>
+    </section>
+    
+    <section id="p17" class="page ">
+      <div class="page-top"><div class="page-no">17</div><div class="page-title">Roles funcionales I</div><div class="page-subtitle">Sin cargos rígidos, sí ejes claros de trabajo</div></div>
+      <div class="page-inner">
+<div class="grid cols-4 role-grid">
+  <div class="card "><div class="kicker">eje</div><h3>Dirección editorial</h3><div class="body"><p>marca el criterio, decide foco, ordena agenda y cuida que la identidad no se disperse.</p></div></div>
+  <div class="card tone-green"><div class="kicker">eje</div><h3>Monitoreo y seguimiento</h3><div class="body"><p>observa promesas, sesiones, anuncios, reclamos y deja trazabilidad.</p></div></div>
+  <div class="card tone-amber"><div class="kicker">eje</div><h3>Campo / territorio</h3><div class="body"><p>sale de la pantalla, conversa, contrasta, escucha zonas y devuelve calle al proyecto.</p></div></div>
+  <div class="card tone-blue"><div class="kicker">eje</div><h3>Producto / sistema</h3><div class="body"><p>cuida sitio, plantillas, archivo, tablero, automatizaciones y consistencia operativa.</p></div></div>
+  <div class="card "><div class="kicker">eje</div><h3>Audiencia y comunidad</h3><div class="body"><p>responde, detecta señales, ordena inbox, arma escucha activa y mapea vínculos.</p></div></div>
+  <div class="card tone-red"><div class="kicker">eje</div><h3>Visual / identidad</h3><div class="body"><p>mantiene clima, jerarquía, plantillas y evita que la marca cambie de cara cada día.</p></div></div>
+  <div class="card tone-green"><div class="kicker">eje</div><h3>Comercial / alianzas</h3><div class="body"><p>busca sostenibilidad sin dejar que la pauta dicte la línea editorial.</p></div></div>
+  <div class="card tone-blue"><div class="kicker">eje</div><h3>Documentación / IA</h3><div class="body"><p>convierte decisiones, aprendizajes y normas en material transferible y reutilizable.</p></div></div>
+</div>
+</div>
+    </section>
+    
+    <section id="p18" class="page ">
+      <div class="page-top"><div class="page-no">18</div><div class="page-title">Roles funcionales II</div><div class="page-subtitle">Prompts operativos asociados a cada eje</div></div>
+      <div class="page-inner">
+<div class="grid cols-2 prompt-grid">
+  <div class="prompt-box"><h3>Dirección editorial</h3><pre>Tomá este tema y devolvelo como: 1) núcleo del hecho, 2) segunda capa, 3) antecedente local, 4) formato sugerido, 5) riesgo editorial.</pre></div>
+  <div class="prompt-box"><h3>Seguimiento</h3><pre>Transformá este anuncio en ficha de seguimiento con fecha, promesa, fuente, estado, evidencia y próxima revisión.</pre></div>
+  <div class="prompt-box"><h3>Territorio</h3><pre>Extraé de este reclamo vecinal: problema, zona, actores, preguntas pendientes, ángulo humano y continuidad posible.</pre></div>
+  <div class="prompt-box"><h3>Producto</h3><pre>Convertí esta agenda en tablero con columnas, prioridades, dependencias y versión publicable multicanal.</pre></div>
+  <div class="prompt-box"><h3>Audiencia</h3><pre>Leé comentarios e inbox y devolvé: señales de interés, tensiones, lenguaje repetido, oportunidades y riesgos.</pre></div>
+  <div class="prompt-box"><h3>Documentación / IA</h3><pre>Resumí esta decisión sin perder contexto. Separá hechos, hipótesis, pendientes y reglas de uso futuro.</pre></div>
+</div>
+<div class="footer-note">Estos prompts no fijan personas; fijan funciones. El proyecto puede sumar nombres sin congelarse en organigramas prematuros.</div>
+</div>
+    </section>
+    
+    <section id="p19" class="page ">
+      <div class="page-top"><div class="page-no">19</div><div class="page-title">Memorias, trayectorias y voces asociadas</div><div class="page-subtitle">Nombres propios sin organigrama forzado</div></div>
+      <div class="page-inner">
+<div class="band light">Los nombres aquí incluidos no se presentan como cargos cerrados. Se presentan como memoria, experiencia, voz posible, referencia del ecosistema y constelación de trabajo en construcción.</div>
+<div class="grid cols-3 compact-top">
+  <div class="card "><div class="kicker">Trayectoria</div><h3>Fabián Longo</h3><div class="body"><p>Referencia vinculada a <em>El Diferente</em> en edición papel. Aporta memoria de oficio, experiencia en soporte local y una historia de trabajo periodístico que merece ser leída con respeto.</p></div></div>
+  <div class="card tone-blue"><div class="kicker">Trayectoria</div><h3>Adriana Giménez</h3><div class="body"><p>Asociada a “Voces, otra mirada” y su versión radial. Importa como voz, sensibilidad y experiencia de lectura de comunidad, no como casillero rígido.</p></div></div>
+  <div class="card tone-green"><div class="kicker">Sistema abierto</div><h3>Aliados en construcción</h3><div class="body"><p>Este apartado queda abierto para futuras personas del proyecto: voces, memorias, trabajo, militancia cultural, respeto por recorridos previos y cooperación no ornamental.</p></div></div>
+</div>
+<div class="grid cols-2 compact-top">
+  <div class="card "><h3>Criterio recomendado</h3><div class="body"><ul class=""><li>sí nombrar</li><li>no inventar cargo definitivo</li><li>ubicar cada trayectoria en una constelación de memoria, trabajo y aporte posible</li></ul></div></div>
+  <div class="card tone-red"><div class="kicker">Advertencia</div><h3>Error a evitar</h3><div class="body"><p>Usar nombres para decorar legitimidad o completar organigramas antes de tiempo. Eso desgasta vínculos y debilita el proyecto.</p></div></div>
+</div>
+</div>
+    </section>
+    
+    <section id="p20" class="page ">
+      <div class="page-top"><div class="page-no">20</div><div class="page-title">Dominios y arquitectura de marca</div><div class="page-subtitle">Verificación manual en NIC Argentina + costos oficiales</div></div>
+      <div class="page-inner">
+<div class="grid cols-2 image-grid">
+  <div class="image-card"><img src="assets/nic_elrufino_ar.jpg" alt="Verificación de elrufino.ar en NIC"><div class="caption">Captura oficial adjunta: <strong>elrufino.ar</strong> figura disponible para registrar.</div></div>
+  <div class="image-card"><img src="assets/nic_elrufino_comar.jpg" alt="Verificación de elrufino.com.ar en NIC"><div class="caption">Captura oficial adjunta: <strong>elrufino.com.ar</strong> figura disponible para registrar.</div></div>
+</div>
+<div class="grid cols-3 compact-top">
+  <div class="card "><div class="kicker">Costo oficial</div><h3>.ar</h3><div class="body"><p>Alta / renovación / transferencia: <strong>$25.500</strong></p><p>NIC la describe como una opción más breve y fácil de recordar.</p></div></div>
+  <div class="card tone-blue"><div class="kicker">Costo oficial</div><h3>.com.ar</h3><div class="body"><p>Alta / renovación / transferencia: <strong>$8.500</strong></p><p>Sigue siendo la zona más extendida del ecosistema .ar.</p></div></div>
+  <div class="card tone-green"><div class="kicker">Estrategia</div><h3>Decisión adoptada</h3><div class="body"><p><strong>Marca pública principal:</strong> elrufino.ar</p><p><strong>Defensivo + redirección:</strong> elrufino.com.ar</p></div></div>
+</div>
+</div>
+    </section>
+    
+    <section id="p21" class="page ">
+      <div class="page-top"><div class="page-no">21</div><div class="page-title">Lectura estratégica del dominio</div><div class="page-subtitle">Recomendación confirmada y no intuitiva</div></div>
+      <div class="page-inner">
+<div class="stat-row large">
+  <div class="stat"><div class="value">91.331</div><div class="label">dominios .ar · feb 2026</div></div>
+  <div class="stat"><div class="value">565.394</div><div class="label">dominios .com.ar · feb 2026</div></div>
+  <div class="stat"><div class="value">marzo 2026</div><div class="label">última actualización NIC de estadísticas</div></div>
+  <div class="stat"><div class="value">301</div><div class="label">redirección recomendada .com.ar → .ar</div></div>
+</div>
+<div class="grid cols-2 compact-top">
+  <div class="card "><div class="kicker">Interpretación</div><h3>Qué muestran los números</h3><div class="body"><p>.com.ar tiene una base muy superior en cantidad de dominios vigentes, por lo que sigue siendo culturalmente fuerte. Pero .ar gana en brevedad, recordación y potencia de marca.</p></div></div>
+  <div class="card tone-green"><div class="kicker">Conclusión</div><h3>Por qué la decisión igual es correcta</h3><div class="body"><p>Usar <strong>elrufino.ar</strong> como frente público permite una marca más limpia y propia; registrar <strong>elrufino.com.ar</strong> evita fugas, confusión y terceros oportunistas. La dupla resuelve marca y defensa a la vez.</p></div></div>
+</div>
+<div class="band soft">Recomendación técnica: publicar y posicionar solo la versión <strong>.ar</strong>, forzando redirección 301 canónica desde <strong>.com.ar</strong> hacia <strong>.ar</strong>.</div>
+</div>
+    </section>
+    
+    <section id="p22" class="page ">
+      <div class="page-top"><div class="page-no">22</div><div class="page-title">Fases y semáforos</div><div class="page-subtitle">Estado real del proyecto hoy</div></div>
+      <div class="page-inner">
+<table class="table small"><thead><tr><th>Eje</th><th>Estado</th><th>Lectura</th></tr></thead><tbody><tr><td>Fase 1 · identidad cerrada</td><td>VERDE</td><td>nombre, claim, qué es / qué no es, pilares y audiencias ya están definidos</td></tr><tr><td>Fase 2 · producto mínimo</td><td>AMARILLO</td><td>hay arquitectura clara, pero requiere ejecución disciplinada de 30 días</td></tr><tr><td>Marca / dominio</td><td>VERDE</td><td>decisión tomada: .ar principal, .com.ar defensivo</td></tr><tr><td>Lenguaje visual</td><td>VERDE / AMARILLO</td><td>ya existe clima; falta sistema cerrado de plantillas</td></tr><tr><td>Monetización</td><td>ROJO</td><td>debe esperar hábito y reputación</td></tr><tr><td>Infraestructura territorial</td><td>ROJO</td><td>todavía es horizonte, no fase presente</td></tr></tbody></table>
+<div class="grid cols-3 compact-top">
+  <div class="card tone-green"><div class="kicker">Acción inmediata</div><h3>Ahora</h3><div class="body"><p>cerrar dossier, registrar dominios, preparar producto mínimo, construir reserva de publicaciones.</p></div></div>
+  <div class="card tone-blue"><div class="kicker">Mes 1</div><h3>Después</h3><div class="body"><p>validar tono, medir respuesta, ajustar tablero y activar seguimiento público de promesas.</p></div></div>
+  <div class="card tone-red"><div class="kicker">Secuencia</div><h3>Mucho después</h3><div class="body"><p>portal útil, alianzas, expansión regional y red territorial. No mezclar escalas hoy.</p></div></div>
+</div>
+</div>
+    </section>
+    
+    <section id="p23" class="page ">
+      <div class="page-top"><div class="page-no">23</div><div class="page-title">Planificación ejemplo · Semana 1 y 2</div><div class="page-subtitle">Agenda referencial, realista y coherente con Rufino</div></div>
+      <div class="page-inner">
+<table class="table small"><thead><tr><th>Día</th><th>Pilar</th><th>Tema ejemplo</th><th>Formato</th><th>Objetivo</th></tr></thead><tbody><tr><td>Lun 1</td><td>Rufino real</td><td>Qué es El Rufino y por qué no quiere ser otro portal apurado</td><td>post + sitio</td><td>presentación con criterio</td></tr><tr><td>Mar 1</td><td>El campo habla</td><td>RN 33, logística y desgaste real del corredor</td><td>nota + placa</td><td>marcar diferencial</td></tr><tr><td>Mié 1</td><td>Generación Rufino</td><td>¿Por qué tantos jóvenes dicen que se irían?</td><td>reel / TikTok</td><td>abrir escucha</td></tr><tr><td>Jue 1</td><td>Poder y gestión</td><td>Ficha 001: promesa municipal en seguimiento</td><td>placa + nota</td><td>instalar producto</td></tr><tr><td>Vie 1</td><td>Barrio a barrio</td><td>Barrio Norte: reclamos que vuelven una y otra vez</td><td>nota + mapa simple</td><td>territorialidad</td></tr><tr><td>Lun 2</td><td>Rufino en datos</td><td>Rufino en números básicos: población, hogares, plataformas</td><td>placa + carrusel</td><td>autoridad</td></tr><tr><td>Jue 2</td><td>Poder y gestión</td><td>Cómo leer un anuncio oficial sin tragárselo entero</td><td>hilo FB</td><td>educar mirada</td></tr></tbody></table>
+<div class="band">Toda esta agenda es <strong>ejemplo</strong>, pero el criterio es real: alternar instalación de marca, diferencial editorial y prueba de disciplina.</div>
+</div>
+    </section>
+    
+    <section id="p24" class="page ">
+      <div class="page-top"><div class="page-no">24</div><div class="page-title">Planificación ejemplo · Semana 3 y 4</div><div class="page-subtitle">Consolidación de hábito sin sobrecargarse</div></div>
+      <div class="page-inner">
+<table class="table small"><thead><tr><th>Día</th><th>Pilar</th><th>Tema ejemplo</th><th>Formato</th><th>Observación</th></tr></thead><tbody><tr><td>Mar 3</td><td>El campo habla</td><td>Precio, flete y margen: ¿cómo pega en la zona?</td><td>audio breve + texto</td><td>traducir economía</td></tr><tr><td>Mié 3</td><td>Generación Rufino</td><td>Perfil de un proyecto joven que decidió quedarse</td><td>reel</td><td>contrapeso al éxodo</td></tr><tr><td>Jue 3</td><td>Poder y gestión</td><td>Actualización ficha 001: qué cambió y qué no</td><td>placa</td><td>probar seguimiento</td></tr><tr><td>Vie 3</td><td>Barrio a barrio</td><td>Zona Oeste: loteo, agua y viviendas</td><td>nota</td><td>continuidad barrial</td></tr><tr><td>Lun 4</td><td>Rufino en datos</td><td>Comparación simple: .ar vs .com.ar y marca local</td><td>carrusel</td><td>pedagogía pública</td></tr><tr><td>Jue 4</td><td>Rufino real</td><td>Qué aprendimos del primer mes de prueba</td><td>editorial corta</td><td>voz propia</td></tr><tr><td>Sáb 4</td><td>Generación Rufino</td><td>Historia local / deportiva / cultural en clave positiva</td><td>reel o perfil</td><td>oxígeno de marca</td></tr></tbody></table>
+<div class="footer-note">El objetivo del primer mes no es agotar la ciudad. Es demostrar que el proyecto sabe pararse.</div>
+</div>
+    </section>
+    
+    <section id="p25" class="page ">
+      <div class="page-top"><div class="page-no">25</div><div class="page-title">Métricas mínimas</div><div class="page-subtitle">Lo que se mira para aprender, no para obsesionarse</div></div>
+      <div class="page-inner">
+<div class="grid cols-4">
+  <div class="card "><div class="kicker">métrica</div><h3>Facebook</h3><div class="body"><p>interacción útil, comentarios con sentido, guardados, compartidos, alcance por tipo de pieza</p></div></div>
+  <div class="card tone-blue"><div class="kicker">métrica</div><h3>Instagram</h3><div class="body"><p>retención en reels, respuestas a stories, guardados y consistencia visual</p></div></div>
+  <div class="card tone-green"><div class="kicker">métrica</div><h3>WhatsApp</h3><div class="body"><p>suscriptores, aperturas, clics y sostenimiento de la frecuencia</p></div></div>
+  <div class="card tone-amber"><div class="kicker">métrica</div><h3>Sitio</h3><div class="body"><p>lectura, tiempo, rebote, piezas más abiertas y entrada por canal</p></div></div>
+</div>
+<div class="grid cols-2 compact-top">
+  <div class="card "><h3>Qué no mirar demasiado pronto</h3><div class="body"><ul class=""><li>vanidad de seguidores aislada</li><li>viralidad como único norte</li><li>comparación obsesiva diaria con medios instalados</li></ul></div></div>
+  <div class="card tone-green"><div class="kicker">Aprendizaje real</div><h3>Qué sí importa</h3><div class="body"><ul class=""><li>si la promesa se entiende</li><li>si el tono se sostiene</li><li>si el tablero evita caos</li><li>si el público detecta la segunda capa</li></ul></div></div>
+</div>
+</div>
+    </section>
+    
+    <section id="p26" class="page ">
+      <div class="page-top"><div class="page-no">26</div><div class="page-title">Sostenibilidad y aliados</div><div class="page-subtitle">Modelo inicial sin captura política ni empresarial</div></div>
+      <div class="page-inner">
+<div class="quote-block small"><p>No deberse a un patrón que compre la línea. Sí deberse a una comunidad de lectores, anunciantes compatibles y alianzas con criterio.</p></div>
+<div class="grid cols-3">
+  <div class="card "><div class="kicker">Primeras capas</div><h3>Ingresos iniciales posibles</h3><div class="body"><ul class=""><li>sponsor del resumen matutino</li><li>placas o series para PyMEs locales</li><li>membresía lector colaborador</li><li>encuentros y formatos híbridos</li></ul></div></div>
+  <div class="card tone-green"><div class="kicker">Ecosistema</div><h3>Aliados compatibles</h3><div class="body"><ul class=""><li>emprendedores</li><li>comercios con raíz local</li><li>productores y servicios del agro</li><li>clubes, instituciones y proyectos culturales</li></ul></div></div>
+  <div class="card tone-red"><div class="kicker">Autonomía</div><h3>Límites sanos</h3><div class="body"><ul class=""><li>no vender enfoque editorial</li><li>no disfrazar pauta de cobertura</li><li>no hipotecar identidad por velocidad de caja</li></ul></div></div>
+</div>
+</div>
+    </section>
+    
+    <section id="p27" class="page ">
+      <div class="page-top"><div class="page-no">27</div><div class="page-title">Riesgos y tensiones</div><div class="page-subtitle">Lo débil del planteo si no se gobierna a tiempo</div></div>
+      <div class="page-inner">
+<div class="grid cols-2">
+  <div class="card tone-red"><div class="kicker">alto</div><h3>Riesgo 1 · Portalitis</h3><div class="body"><p>Querer ser medio, bolsa de trabajo, digesto, agenda, streaming y directorio desde el minuto cero. Resultado probable: identidad diluida.</p></div></div>
+  <div class="card tone-red"><div class="kicker">alto</div><h3>Riesgo 2 · Simbolismo mal calibrado</h3><div class="body"><p>Pasarse de guiño territorial a estética panfletaria. La capa principal debe sostener credibilidad amplia.</p></div></div>
+  <div class="card tone-amber"><div class="kicker">medio</div><h3>Riesgo 3 · Dependencia de una sola voz</h3><div class="body"><p>Si toda la arquitectura depende de una única presencia, el proyecto se vuelve frágil aunque la marca sea buena.</p></div></div>
+  <div class="card tone-red"><div class="kicker">alto</div><h3>Riesgo 4 · Publicar por ansiedad</h3><div class="body"><p>Enfrentarse a Sucesos queriendo correr la misma carrera. Ese reflejo rompe la promesa diferencial.</p></div></div>
+  <div class="card tone-amber"><div class="kicker">alto</div><h3>Riesgo 5 · Falta de calle</h3><div class="body"><p>Si todo nace y muere en pantalla, El Rufino puede ser prolijo pero no necesario.</p></div></div>
+  <div class="card tone-red"><div class="kicker">medio</div><h3>Riesgo 6 · Monetización precoz</h3><div class="body"><p>Buscar negocio antes de construir hábito editorial puede licuar confianza y foco.</p></div></div>
+</div>
+</div>
+    </section>
+    
+    <section id="p28" class="page ">
+      <div class="page-top"><div class="page-no">28</div><div class="page-title">Objetivo operativo</div><div class="page-subtitle">Qué debería quedar hecho en los próximos 90 días</div></div>
+      <div class="page-inner">
+<div class="grid cols-3">
+  <div class="card "><h3>Día 1–15</h3><div class="body"><ul class=""><li>registrar dominios</li><li>cerrar sistema visual base</li><li>armar reserva de contenidos</li><li>abrir canal WhatsApp</li></ul></div></div>
+  <div class="card tone-green"><div class="kicker">Tramo 2</div><h3>Día 16–45</h3><div class="body"><ul class=""><li>lanzar con pieza fuerte</li><li>sostener frecuencia</li><li>abrir ficha pública de seguimiento</li><li>medir y corregir</li></ul></div></div>
+  <div class="card tone-blue"><div class="kicker">Tramo 3</div><h3>Día 46–90</h3><div class="body"><ul class=""><li>probar primera alianza</li><li>consolidar hábito</li><li>validar formatos que mejor funcionan</li><li>preparar monetización compatible</li></ul></div></div>
+</div>
+<div class="band light compact-top"><strong>Objetivo concreto:</strong> que El Rufino deje de ser una idea potente y pase a ser un dispositivo editorial reconocible, disciplinado y recordable.</div>
+</div>
+    </section>
+    
+    <section id="p29" class="page ">
+      <div class="page-top"><div class="page-no">29</div><div class="page-title">Bloque de transferencia para otra IA</div><div class="page-subtitle">Constantes, reglas y límites del proyecto</div></div>
+      <div class="page-inner">
+<div class="prompt-box full"><pre>PROYECTO = EL RUFINO
+CIUDAD = Rufino, Santa Fe, Argentina
+CLAIM = "Lo que pasa y lo que significa"
+TIPO = medio digital local con noticias, contexto y seguimiento
+SECUENCIA = medio confiable -> portal útil -> infraestructura territorial
+SIMBOLICA = patriótica / territorial / argentina con guiño peronista sutil
+NO HACER = portal total prematuro, panfleto frontal, comunicado sin segunda capa
+VENTAJA = contexto + seguimiento + campo + lectura territorial
+DOMINIO PRINCIPAL = elrufino.ar
+DOMINIO DEFENSIVO = elrufino.com.ar
+REDIRECCION = 301 .com.ar -> .ar
+FASE_1 = identidad cerrada
+FASE_2 = producto mínimo
+ROLES = funcionales, no cargos rígidos
+NOMBRES PROPIOS = sí nombrar, no congelar organigrama
+FOTO NOTEBOOK = contratapa simbólica de origen
+DOCUMENTO = debe servir para institución + interno + IA + aliados</pre></div>
+<div class="footer-note">Este bloque existe para evitar que otra IA “reinicie” el proyecto como si fuera un brainstorming vacío.</div>
+</div>
+    </section>
+    
+    <section id="p30" class="page backcover">
+      <div class="page-top"><div class="page-no">30</div><div class="page-title">Cierre</div><div class="page-subtitle">Origen, trabajo y construcción desde abajo</div></div>
+      <div class="page-inner">
+<img class="backdrop-img" src="assets/notebook_origen.jpg" alt="Origen del proyecto en notebook">
+<div class="back-overlay"></div>
+<div class="back-content">
+  <div class="eyebrow">Contratapa simbólica</div>
+  <h2>Antes de ser medio,<br>fue mesa de trabajo.</h2>
+  <p>Esta imagen no se usa como “foto linda”. Se usa como prueba de origen: noche, pantalla, torsión, teclado, taller. El Rufino no nace pulido. Nace trabajado.</p>
+  <div class="chips"><span>origen</span><span>pantalla</span><span>noche</span><span>ciudad</span><span>comunidad</span></div>
+  <div class="signature end">PROYECTO EL RUFINO</div>
+</div>
+</div>
+    </section>
+    </main>
+</body>
+</html>

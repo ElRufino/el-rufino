@@ -1,0 +1,586 @@
+
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard de ecosistema mediático · Rufino</title>
+<style>
+  :root {
+    --bg: #f7f8fb;
+    --card: #ffffff;
+    --ink: #172033;
+    --muted: #5c667a;
+    --line: #dfe5ef;
+    --brand: #2155a4;
+    --accent: #3e8ed0;
+    --good: #1f8f5f;
+    --warn: #cc7a00;
+    --bad: #b54747;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: Inter, Arial, Helvetica, sans-serif;
+    line-height: 1.55;
+    font-size: 18px;
+  }
+  .wrap {
+    max-width: 1380px;
+    margin: 0 auto;
+    padding: 28px;
+  }
+  .hero {
+    background: linear-gradient(135deg, #ffffff 0%, #eef4ff 100%);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 28px 30px;
+    margin-bottom: 22px;
+  }
+  h1 {
+    font-size: 40px;
+    line-height: 1.08;
+    margin: 0 0 8px;
+    letter-spacing: -0.02em;
+  }
+  .sub {
+    font-size: 21px;
+    color: var(--muted);
+    max-width: 1000px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 18px;
+    margin-bottom: 18px;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 22px;
+    box-shadow: 0 1px 2px rgba(16,24,40,0.04);
+  }
+  .span-12 { grid-column: span 12; }
+  .span-8 { grid-column: span 8; }
+  .span-7 { grid-column: span 7; }
+  .span-6 { grid-column: span 6; }
+  .span-5 { grid-column: span 5; }
+  .span-4 { grid-column: span 4; }
+  .span-3 { grid-column: span 3; }
+
+  h2 {
+    margin: 0 0 12px;
+    font-size: 28px;
+    letter-spacing: -0.01em;
+  }
+  h3 {
+    margin: 0 0 10px;
+    font-size: 22px;
+  }
+  p { margin: 0 0 12px; }
+  .small {
+    color: var(--muted);
+    font-size: 16px;
+  }
+  .metric {
+    font-size: 38px;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 8px;
+    color: var(--brand);
+  }
+  .metric-label {
+    color: var(--muted);
+    font-size: 17px;
+  }
+  .pill {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: #edf3ff;
+    color: var(--brand);
+    font-weight: 700;
+    font-size: 14px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+  }
+  .pill.good { background: #e9f7f0; color: var(--good); }
+  .pill.warn { background: #fff2df; color: var(--warn); }
+  .pill.bad { background: #fdeaea; color: var(--bad); }
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+  }
+  .table th, .table td {
+    border-bottom: 1px solid var(--line);
+    padding: 10px 8px;
+    text-align: left;
+    vertical-align: top;
+  }
+  .table th {
+    background: #f4f7fc;
+    color: var(--ink);
+    font-size: 15px;
+  }
+  .table tr:hover td { background: #fafcff; }
+  ol.insights {
+    margin: 0;
+    padding-left: 24px;
+  }
+  ol.insights li {
+    margin-bottom: 14px;
+  }
+  ol.insights strong {
+    display: block;
+    margin-bottom: 3px;
+  }
+  .bars {
+    display: grid;
+    gap: 12px;
+  }
+  .bar-row {
+    display: grid;
+    grid-template-columns: 270px 1fr 100px;
+    align-items: center;
+    gap: 12px;
+    font-size: 16px;
+  }
+  .bar-track {
+    height: 18px;
+    background: #edf1f7;
+    border-radius: 999px;
+    overflow: hidden;
+    border: 1px solid #e4eaf3;
+  }
+  .bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #7fb1e8, #2155a4);
+  }
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 8px;
+  }
+  .legend span {
+    font-size: 15px;
+    color: var(--muted);
+  }
+  .source-list {
+    columns: 2;
+    column-gap: 30px;
+    font-size: 15px;
+  }
+  .source-list li {
+    break-inside: avoid;
+    margin-bottom: 8px;
+  }
+  .note {
+    background: #fff8e8;
+    border: 1px solid #f1dfaa;
+    padding: 14px 16px;
+    border-radius: 12px;
+    font-size: 16px;
+  }
+  @media (max-width: 1000px) {
+    body { font-size: 17px; }
+    .grid { grid-template-columns: 1fr; }
+    .span-12, .span-8, .span-7, .span-6, .span-5, .span-4, .span-3 { grid-column: auto; }
+    .bar-row { grid-template-columns: 1fr; }
+    .source-list { columns: 1; }
+    h1 { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <div class="pill">Rufino · ecosistema mediático</div>
+    <div class="pill">Facebook + actores públicos</div>
+    <div class="pill">marzo 2026</div>
+    <h1>Dashboard de métricas, conversación pública y audiencias</h1>
+    <p class="sub">
+      Esto no es un “estudio de mercado” clásico en sentido estadístico. Es más preciso llamarlo
+      <strong>análisis de ecosistema mediático, conversación pública observable y segmentación editorial</strong>,
+      construido con señales públicas actuales: páginas, perfiles, snippets de publicaciones y actividad visible.
+    </p>
+  </section>
+
+  <section class="grid">
+    <div class="card span-3"><div class="metric">14+</div><div class="metric-label">marcas / medios comparados</div></div>
+    <div class="card span-3"><div class="metric">3</div><div class="metric-label">bloques dominantes: noticias rápidas, radio y oficialismo</div></div>
+    <div class="card span-3"><div class="metric">1</div><div class="metric-label">gran zona ciega: campo / agro / economía regional</div></div>
+    <div class="card span-3"><div class="metric">2</div><div class="metric-label">vacíos fuertes: seguimiento y periodismo de contexto</div></div>
+  </section>
+
+  <section class="grid">
+    <div class="card span-7">
+      <h2>Lectura ejecutiva</h2>
+      <p>La discusión pública local gira mucho más alrededor de <strong>política, obras, servicios, seguridad, justicia y vida cotidiana</strong> que de cultura, educación o desarrollo productivo en sentido amplio.</p>
+      <p>Los medios con más base no siempre son los que más conversación mueven. En la muestra pública, <strong>FM Rufino</strong>, <strong>Carlos Babaja</strong> y <strong>Rufino Noticias</strong> muestran una relación conversación/base especialmente alta, mientras que marcas con mucho histórico como <strong>FM Uno</strong> o <strong>Noticiasderufino.com</strong> exhiben menor intensidad visible en Facebook.</p>
+      <p>La oportunidad editorial no está en “publicar más”, sino en <strong>ordenar, contextualizar y seguir</strong>: obras, promesas, educación, salud, producción, juventud y cultura.</p>
+      <div class="note">
+        <strong>Conclusión operativa:</strong> para un proyecto nuevo, el espacio no está en imitar a la radio ni en competir en velocidad con los portales. Está en hacer lo que casi nadie hace de forma sostenida: <strong>seguimiento, capa de contexto, lectura territorial y agenda propia</strong>.
+      </div>
+    </div>
+    <div class="card span-5">
+      <h2>Temperatura del debate</h2>
+      <div class="bars">
+        <div class="bar-row"><div>Política local / gestión</div><div class="bar-track"><div class="bar-fill" style="width:92%"></div></div><div>muy alto</div></div>
+        <div class="bar-row"><div>Obras públicas / infraestructura</div><div class="bar-track"><div class="bar-fill" style="width:90%"></div></div><div>muy alto</div></div>
+        <div class="bar-row"><div>Seguridad / policiales / justicia</div><div class="bar-track"><div class="bar-fill" style="width:88%"></div></div><div>muy alto</div></div>
+        <div class="bar-row"><div>Salud</div><div class="bar-track"><div class="bar-fill" style="width:74%"></div></div><div>alto</div></div>
+        <div class="bar-row"><div>Educación</div><div class="bar-track"><div class="bar-fill" style="width:55%"></div></div><div>medio</div></div>
+        <div class="bar-row"><div>Cultura</div><div class="bar-track"><div class="bar-fill" style="width:52%"></div></div><div>medio</div></div>
+        <div class="bar-row"><div>Campo / agro / producción</div><div class="bar-track"><div class="bar-fill" style="width:38%"></div></div><div>bajo visible</div></div>
+      </div>
+      <div class="legend">
+        <span>Cuanto más alto el debate, más saturado está el tema.</span>
+        <span>Cuanto más bajo, mayor puede ser la oportunidad editorial.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="card span-12">
+      <h2>Mapa de medios y marcas visibles</h2>
+      <table border="1" class="dataframe table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>medio</th>
+      <th>tipo</th>
+      <th>likes</th>
+      <th>hablando</th>
+      <th>nota</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Sucesos</td>
+      <td>Portal / breaking news</td>
+      <td>29.7K</td>
+      <td>n/d público estable</td>
+      <td>liderazgo en inmediatez; fuerte en policiales y mensajes vecinales</td>
+    </tr>
+    <tr>
+      <td>FM Rufino 106.3</td>
+      <td>Radio + noticias</td>
+      <td>29.0K</td>
+      <td>4.5K</td>
+      <td>muy alta conversación; agenda diaria, servicio, policiales, clima, cortes</td>
+    </tr>
+    <tr>
+      <td>FM Uno</td>
+      <td>Radio</td>
+      <td>26.9K</td>
+      <td>1-5</td>
+      <td>gran base histórica, interacción actual baja en Facebook</td>
+    </tr>
+    <tr>
+      <td>La Tribuna del Sur</td>
+      <td>Diario digital</td>
+      <td>19.5K</td>
+      <td>456</td>
+      <td>peso institucional; menor intensidad conversacional que FM Rufino</td>
+    </tr>
+    <tr>
+      <td>Municipalidad de Rufino</td>
+      <td>Canal oficial</td>
+      <td>18.0K</td>
+      <td>1.4K</td>
+      <td>alto alcance oficial; anuncios, agenda, eventos y gestión</td>
+    </tr>
+    <tr>
+      <td>Carlos Babaja Locutor</td>
+      <td>Locutor / agenda y opinión</td>
+      <td>12.8K</td>
+      <td>4.8K</td>
+      <td>conversación muy intensa; salud, justicia, agenda humana y opinión</td>
+    </tr>
+    <tr>
+      <td>Noticiasderufino.com</td>
+      <td>Portal</td>
+      <td>12.6K</td>
+      <td>1</td>
+      <td>marca conocida, pero con señales públicas de baja conversación en Facebook</td>
+    </tr>
+    <tr>
+      <td>SOL FM TV Rufino</td>
+      <td>Radio + TV</td>
+      <td>12.2K</td>
+      <td>105</td>
+      <td>presencia audiovisual y archivo; conversación más baja</td>
+    </tr>
+    <tr>
+      <td>Rufino Noticias</td>
+      <td>Portal / lives</td>
+      <td>11.3K</td>
+      <td>2.6K</td>
+      <td>volumen conversacional alto para su tamaño; vivos y flujo constante</td>
+    </tr>
+    <tr>
+      <td>El Diferente</td>
+      <td>Semanario / investigación</td>
+      <td>11.2K</td>
+      <td>428</td>
+      <td>marca de identidad periodística más definida</td>
+    </tr>
+    <tr>
+      <td>Rufino Web</td>
+      <td>Portal</td>
+      <td>10.8K</td>
+      <td>626</td>
+      <td>mejor puente Facebook + Instagram del ecosistema</td>
+    </tr>
+    <tr>
+      <td>FM Panamericana 105.7</td>
+      <td>Radio / streaming / debate</td>
+      <td>9.6K</td>
+      <td>n/d accesible</td>
+      <td>buen posicionamiento de marca; debates y transmisiones</td>
+    </tr>
+    <tr>
+      <td>FM Universal 98.9</td>
+      <td>Radio</td>
+      <td>4.7K</td>
+      <td>2</td>
+      <td>presencia residual, baja actividad visible</td>
+    </tr>
+    <tr>
+      <td>Conectados / InfoConectados</td>
+      <td>Proyecto / noticias</td>
+      <td>474</td>
+      <td>1</td>
+      <td>marca emergente; aún sin escala competitiva</td>
+    </tr>
+  </tbody>
+</table>
+      <p class="small">Lectura: “hablando de esto” no equivale a calidad editorial, pero sí da una pista de intensidad conversacional pública en Facebook.</p>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="card span-6">
+      <h2>De qué se habla</h2>
+      <p><span class="pill">obras</span><span class="pill">calles</span><span class="pill">repavimentación</span><span class="pill">agua</span><span class="pill">cloacas</span><span class="pill">salud</span><span class="pill">guardias</span><span class="pill">viviendas</span><span class="pill">juicios</span><span class="pill">robos</span><span class="pill">eventos</span><span class="pill">aniversario de la ciudad</span><span class="pill">agenda municipal</span><span class="pill">elecciones</span></p>
+      <p>En la conversación visible predominan el <strong>reclamo práctico</strong>, la <strong>comparación política</strong> y la <strong>actualización de servicio</strong>. La gente reacciona cuando el tema toca el cuerpo de la ciudad: tránsito, barrio, salud, obra, seguridad, justicia, trámite, clima, corte, agua.</p>
+    </div>
+    <div class="card span-6">
+      <h2>De qué no se habla lo suficiente</h2>
+      <p><span class="pill bad">seguimiento de obras</span><span class="pill bad">presupuesto ejecutado</span><span class="pill bad">agro real</span><span class="pill bad">empleo joven</span><span class="pill bad">alquileres</span><span class="pill bad">economía local con datos</span><span class="pill bad">salud mental</span><span class="pill bad">agenda cultural permanente</span><span class="pill bad">educación como sistema</span></p>
+      <p>El agujero no es temático sino metodológico: casi todo aparece como <strong>evento o comunicado</strong>, no como serie, problema estructural o investigación con continuidad.</p>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="card span-12">
+      <h2>Matriz temática</h2>
+      <table border="1" class="dataframe table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>tema</th>
+      <th>peso</th>
+      <th>se_habla_de</th>
+      <th>se_habla_poco_de</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Política local y gestión</td>
+      <td>Muy alto</td>
+      <td>obras, anuncios, intendencia, concejo, internas, comparaciones entre gestiones</td>
+      <td>presupuesto abierto, ejecución real, indicadores comparados, seguimiento sistemático</td>
+    </tr>
+    <tr>
+      <td>Obras públicas e infraestructura</td>
+      <td>Muy alto</td>
+      <td>calles, repavimentación, barrios, desagües, conectividad, agua, cloacas, rutas</td>
+      <td>plazos, costo final, hitos verificables, tablero público de avance</td>
+    </tr>
+    <tr>
+      <td>Seguridad y policiales</td>
+      <td>Muy alto</td>
+      <td>robos, accidentes, mensajes de vecinos, urgencias, justicia, juicio Giuliana</td>
+      <td>análisis de causas, prevención, datos históricos, seguimiento judicial serio</td>
+    </tr>
+    <tr>
+      <td>Salud</td>
+      <td>Alto</td>
+      <td>SAMCo, guardias, sanatorio, solidaridad, campañas, falta de atención</td>
+      <td>series de datos, especialistas, acceso territorial, salud mental</td>
+    </tr>
+    <tr>
+      <td>Educación</td>
+      <td>Medio</td>
+      <td>carreras, escuela agrotécnica, actos, profesorados, iniciativas puntuales</td>
+      <td>rendimiento, abandono, oferta insuficiente, empleo joven vinculado a educación</td>
+    </tr>
+    <tr>
+      <td>Cultura y comunidad</td>
+      <td>Medio</td>
+      <td>aniversario de Rufino, ferias, música, clubes, fiestas, homenajes, memoria local</td>
+      <td>crítica cultural, agenda permanente, nuevos artistas, economía cultural</td>
+    </tr>
+    <tr>
+      <td>Campo / agro / economía regional</td>
+      <td>Medio-bajo en medios masivos; alto como oportunidad</td>
+      <td>rutas, ocasional agrotécnica, clima, expo</td>
+      <td>márgenes, flete, granos, logística, productores, cooperativas, cadena de valor</td>
+    </tr>
+    <tr>
+      <td>Trabajo, precios y economía cotidiana</td>
+      <td>Medio</td>
+      <td>comercios, publicidad, sorteos, servicios, algunos conflictos laborales</td>
+      <td>salarios, empleo joven, alquileres, costo de vida local, informalidad</td>
+    </tr>
+  </tbody>
+</table>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="card span-12">
+      <h2>Personas y actores públicos a seguir</h2>
+      <table border="1" class="dataframe table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>actor</th>
+      <th>rol</th>
+      <th>likes</th>
+      <th>hablando</th>
+      <th>clima</th>
+      <th>foco</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Natalio Lattanzi</td>
+      <td>Intendente</td>
+      <td>n/d accesible</td>
+      <td>n/d accesible</td>
+      <td>mixto / polarizado</td>
+      <td>gestión, conectividad, obras, aniversarios, agenda oficial</td>
+    </tr>
+    <tr>
+      <td>Fede Carballeira</td>
+      <td>dirigente / gestión provincial</td>
+      <td>3.6K-3.7K</td>
+      <td>148-312</td>
+      <td>positivo en comunidad propia, competitivo en disputa política</td>
+      <td>desarrollo productivo, instituciones, ciudad, identidad</td>
+    </tr>
+    <tr>
+      <td>Gisela Reinoso</td>
+      <td>concejal</td>
+      <td>2.35K</td>
+      <td>2</td>
+      <td>más institucional que masivo</td>
+      <td>viviendas, educación, ordenanzas, escuela, seguridad vial</td>
+    </tr>
+    <tr>
+      <td>Norberto E. Gonzalez</td>
+      <td>referente / productor de contenidos</td>
+      <td>n/d accesible</td>
+      <td>n/d accesible</td>
+      <td>comunitario / propositivo</td>
+      <td>viviendas, agua, aniversarios, lives con referentes</td>
+    </tr>
+    <tr>
+      <td>Gustavo Dehesa</td>
+      <td>ex intendente / figura de memoria política</td>
+      <td>sin página principal visible en esta muestra</td>
+      <td>-</td>
+      <td>nostalgia positiva en comentarios comparativos</td>
+      <td>aparece como vara retrospectiva de gestión</td>
+    </tr>
+    <tr>
+      <td>Hernán García</td>
+      <td>periodista / radial</td>
+      <td>sin página central visible en esta muestra</td>
+      <td>-</td>
+      <td>presencia lateral en interacciones y antecedentes</td>
+      <td>radio, política local y región</td>
+    </tr>
+    <tr>
+      <td>Christian Raúl San Martín</td>
+      <td>militancia / agenda social</td>
+      <td>perfil personal</td>
+      <td>-</td>
+      <td>vinculado a tema laboral y solidaridad</td>
+      <td>agenda social y política partidaria</td>
+    </tr>
+  </tbody>
+</table>
+      <p class="small">Acá la clave es no confundir presencia pública con dominancia real. Algunos perfiles tienen menos masa, pero sirven como termómetro de clima, base militante o narrativa sectorial.</p>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="card span-8">
+      <h2>Segmentación de audiencias útil para un medio nuevo</h2>
+      <h3>1) Adultos 25–44 políticamente activos</h3>
+      <p>Se mueven sobre todo en Facebook. Reaccionan a obras, política local, servicios y discusiones concretas. Quieren utilidad, comparación y pruebas.</p>
+      <h3>2) Adultos 45–60 redistribuidores</h3>
+      <p>Consumen radio, Facebook y WhatsApp. No siempre producen contenido, pero amplifican. Son claves para hábito y reputación.</p>
+      <h3>3) Campo / productores / logística</h3>
+      <p>Hoy aparecen poco en medios masivos, pero su centralidad económica es alta. Es una audiencia más rentable y menos atendida.</p>
+      <h3>4) Jóvenes 18–30</h3>
+      <p>La conversación pública visible los representa poco salvo en episodios virales o eventos. Ahí hay espacio para crecimiento, pero no para basar todo el arranque.</p>
+      <h3>5) Audiencia comunitaria cultural</h3>
+      <p>Actúa alrededor de aniversarios, actos, clubes, fiestas y homenajes. Existe, pero suele quedar encapsulada en la lógica del evento.</p>
+    </div>
+    <div class="card span-4">
+      <h2>Imagen pública: positiva o negativa</h2>
+      <p><span class="pill warn">No hay una “imagen única”</span></p>
+      <p>Lo correcto es hablar de <strong>climas diferenciados</strong>:</p>
+      <p><span class="pill good">Positiva</span> cuando hay identidad local, aniversario, comunidad, clubes, escuela, vivienda lograda, premio o fiesta.</p>
+      <p><span class="pill bad">Negativa</span> cuando aparecen salud, seguridad, cortes, obra demorada, agua, barrio, crisis o comparación con promesas incumplidas.</p>
+      <p><span class="pill warn">Mixta / polarizada</span> en política local, donde los comentarios comparan gestiones, cercanía, humanidad y eficacia.</p>
+      <div class="note">
+        <strong>Sobre encuestas:</strong> sin acceso a Meta Business, sondeos propios o muestreo representativo, no corresponde afirmar “imagen positiva/negativa” como dato duro. Sí se puede mapear <strong>sentimiento público observable</strong>.
+      </div>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="card span-12">
+      <h2>Hallazgos clave</h2>
+      <ol class="insights">
+        <li><strong>1. Ecosistema sobrerrepresentado por radio y Facebook</strong>Rufino no tiene un vacío de publicación; tiene un vacío de lectura, contexto y seguimiento.</li><li><strong>2. La conversación fuerte no siempre coincide con el mayor tamaño</strong>Carlos Babaja y Rufino Noticias muestran intensidades conversacionales muy altas frente a medios con más likes.</li><li><strong>3. Hay mucha agenda oficial y mucho mensaje vecinal, pero poco periodismo de trazabilidad</strong>Se anuncian obras, cortes, actos, viviendas y servicios; casi no aparece un sistema consistente de &#x27;promesa → avance → resultado&#x27;.</li><li><strong>4. El campo sigue siendo la gran zona ciega</strong>Aparece como telón de fondo de la economía local, pero no como audiencia editorial estable.</li><li><strong>5. Educación y cultura existen, pero más como evento que como sistema</strong>Hay actos, aperturas, aniversarios y efemérides; falta cobertura serial, crítica y de futuro.</li><li><strong>6. El debate político local es emocional y comparativo</strong>La imagen pública se construye en contraste: actual vs. anterior, anuncio vs. incumplimiento, cercanía vs. distancia.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="card span-6">
+      <h2>Medios que conviene incorporar sí o sí</h2>
+      <p><span class="pill good">Sucesos</span><span class="pill good">Municipalidad de Rufino</span><span class="pill good">Rufino Noticias</span><span class="pill good">Noticiasderufino.com</span><span class="pill good">Rufino Web</span></p>
+      <p>Aunque no estaban todos en tu lista inicial, dejarlos afuera te deformaría el mapa competitivo. <strong>Sucesos</strong> es referencia obligada de velocidad; <strong>Municipalidad</strong> ordena gran parte de la agenda institucional; <strong>Rufino Noticias</strong> muestra conversación alta; <strong>Rufino Web</strong> es el mejor puente entre Facebook e Instagram; <strong>Noticiasderufino.com</strong> mantiene marca histórica aunque su conversación visible hoy parezca menor.</p>
+    </div>
+    <div class="card span-6">
+      <h2>Qué debería hacer un proyecto nuevo</h2>
+      <p>1. No competir por primicia bruta.</p>
+      <p>2. Hacer tablero de obras y promesas.</p>
+      <p>3. Abrir una línea editorial de <strong>campo / logística / economía regional</strong>.</p>
+      <p>4. Tratar salud y educación con continuidad, no solo con efemérides.</p>
+      <p>5. Aprovechar Facebook para reputación y WhatsApp para hábito.</p>
+      <p>6. Usar cultura como identidad, pero no como maquillaje.</p>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="card span-12">
+      <h2>Fuentes de trabajo y notas metodológicas</h2>
+      <ul class="source-list">
+        <li>FM Rufino: 28.996 Me gusta y 4.529 personas hablando de esto.</li><li>La Tribuna del Sur: 19.532 likes y 456 hablando de esto.</li><li>El Diferente: 11.219 likes y 428 hablando de esto.</li><li>SOL FM TV Rufino: 12.222 Me gusta y 105 personas hablando de esto.</li><li>FM UNIVERSAL 98.9: 4.710-4.711 likes y 2 hablando de esto.</li><li>FM Uno: 26.880-26.911 Me gusta y 1-5 hablando de esto.</li><li>Conectados: 473-474 likes y 1 hablando de esto.</li><li>Rufino Noticias: 11.249-11.273 likes y 2.386-2.584 hablando de esto.</li><li>Municipalidad de Rufino: 18.014 likes y 1.425 hablando de esto.</li><li>Rufino Web: 10.843 likes, 626 hablando de esto; Instagram 4.132 followers.</li><li>Gisela Reinoso: 2.350 likes y 2 hablando de esto.</li><li>Fede Carballeira: 3.630-3.718 likes y 148-312 hablando de esto.</li><li>Panamericana: 9.6K likes observables en snippets relacionados.</li>
+      </ul>
+      <p class="small">Este dashboard fue armado con señales públicas observables a marzo de 2026. Algunas páginas/perfiles tienen restricciones, datos variables por snippet o actividad intermitente; por eso conviene usarlo como tablero de inteligencia editorial, no como censo estadístico definitivo.</p>
+    </div>
+  </section>
+</div>
+</body>
+</html>

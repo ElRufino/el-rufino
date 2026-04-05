@@ -1,0 +1,187 @@
+PROYECTO
+“EL RUFINO” — nuevo medio digital local de Rufino, Santa Fe, Argentina.
+
+OBJETIVO INMEDIATO
+Necesito que desarrolles un dossier maestro visual, estratégico y operativo del proyecto, con salida en:
+1) PDF 
+2) HTML interactivo
+
+No quiero una pieza genérica. Quiero un documento con espesor editorial, institucional, simbólico y operativo.
+
+ENFOQUE GENERAL DEL MEDIO
+- El medio se llama: EL RUFINO
+- Claim principal: “Lo que pasa y lo que significa.”
+- Definición base: medio digital local con noticias, contexto y seguimiento.
+- Secuencia estratégica obligatoria:
+  1. medio digital confiable
+  2. portal útil
+  3. infraestructura territorial
+- No quiero que nazca como un portal de todo. Primero medio claro, luego expansión.
+
+MARCO SIMBÓLICO E IDENTITARIO
+- Opción simbólica elegida: patriótica / territorial / argentina con guiño peronista sutil.
+- No quiero panfleto frontal en la capa principal.
+- Sí quiero memoria, trabajo, comunidad, justicia social, pertenencia territorial y respeto por quienes construyeron antes.
+- Cuidado con el uso de la bandera: no usarla de forma literal o torpe. Puede aparecer sugerida, reinterpretada, abstraída o trabajada con lenguaje visual más fino.
+
+DOMINIOS
+- Se registrarán ambos:
+  - elrufino.ar
+  - elrufino.com.ar
+- Recomendación estratégica ya tomada:
+  - marca pública principal: elrufino.ar
+  - dominio defensivo y redirección: elrufino.com.ar
+- Antes de cerrar piezas finales, verifica con fuentes oficiales actuales de NIC Argentina:
+  - disponibilidad
+  - costos
+  - métricas o contexto de uso si corresponde
+- Si das recomendaciones técnicas, considerar redirección 301 de .com.ar hacia .ar.
+
+TÍTULOS DEL DOSSIER
+Quiero usar ambos:
+- “El Rufino — Dossier fundacional”
+- “El Rufino — Documento maestro de fundación, operación e identidad”
+
+FIRMA / AUTORÍA
+- Firma institucional del documento: PROYECTO EL RUFINO
+
+LECTURAS QUE DEBE SOPORTAR EL DOCUMENTO
+Este dossier debe servir al mismo tiempo como:
+1. documento para otra IA
+2. presentación institucional
+3. guía interna de trabajo
+4. documento para socios / aliados / futuras personas del proyecto
+
+No mezclar todo caóticamente: organizarlo para que soporte esas 4 lecturas sin perder coherencia.
+
+ROLES Y PERSONAS
+No quiero inventar cargos rígidos todavía.
+Quiero que identifiques “roles” como ejes funcionales y los vincules, cuando corresponda, con prompts, funciones, responsabilidades o memorias asociadas.
+
+ESTÉTICA DEL DOCUMENTO
+Quiero una mezcla de:
+- editorial premium
+- institucional técnico
+- militante-digital
+- visual potente
+- con sensibilidad argentina / local / territorial
+
+Tu recomendación debe guiar la mezcla, no hacer collage.
+Tono visual deseado:
+- fuerte
+- cuidado
+- con jerarquía clara
+- con diseño de dossier serio, no de folleto escolar
+- con clima de fundación, ciudad, trabajo, noche, pantalla, origen, comunidad
+
+PAGINACIÓN
+- Si la cantidad de fases es menor a 20, quiero 25 páginas por fase
+- Debe incluir carátula, prólogo y desarrollo consistente
+- La pieza debe poder crecer por fases
+
+FASES YA TRABAJADAS
+FASE 1 — identidad cerrada
+Ya está definida así:
+- Nombre: El Rufino
+- Claim: Lo que pasa y lo que significa
+- Qué es: medio digital local con contexto y seguimiento
+- Qué no es todavía: portal total, multiservicio integral ni aparato partidario disfrazado
+- Audiencias prioritarias:
+  1. adultos 25–44 activos en Facebook
+  2. adultos 45–60 que consumen y redistribuyen
+  3. campo / productores / agro
+  4. jóvenes 18–30 para crecimiento
+- Pilares editoriales:
+  1. Rufino real
+  2. El campo habla
+  3. Barrio a barrio
+  4. Generación Rufino
+  5. Poder y gestión
+  6. Rufino en datos
+
+FASE 2 — producto mínimo
+Ya está definida así:
+- sitio base
+- Facebook
+- Instagram
+- WhatsApp canal
+- estructura de seguimiento
+- banco inicial de contenidos
+- plantillas visuales
+- tablero editorial
+- protocolo de publicación sensible
+- métricas mínimas
+- meta: poder sostener 30 días de publicación coherente sin desordenarse
+
+CRITERIOS EDITORIALES IMPORTANTES
+1. No competir en velocidad con Sucesos.
+2. La ventaja competitiva es:
+   - contexto
+   - seguimiento
+   - campo
+   - lectura territorial
+   - TikTok como cancha vacía, pero sin depender de eso para el arranque
+3. Toda pieza debe tener al menos dos capas:
+   - lo que pasó
+   - lo que significa / lo que falta saber / el contexto
+4. Nunca publicar comunicado sin segunda capa.
+5. El seguimiento de promesas es un eje central.
+6. Los policiales deben trabajarse con criterio:
+   - versión policial no equivale a verdad cerrada
+   - no usar imágenes humillantes como recurso automático
+   - aclarar qué está confirmado y qué no
+7. Los embeds de Facebook se usan como fuente o evidencia, no como sustituto de cobertura propia.
+
+FORMATO DEL DOSSIER
+Quiero un documento completamente visual, informativo, estratégico analitico e interactivo.
+Debe poder funcionar como:
+- pieza de lectura
+- tablero visual
+- documento de transferencia para otra IA
+- base institucional y operativa
+
+CUANDO HABLES DE PLANIFICACIÓN DE PUBLICACIÓN
+- la información puede ser de ejemplo
+- pero debe ser realista y coherente con Rufino y con el tono del proyecto
+
+ESTRUCTURA SUGERIDA DEL DOSSIER
+Puedes mejorarla, pero como base quiero algo así:
+1. Carátula
+2. Prólogo
+3. Origen del proyecto
+4. Contexto de Rufino
+5. Ecosistema de medios local
+6. Brechas editoriales
+7. Identidad de El Rufino
+8. Marco simbólico y doctrinario sutil
+9. Audiencias
+10. Pilares editoriales
+11. Producto mínimo
+12. Fases y semáforos
+13. Roles y ejes funcionales
+14. Socios, memorias, trayectorias y voces asociadas
+15. Herramientas editoriales y protocolos
+16. Planificación ejemplo de publicación
+17. Arquitectura de dominio y marca
+18. Objetivo operativo
+19. Contratapa / origen / cierre
+
+MATERIALES BASE
+Trabaja también sobre estos materiales si están disponibles o si te los re-subo:
+- Prompt maestro del proyecto
+- Plan fundacional visual
+
+MODO DE TRABAJO QUE QUIERO
+- no me hagas perder tiempo repitiendo contexto ya dado
+- si hay algo suelto, dilo ahora y no al final
+- prioriza claridad, potencia visual y estructura reutilizable
+- no seas complaciente: si algo del planteo es débil, señálalo
+- necesito criterio, no relleno
+
+TU PRIMERA TAREA EN ESTE NUEVO CHAT
+1. Reconfirmar en limpio todo lo entendido
+2. Detectar cualquier cabo suelto real
+3. Proponer la arquitectura final del dossier
+4. Decirme exactamente qué archivos debo re-subir si hiciera falta
+5. Empezar la ejecución del dossier con ese marco
+

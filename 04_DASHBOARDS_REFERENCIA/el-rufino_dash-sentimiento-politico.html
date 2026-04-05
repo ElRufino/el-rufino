@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rufino - Dashboard de sentimiento público observable y terreno político</title>
+<style>
+:root {
+  --bg:#f4f7fb;
+  --card:#ffffff;
+  --ink:#142033;
+  --muted:#5c6a80;
+  --line:#dbe4f0;
+  --blue:#2f6fe4;
+  --blue2:#4b83ff;
+  --violet:#7a45d1;
+  --gray:#95a1b6;
+  --teal:#1a8f84;
+  --red:#c45252;
+  --amber:#cc8600;
+  --soft:#eef4ff;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family: Inter, Arial, Helvetica, sans-serif; font-size:18px; line-height:1.55;
+}
+.wrap { max-width:1500px; margin:0 auto; padding:28px; }
+.hero {
+  background:linear-gradient(135deg,#ffffff 0%,#edf4ff 70%, #f7fbff 100%);
+  border:1px solid var(--line); border-radius:24px; padding:34px;
+  box-shadow:0 12px 40px rgba(20,32,51,.05); margin-bottom:22px;
+}
+.top-badges { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:16px; }
+.badge {
+  padding:7px 12px; border-radius:999px; font-size:14px; font-weight:800;
+  letter-spacing:.01em; border:1px solid var(--line); background:#fff;
+}
+.badge.blue { background:#edf3ff; color:var(--blue); border-color:#cbdcff; }
+.badge.teal { background:#eaf8f6; color:var(--teal); border-color:#cdebe7; }
+.badge.violet { background:#f3edff; color:var(--violet); border-color:#ddcffd; }
+h1 { margin:0 0 10px; font-size:44px; line-height:1.03; letter-spacing:-.03em; }
+.sub {
+  color:var(--muted); max-width:1080px; font-size:21px;
+}
+.grid {
+  display:grid; grid-template-columns:repeat(12,1fr); gap:18px; margin-bottom:18px;
+}
+.card {
+  background:var(--card); border:1px solid var(--line); border-radius:20px; padding:24px;
+  box-shadow:0 3px 10px rgba(20,32,51,.03);
+}
+.span-12 { grid-column:span 12; }
+.span-8 { grid-column:span 8; }
+.span-7 { grid-column:span 7; }
+.span-6 { grid-column:span 6; }
+.span-5 { grid-column:span 5; }
+.span-4 { grid-column:span 4; }
+.span-3 { grid-column:span 3; }
+h2 { margin:0 0 14px; font-size:30px; letter-spacing:-.02em; }
+h3 { margin:0 0 10px; font-size:22px; }
+p { margin:0 0 12px; }
+.kpi {
+  font-size:42px; font-weight:900; letter-spacing:-.03em; color:var(--blue);
+}
+.kpi-label { color:var(--muted); font-size:17px; }
+.controls {
+  display:grid; grid-template-columns:repeat(3, minmax(220px,1fr)); gap:14px;
+}
+.control label {
+  display:block; font-size:14px; color:var(--muted); font-weight:700; margin-bottom:6px;
+}
+select {
+  width:100%; border:1px solid var(--line); border-radius:12px; background:#fff; color:var(--ink);
+  font-size:17px; padding:12px 14px;
+}
+.note {
+  background:#fff8e7; border:1px solid #f0ddb0; border-radius:14px; padding:14px 16px; font-size:16px;
+}
+.note.info {
+  background:#eef6ff; border-color:#cfe2ff;
+}
+.note strong { color:#111b2d; }
+.logo-row { display:flex; flex-wrap:wrap; gap:14px; }
+.logo-chip {
+  display:flex; align-items:center; gap:12px; padding:12px 16px;
+  border-radius:16px; border:1px solid var(--line); background:#fff; min-width:220px;
+}
+.mark {
+  width:44px; height:44px; border-radius:14px; display:flex; align-items:center; justify-content:center;
+  color:#fff; font-weight:900; font-size:15px; letter-spacing:.03em;
+}
+.mark.blue { background:linear-gradient(135deg,#2f6fe4,#4b83ff); }
+.mark.violet { background:linear-gradient(135deg,#6f3ac5,#8d5de6); }
+.mark.gray { background:linear-gradient(135deg,#7f8ca3,#a9b4c4); }
+.mark.red { background:linear-gradient(135deg,#b54747,#d36a6a); }
+.logo-chip .t1 { font-size:17px; font-weight:800; }
+.logo-chip .t2 { font-size:14px; color:var(--muted); }
+
+.chart-block { margin-top:6px; }
+.bar-chart { display:grid; gap:12px; }
+.bar-row {
+  display:grid; grid-template-columns:270px 1fr 110px; gap:14px; align-items:center;
+}
+.bar-label { font-size:16px; font-weight:700; }
+.track {
+  height:20px; border-radius:999px; background:#edf2f8; overflow:hidden; border:1px solid #e0e8f3;
+}
+.fill {
+  height:100%; background:linear-gradient(90deg,#9fc0ff,#2f6fe4);
+}
+.fill.teal { background:linear-gradient(90deg,#7fddd1,#1a8f84); }
+.fill.violet { background:linear-gradient(90deg,#c1a9f2,#7a45d1); }
+.fill.gray { background:linear-gradient(90deg,#c9d1de,#8b97aa); }
+.bar-value { font-size:15px; color:var(--muted); text-align:right; }
+
+.dual-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+.table { width:100%; border-collapse:collapse; font-size:15px; }
+.table th, .table td {
+  padding:11px 9px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top;
+}
+.table th { background:#f6f9fc; font-size:14px; }
+.table tr:hover td { background:#fafcff; }
+.small { color:var(--muted); font-size:15px; }
+.columns2 { columns:2; column-gap:26px; }
+.columns2 li { break-inside:avoid; margin-bottom:10px; }
+.pills { display:flex; flex-wrap:wrap; gap:8px; }
+.pill {
+  padding:7px 11px; border-radius:999px; font-size:14px; font-weight:700;
+  background:#eef3fb; color:#42526b; border:1px solid #d8e1ef;
+}
+.pill.bad { background:#fdeeee; color:#ad3d3d; border-color:#f0d0d0; }
+.pill.good { background:#ebf8f3; color:#1d7d5e; border-color:#caebde; }
+.footer {
+  color:var(--muted); font-size:14px; padding:8px 6px 24px;
+}
+.legend { display:flex; gap:14px; flex-wrap:wrap; margin-top:10px; font-size:14px; color:var(--muted); }
+.legend .dot {
+  width:10px; height:10px; border-radius:50%; display:inline-block; margin-right:6px; transform:translateY(1px);
+}
+.segment-tip {
+  border-left:4px solid var(--blue); padding-left:14px; margin-top:8px;
+}
+.hero-stats {
+  display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:22px;
+}
+.hero-stat {
+  background:#fff; border:1px solid var(--line); border-radius:16px; padding:16px;
+}
+.hero-stat .n { font-size:30px; font-weight:900; color:var(--blue); }
+.hero-stat .l { font-size:14px; color:var(--muted); }
+@media (max-width: 1100px) {
+  .grid { grid-template-columns:1fr; }
+  .span-12,.span-8,.span-7,.span-6,.span-5,.span-4,.span-3 { grid-column:auto; }
+  .controls { grid-template-columns:1fr; }
+  .dual-grid { grid-template-columns:1fr; }
+  .bar-row { grid-template-columns:1fr; }
+  .columns2 { columns:1; }
+  .hero-stats { grid-template-columns:repeat(2,1fr); }
+  h1 { font-size:35px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <div class="top-badges">
+      <span class="badge blue">Rufino · conversación pública observable</span>
+      <span class="badge teal">Facebook + Instagram + YouTube + web local</span>
+      <span class="badge violet">Terreno político y segmentación</span>
+    </div>
+    <h1>Dashboard de sentimiento público observable y terreno político en Rufino</h1>
+    <p class="sub">
+      Informe visual e interactivo construido con señales públicas actuales. Separa dos capas:
+      <strong>métricas verificables</strong> (likes, followers, suscriptores, resultados electorales) y
+      <strong>lecturas inferenciales</strong> (sentimiento, resonancia por segmento y polarización observable).
+      No reemplaza una encuesta. Sirve para leer el clima digital, los huecos temáticos y la estructura del debate.
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="n">9</div><div class="l">marcas/medios con señal pública comparable</div></div>
+      <div class="hero-stat"><div class="n">4</div><div class="l">bloques políticos para lectura del terreno</div></div>
+      <div class="hero-stat"><div class="n">2</div><div class="l">capas analíticas: verificado + inferencial</div></div>
+      <div class="hero-stat"><div class="n">1</div><div class="l">caveat central: el origen geográfico de likes/comentarios no es público</div></div>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="card span-12">
+      <h2>Controles interactivos</h2>
+      <div class="controls">
+        <div class="control">
+          <label for="segmentSelect">Segmento de observación</label>
+          <select id="segmentSelect">
+            <option>General</option>
+            <option>Jóvenes 18-30</option>
+            <option>Adultos 25-44</option>
+            <option>Adultos 45-60</option>
+            <option>Adultos mayores 60+</option>
+            <option>Campo / productores</option>
+          </select>
+        </div>
+        <div class="control">
+          <label for="blocSelect">Bloque político destacado</label>
+          <select id="blocSelect">
+            <option>Todos</option>
+            <option>Oficialismo local / Unidos-Provincias Unidas</option>
+            <option>Fuerza Patria / peronismo</option>
+            <option>La Libertad Avanza</option>
+            <option>Otros / independientes</option>
+          </select>
+        </div>
+        <div class="control">
+          <label for="viewSelect">Vista</label>
+          <select id="viewSelect">
+            <option>Mixta (verificado + inferencial)</option>
+            <option>Solo verificado</option>
+            <option>Solo inferencial</option>
+          </select>
+        </div>
+      </div>
+      <div class="legend">
+        <span><span class="dot" style="background:#2f6fe4"></span>Volumen / alcance</span>
+        <span><span class="dot" style="background:#1a8f84"></span>Temas y segmentos</span>
+        <span><span class="dot" style="background:#7a45d1"></span>Sentimiento y polarización</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="card span-8">
+      <h2>Lectura ejecutiva</h2>
+      <p>
+        En Rufino, la conversación pública visible no gira primero por “marca de medio”, sino por
+        <strong>problemas concretos de ciudad</strong>: política local, obra pública, calles, agua, cloacas,
+        salud, seguridad, justicia y economía cotidiana. Lo cultural y educativo aparecen, pero más como
+        <strong>evento o acto</strong> que como sistema cubierto en continuidad.
+      </p>
+      <p>
+        El mapa político local también requiere una corrección de nomenclatura: en el
+        <strong>Rufino electoral 2025</strong>, los rótulos oficiales visibles fueron
+        <strong>Unidos para Cambiar Santa Fe</strong>, <strong>Más para Santa Fe</strong>,
+        <strong>La Libertad Avanza</strong> y <strong>Sin Miedo</strong>. Por eso, en este tablero
+        <strong>Fuerza Patria</strong> y <strong>Provincias Unidas</strong> se usan como lentes de familia
+        política o conversación ampliada, no como etiqueta exacta de la boleta local.
+      </p>
+      <div class="note info">
+        <strong>Pregunta clave - ¿los likes y comentarios son de Rufino?</strong><br>
+        No se puede verificar con datos públicos abiertos. Los contadores públicos de Facebook/Instagram muestran volumen,
+        pero no el domicilio de cada usuario. La localización de audiencias existe en las herramientas de insights del lado
+        administrador, no en la vista pública.
+      </div>
+    </div>
+    <div class="card span-4">
+      <h2>Identificadores visuales</h2>
+      <div class="logo-row">
+        <div class="logo-chip"><div class="mark blue">UP</div><div><div class="t1">Unidos / Provincias Unidas</div><div class="t2">oficialismo provincial-local</div></div></div>
+        <div class="logo-chip"><div class="mark blue">FP</div><div><div class="t1">Fuerza Patria</div><div class="t2">lente peronista / Más para Santa Fe</div></div></div>
+        <div class="logo-chip"><div class="mark violet">LLA</div><div><div class="t1">La Libertad Avanza</div><div class="t2">bloque libertario</div></div></div>
+        <div class="logo-chip"><div class="mark gray">OT</div><div><div class="t1">Otros</div><div class="t2">Sin Miedo e independientes</div></div></div>
+      </div>
+      <div class="segment-tip small">
+        Estos identificadores son de trabajo para el tablero. Ordenan la lectura visual del informe sin reemplazar los sellos partidarios oficiales.
+      </div>
+    </div>
+  </section>
+
+  <section class="grid" id="verifiedSection">
+    <div class="card span-7">
+      <h2>Métricas públicas verificables - medios y marcas</h2>
+      <div class="chart-block bar-chart" id="mediaLikesChart"></div>
+    </div>
+    <div class="card span-5">
+      <h2>Conversación pública visible en Facebook</h2>
+      <div class="chart-block bar-chart" id="mediaTalkingChart"></div>
+      <div class="small">Se muestran sólo las cuentas con dato público accesible de “personas hablando de esto”.</div>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="card span-6" id="electionSection">
+      <h2>Terreno político verificable - elección de concejales 2025</h2>
+      <div class="chart-block bar-chart" id="electionChart"></div>
+      <div class="small">
+        Base oficial: escrutinio definitivo local. Se usa como piso verificable del terreno político de Rufino,
+        no como encuesta de opinión actual.
+      </div>
+    </div>
+    <div class="card span-6">
+      <h2>Actores públicos con señal digital visible</h2>
+      <table class="table" id="actorsTable"></table>
+      <div class="small">
+        Para actores políticos se priorizan cuentas públicas con señal verificable abierta en Instagram y/o Facebook.
+      </div>
+    </div>
+  </section>
+
+  <section class="grid" id="inferentialSection">
+    <div class="card span-6">
+      <h2>Temas que más resuenan por segmento</h2>
+      <div class="chart-block bar-chart" id="topicChart"></div>
+      <div class="small">Índice 0-100. Lectura inferencial apoyada en agenda pública observable, no en encuesta.</div>
+    </div>
+    <div class="card span-6">
+      <h2>Sentimiento observable por bloque político</h2>
+      <div class="chart-block" id="sentimentTableWrap"></div>
+      <div class="legend">
+        <span><span class="dot" style="background:#2f6fe4"></span>volumen</span>
+        <span><span class="dot" style="background:#7a45d1"></span>polarización</span>
+        <span><span class="dot" style="background:#c45252"></span>balance negativo</span>
+        <span><span class="dot" style="background:#1a8f84"></span>balance positivo</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="card span-7">
+      <h2>De qué se habla y de qué no se habla</h2>
+      <h3>Se habla mucho de</h3>
+      <div class="pills">
+        <span class="pill">política local</span>
+        <span class="pill">gestión</span>
+        <span class="pill">obras</span>
+        <span class="pill">calles</span>
+        <span class="pill">agua y cloacas</span>
+        <span class="pill">seguridad</span>
+        <span class="pill">justicia</span>
+        <span class="pill">salud</span>
+        <span class="pill">aniversario / actos</span>
+        <span class="pill">servicios</span>
+        <span class="pill">viviendas</span>
+      </div>
+      <h3 style="margin-top:16px;">Se habla poco o mal de</h3>
+      <div class="pills">
+        <span class="pill bad">Seguimiento real de obras y promesas</span><span class="pill bad">Presupuesto ejecutado y rendición simple</span><span class="pill bad">Campo / agro / logística como audiencia editorial estable</span><span class="pill bad">Empleo joven, alquileres y costo de vida local</span><span class="pill bad">Salud mental y acceso territorial a salud</span><span class="pill bad">Educación como sistema, no sólo actos y aperturas</span><span class="pill bad">Cultura de base y economía cultural local</span>
+      </div>
+    </div>
+    <div class="card span-5">
+      <h2>Ejemplos observables que empujan el clima</h2>
+      <table class="table">
+        <thead><tr><th>Fuente</th><th>Tema</th><th>Qué muestra</th></tr></thead>
+        <tbody>
+          <tr><td>Carlos Babaja</td><td>Salud</td><td>Samco y falta de guardias activas.</td></tr><tr><td>Carlos Babaja</td><td>Justicia</td><td>Juicio por Giuliana como caso de alto impacto comunitario.</td></tr><tr><td>Rufino Noticias</td><td>Debate</td><td>Operativos de motos, economía personal y clubes como disparadores de comentarios.</td></tr><tr><td>FM Rufino</td><td>Movilización social</td><td>Cobertura de instituciones de discapacidad y agenda de servicios.</td></tr><tr><td>Rufino Web</td><td>Servicios + cultura + campo</td><td>Licitaciones, necrológicas, cine, guías y sección El Campo.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="card span-6">
+      <h2>Hallazgos críticos</h2>
+      <ol class="columns2">
+        <li>Rufino no tiene vacío de publicación. Tiene vacío de <strong>seguimiento, contexto y jerarquización</strong>.</li>
+        <li>La conversación digital local es <strong>muy Facebook-céntrica</strong> y todavía muy radial.</li>
+        <li><strong>Rufino Noticias</strong> y <strong>FM Rufino</strong> empujan conversación; <strong>Rufino Web</strong> destaca por servicios y cruce con Instagram.</li>
+        <li>La política se discute por comparación: gestión actual vs. anterior, anuncio vs. cumplimiento, cercanía vs. distancia.</li>
+        <li>El terreno político local 2025 tuvo una hegemonía clara del oficialismo de <strong>Unidos</strong>.</li>
+        <li><strong>LLA</strong> aparece como polo altamente polarizador.</li>
+        <li>El peronismo local existe como conversación, pero su traducción electoral reciente visible quedó en <strong>Más para Santa Fe</strong>, no en la etiqueta “Fuerza Patria”.</li>
+        <li><strong>Campo/agro/logística</strong> sigue siendo una zona editorial estratégicamente subatendida.</li>
+      </ol>
+    </div>
+    <div class="card span-6">
+      <h2>Metodología y límites</h2>
+      <div class="note">
+        <strong>Esto sí es sólido:</strong><br>
+        - likes/followers/suscriptores visibles<br>
+        - resultados electorales oficiales<br>
+        - existencia de posteos, lives y debates abiertos<br><br>
+        <strong>Esto es inferencial:</strong><br>
+        - balance de sentimiento por bloque<br>
+        - resonancia por segmento etario<br>
+        - lectura de imagen positiva/negativa<br><br>
+        <strong>Esto no es verificable públicamente:</strong><br>
+        - si los comentarios vienen efectivamente de residentes de Rufino<br>
+        - si los seguidores son locales en su mayoría<br>
+        - la composición exacta etaria por cuenta si no se accede al panel administrador
+      </div>
+      <p class="small" style="margin-top:12px;">
+        Por eso el tablero no se vende como encuesta. Se vende como lo que sí es:
+        <strong>inteligencia editorial y política basada en señales públicas observables</strong>.
+      </p>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="card span-12">
+      <h2>Fuentes públicas consideradas</h2>
+      <ul class="columns2 small">
+        <li>Facebook público: FM Rufino; La Tribuna del Sur; Municipalidad de Rufino; El Diferente; Rufino Noticias; Rufino Web; Carlos Babaja; FM Uno; FM Panamericana.</li><li>Instagram público: @rufinoweb, @fedecarballeiraok, @gisela_reinoso_, @natalio.lattanzi, @panamericana_rufino.</li><li>YouTube público: FM Rufino La Voz de la Ciudad; Panamericana Play; RufinoWeb Noticias; RufinoCiudad Comunicación.</li><li>Tribunal Electoral de Santa Fe: resultados definitivos de concejales 2025 para Rufino y boletas/candidaturas oficializadas.</li><li>Observación manual de snippets públicos para temas, tono y patrones de debate.</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="footer">
+    Informe visual de trabajo - Rufino, Santa Fe - actualización de señales públicas a marzo de 2026.
+  </div>
+</div>
+
+<script>
+const DATA = {"topicHeatBySegment": {"General": {"Política local y gestión": 92, "Obras públicas e infraestructura": 90, "Seguridad / policiales / justicia": 88, "Salud": 74, "Educación": 56, "Cultura / comunidad": 53, "Campo / agro / logística": 39, "Economía cotidiana / empleo": 63}, "Jóvenes 18-30": {"Política local y gestión": 58, "Obras públicas e infraestructura": 49, "Seguridad / policiales / justicia": 67, "Salud": 38, "Educación": 61, "Cultura / comunidad": 64, "Campo / agro / logística": 18, "Economía cotidiana / empleo": 71}, "Adultos 25-44": {"Política local y gestión": 96, "Obras públicas e infraestructura": 92, "Seguridad / policiales / justicia": 86, "Salud": 70, "Educación": 58, "Cultura / comunidad": 46, "Campo / agro / logística": 44, "Economía cotidiana / empleo": 76}, "Adultos 45-60": {"Política local y gestión": 91, "Obras públicas e infraestructura": 89, "Seguridad / policiales / justicia": 90, "Salud": 82, "Educación": 47, "Cultura / comunidad": 40, "Campo / agro / logística": 43, "Economía cotidiana / empleo": 66}, "Adultos mayores 60+": {"Política local y gestión": 72, "Obras públicas e infraestructura": 71, "Seguridad / policiales / justicia": 79, "Salud": 90, "Educación": 28, "Cultura / comunidad": 51, "Campo / agro / logística": 27, "Economía cotidiana / empleo": 57}, "Campo / productores": {"Política local y gestión": 77, "Obras públicas e infraestructura": 88, "Seguridad / policiales / justicia": 42, "Salud": 24, "Educación": 20, "Cultura / comunidad": 16, "Campo / agro / logística": 95, "Economía cotidiana / empleo": 82}}, "sentimentByBlocSegment": {"General": {"Oficialismo local / Unidos-Provincias Unidas": {"balance": 12, "volume": 92, "polarization": 74}, "Fuerza Patria / peronismo": {"balance": -6, "volume": 70, "polarization": 83}, "La Libertad Avanza": {"balance": -10, "volume": 78, "polarization": 91}, "Otros / independientes": {"balance": 4, "volume": 43, "polarization": 39}}, "Jóvenes 18-30": {"Oficialismo local / Unidos-Provincias Unidas": {"balance": -8, "volume": 56, "polarization": 68}, "Fuerza Patria / peronismo": {"balance": -14, "volume": 44, "polarization": 71}, "La Libertad Avanza": {"balance": 6, "volume": 61, "polarization": 86}, "Otros / independientes": {"balance": 2, "volume": 36, "polarization": 34}}, "Adultos 25-44": {"Oficialismo local / Unidos-Provincias Unidas": {"balance": 10, "volume": 95, "polarization": 78}, "Fuerza Patria / peronismo": {"balance": -4, "volume": 77, "polarization": 85}, "La Libertad Avanza": {"balance": -7, "volume": 84, "polarization": 93}, "Otros / independientes": {"balance": 3, "volume": 46, "polarization": 41}}, "Adultos 45-60": {"Oficialismo local / Unidos-Provincias Unidas": {"balance": 16, "volume": 89, "polarization": 70}, "Fuerza Patria / peronismo": {"balance": -1, "volume": 68, "polarization": 79}, "La Libertad Avanza": {"balance": -9, "volume": 72, "polarization": 89}, "Otros / independientes": {"balance": 5, "volume": 39, "polarization": 33}}, "Adultos mayores 60+": {"Oficialismo local / Unidos-Provincias Unidas": {"balance": 18, "volume": 71, "polarization": 60}, "Fuerza Patria / peronismo": {"balance": 2, "volume": 54, "polarization": 68}, "La Libertad Avanza": {"balance": -13, "volume": 49, "polarization": 73}, "Otros / independientes": {"balance": 6, "volume": 28, "polarization": 24}}, "Campo / productores": {"Oficialismo local / Unidos-Provincias Unidas": {"balance": 8, "volume": 82, "polarization": 69}, "Fuerza Patria / peronismo": {"balance": -12, "volume": 38, "polarization": 75}, "La Libertad Avanza": {"balance": 4, "volume": 73, "polarization": 88}, "Otros / independientes": {"balance": 3, "volume": 27, "polarization": 31}}}, "mediaMetrics": [{"name": "Sucesos", "type": "Portal", "fb_likes": 29900, "fb_talking": null, "ig_followers": null, "yt_subs": null, "notes": "Fuerte en breaking news, policiales y mensajes vecinales."}, {"name": "FM Rufino 106.3", "type": "Radio + noticias", "fb_likes": 28988, "fb_talking": 4317, "ig_followers": null, "yt_subs": 508, "notes": "Polo radial más conversacional de la muestra pública."}, {"name": "La Tribuna del Sur", "type": "Diario digital", "fb_likes": 19358, "fb_talking": 478, "ig_followers": null, "yt_subs": null, "notes": "Peso institucional alto; señal de conversación media."}, {"name": "Municipalidad de Rufino", "type": "Canal oficial", "fb_likes": 18014, "fb_talking": 1425, "ig_followers": null, "yt_subs": null, "notes": "Agenda oficial, obras, actos, servicios, cultura y gobierno."}, {"name": "Rufino Noticias", "type": "Portal / lives", "fb_likes": 11249, "fb_talking": 2386, "ig_followers": null, "yt_subs": null, "notes": "Relación conversación/base muy alta, usa debate y posteos calientes."}, {"name": "El Diferente", "type": "Semanario / investigación", "fb_likes": 11220, "fb_talking": 363, "ig_followers": null, "yt_subs": null, "notes": "Marca periodística más definida; investigación y fotoperiodismo."}, {"name": "Rufino Web", "type": "Portal + servicios", "fb_likes": 10845, "fb_talking": 114, "ig_followers": 4100, "yt_subs": null, "notes": "Mejor cruce local entre noticias, servicios e Instagram."}, {"name": "FM Panamericana / Panamericana Play", "type": "Radio + streaming", "fb_likes": 9600, "fb_talking": null, "ig_followers": 1245, "yt_subs": 706, "notes": "Se mueve en entrevistas, debate y transmisiones."}, {"name": "FM Uno", "type": "Radio", "fb_likes": 26900, "fb_talking": null, "ig_followers": null, "yt_subs": null, "notes": "Base histórica enorme, pero con menor conversación pública visible."}], "actorMetrics": [{"actor": "Natalio Lattanzi", "role": "Intendente", "instagram_followers": 4600, "platform": "Instagram", "notes": "Cuenta oficial orientada a gestión, obras, conectividad y agenda."}, {"actor": "Fede Carballeira", "role": "Dirigente / gestión provincial", "instagram_followers": 5500, "platform": "Instagram", "notes": "Instalación institucional-productiva; vínculo con infraestructura y territorio."}, {"actor": "Gisela Reinoso", "role": "Concejal", "instagram_followers": 2568, "platform": "Instagram", "notes": "Perfil institucional, legislativo y barrial."}], "electionResults": [{"bloc": "Oficialismo local / Unidos", "ballot": "Unidos para Cambiar Santa Fe", "votes": 3872, "share": 57.05, "color": "#2f6fe4"}, {"bloc": "Peronismo local / Fuerza Patria-lente", "ballot": "Más para Santa Fe", "votes": 1027, "share": 15.13, "color": "#4b83ff"}, {"bloc": "La Libertad Avanza", "ballot": "La Libertad Avanza", "votes": 943, "share": 13.89, "color": "#7a45d1"}, {"bloc": "Otros", "ballot": "Sin Miedo", "votes": 790, "share": 11.63, "color": "#8d99ae"}], "gaps": ["Seguimiento real de obras y promesas", "Presupuesto ejecutado y rendición simple", "Campo / agro / logística como audiencia editorial estable", "Empleo joven, alquileres y costo de vida local", "Salud mental y acceso territorial a salud", "Educación como sistema, no sólo actos y aperturas", "Cultura de base y economía cultural local"], "examples": [{"source": "Carlos Babaja", "theme": "Salud", "note": "Samco y falta de guardias activas."}, {"source": "Carlos Babaja", "theme": "Justicia", "note": "Juicio por Giuliana como caso de alto impacto comunitario."}, {"source": "Rufino Noticias", "theme": "Debate", "note": "Operativos de motos, economía personal y clubes como disparadores de comentarios."}, {"source": "FM Rufino", "theme": "Movilización social", "note": "Cobertura de instituciones de discapacidad y agenda de servicios."}, {"source": "Rufino Web", "theme": "Servicios + cultura + campo", "note": "Licitaciones, necrológicas, cine, guías y sección El Campo."}]};
+
+function formatK(v) {
+  if (v === null || v === undefined) return "n/d";
+  if (v >= 1000) return (v/1000).toFixed(v % 1000 === 0 ? 0 : 1) + "k";
+  return String(v);
+}
+
+function makeBarChart(targetId, rows, colorClass="") {
+  const el = document.getElementById(targetId);
+  el.innerHTML = "";
+  const max = Math.max(...rows.map(r => r.value), 1);
+  rows.forEach(r => {
+    const row = document.createElement("div");
+    row.className = "bar-row";
+    row.innerHTML = `
+      <div class="bar-label">${r.label}</div>
+      <div class="track"><div class="fill ${r.color || colorClass}" style="width:${(r.value/max)*100}%"></div></div>
+      <div class="bar-value">${r.display || r.value}</div>
+    `;
+    el.appendChild(row);
+  });
+}
+
+function renderMediaLikes() {
+  const rows = [...DATA.mediaMetrics]
+    .sort((a,b)=>(b.fb_likes||0)-(a.fb_likes||0))
+    .map(m => ({
+      label: m.name,
+      value: m.fb_likes || 0,
+      display: formatK(m.fb_likes),
+      color: "blue"
+    }));
+  makeBarChart("mediaLikesChart", rows, "blue");
+}
+
+function renderTalking() {
+  const rows = DATA.mediaMetrics
+    .filter(m => m.fb_talking !== null && m.fb_talking !== undefined)
+    .sort((a,b)=>b.fb_talking-a.fb_talking)
+    .map(m => ({
+      label: m.name,
+      value: m.fb_talking,
+      display: formatK(m.fb_talking),
+      color: "violet"
+    }));
+  makeBarChart("mediaTalkingChart", rows, "violet");
+}
+
+function renderElection(blocFilter) {
+  let rows = DATA.electionResults.map(r => ({
+      label: r.ballot,
+      value: r.share,
+      display: r.share.toFixed(2) + "%",
+      color: r.ballot.includes("Libertad") ? "violet" : (r.ballot.includes("Más") ? "blue" : (r.ballot.includes("Sin") ? "gray" : "blue"))
+  }));
+  if (blocFilter && blocFilter !== "Todos") {
+    rows = rows.filter(r => {
+      if (blocFilter.includes("Libertad")) return r.label.includes("Libertad");
+      if (blocFilter.includes("Fuerza Patria")) return r.label.includes("Más");
+      if (blocFilter.includes("Unidos")) return r.label.includes("Unidos");
+      if (blocFilter.includes("Otros")) return r.label.includes("Sin");
+      return true;
+    });
+  }
+  makeBarChart("electionChart", rows, "blue");
+}
+
+function renderActors() {
+  const el = document.getElementById("actorsTable");
+  el.innerHTML = `
+    <thead><tr><th>Actor</th><th>Rol</th><th>Señal pública</th><th>Lectura breve</th></tr></thead>
+    <tbody>
+      ${DATA.actorMetrics.map(a => `<tr><td>${a.actor}</td><td>${a.role}</td><td>${formatK(a.instagram_followers)} seguidores en ${a.platform}</td><td>${a.notes}</td></tr>`).join("")}
+    </tbody>
+  `;
+}
+
+function renderTopics(segment) {
+  const d = DATA.topicHeatBySegment[segment] || DATA.topicHeatBySegment["General"];
+  const rows = Object.entries(d)
+    .sort((a,b)=>b[1]-a[1])
+    .map(([k,v]) => ({
+      label:k, value:v, display:String(v), color:"teal"
+    }));
+  makeBarChart("topicChart", rows, "teal");
+}
+
+function renderSentiment(segment, blocFilter) {
+  const d = DATA.sentimentByBlocSegment[segment] || DATA.sentimentByBlocSegment["General"];
+  let entries = Object.entries(d);
+  if (blocFilter && blocFilter !== "Todos") {
+    entries = entries.filter(([k,_]) => k === blocFilter);
+  }
+  const wrap = document.getElementById("sentimentTableWrap");
+  wrap.innerHTML = `
+    <table class="table">
+      <thead>
+        <tr><th>Bloque</th><th>Volumen</th><th>Polarización</th><th>Balance</th><th>Lectura</th></tr>
+      </thead>
+      <tbody>
+        ${entries.map(([bloc,vals]) => {
+          const bal = vals.balance;
+          let read = "mixto";
+          if (bal >= 12) read = "tendencia positiva";
+          else if (bal > 0) read = "ligeramente positiva";
+          else if (bal <= -12) read = "tendencia negativa";
+          else if (bal < 0) read = "ligeramente negativa";
+          return `<tr>
+            <td><strong>${bloc}</strong></td>
+            <td>${vals.volume} / 100</td>
+            <td>${vals.polarization} / 100</td>
+            <td style="color:${bal >= 0 ? '#1a8f84' : '#c45252'}; font-weight:800">${bal}</td>
+            <td>${read}</td>
+          </tr>`;
+        }).join("")}
+      </tbody>
+    </table>
+    <div class="small" style="margin-top:10px;">
+      Balance = orientación tonal del clima observable. Volumen = presencia de conversación. Polarización = fricción y división. Todo en clave inferencial.
+    </div>
+  `;
+}
+
+function applyView(view) {
+  const verified = document.getElementById("verifiedSection");
+  const election = document.getElementById("electionSection");
+  const inferential = document.getElementById("inferentialSection");
+  if (view === "Solo verificado") {
+    verified.style.display = "";
+    election.parentElement.style.display = "";
+    inferential.style.display = "none";
+  } else if (view === "Solo inferencial") {
+    verified.style.display = "none";
+    election.parentElement.style.display = "";
+    inferential.style.display = "";
+  } else {
+    verified.style.display = "";
+    election.parentElement.style.display = "";
+    inferential.style.display = "";
+  }
+}
+
+function rerender() {
+  const segment = document.getElementById("segmentSelect").value;
+  const bloc = document.getElementById("blocSelect").value;
+  const view = document.getElementById("viewSelect").value;
+  renderMediaLikes();
+  renderTalking();
+  renderElection(bloc);
+  renderActors();
+  renderTopics(segment);
+  renderSentiment(segment, bloc);
+  applyView(view);
+}
+
+document.getElementById("segmentSelect").addEventListener("change", rerender);
+document.getElementById("blocSelect").addEventListener("change", rerender);
+document.getElementById("viewSelect").addEventListener("change", rerender);
+rerender();
+</script>
+</body>
+</html>

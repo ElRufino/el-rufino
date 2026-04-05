@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EL RUFINO · Dashboard Analítico</title>
+<style>
+:root {
+  --bg:#f4f7fb;
+  --card:#ffffff;
+  --ink:#172133;
+  --muted:#60708a;
+  --line:#dbe3ef;
+  --brand:#1d4f91;
+  --brand2:#4f83c2;
+  --accent:#d9a22b;
+  --green:#1e8b5c;
+  --amber:#bb7b00;
+  --red:#ba4b4b;
+  --shadow:0 10px 30px rgba(30,60,100,.08);
+  --radius:18px;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0;
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  color:var(--ink);
+  background:linear-gradient(180deg,#f8fbff 0%, var(--bg) 100%);
+  font-size:18px;
+}
+.wrap { max-width:1440px; margin:0 auto; padding:28px; }
+.hero {
+  background:linear-gradient(135deg,#ffffff 0%, #eef4ff 60%, #fdf7eb 100%);
+  border:1px solid var(--line);
+  border-radius:26px;
+  padding:30px 32px 24px;
+  box-shadow:var(--shadow);
+  margin-bottom:18px;
+}
+.brandline {
+  display:flex; align-items:center; gap:16px; margin-bottom:12px;
+}
+.logo {
+  width:66px; height:66px; border-radius:18px;
+  background:linear-gradient(135deg,var(--brand) 0%, var(--brand2) 100%);
+  color:white; display:flex; align-items:center; justify-content:center;
+  font-size:28px; font-weight:800; letter-spacing:-0.04em;
+  box-shadow:0 8px 20px rgba(29,79,145,.22);
+}
+h1 {
+  margin:0 0 8px; font-size:44px; line-height:1.05; letter-spacing:-0.03em;
+}
+.sub {
+  font-size:22px; color:var(--muted); max-width:1100px; margin-bottom:16px;
+}
+.badges { display:flex; flex-wrap:wrap; gap:10px; }
+.badge {
+  padding:8px 12px; border-radius:999px; font-size:14px; font-weight:700;
+  background:#edf4ff; color:var(--brand); border:1px solid #d9e7fb;
+}
+.toolbar {
+  display:flex; flex-wrap:wrap; gap:16px; align-items:flex-end;
+  background:var(--card); border:1px solid var(--line); border-radius:20px;
+  padding:18px 20px; margin-bottom:18px; box-shadow:var(--shadow);
+}
+.control label {
+  display:block; font-size:14px; color:var(--muted); font-weight:700; margin-bottom:6px;
+}
+select {
+  appearance:none; border:1px solid var(--line); background:#fff; color:var(--ink);
+  border-radius:12px; padding:12px 14px; font-size:17px; min-width:240px;
+}
+.control-group {
+  display:flex; flex-wrap:wrap; gap:8px;
+}
+.btn {
+  border:1px solid var(--line); background:#fff; color:var(--ink);
+  padding:11px 14px; border-radius:12px; cursor:pointer; font-size:16px; font-weight:700;
+}
+.btn.active {
+  background:var(--brand); color:#fff; border-color:var(--brand);
+  box-shadow:0 8px 18px rgba(29,79,145,.18);
+}
+.kpis {
+  display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:18px;
+}
+.card {
+  background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+  padding:22px; box-shadow:var(--shadow);
+}
+.kpi-value {
+  font-size:32px; line-height:1.05; font-weight:800; letter-spacing:-0.03em; color:var(--brand);
+  margin-bottom:6px;
+}
+.kpi-label { font-size:15px; color:var(--muted); }
+.grid {
+  display:grid; grid-template-columns:repeat(12,1fr); gap:18px; margin-bottom:18px;
+}
+.span-12 { grid-column:span 12; }
+.span-8 { grid-column:span 8; }
+.span-7 { grid-column:span 7; }
+.span-6 { grid-column:span 6; }
+.span-5 { grid-column:span 5; }
+.span-4 { grid-column:span 4; }
+h2 {
+  margin:0 0 12px; font-size:28px; letter-spacing:-0.02em;
+}
+p { margin:0 0 12px; }
+.muted { color:var(--muted); }
+.summary {
+  font-size:19px; color:#28354d;
+}
+.hbars { display:grid; gap:12px; }
+.hbar-row {
+  display:grid; grid-template-columns:270px 1fr 62px; gap:12px; align-items:center;
+  font-size:16px;
+}
+.hbar-label { color:#23314a; }
+.hbar-track {
+  height:18px; border-radius:999px; background:#edf2f8; overflow:hidden; border:1px solid #e3e9f2;
+}
+.hbar-fill {
+  height:100%; border-radius:999px;
+  background:linear-gradient(90deg,#91b8e6 0%, var(--brand) 100%);
+}
+.small-note {
+  margin-top:10px; font-size:15px; color:var(--muted);
+}
+.legend {
+  display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;
+}
+.pill {
+  padding:7px 10px; border-radius:999px; font-size:14px; font-weight:700;
+  border:1px solid var(--line); background:#f7f9fc; color:#32425f;
+}
+.table {
+  width:100%; border-collapse:collapse; font-size:16px;
+}
+.table th, .table td {
+  text-align:left; padding:11px 8px; border-bottom:1px solid var(--line); vertical-align:top;
+}
+.table th { background:#f6f9fd; font-size:14px; color:#49607e; }
+.table tr:hover td { background:#fafcff; }
+.status {
+  display:inline-block; padding:6px 10px; border-radius:999px; font-size:14px; font-weight:800;
+}
+.verde { background:#e9f7ef; color:var(--green); }
+.amarillo { background:#fff3dd; color:var(--amber); }
+.rojo { background:#fdeaea; color:var(--red); }
+.seq {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:14px;
+}
+.seq .step {
+  border:1px solid var(--line); background:#fbfcfe; border-radius:16px; padding:18px;
+}
+.seq .num {
+  font-size:14px; color:var(--muted); font-weight:800; margin-bottom:8px;
+}
+.seq .title {
+  font-size:22px; font-weight:800; letter-spacing:-0.02em; margin-bottom:4px;
+}
+.narratives {
+  display:grid; grid-template-columns:repeat(2,1fr); gap:12px;
+}
+.narr {
+  padding:16px; border-radius:16px; background:#f8fbff; border:1px solid var(--line);
+  font-size:17px; line-height:1.45;
+}
+.footer-note {
+  font-size:14px; color:var(--muted); text-align:center; padding:10px 0 20px;
+}
+@media (max-width:1100px) {
+  .kpis { grid-template-columns:repeat(2,1fr); }
+  .grid { grid-template-columns:1fr; }
+  .span-12,.span-8,.span-7,.span-6,.span-5,.span-4 { grid-column:auto; }
+  .seq, .narratives { grid-template-columns:1fr; }
+  .hbar-row { grid-template-columns:1fr; }
+  h1 { font-size:34px; }
+  .sub { font-size:20px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <div class="brandline">
+      <div class="logo">ER</div>
+      <div>
+        <div class="badge">PROYECTO EL RUFINO</div>
+        <h1>Dashboard Analítico · EL RUFINO</h1>
+      </div>
+    </div>
+    <div class="sub" id="hero-sub"></div>
+    <div class="badges">
+      <div class="badge">Medio digital confiable primero</div>
+      <div class="badge">Contexto + seguimiento + territorio</div>
+      <div class="badge">Lectura interna y operativa</div>
+      <div class="badge">Tema base: Rufino, Santa Fe</div>
+    </div>
+  </section>
+
+  <section class="toolbar">
+    <div class="control">
+      <label>Segmento de lectura</label>
+      <select id="segmentSelect"></select>
+    </div>
+    <div class="control">
+      <label>Vista analítica</label>
+      <div class="control-group" id="viewButtons"></div>
+    </div>
+  </section>
+
+  <section class="kpis" id="kpis"></section>
+
+  <section class="grid" id="view-estrategia">
+    <div class="card span-7">
+      <h2>Resumen estratégico del segmento</h2>
+      <p class="summary" id="segment-summary"></p>
+      <div class="small-note">La lectura cambia con el segmento. Acá el cambio es deliberadamente visible: canales, pilares y vacíos se recalculan según la audiencia seleccionada.</div>
+    </div>
+    <div class="card span-5">
+      <h2>Secuencia obligatoria del proyecto</h2>
+      <div class="seq" id="seq"></div>
+    </div>
+    <div class="card span-6">
+      <h2>Pilares editoriales con mayor tracción</h2>
+      <div class="hbars" id="pillars-bars"></div>
+    </div>
+    <div class="card span-6">
+      <h2>Plataformas prioritarias</h2>
+      <div class="hbars" id="platform-bars"></div>
+      <div class="small-note">Esto no reemplaza la operación diaria. Ordena dónde poner energía primero.</div>
+    </div>
+  </section>
+
+  <section class="grid" id="view-conversacion" style="display:none">
+    <div class="card span-6">
+      <h2>De qué se habla</h2>
+      <div class="hbars" id="spoken-bars"></div>
+    </div>
+    <div class="card span-6">
+      <h2>De qué no se habla lo suficiente</h2>
+      <div class="hbars" id="missing-bars"></div>
+      <div class="small-note">Acá suele estar la oportunidad real de El Rufino: no en sumarse al ruido, sino en cubrir la zona ciega.</div>
+    </div>
+    <div class="card span-12">
+      <h2>Narrativas dominantes del ecosistema</h2>
+      <div class="narratives" id="narratives"></div>
+    </div>
+  </section>
+
+  <section class="grid" id="view-competencia" style="display:none">
+    <div class="card span-6">
+      <h2>Presión competitiva por marca</h2>
+      <div class="hbars" id="competitor-bars"></div>
+    </div>
+    <div class="card span-6">
+      <h2>Brechas de los competidores</h2>
+      <table class="table" id="competitors-table"></table>
+    </div>
+  </section>
+
+  <section class="grid" id="view-operacion" style="display:none">
+    <div class="card span-6">
+      <h2>Foco por fase</h2>
+      <div class="hbars" id="phase-bars"></div>
+    </div>
+    <div class="card span-6">
+      <h2>Semáforo del proyecto</h2>
+      <table class="table" id="semaphores-table"></table>
+    </div>
+    <div class="card span-12">
+      <h2>Qué ya está definido y qué todavía no conviene forzar</h2>
+      <div class="legend">
+        <span class="pill">Fase 1: identidad cerrada</span>
+        <span class="pill">Fase 2: producto mínimo definido</span>
+        <span class="pill">No nacer como portal de todo</span>
+        <span class="pill">No forzar aparato partidario</span>
+        <span class="pill">Infraestructura territorial: más adelante</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid" id="view-riesgos" style="display:none">
+    <div class="card span-8">
+      <h2>Riesgos analíticos más importantes</h2>
+      <table class="table">
+        <thead><tr><th>Riesgo</th><th>Por qué importa</th><th>Antídoto recomendado</th></tr></thead>
+        <tbody>
+          <tr><td>Competir en velocidad con Sucesos</td><td>Te empuja a un terreno donde el proyecto nace tarde y peor posicionado.</td><td>Llegar segundo con contexto, seguimiento y lectura territorial.</td></tr>
+          <tr><td>Querer ser portal total desde el inicio</td><td>Diluye identidad y desordena operación.</td><td>Primero medio claro; luego portal útil; luego infraestructura.</td></tr>
+          <tr><td>Hablar del territorio sin método</td><td>Se vuelve comentario, no periodismo.</td><td>Tablero de promesas, series por barrio y datos propios.</td></tr>
+          <tr><td>Subestimar el campo</td><td>Perdés una audiencia rentable y casi huérfana editorialmente.</td><td>Línea agro/logística estable desde el producto mínimo.</td></tr>
+          <tr><td>Intentar lenguaje juvenil impostado</td><td>Rompe credibilidad y genera rechazo.</td><td>Autenticidad + protagonistas locales + formatos nativos.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card span-4">
+      <h2>Alertas doctrinarias y de marca</h2>
+      <div class="legend">
+        <span class="pill">Patriótico / territorial / argentino</span>
+        <span class="pill">Guiño peronista sutil</span>
+        <span class="pill">No panfleto frontal</span>
+        <span class="pill">Bandera: sugerida, no literal</span>
+        <span class="pill">Memoria + trabajo + comunidad</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer-note">Dashboard interno basado en el material estratégico del proyecto. Uso sugerido: lectura de dirección, mesa editorial y transferencia a otras IAs o colaboradores.</div>
+</div>
+
+<script>
+const DATA = {"meta": {"project": "EL RUFINO", "claim": "Lo que pasa y lo que significa.", "base": "Medio digital local con noticias, contexto y seguimiento.", "sequence": ["medio digital confiable", "portal útil", "infraestructura territorial"], "note": "Dashboard analítico construido sobre el prompt maestro y el plan fundacional del proyecto."}, "segments": {"general": {"label": "Lectura general", "summary": "El espacio real de El Rufino no está en la velocidad, sino en el contexto, el seguimiento y la lectura territorial. El vacío editorial existe, pero no en cantidad de publicaciones: existe en método y profundidad.", "kpis": [{"label": "Ventaja competitiva", "value": "Contexto + seguimiento"}, {"label": "Canal de arranque", "value": "Facebook + WhatsApp"}, {"label": "Vacío más claro", "value": "Campo / economía regional"}, {"label": "Riesgo principal", "value": "Anunciar más de lo que se ejecuta"}], "platforms": {"Facebook": 34, "WhatsApp": 29, "Instagram": 22, "TikTok": 15}, "pillars": {"Rufino real": 90, "El campo habla": 84, "Barrio a barrio": 78, "Generación Rufino": 66, "Poder y gestión": 88, "Rufino en datos": 74}, "topics_spoken": {"Rutas RN 33 y 7": 95, "Seguridad y violencia": 88, "Política local": 82, "Inundaciones / agua": 75, "Precios e inflación": 72, "Obras municipales": 65, "Escuela agrotécnica": 60, "Empleo / éxodo juvenil": 55, "Salud / SAMCo": 50, "Fútbol / deporte": 45}, "topics_missing": {"Seguimiento de promesas": 93, "Agro y logística local": 91, "Ejecución real de obras": 88, "Economía cotidiana con datos": 82, "Educación como sistema": 74, "Agenda cultural permanente": 68}, "competitors": {"Sucesos": 92, "FM Rufino": 86, "La Tribuna del Sur": 68, "Municipalidad": 70, "El Diferente": 58, "Rufino Web": 52}, "phase_focus": {"Fase 1 · identidad": 88, "Fase 2 · producto mínimo": 95, "Fase 3 · hábito": 76, "Fase 4 · monetización": 54}}, "jovenes": {"label": "Jóvenes 18–30", "summary": "No son la base de arranque, pero sí el mayor potencial de crecimiento. Lo juvenil en Rufino aparece hoy más como queja, desarraigo o viral aislado que como comunidad editorial sostenida.", "kpis": [{"label": "Canal prioritario", "value": "Instagram + TikTok"}, {"label": "Tema sensible", "value": "Éxodo / falta de oportunidades"}, {"label": "Oportunidad", "value": "Historias locales con lenguaje nativo"}, {"label": "Riesgo", "value": "Sonar institucional o impostado"}], "platforms": {"Instagram": 34, "TikTok": 31, "Facebook": 20, "WhatsApp": 15}, "pillars": {"Rufino real": 58, "El campo habla": 28, "Barrio a barrio": 49, "Generación Rufino": 95, "Poder y gestión": 54, "Rufino en datos": 71}, "topics_spoken": {"Viral emocional / identidad": 81, "Fútbol / deporte": 67, "Empleo / éxodo juvenil": 63, "Educación / estudio afuera": 61, "Policiales virales": 57, "Cultura / eventos": 52}, "topics_missing": {"Oportunidades reales en Rufino": 94, "Historias de jóvenes que construyen": 90, "Formación y trabajo": 83, "Agenda cultural joven": 79, "Explicadores políticos simples": 68}, "competitors": {"Sucesos": 60, "FM Rufino": 38, "La Tribuna del Sur": 25, "Municipalidad": 44, "El Diferente": 33, "Rufino Web": 58}, "phase_focus": {"Fase 1 · identidad": 72, "Fase 2 · producto mínimo": 78, "Fase 3 · hábito": 82, "Fase 4 · monetización": 36}}, "activos": {"label": "Adultos 25–44 activos", "summary": "Es la base política y social más intensa del arranque. Debaten obras, gestión, tarifas, reclamos, seguridad y promesas incumplidas. Quieren argumentos y señales de seriedad.", "kpis": [{"label": "Canal prioritario", "value": "Facebook"}, {"label": "Tema sensible", "value": "Obras + política + servicios"}, {"label": "Oportunidad", "value": "Tablero de seguimiento"}, {"label": "Riesgo", "value": "Parecer una página de opinión"}], "platforms": {"Facebook": 44, "WhatsApp": 24, "Instagram": 20, "TikTok": 12}, "pillars": {"Rufino real": 94, "El campo habla": 72, "Barrio a barrio": 87, "Generación Rufino": 53, "Poder y gestión": 96, "Rufino en datos": 84}, "topics_spoken": {"Política local": 93, "Obras municipales": 88, "Rutas / infraestructura": 84, "Seguridad": 79, "Precios / inflación": 77, "Agua / cloacas": 74}, "topics_missing": {"Promesa → avance → resultado": 96, "Presupuesto y ejecución": 89, "Impacto real por barrio": 85, "Comparación histórica con datos": 78}, "competitors": {"Sucesos": 96, "FM Rufino": 88, "La Tribuna del Sur": 72, "Municipalidad": 82, "El Diferente": 62, "Rufino Web": 49}, "phase_focus": {"Fase 1 · identidad": 90, "Fase 2 · producto mínimo": 97, "Fase 3 · hábito": 83, "Fase 4 · monetización": 59}}, "mayores": {"label": "Adultos mayores 45–60+", "summary": "Son lectores, redistribuidores y amplificadores. No siempre producen contenido propio, pero ayudan a instalar reputación. La claridad, la utilidad y el tono confiable pesan más que el diseño.", "kpis": [{"label": "Canal prioritario", "value": "WhatsApp + Facebook"}, {"label": "Tema sensible", "value": "Salud + seguridad + servicios"}, {"label": "Oportunidad", "value": "Resumen diario confiable"}, {"label": "Riesgo", "value": "Sobrecargar con formato técnico"}], "platforms": {"WhatsApp": 36, "Facebook": 35, "Instagram": 17, "TikTok": 12}, "pillars": {"Rufino real": 88, "El campo habla": 57, "Barrio a barrio": 82, "Generación Rufino": 31, "Poder y gestión": 79, "Rufino en datos": 60}, "topics_spoken": {"Salud / SAMCo": 84, "Seguridad": 82, "Precios": 80, "Obras / servicios": 74, "Aniversarios / comunidad": 61}, "topics_missing": {"Información diaria filtrada": 92, "Seguimiento de salud local": 84, "Servicios y trámites claros": 80, "Memoria institucional y barrial": 69}, "competitors": {"Sucesos": 84, "FM Rufino": 94, "La Tribuna del Sur": 77, "Municipalidad": 68, "El Diferente": 54, "Rufino Web": 33}, "phase_focus": {"Fase 1 · identidad": 81, "Fase 2 · producto mínimo": 93, "Fase 3 · hábito": 88, "Fase 4 · monetización": 57}}, "campo": {"label": "Campo / productores / agro", "summary": "Es la audiencia menos atendida y, al mismo tiempo, una de las más rentables y fidelizables. La cobertura rural hoy existe más en conversaciones cerradas que en medios locales.", "kpis": [{"label": "Canal prioritario", "value": "WhatsApp + Facebook"}, {"label": "Tema sensible", "value": "Rutas + logística + costos"}, {"label": "Oportunidad", "value": "Cobertura seria del agro local"}, {"label": "Riesgo", "value": "Tratarlo como nicho accesorio"}], "platforms": {"WhatsApp": 34, "Facebook": 33, "Instagram": 18, "TikTok": 15}, "pillars": {"Rufino real": 72, "El campo habla": 98, "Barrio a barrio": 48, "Generación Rufino": 22, "Poder y gestión": 86, "Rufino en datos": 88}, "topics_spoken": {"Rutas RN 33 y 7": 96, "Política local / provincial": 72, "Clima / cosecha": 57, "Agrotécnica": 49, "Comercio regional": 45}, "topics_missing": {"Costos y márgenes locales": 95, "Flete y logística": 93, "Productores como fuente principal": 90, "Cadena de valor regional": 87, "Datos agro propios": 82}, "competitors": {"Sucesos": 28, "FM Rufino": 34, "La Tribuna del Sur": 22, "Municipalidad": 41, "El Diferente": 30, "Rufino Web": 20}, "phase_focus": {"Fase 1 · identidad": 76, "Fase 2 · producto mínimo": 89, "Fase 3 · hábito": 84, "Fase 4 · monetización": 72}}}, "fixed": {"competitors_meta": [{"name": "Sucesos", "fb": "29.731", "type": "Portal líder", "gap": "velocidad sin contexto"}, {"name": "FM Rufino 106.3", "fb": "28.712", "type": "Radio + digital", "gap": "mucho tiempo real, poco archivo útil"}, {"name": "La Tribuna del Sur", "fb": "19.327", "type": "Diario local", "gap": "menos segmentación por audiencia"}, {"name": "Municipalidad", "fb": "17.983", "type": "Canal oficial", "gap": "agenda oficial, no seguimiento crítico"}, {"name": "El Diferente", "fb": "11.011", "type": "Portal / papel", "gap": "identidad fuerte, menor escala"}, {"name": "Rufino Web", "fb": "10.634", "type": "Portal + IG", "gap": "mejor conexión visual, menor peso político"}], "narratives": ["El gobierno promete y no cumple", "Rufino no tiene futuro para los jóvenes", "La inseguridad está peor que antes", "El campo sostiene todo y le dan poco"], "sequencing": [{"step": "1", "title": "Medio digital confiable", "status": "prioridad máxima"}, {"step": "2", "title": "Portal útil", "status": "segunda capa"}, {"step": "3", "title": "Infraestructura territorial", "status": "horizonte posterior"}], "semaphores": [{"area": "Identidad", "status": "verde", "detail": "Nombre, claim y definición base cerrados"}, {"area": "Producto mínimo", "status": "verde", "detail": "Sitio base, Facebook, Instagram, WhatsApp y tablero editorial definidos"}, {"area": "Operación diaria", "status": "amarillo", "detail": "Necesita plantillas, ritmo y banco de contenidos ejecutable"}, {"area": "Monetización", "status": "amarillo", "detail": "Puede diseñarse, pero no debe adelantarse al hábito editorial"}, {"area": "Infraestructura territorial", "status": "rojo", "detail": "Todavía es horizonte, no dispositivo material listo"}]}};
+const views = [
+  {id:'estrategia', label:'Estrategia'},
+  {id:'conversacion', label:'Conversación'},
+  {id:'competencia', label:'Competencia'},
+  {id:'operacion', label:'Operación'},
+  {id:'riesgos', label:'Riesgos'}
+];
+
+let currentSegment = 'general';
+let currentView = 'estrategia';
+
+const segmentSelect = document.getElementById('segmentSelect');
+const viewButtons = document.getElementById('viewButtons');
+
+Object.entries(DATA.segments).forEach(([key,val]) => {
+  const op = document.createElement('option');
+  op.value = key;
+  op.textContent = val.label;
+  segmentSelect.appendChild(op);
+});
+
+views.forEach(v => {
+  const btn = document.createElement('button');
+  btn.className = 'btn' + (v.id === currentView ? ' active' : '');
+  btn.textContent = v.label;
+  btn.onclick = () => {
+    currentView = v.id;
+    syncViewButtons();
+    syncSections();
+  };
+  btn.dataset.view = v.id;
+  viewButtons.appendChild(btn);
+});
+
+segmentSelect.addEventListener('change', e => {
+  currentSegment = e.target.value;
+  renderAll();
+});
+
+function syncViewButtons() {
+  [...viewButtons.querySelectorAll('.btn')].forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.view === currentView);
+  });
+}
+
+function syncSections() {
+  views.forEach(v => {
+    const el = document.getElementById('view-' + v.id);
+    el.style.display = (v.id === currentView) ? '' : 'none';
+  });
+}
+
+function makeKpis(kpis) {
+  const wrap = document.getElementById('kpis');
+  wrap.innerHTML = '';
+  kpis.forEach(k => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `<div class="kpi-value">${k.value}</div><div class="kpi-label">${k.label}</div>`;
+    wrap.appendChild(card);
+  });
+}
+
+function renderBars(targetId, obj, suffix='') {
+  const wrap = document.getElementById(targetId);
+  wrap.innerHTML = '';
+  Object.entries(obj).sort((a,b)=>b[1]-a[1]).forEach(([label,val]) => {
+    const row = document.createElement('div');
+    row.className = 'hbar-row';
+    row.innerHTML = `
+      <div class="hbar-label">${label}</div>
+      <div class="hbar-track"><div class="hbar-fill" style="width:${val}%"></div></div>
+      <div>${val}${suffix}</div>
+    `;
+    wrap.appendChild(row);
+  });
+}
+
+function renderSeq() {
+  const wrap = document.getElementById('seq');
+  wrap.innerHTML = '';
+  DATA.fixed.sequencing.forEach(s => {
+    const el = document.createElement('div');
+    el.className = 'step';
+    el.innerHTML = `<div class="num">Paso ${s.step}</div><div class="title">${s.title}</div><div class="muted">${s.status}</div>`;
+    wrap.appendChild(el);
+  });
+}
+
+function renderNarratives() {
+  const wrap = document.getElementById('narratives');
+  wrap.innerHTML = '';
+  DATA.fixed.narratives.forEach(n => {
+    const el = document.createElement('div');
+    el.className = 'narr';
+    el.textContent = n;
+    wrap.appendChild(el);
+  });
+}
+
+function renderCompetitorsTable() {
+  const table = document.getElementById('competitors-table');
+  const rows = DATA.fixed.competitors_meta.map(c => `<tr><td>${c.name}</td><td>${c.fb}</td><td>${c.type}</td><td>${c.gap}</td></tr>`).join('');
+  table.innerHTML = `
+    <thead><tr><th>Marca</th><th>FB</th><th>Tipo</th><th>Brecha principal</th></tr></thead>
+    <tbody>${rows}</tbody>
+  `;
+}
+
+function renderSemaphores() {
+  const table = document.getElementById('semaphores-table');
+  const rows = DATA.fixed.semaphores.map(s => `<tr><td>${s.area}</td><td><span class="status ${s.status}">${s.status}</span></td><td>${s.detail}</td></tr>`).join('');
+  table.innerHTML = `<thead><tr><th>Área</th><th>Estado</th><th>Lectura</th></tr></thead><tbody>${rows}</tbody>`;
+}
+
+function renderAll() {
+  const seg = DATA.segments[currentSegment];
+  document.getElementById('hero-sub').textContent = DATA.meta.claim + ' · ' + seg.label;
+  document.getElementById('segment-summary').textContent = seg.summary;
+  makeKpis(seg.kpis);
+  renderBars('pillars-bars', seg.pillars, '%');
+  renderBars('platform-bars', seg.platforms, '%');
+  renderBars('spoken-bars', seg.topics_spoken, '%');
+  renderBars('missing-bars', seg.topics_missing, '%');
+  renderBars('competitor-bars', seg.competitors, '%');
+  renderBars('phase-bars', seg.phase_focus, '%');
+  renderSeq();
+  renderNarratives();
+  renderCompetitorsTable();
+  renderSemaphores();
+  syncSections();
+}
+
+syncViewButtons();
+renderAll();
+</script>
+</body>
+</html>
