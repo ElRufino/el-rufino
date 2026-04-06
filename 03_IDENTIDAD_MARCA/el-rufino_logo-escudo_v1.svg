@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&amp;display=swap');
+    </style>
+  </defs>
+
+  <!-- Outer ring - black -->
+  <circle cx="200" cy="200" r="190" fill="#1a1a1a"/>
+
+  <!-- Cream ring -->
+  <circle cx="200" cy="200" r="182" fill="#f5f0e8"/>
+
+  <!-- Red inner circle -->
+  <circle cx="200" cy="200" r="168" fill="#c0271b"/>
+
+  <!-- Sun rays (crema) -->
+  <g transform="translate(200, 175)" stroke="#f5f0e8" stroke-width="2.5" stroke-linecap="round">
+    <line x1="0" y1="-90" x2="0" y2="-60"/>
+    <line x1="43" y1="-77" x2="29" y2="-52"/>
+    <line x1="77" y1="-43" x2="52" y2="-29"/>
+    <line x1="90" y1="0" x2="60" y2="0"/>
+    <line x1="77" y1="43" x2="52" y2="29"/>
+    <line x1="-43" y1="-77" x2="-29" y2="-52"/>
+    <line x1="-77" y1="-43" x2="-52" y2="-29"/>
+    <line x1="-90" y1="0" x2="-60" y2="0"/>
+    <line x1="-77" y1="43" x2="-52" y2="29"/>
+    <line x1="23" y1="-87" x2="15" y2="-58"/>
+    <line x1="-23" y1="-87" x2="-15" y2="-58"/>
+    <line x1="63" y1="-63" x2="42" y2="-42"/>
+    <line x1="-63" y1="-63" x2="-42" y2="-42"/>
+    <line x1="87" y1="-23" x2="58" y2="-15"/>
+    <line x1="-87" y1="-23" x2="-58" y2="-15"/>
+  </g>
+
+  <!-- Sun circle -->
+  <circle cx="200" cy="175" r="30" fill="#f5f0e8"/>
+
+  <!-- Horizon line / pampa landscape -->
+  <path d="M 42 220 Q 120 195 200 205 Q 280 215 358 200 L 358 280 Q 280 260 200 265 Q 120 270 42 255 Z" fill="#1a1a1a" opacity="0.35"/>
+
+  <!-- Field furrows -->
+  <path d="M 80 240 Q 200 225 320 240" stroke="#1a1a1a" stroke-width="1.5" fill="none" opacity="0.4"/>
+  <path d="M 65 252 Q 200 235 335 252" stroke="#1a1a1a" stroke-width="1.5" fill="none" opacity="0.3"/>
+  <path d="M 55 264 Q 200 248 345 264" stroke="#1a1a1a" stroke-width="1.5" fill="none" opacity="0.2"/>
+
+  <!-- Wheat stalk (right side) -->
+  <g transform="translate(282, 135)">
+    <!-- Main stalk -->
+    <line x1="0" y1="80" x2="0" y2="-20" stroke="#f5f0e8" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- Grains -->
+    <ellipse cx="0" cy="-20" rx="5" ry="10" fill="#f5f0e8"/>
+    <ellipse cx="-8" cy="-10" rx="4.5" ry="8" fill="#f5f0e8" transform="rotate(-25, -8, -10)"/>
+    <ellipse cx="8" cy="-10" rx="4.5" ry="8" fill="#f5f0e8" transform="rotate(25, 8, -10)"/>
+    <ellipse cx="-9" cy="5" rx="4" ry="7.5" fill="#f5f0e8" transform="rotate(-20, -9, 5)"/>
+    <ellipse cx="9" cy="5" rx="4" ry="7.5" fill="#f5f0e8" transform="rotate(20, 9, 5)"/>
+    <ellipse cx="-8" cy="20" rx="3.5" ry="7" fill="#f5f0e8" transform="rotate(-15, -8, 20)"/>
+    <ellipse cx="8" cy="20" rx="3.5" ry="7" fill="#f5f0e8" transform="rotate(15, 8, 20)"/>
+    <ellipse cx="-7" cy="34" rx="3" ry="6" fill="#f5f0e8" transform="rotate(-12, -7, 34)"/>
+    <ellipse cx="7" cy="34" rx="3" ry="6" fill="#f5f0e8" transform="rotate(12, 7, 34)"/>
+  </g>
+
+  <!-- Black band for text -->
+  <rect x="32" y="268" width="336" height="62" rx="0" fill="#1a1a1a"/>
+
+  <!-- EL RUFINO text -->
+  <text x="200" y="312" 
+    font-family="'Playfair Display', Georgia, 'Times New Roman', serif" 
+    font-size="38" 
+    font-weight="900"
+    fill="#f5f0e8" 
+    text-anchor="middle" 
+    letter-spacing="3">EL RUFINO</text>
+
+  <!-- Thin red lines above and below band -->
+  <rect x="32" y="265" width="336" height="3" fill="#c0271b"/>
+  <rect x="32" y="330" width="336" height="3" fill="#c0271b"/>
+
+  <!-- Outer black ring stroke -->
+  <circle cx="200" cy="200" r="190" fill="none" stroke="#1a1a1a" stroke-width="4"/>
+</svg>

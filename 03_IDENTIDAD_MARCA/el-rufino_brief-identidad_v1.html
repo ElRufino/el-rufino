@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El Rufino — Brief de Identidad Visual (Opción C)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --rojo: #c0271b;
+      --negro: #1a1a1a;
+      --blanco: #ffffff;
+      --crema: #f5f0e8;
+      --crema-oscuro: #e8e0d0;
+      --gris: #666;
+      --gris-claro: #f0f0ee;
+    }
+
+    body {
+      background: var(--blanco);
+      color: var(--negro);
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 48px 40px;
+    }
+
+    /* =====================
+       PORTADA
+    ===================== */
+    .portada {
+      border-left: 5px solid var(--rojo);
+      padding: 32px 32px 32px 36px;
+      margin-bottom: 48px;
+      background: var(--crema);
+    }
+
+    .portada-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--rojo);
+      margin-bottom: 12px;
+    }
+
+    .portada-titulo {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      font-weight: 900;
+      color: var(--negro);
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+
+    .portada-sub {
+      font-size: 13px;
+      color: var(--gris);
+      margin-bottom: 20px;
+    }
+
+    .portada-meta {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      font-size: 11.5px;
+    }
+
+    .meta-label {
+      font-weight: 700;
+      color: var(--negro);
+      display: block;
+      margin-bottom: 1px;
+    }
+
+    .meta-val { color: var(--gris); }
+
+    /* =====================
+       SECCIONES
+    ===================== */
+    h2 {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--rojo);
+      margin: 40px 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--crema-oscuro);
+    }
+
+    h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--negro);
+      margin: 20px 0 8px;
+    }
+
+    p {
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: #333;
+      margin-bottom: 12px;
+    }
+
+    /* =====================
+       PALETA
+    ===================== */
+    .paleta {
+      display: flex;
+      gap: 12px;
+      margin: 16px 0;
+      flex-wrap: wrap;
+    }
+
+    .color-chip {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .color-box {
+      width: 72px;
+      height: 72px;
+      border-radius: 4px;
+      border: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .color-name {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--negro);
+    }
+
+    .color-hex {
+      font-size: 10px;
+      color: var(--gris);
+      font-family: 'Courier New', monospace;
+    }
+
+    .color-uso {
+      font-size: 9.5px;
+      color: var(--gris);
+      text-align: center;
+      max-width: 72px;
+    }
+
+    /* =====================
+       TIPOGRAFÍA
+    ===================== */
+    .tipo-demo {
+      background: var(--gris-claro);
+      padding: 16px 20px;
+      margin: 10px 0;
+      border-left: 3px solid var(--crema-oscuro);
+    }
+
+    .tipo-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gris);
+      margin-bottom: 6px;
+    }
+
+    /* =====================
+       VARIANTES DEL LOGO
+    ===================== */
+    .variantes-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 16px 0;
+    }
+
+    .variante-card {
+      border: 1px solid var(--crema-oscuro);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .variante-preview {
+      height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .variante-preview.light { background: var(--blanco); }
+    .variante-preview.dark { background: var(--negro); }
+    .variante-preview.rojo-bg { background: var(--rojo); }
+    .variante-preview.crema-bg { background: var(--crema); }
+
+    .variante-info {
+      padding: 10px 14px;
+      background: var(--blanco);
+      border-top: 1px solid var(--crema-oscuro);
+    }
+
+    .variante-nombre {
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--negro);
+      margin-bottom: 2px;
+    }
+
+    .variante-uso {
+      font-size: 10.5px;
+      color: var(--gris);
+    }
+
+    /* =====================
+       ESPECIFICACIONES
+    ===================== */
+    .spec-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 12.5px;
+    }
+
+    .spec-table th {
+      background: var(--negro);
+      color: var(--crema);
+      padding: 8px 12px;
+      text-align: left;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .spec-table td {
+      padding: 9px 12px;
+      border-bottom: 1px solid var(--crema-oscuro);
+      vertical-align: top;
+    }
+
+    .spec-table tr:nth-child(even) td { background: #fafafa; }
+
+    .spec-table td:first-child {
+      font-weight: 600;
+      width: 35%;
+    }
+
+    /* =====================
+       CHECKLIST ENTREGABLES
+    ===================== */
+    .checklist {
+      list-style: none;
+      margin: 12px 0;
+    }
+
+    .checklist li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      padding: 7px 0;
+      border-bottom: 1px solid var(--crema-oscuro);
+      font-size: 13px;
+    }
+
+    .check-box {
+      width: 16px;
+      height: 16px;
+      border: 1.5px solid var(--crema-oscuro);
+      border-radius: 2px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .check-priority {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      padding: 2px 6px;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    .p-alta { background: #fde8e8; color: var(--rojo); }
+    .p-media { background: #fef3e2; color: #c07800; }
+    .p-baja { background: #e8f4e8; color: #2a7a2a; }
+
+    /* =====================
+       ERRORES A EVITAR
+    ===================== */
+    .errores-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 12px 0;
+    }
+
+    .error-card {
+      padding: 14px;
+      border-radius: 3px;
+      font-size: 12.5px;
+      line-height: 1.5;
+    }
+
+    .error-no {
+      background: #fde8e8;
+      border-left: 3px solid var(--rojo);
+      color: #8b1a1a;
+    }
+
+    .error-si {
+      background: #e8f4e8;
+      border-left: 3px solid #2a7a2a;
+      color: #1a4a1a;
+    }
+
+    .error-icon {
+      font-size: 15px;
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    /* =====================
+       CITA DE REFERENCIA
+    ===================== */
+    .ref-images {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 12px 0;
+    }
+
+    .ref-img-card {
+      background: var(--gris-claro);
+      border-radius: 4px;
+      padding: 12px;
+      text-align: center;
+    }
+
+    .ref-img-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--negro);
+      margin-bottom: 4px;
+    }
+
+    .ref-img-desc {
+      font-size: 10.5px;
+      color: var(--gris);
+    }
+
+    .ref-img-rating {
+      font-size: 18px;
+      margin: 6px 0;
+    }
+
+    /* =====================
+       INSTRUCCIONES FINALES
+    ===================== */
+    .instruccion-box {
+      background: var(--negro);
+      color: var(--crema);
+      padding: 24px 28px;
+      margin: 32px 0;
+      border-radius: 3px;
+    }
+
+    .instruccion-box h3 {
+      color: var(--crema);
+      font-size: 16px;
+      margin-bottom: 12px;
+    }
+
+    .instruccion-box p {
+      color: rgba(245,240,232,0.8);
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .instruccion-box code {
+      background: rgba(255,255,255,0.1);
+      padding: 1px 6px;
+      border-radius: 2px;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      color: #f5c842;
+    }
+
+    /* =====================
+       PRINT
+    ===================== */
+    @media print {
+      body { padding: 24px; font-size: 12px; }
+      h2 { page-break-after: avoid; }
+      .variante-card, .error-card { page-break-inside: avoid; }
+    }
+
+    @media (max-width: 600px) {
+      body { padding: 24px 16px; }
+      .variantes-grid, .errores-grid, .ref-images { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- PORTADA -->
+<div class="portada">
+  <div class="portada-label">Documento de trabajo · Identidad Visual</div>
+  <h1 class="portada-titulo">El Rufino<br>Brief de diseño</h1>
+  <p class="portada-sub">Instrucciones completas para vectorización y producción de identidad</p>
+  <div class="portada-meta">
+    <div class="meta-item">
+      <span class="meta-label">Versión</span>
+      <span class="meta-val">1.0 · Abril 2026</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Medio</span>
+      <span class="meta-val">Portal digital local · Rufino, Santa Fe, AR</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Destino</span>
+      <span class="meta-val">Diseñador gráfico / Fiverr / Freelancer</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Software requerido</span>
+      <span class="meta-val">Adobe Illustrator o Inkscape</span>
+    </div>
+  </div>
+</div>
+
+<!-- CONTEXTO -->
+<h2>01 · Contexto del proyecto</h2>
+
+<p><strong>El Rufino</strong> es un medio digital de noticias local con sede en Rufino, ciudad de 19.000 habitantes en el sudoeste de la provincia de Santa Fe, Argentina. Su propuesta editorial es cubrir lo que otros medios locales no cubren: el contexto, el seguimiento y el significado detrás de los hechos.</p>
+
+<p>El claim del medio es: <em>"Lo que pasa y lo que significa."</em> La identidad visual debe comunicar credibilidad periodística, arraigo territorial y tono argentino auténtico. No es una marca corporativa ni un medio partidario: es un diario local del interior productivo.</p>
+
+<p><strong>Referencia simbólica:</strong> el horizonte pampeano, los silos, la ruta, el sol que sale. Narrativa visual de trabajo, origen y pertenencia territorial.</p>
+
+<!-- PALETA -->
+<h2>02 · Paleta de colores (CERRADA — no modificar)</h2>
+
+<p>Esta paleta está aprobada definitivamente. El diseñador NO debe proponer variaciones:</p>
+
+<div class="paleta">
+  <div class="color-chip">
+    <div class="color-box" style="background:#c0271b;"></div>
+    <span class="color-name">Rojo</span>
+    <span class="color-hex">#c0271b</span>
+    <span class="color-uso">Masthead, accentos, bordes primarios</span>
+  </div>
+  <div class="color-chip">
+    <div class="color-box" style="background:#1a1a1a; border-color:#333;"></div>
+    <span class="color-name">Negro</span>
+    <span class="color-hex">#1a1a1a</span>
+    <span class="color-uso">Texto, banda inferior del escudo</span>
+  </div>
+  <div class="color-chip">
+    <div class="color-box" style="background:#ffffff;"></div>
+    <span class="color-name">Blanco</span>
+    <span class="color-hex">#ffffff</span>
+    <span class="color-uso">Texto sobre rojo, fondos primarios del sitio</span>
+  </div>
+  <div class="color-chip">
+    <div class="color-box" style="background:#f5f0e8;"></div>
+    <span class="color-name">Crema</span>
+    <span class="color-hex">#f5f0e8</span>
+    <span class="color-uso">Fondos secundarios, elementos del escudo</span>
+  </div>
+</div>
+
+<p style="background:#fde8e8; padding:10px 14px; border-left:3px solid var(--rojo); font-size:12.5px; color:#8b1a1a;">
+  ⚠️ <strong>Prohibido agregar:</strong> dorado, plateado, gradientes, colores fuera de esta paleta. El logo debe funcionar a 1 color (solo negro o solo blanco) sobre cualquier fondo.
+</p>
+
+<!-- TIPOGRAFÍA -->
+<h2>03 · Tipografía</h2>
+
+<div class="tipo-demo">
+  <div class="tipo-label">Títulos — Playfair Display Bold/Black (Google Fonts · gratuita)</div>
+  <div style="font-family:'Playfair Display',serif; font-size:28px; font-weight:900; color:var(--negro);">El Rufino</div>
+  <div style="font-family:'Playfair Display',serif; font-size:16px; font-weight:700; color:var(--negro); margin-top:4px;">Lo que pasa y lo que significa</div>
+</div>
+
+<div class="tipo-demo">
+  <div class="tipo-label">Cuerpo — Source Serif 4 o Inter (Google Fonts · gratuitas)</div>
+  <div style="font-family:'Source Serif 4',serif; font-size:14px; color:#444;">Texto corrido de noticias. Legible, clásico, sin distorsiones.</div>
+  <div style="font-family:'Inter',sans-serif; font-size:12px; color:#888; margin-top:6px; letter-spacing:0.08em; text-transform:uppercase;">ETIQUETAS · NAVEGACIÓN · METADATOS</div>
+</div>
+
+<p>El logo usa <strong>Playfair Display Black (900)</strong>. El diseñador debe embedear o outlinear la tipografía en el archivo final para evitar dependencia de fuentes.</p>
+
+<!-- CONCEPTO DEL LOGO -->
+<h2>04 · Concepto del logo — Escudo circular</h2>
+
+<p>El logo es un <strong>escudo circular</strong> (badge) con los siguientes elementos, de arriba hacia abajo:</p>
+
+<table class="spec-table">
+  <thead>
+    <tr><th>Elemento</th><th>Descripción</th><th>Color</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Anillo exterior</td>
+      <td>Borde circular grueso. Define el límite del escudo.</td>
+      <td>Negro #1a1a1a</td>
+    </tr>
+    <tr>
+      <td>Anillo interior</td>
+      <td>Aro fino separando el borde del fondo. 3-5px.</td>
+      <td>Crema #f5f0e8</td>
+    </tr>
+    <tr>
+      <td>Fondo principal</td>
+      <td>Círculo interior que ocupa ~85% del escudo.</td>
+      <td>Rojo #c0271b</td>
+    </tr>
+    <tr>
+      <td>Sol naciente</td>
+      <td>Semicírculo en la parte superior del fondo rojo, con rayos irradiando. Sol = horizonte pampeano, nuevo comienzo.</td>
+      <td>Crema #f5f0e8</td>
+    </tr>
+    <tr>
+      <td>Trigo / espiga</td>
+      <td>Una espiga de trigo a la derecha del sol. Debe ser reconocible pero estilizada. Referencia: pampa, campo, producción.</td>
+      <td>Crema #f5f0e8</td>
+    </tr>
+    <tr>
+      <td>Campo / perspectiva</td>
+      <td>Líneas horizontales leves que sugieren el terreno pampeano. Opcional: silueta de horizonte. No recargar.</td>
+      <td>Negro #1a1a1a (opacidad 30-40%)</td>
+    </tr>
+    <tr>
+      <td>Banda de texto</td>
+      <td>Franja horizontal en la parte inferior del círculo. Contiene el nombre del medio.</td>
+      <td>Negro #1a1a1a</td>
+    </tr>
+    <tr>
+      <td>Nombre "EL RUFINO"</td>
+      <td>Texto en mayúsculas, Playfair Display Black. Centrado en la banda negra.</td>
+      <td>Crema #f5f0e8</td>
+    </tr>
+    <tr>
+      <td>Filetes de separación</td>
+      <td>Líneas finas (2-3px) arriba y abajo de la banda negra. Delimitación editorial.</td>
+      <td>Rojo #c0271b</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- REFERENCIAS -->
+<h2>05 · Referencia de las imágenes generadas (Gemini)</h2>
+
+<p>Se generaron 5 imágenes de referencia conceptual. Esta es la evaluación y el nivel de utilidad de cada una:</p>
+
+<div class="ref-images">
+  <div class="ref-img-card">
+    <div class="ref-img-label">Imagen 1</div>
+    <div class="ref-img-rating">⭐⭐⭐⭐</div>
+    <div class="ref-img-desc">Badge circular + silos de fondo. El concepto más completo. <strong>Usar como referencia principal.</strong> Problema: fondo negro en la presentación (corregir a crema/blanco).</div>
+  </div>
+  <div class="ref-img-card">
+    <div class="ref-img-label">Imagen 5</div>
+    <div class="ref-img-rating">⭐⭐⭐⭐</div>
+    <div class="ref-img-desc">Badge simplificado, más limpio. Escala mejor a tamaños pequeños (favicon, avatar). <strong>Usar para variante reducida.</strong></div>
+  </div>
+  <div class="ref-img-card">
+    <div class="ref-img-label">Imagen 2 y 4</div>
+    <div class="ref-img-rating">⭐⭐⭐</div>
+    <div class="ref-img-desc">Header fotográfico con ruta + silos. Referencia de ambiente visual para banners y redes. No usar como logo.</div>
+  </div>
+  <div class="ref-img-card">
+    <div class="ref-img-label">Imagen 3</div>
+    <div class="ref-img-rating">⭐⭐</div>
+    <div class="ref-img-desc">Badge con dorado. Deriva hacia cervecería o whisky. <strong>No usar.</strong> El dorado no está en la paleta aprobada.</div>
+  </div>
+</div>
+
+<p><strong>Instrucción:</strong> tomar Imagen 1 como referencia de estructura y composición. Vectorizar limpiamente, corregir a paleta B (sin fondos oscuros de presentación), y entregar en los formatos listados en la sección 07.</p>
+
+<!-- VARIANTES -->
+<h2>06 · Variantes requeridas del logo</h2>
+
+<div class="variantes-grid">
+  <div class="variante-card">
+    <div class="variante-preview light" style="padding:16px;">
+      <div style="font-family:'Playfair Display',serif; font-size:11px; font-weight:900; color:#999; letter-spacing:2px;">ESCUDO CIRCULAR</div>
+    </div>
+    <div class="variante-info">
+      <div class="variante-nombre">V1 — Escudo completo (principal)</div>
+      <div class="variante-uso">WordPress header · favicon grande · redes sociales (avatar 400×400px)</div>
+    </div>
+  </div>
+
+  <div class="variante-card">
+    <div class="variante-preview light" style="padding:16px; gap:8px; flex-direction:row; justify-content:flex-start; padding-left:24px;">
+      <div style="width:40px; height:40px; background:var(--rojo); border-radius:50%; flex-shrink:0;"></div>
+      <div>
+        <div style="font-size:8px; color:#aaa; letter-spacing:2px; font-family:Inter,sans-serif;">EL</div>
+        <div style="font-family:'Playfair Display',serif; font-size:20px; font-weight:900; color:var(--negro); line-height:1;">Rufino</div>
+        <div style="font-size:8px; color:#aaa; font-style:italic; font-family:serif;">Lo que pasa y lo que significa</div>
+      </div>
+    </div>
+    <div class="variante-info">
+      <div class="variante-nombre">V2 — Horizontal (masthead)</div>
+      <div class="variante-uso">Header WordPress · banners · firma de email</div>
+    </div>
+  </div>
+
+  <div class="variante-card">
+    <div class="variante-preview rojo-bg">
+      <div style="font-family:'Playfair Display',serif; font-size:22px; font-weight:900; color:white; letter-spacing:1px;">EL RUFINO</div>
+    </div>
+    <div class="variante-info">
+      <div class="variante-nombre">V3 — Solo texto sobre rojo</div>
+      <div class="variante-uso">Masthead alternativo · OG image · tarjetas · portadas redes</div>
+    </div>
+  </div>
+
+  <div class="variante-card">
+    <div class="variante-preview dark">
+      <div style="width:40px; height:40px; background:var(--crema); border-radius:4px; display:flex; align-items:center; justify-content:center;">
+        <span style="font-family:'Playfair Display',serif; font-size:14px; font-weight:900; color:var(--rojo);">ER</span>
+      </div>
+    </div>
+    <div class="variante-info">
+      <div class="variante-nombre">V4 — Ícono mínimo (favicon)</div>
+      <div class="variante-uso">Favicon 16×16 / 32×32 · app icon · watermark en fotos</div>
+    </div>
+  </div>
+</div>
+
+<!-- ENTREGABLES -->
+<h2>07 · Entregables requeridos</h2>
+
+<ul class="checklist">
+  <li>
+    <div class="check-box"></div>
+    <span class="check-priority p-alta">ALTA</span>
+    <div><strong>AI o SVG editable</strong> — Archivo fuente del escudo circular (V1). Capas nombradas, colores en variables de símbolo.</div>
+  </li>
+  <li>
+    <div class="check-box"></div>
+    <span class="check-priority p-alta">ALTA</span>
+    <div><strong>PNG transparente 1000×1000px</strong> — V1 sobre fondo transparente. Para WordPress y redes.</div>
+  </li>
+  <li>
+    <div class="check-box"></div>
+    <span class="check-priority p-alta">ALTA</span>
+    <div><strong>PNG transparente 400×400px</strong> — V1 optimizada para avatar de Facebook/Instagram.</div>
+  </li>
+  <li>
+    <div class="check-box"></div>
+    <span class="check-priority p-alta">ALTA</span>
+    <div><strong>SVG del escudo</strong> — Para embed inline en WordPress. Sin fuentes embebidas, texto convertido a paths.</div>
+  </li>
+  <li>
+    <div class="check-box"></div>
+    <span class="check-priority p-alta">ALTA</span>
+    <div><strong>PNG horizontal 1200×400px</strong> — V2 (logo + texto) sobre fondo rojo. Para header WordPress y banner Facebook.</div>
+  </li>
+  <li>
+    <div class="check-box"></div>
+    <span class="check-priority p-media">MEDIA</span>
+    <div><strong>ICO 32×32px</strong> — Favicon para el sitio web. Fondo transparente.</div>
+  </li>
+  <li>
+    <div class="check-box"></div>
+    <span class="check-priority p-media">MEDIA</span>
+    <div><strong>PNG 1200×628px</strong> — OG Image para compartir en redes. Logo centrado sobre fondo rojo o imagen de la RN33.</div>
+  </li>
+  <li>
+    <div class="check-box"></div>
+    <span class="check-priority p-media">MEDIA</span>
+    <div><strong>PNG versión 1 color negro</strong> — Logo solo en negro #1a1a1a sobre fondo blanco. Para documentos, sellos, impresión.</div>
+  </li>
+  <li>
+    <div class="check-box"></div>
+    <span class="check-priority p-baja">BAJA</span>
+    <div><strong>PNG versión 1 color blanco</strong> — Logo solo en blanco sobre fondo negro. Para merchandising o prendas.</div>
+  </li>
+</ul>
+
+<!-- ERRORES A EVITAR -->
+<h2>08 · Errores a evitar</h2>
+
+<div class="errores-grid">
+  <div class="error-card error-no">
+    <span class="error-icon">✗</span>
+    <strong>No usar dorado ni plateado.</strong> La imagen 3 de referencia lo tiene. No forma parte de la paleta aprobada.
+  </div>
+  <div class="error-card error-si">
+    <span class="error-icon">✓</span>
+    <strong>Solo 4 colores:</strong> rojo, negro, blanco y crema. Sin variaciones ni degradados de estos.
+  </div>
+  <div class="error-card error-no">
+    <span class="error-icon">✗</span>
+    <strong>No usar fondos negros en el escudo.</strong> El fondo de presentación negro de Gemini no es el diseño final — es el contexto oscuro de la imagen generada.
+  </div>
+  <div class="error-card error-si">
+    <span class="error-icon">✓</span>
+    <strong>El escudo tiene fondo rojo</strong> en su interior. La banda inferior es negra solo para el texto. El exterior es transparente.
+  </div>
+  <div class="error-card error-no">
+    <span class="error-icon">✗</span>
+    <strong>No agregar elementos no solicitados:</strong> mapas, coronas, laureles, estrellas, escudos heráldicos, ni símbolos patrios literales.
+  </div>
+  <div class="error-card error-si">
+    <span class="error-icon">✓</span>
+    <strong>Elementos aprobados:</strong> sol, rayos, espiga de trigo, líneas de horizonte, banda de texto. Nada más.
+  </div>
+  <div class="error-card error-no">
+    <span class="error-icon">✗</span>
+    <strong>No cambiar la tipografía.</strong> El nombre va en Playfair Display Black. Sin alternativas "similares" o "equivalentes".
+  </div>
+  <div class="error-card error-si">
+    <span class="error-icon">✓</span>
+    <strong>Tipografía convertida a paths</strong> en todos los archivos finales para evitar problemas de fuentes.
+  </div>
+</div>
+
+<!-- INSTRUCCIÓN PARA EL DISEÑADOR -->
+<div class="instruccion-box">
+  <h3>Instrucciones para el diseñador</h3>
+  <p>Usá las imágenes 1 y 5 como referencia de composición. El concepto está aprobado — no propongas variaciones de concepto, solo refinamiento vectorial.</p>
+  <p>Respetá estrictamente la paleta: <code>#c0271b</code> · <code>#1a1a1a</code> · <code>#ffffff</code> · <code>#f5f0e8</code>.</p>
+  <p>Entregá todos los archivos en una carpeta comprimida con subcarpetas por tipo: <code>/SVG</code> · <code>/PNG</code> · <code>/ICO</code> · <code>/Fuentes</code>.</p>
+  <p>Primera entrega: solo V1 (escudo completo) para aprobación antes de producir el resto de variantes.</p>
+  <p>Plazo de revisión: máximo 2 rondas de cambios incluidas en el precio pactado.</p>
+</div>
+
+<!-- PRESUPUESTO DE REFERENCIA -->
+<h2>09 · Referencia de costos (Fiverr · abril 2026)</h2>
+
+<table class="spec-table">
+  <thead>
+    <tr><th>Nivel</th><th>Precio estimado USD</th><th>Qué incluye</th><th>Recomendación</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Básico</td>
+      <td>$15–$30</td>
+      <td>1-2 variantes, PNG solamente</td>
+      <td>Solo si el presupuesto es muy ajustado</td>
+    </tr>
+    <tr>
+      <td>Estándar</td>
+      <td>$30–$80</td>
+      <td>Todas las variantes, SVG + PNG + ICO, 2 revisiones</td>
+      <td>✅ Recomendado para este proyecto</td>
+    </tr>
+    <tr>
+      <td>Premium</td>
+      <td>$80–$200</td>
+      <td>Branding kit completo, manual de uso incluido</td>
+      <td>Si se quiere manual de identidad completo</td>
+    </tr>
+  </tbody>
+</table>
+
+<p style="font-size:12px; color:var(--gris); margin-top:8px;">Términos de búsqueda en Fiverr: <em>"logo vectorize", "badge logo design", "newspaper logo design", "rediseño logo SVG"</em>. Filtrar por: 4+ estrellas · más de 50 reseñas · entrega en 3-5 días.</p>
+
+<!-- CHECKPOINT -->
+<h2>10 · Checkpoint de sesión</h2>
+
+<p style="background:var(--crema); padding:12px 16px; border-radius:3px; font-size:12.5px;">
+  <strong>Estado al entregar este brief:</strong> Identidad cerrada (Fase 1 ✅). Paleta B confirmada. Concepto escudo aprobado. Pendiente: vectorización por diseñador → entrega de SVG/PNG → implementación en WordPress child theme (Agente 3). Próximo paso: ejecutar Agente 3 con los assets finales.
+</p>
+
+</body>
+</html>
