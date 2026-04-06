@@ -255,7 +255,7 @@ El proyecto tiene 7 agentes definidos con prompts operativos listos. Los prompts
 |---|---|---|
 | Identidad (Fase 1) | 🟢 VERDE | Cerrada definitivamente |
 | Producto mínimo (Fase 2) | 🟡 AMARILLO | Arquitectura ok, requiere ejecución |
-| WordPress / técnica | 🟡 AMARILLO | Plugin v4 + child theme en test |
+| WordPress / técnica |🟢 VERDE | Plugin v4 + child theme en test |
 | Dominios | 🟡 AMARILLO | Pendiente registro NIC |
 | Sistema visual / plantillas | 🟡 AMARILLO | Paleta cerrada, falta sistema plantillas |
 | Monetización | 🔴 ROJO | Esperar hábito y reputación |
