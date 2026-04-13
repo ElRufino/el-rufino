@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Rufino — Dossier Fundacional · Fase 0</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display+SC:wght@400;700;900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Barlow+Condensed:wght@300;400;500;600;700;800;900&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#08080b;--bg2:#0e0e14;--bg3:#141420;
+  --text:#ede8d8;--text-dim:#8a8478;--text-faint:#32302c;
+  --cel:#4a8fc4;--cel-l:#7ab2d8;
+  --gold:#b89040;--gold-l:#d4ad5c;
+  --red-l:#b83040;
+  --bdr:#1e1e2a;--bdr-l:#2a2a38;
+}
+html,body{width:100%;height:100%;background:var(--bg);color:var(--text);font-family:'Libre Baskerville',Georgia,serif;overflow:hidden;}
+#app{width:100vw;height:100vh;display:flex;flex-direction:column;}
+#pbar{height:2px;background:var(--cel);transition:width .3s;flex-shrink:0;}
+
+/* SLIDES */
+.slide{display:none;flex:1;position:relative;overflow:hidden;}
+.slide.on{display:flex;}
+
+/* NAV */
+#nav{height:46px;background:rgba(8,8,11,.98);border-top:1px solid var(--bdr-l);display:flex;align-items:center;justify-content:space-between;padding:0 28px;flex-shrink:0;}
+.nb{background:none;border:1px solid var(--bdr-l);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:5px 16px;cursor:pointer;transition:all .2s;}
+.nb:hover{border-color:var(--cel);color:var(--cel);}
+.nb:disabled{opacity:.18;cursor:default;}
+#ni{font-family:'Space Mono',monospace;font-size:9px;color:var(--text-dim);text-align:center;line-height:1.7;}
+
+/* UTILS */
+.sl{font-family:'Space Mono',monospace;font-size:8.5px;color:var(--text-faint);position:absolute;bottom:12px;right:28px;}
+.sec{font-family:'Barlow Condensed',sans-serif;font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-faint);position:absolute;top:16px;right:28px;}
+.al{width:38px;height:3px;background:var(--cel);margin-bottom:20px;}
+.al.g{background:var(--gold);}
+.al.r{background:var(--red-l);}
+.ey{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--cel);margin-bottom:14px;}
+.h1{font-family:'Playfair Display SC',serif;font-size:clamp(28px,4.2vw,54px);font-weight:700;color:var(--text);line-height:1.04;margin-bottom:22px;}
+.h2{font-family:'Barlow Condensed',sans-serif;font-size:clamp(22px,3vw,42px);font-weight:800;letter-spacing:.02em;text-transform:uppercase;color:var(--text);line-height:1.06;margin-bottom:16px;}
+.h3{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-l);margin-bottom:10px;}
+.bt{font-family:'Libre Baskerville',serif;font-size:clamp(11.5px,1.2vw,13.5px);color:var(--text-dim);line-height:1.9;max-width:620px;}
+.bt p+p{margin-top:10px;}
+.bt strong{color:var(--text);}
+.bq{font-family:'Libre Baskerville',serif;font-size:clamp(15px,2vw,24px);font-style:italic;color:var(--text);line-height:1.4;border-left:3px solid var(--cel);padding-left:22px;margin:18px 0;}
+.tag{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;padding:3px 9px;border:1px solid var(--bdr-l);color:var(--text-faint);margin:2px;}
+.tag.c{border-color:var(--cel);color:var(--cel);}
+.tag.g{border-color:var(--gold);color:var(--gold);}
+.dots{position:absolute;inset:0;background-image:radial-gradient(circle,var(--bdr-l) 1px,transparent 1px);background-size:30px 30px;opacity:.4;pointer-events:none;}
+
+/* LAYOUTS */
+.lt{flex-direction:column;justify-content:center;padding:54px 12vw;}
+.lh{flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:54px 10vw;}
+.ld{flex-direction:column;padding:44px 8vw;justify-content:center;}
+.l2{flex-direction:row;}
+.cl{width:50%;padding:54px 4vw 54px 8vw;display:flex;flex-direction:column;justify-content:center;border-right:1px solid var(--bdr);}
+.cr{width:50%;padding:54px 8vw 54px 4vw;display:flex;flex-direction:column;justify-content:center;}
+
+/* DATA */
+.dr{display:grid;gap:1px;background:var(--bdr);margin:16px 0;}
+.dr4{grid-template-columns:repeat(4,1fr);}
+.dr3{grid-template-columns:repeat(3,1fr);}
+.dr2{grid-template-columns:repeat(2,1fr);}
+.dc{background:var(--bg2);padding:18px 14px;}
+.dn{font-family:'Space Mono',monospace;font-size:clamp(15px,2vw,26px);color:var(--cel-l);line-height:1;margin-bottom:6px;}
+.dl{font-family:'Barlow Condensed',sans-serif;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--text-dim);line-height:1.4;}
+.ds{font-family:'Libre Baskerville',serif;font-size:10px;font-style:italic;color:var(--text-faint);margin-top:4px;}
+
+/* TABLE */
+.tbl{width:100%;border-collapse:collapse;margin-top:12px;}
+.tbl th{font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-faint);text-align:left;padding:7px 11px;border-bottom:1px solid var(--bdr-l);}
+.tbl td{font-family:'Libre Baskerville',serif;font-size:11.5px;color:var(--text-dim);padding:9px 11px;border-bottom:1px solid var(--bdr);line-height:1.5;}
+.tbl tr:hover td{background:var(--bg3);}
+
+/* LIST */
+.sl2{list-style:none;margin-top:12px;}
+.sl2 li{font-family:'Libre Baskerville',serif;font-size:12px;color:var(--text-dim);line-height:1.7;padding:8px 0 8px 18px;border-bottom:1px solid var(--bdr);position:relative;}
+.sl2 li::before{content:'';position:absolute;left:0;top:18px;width:7px;height:1px;background:var(--cel);}
+
+/* BARS */
+.bars{margin-top:12px;}
+.br{display:flex;align-items:center;margin-bottom:10px;}
+.bl{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:.03em;text-transform:uppercase;color:var(--text-dim);width:170px;flex-shrink:0;}
+.bt2{flex:1;height:4px;background:var(--bg3);margin:0 9px;position:relative;}
+.bf{position:absolute;left:0;top:0;height:100%;background:var(--cel);}
+.bf.g{background:var(--gold);}
+.bf.r{background:var(--red-l);}
+.bf.d{background:var(--bdr-l);}
+.bv{font-family:'Space Mono',monospace;font-size:9px;color:var(--text-faint);width:30px;text-align:right;}
+
+/* BRECHAS */
+.bg2{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--bdr);margin-top:14px;}
+.bca{background:var(--bg2);padding:18px 16px;}
+.bcn{font-family:'Space Mono',monospace;font-size:9px;color:var(--red-l);margin-bottom:7px;}
+.bct{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text);margin-bottom:7px;line-height:1.2;}
+.bcd{font-family:'Libre Baskerville',serif;font-size:10.5px;color:var(--text-dim);line-height:1.7;}
+
+/* PORTADA */
+.pgrid{position:absolute;inset:0;background-image:linear-gradient(var(--bdr) 1px,transparent 1px),linear-gradient(90deg,var(--bdr) 1px,transparent 1px);background-size:52px 52px;opacity:.18;}
+.pvl{position:absolute;left:6.5vw;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,transparent,var(--cel) 15%,var(--cel) 85%,transparent);opacity:.28;}
+.pt{font-family:'Playfair Display SC',serif;font-size:clamp(58px,9.5vw,132px);font-weight:900;color:var(--text);line-height:.86;letter-spacing:-.02em;margin-bottom:22px;}
+.pel{color:var(--text-dim);font-size:.48em;}
+.pc{font-family:'Libre Baskerville',serif;font-size:clamp(13px,1.6vw,19px);font-style:italic;color:var(--gold-l);margin-bottom:28px;}
+.pm{font-family:'Barlow Condensed',sans-serif;font-size:11.5px;letter-spacing:.07em;color:var(--text-dim);line-height:2.2;}
+.pfbg{position:absolute;right:6vw;top:50%;transform:translateY(-50%);font-family:'Playfair Display SC',serif;font-size:clamp(110px,17vw,220px);font-weight:900;color:var(--bg2);line-height:1;user-select:none;}
+
+/* FICHA */
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:24px 52px;margin-top:26px;}
+.fi{border-top:1px solid var(--bdr-l);padding-top:11px;}
+.fil{font-family:'Barlow Condensed',sans-serif;font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-faint);margin-bottom:5px;}
+.fiv{font-family:'Libre Baskerville',serif;font-size:12.5px;color:var(--text);line-height:1.65;}
+.fiv.i{font-style:italic;color:var(--gold-l);font-size:16px;}
+
+/* ÍNDICE */
+.ig{display:grid;grid-template-columns:repeat(3,1fr);}
+.is{border-top:1px solid var(--bdr);padding:14px 14px 14px 0;cursor:pointer;transition:border-color .2s;}
+.is:hover{border-top-color:var(--cel);}
+.is:hover .isn{color:var(--cel-l);}
+.isn{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--text);margin-bottom:2px;transition:color .2s;}
+.iss{font-family:'Libre Baskerville',serif;font-size:10px;color:var(--text-dim);font-style:italic;}
+.isp{font-family:'Space Mono',monospace;font-size:7.5px;color:var(--text-faint);margin-top:3px;}
+.inum{font-family:'Space Mono',monospace;font-size:7.5px;color:var(--text-faint);margin-bottom:4px;}
+
+/* LAYERBOX */
+.lb{padding:18px;margin-top:2px;}
+.lbl2{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--cel);margin-bottom:7px;}
+.lbt{font-family:'Libre Baskerville',serif;font-size:13px;color:var(--text);font-weight:700;margin-bottom:4px;}
+.lbd{font-family:'Libre Baskerville',serif;font-size:11px;color:var(--text-dim);line-height:1.6;}
+
+/* CYCLE */
+.cs{padding:11px 15px;margin-bottom:2px;}
+.csl{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.09em;text-transform:uppercase;margin-bottom:2px;}
+.cst{font-family:'Libre Baskerville',serif;font-size:11px;color:var(--text-dim);line-height:1.5;}
+
+/* CIERRE BG */
+.cbg{position:absolute;font-family:'Playfair Display SC',serif;font-size:28vw;font-weight:900;color:var(--bg2);pointer-events:none;user-select:none;white-space:nowrap;line-height:1;top:50%;left:50%;transform:translate(-50%,-50%);}
+
+.bg1{background:var(--bg);}
+.bg2b{background:var(--bg2);}
+.bg3b{background:var(--bg3);}
+.bgd{background:#050508;}
+</style>
+</head>
+<body>
+<div id="app">
+<div id="pbar" style="width:0%"></div>
+
+<!-- 01 PORTADA -->
+<div class="slide bg1 on" data-s="Portada" data-p="1">
+  <div class="pgrid"></div><div class="pvl"></div>
+  <div class="pfbg">0</div>
+  <div style="position:relative;z-index:1;padding:0 8vw;display:flex;flex-direction:column;justify-content:center;height:100%;">
+    <div class="ey">Fase 0 · Documento fundacional · Rufino, Santa Fe · Abril 2026</div>
+    <div class="pt"><span class="pel">El </span>Rufino</div>
+    <div class="pc">"Lo que pasa y lo que significa."</div>
+    <div style="width:70px;height:1px;background:var(--bdr-l);margin-bottom:20px;"></div>
+    <div class="pm">El Rufino — Dossier Fundacional<br>Documento maestro de fundación, operación e identidad<br>PROYECTO EL RUFINO · Rufino, Santa Fe, Argentina</div>
+  </div>
+  <div class="sl">001 / 025</div>
+</div>
+
+<!-- 02 FICHA -->
+<div class="slide bg2b" data-s="Portada" data-p="2">
+  <div style="padding:44px 9vw 44px 10vw;display:flex;flex-direction:column;justify-content:center;height:100%;position:relative;">
+    <div class="ey">Ficha técnica del documento</div>
+    <div class="fg">
+      <div class="fi"><div class="fil">Nombre del medio</div><div class="fiv i">El Rufino</div></div>
+      <div class="fi"><div class="fil">Claim principal</div><div class="fiv i">Lo que pasa y lo que significa.</div></div>
+      <div class="fi"><div class="fil">Definición</div><div class="fiv">Medio digital local con noticias, contexto y seguimiento</div></div>
+      <div class="fi"><div class="fil">Territorio</div><div class="fiv">Rufino · Dpto. General López · Santa Fe · Argentina</div></div>
+      <div class="fi"><div class="fil">Dominio principal</div><div class="fiv"><strong>elrufino.ar</strong> — marca pública<br><span style="font-size:11px;color:var(--text-dim);">elrufino.com.ar — defensivo / redirección 301</span></div></div>
+      <div class="fi"><div class="fil">Costos NIC Argentina 2025</div><div class="fiv">.ar → AR$25.500/año &nbsp;·&nbsp; .com.ar → AR$8.500/año<br><span style="font-size:10px;font-style:italic;color:var(--text-faint);">Verificar disponibilidad en nic.ar</span></div></div>
+      <div class="fi"><div class="fil">Arquitectura del dossier</div><div class="fiv">Fase 0 — Bases · 25 p. &nbsp;·&nbsp; Fase 1 — Identidad · 25 p. &nbsp;·&nbsp; Fase 2 — Producto mínimo · 25 p.</div></div>
+      <div class="fi"><div class="fil">Lecturas que soporta</div><div class="fiv">Transferencia a IA · Presentación institucional · Guía interna · Socios y aliados</div></div>
+    </div>
+    <div style="margin-top:22px;font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:.19em;text-transform:uppercase;color:var(--text-faint);">PROYECTO EL RUFINO · Firma institucional · Rufino, Santa Fe · Abril 2026</div>
+  </div>
+  <div class="sec">Portada</div><div class="sl">002 / 025</div>
+</div>
+
+<!-- 03 ÍNDICE -->
+<div class="slide bgd" data-s="Portada" data-p="3">
+  <div style="padding:40px 7vw;display:flex;flex-direction:column;justify-content:center;height:100%;position:relative;">
+    <div class="ey">Estructura · Fase 0 · 25 páginas</div>
+    <div class="ig">
+      <div class="is" onclick="goTo(0)"><div class="inum">§ 01–03</div><div class="isn">Portada</div><div class="iss">Carátula, ficha, índice</div><div class="isp">Págs. 1–3</div></div>
+      <div class="is" onclick="goTo(3)"><div class="inum">§ 04–06</div><div class="isn">Prólogo</div><div class="iss">Voz fundacional, apuesta, cierre</div><div class="isp">Págs. 4–6</div></div>
+      <div class="is" onclick="goTo(6)"><div class="inum">§ 07–10</div><div class="isn">Origen</div><div class="iss">Por qué, desde dónde, punto cero</div><div class="isp">Págs. 7–10</div></div>
+      <div class="is" onclick="goTo(10)"><div class="inum">§ 11–14</div><div class="isn">Contexto</div><div class="iss">Territorio, economía, política, digital</div><div class="isp">Págs. 11–14</div></div>
+      <div class="is" onclick="goTo(14)"><div class="inum">§ 15–18</div><div class="isn">Ecosistema</div><div class="iss">Medios locales, actores, consumo</div><div class="isp">Págs. 15–18</div></div>
+      <div class="is" onclick="goTo(18)"><div class="inum">§ 19–22</div><div class="isn">Brechas</div><div class="iss">Vacíos editoriales reales</div><div class="isp">Págs. 19–22</div></div>
+      <div class="is" onclick="goTo(22)"><div class="inum">§ 23–25</div><div class="isn">Identidad</div><div class="iss">Nombre, claim, qué es y qué no es</div><div class="isp">Págs. 23–25</div></div>
+    </div>
+    <div style="margin-top:18px;display:flex;gap:5px;flex-wrap:wrap;align-items:center;">
+      <span class="tag c">Fase 0 — activa</span><span class="tag">Fase 1 — pendiente</span><span class="tag">Fase 2 — pendiente</span>
+      <span style="font-family:'Space Mono',monospace;font-size:8px;color:var(--text-faint);margin-left:8px;">← → para navegar · click para saltar</span>
+    </div>
+  </div>
+  <div class="sec">Portada</div><div class="sl">003 / 025</div>
+</div>
+
+<!-- 04 PRÓLOGO I -->
+<div class="slide lt bg2b" data-s="Prólogo" data-p="4">
+  <div class="al"></div>
+  <div class="ey">Prólogo · I de III</div>
+  <div class="h1">Este documento<br>no es una presentación.</div>
+  <div class="bt">
+    <p>No es un pitch. No es un plan de marketing. No es un PowerPoint para una reunión de inversores.</p>
+    <p>Es un <strong>documento de origen</strong>. Un registro del momento en que se decidió que Rufino necesitaba un medio que todavía no existe. Uno que no llegue tarde a lo que ya sabe todo el mundo, sino que llegue a donde los demás no llegan.</p>
+    <p>Quien lo lea —sea una persona, sea una inteligencia artificial, sea un socio potencial— debe entender desde el primer párrafo <strong>qué es este proyecto, por qué existe, y qué lo distingue</strong> de todo lo que ya circula.</p>
+    <p>Este dossier está escrito para cuatro lecturas distintas sin perder coherencia: transferencia a otra IA, presentación institucional, guía interna de trabajo, y carta de presentación para aliados y voces que puedan sumarse.</p>
+  </div>
+  <div class="sec">Prólogo</div><div class="sl">004 / 025</div>
+</div>
+
+<!-- 05 PRÓLOGO II -->
+<div class="slide l2 bgd" data-s="Prólogo" data-p="5">
+  <div class="cl">
+    <div class="ey">Prólogo · II de III · La apuesta</div>
+    <div class="h2">Competimos<br>en sentido,<br>no en velocidad.</div>
+    <div class="bt">
+      <p>El Rufino no nace para competir en velocidad. Nace para competir en <strong>sentido</strong>.</p>
+      <p>En un ecosistema local donde la información circula rápido y se olvida más rápido todavía, la apuesta es otra: construir un medio que cuente lo que pasa, y que explique lo que significa.</p>
+      <p>Esa doble capa —lo que pasó, y lo que falta saber— es la razón de existir del proyecto. Sin ella, sería un portal más.</p>
+    </div>
+  </div>
+  <div class="cr">
+    <div class="bq">"No competimos en velocidad.<br>Competimos en espesor."</div>
+    <div class="h3" style="margin-top:18px;">Secuencia estratégica</div>
+    <ul class="sl2">
+      <li><strong>1 ·</strong> Medio digital confiable — primero</li>
+      <li><strong>2 ·</strong> Portal útil — después</li>
+      <li><strong>3 ·</strong> Infraestructura territorial — al final</li>
+    </ul>
+    <div style="margin-top:12px;font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--text-faint);">No nace como un portal de todo. Primero medio claro, luego expansión.</div>
+  </div>
+  <div class="sec">Prólogo</div><div class="sl">005 / 025</div>
+</div>
+
+<!-- 06 PRÓLOGO III -->
+<div class="slide lh bgd" data-s="Prólogo" data-p="6">
+  <div class="dots"></div>
+  <div style="position:relative;z-index:1;max-width:700px;">
+    <div class="ey" style="text-align:center;">Prólogo · III de III · Cierre fundacional</div>
+    <div style="font-family:'Playfair Display SC',serif;font-size:clamp(18px,2.8vw,34px);color:var(--text);line-height:1.32;margin-bottom:24px;text-align:center;">"La ciudad que no tiene medios que la entiendan<br>es una ciudad que no puede entenderse a sí misma."</div>
+    <div style="width:38px;height:3px;background:var(--cel);margin:0 auto 20px;"></div>
+    <div class="bt" style="text-align:center;margin:0 auto;">
+      <p>Este dossier es el primer acto de El Rufino. No la primera nota. El primer documento que se escribió.</p>
+      <p>Quien lo lea con atención ya estará dentro del proyecto.</p>
+    </div>
+    <div style="margin-top:26px;display:flex;justify-content:center;gap:6px;flex-wrap:wrap;">
+      <span class="tag c">Rufino, Santa Fe</span><span class="tag c">Abril 2026</span><span class="tag c">Fase 0 · Bases</span>
+    </div>
+  </div>
+  <div class="sec">Prólogo</div><div class="sl">006 / 025</div>
+</div>
+
+<!-- 07 ORIGEN I -->
+<div class="slide lt bg3b" data-s="Origen" data-p="7">
+  <div class="al g"></div>
+  <div class="ey">Origen · I de IV · Por qué ahora</div>
+  <div class="h1">El momento<br>no es casual.</div>
+  <div class="bt">
+    <p>No hay un buen momento para empezar un medio. Siempre hay razones para esperar: falta el equipo, falta el capital, falta la infraestructura. El momento exacto para empezar es cuando se vuelve insostenible no empezar.</p>
+    <p>Rufino tiene en 2026 un ecosistema informativo que creció en velocidad pero no en profundidad. La ciudad tiene presencia en redes, tiene portales, tiene radios. Lo que no tiene es un medio que <strong>sostenga una cobertura a lo largo del tiempo</strong>: que recuerde lo que prometieron, que explique cómo funciona el poder, que escuche al campo y a los barrios.</p>
+    <p>El vacío no es técnico. Es editorial. Y un vacío editorial es también un vacío cívico.</p>
+    <p>El momento es ahora porque el momento estuvo siendo ahora durante demasiado tiempo sin que nadie lo ocupara.</p>
+  </div>
+  <div class="sec">Origen</div><div class="sl">007 / 025</div>
+</div>
+
+<!-- 08 ORIGEN II -->
+<div class="slide l2 bg2b" data-s="Origen" data-p="8">
+  <div class="cl">
+    <div class="ey">Origen · II de IV · Por qué Rufino</div>
+    <div class="h2">Una ciudad<br>que merece<br>más.</div>
+    <div class="bt">
+      <p>Rufino no es "el interior" como categoría residual. Es una ciudad real, con más de 35.000 personas, con historia, con política, con producción, con conflictos.</p>
+      <p>Las ciudades de ese tamaño suelen tener dos destinos mediáticos: o no tienen cobertura, o tienen cobertura de mala calidad. El Rufino apunta a un tercero: <strong>cobertura que respete la inteligencia de quien lee.</strong></p>
+    </div>
+  </div>
+  <div class="cr">
+    <div class="h3">Rufino en datos</div>
+    <div class="dr dr2" style="margin-top:12px;">
+      <div class="dc"><div class="dn">~35K</div><div class="dl">Habitantes</div><div class="ds">Dpto. General López</div></div>
+      <div class="dc"><div class="dn">Sur</div><div class="dl">Posición provincial</div><div class="ds">Nodo sur de Santa Fe</div></div>
+      <div class="dc"><div class="dn">1884</div><div class="dl">Fundación</div><div class="ds">+140 años de historia</div></div>
+      <div class="dc"><div class="dn">RN 8</div><div class="dl">Eje vial</div><div class="ds">+ RN 7 · RP 93</div></div>
+    </div>
+  </div>
+  <div class="sec">Origen</div><div class="sl">008 / 025</div>
+</div>
+
+<!-- 09 ORIGEN III -->
+<div class="slide lt bgd" data-s="Origen" data-p="9">
+  <div class="al g"></div>
+  <div class="ey">Origen · III de IV · Desde dónde se construye</div>
+  <div class="h1">Desde abajo.<br>Desde la pantalla.<br>Desde el trabajo.</div>
+  <div class="bt">
+    <p>El Rufino no nace de una empresa de medios. No nace de un partido político. Nace de quienes entienden que <strong>la comunicación es un bien comunitario</strong> y que Rufino merece tener uno que le pertenezca.</p>
+    <p>Nace con herramientas digitales accesibles y con criterio editorial firme. Nace sabiendo que la legitimidad no se declara: se construye nota a nota, cobertura a cobertura, seguimiento a seguimiento.</p>
+    <p>El origen condiciona todo: la forma de financiarse, la forma de relacionarse con el poder, la forma de cubrir los conflictos. Un medio que nace desde abajo tiene que ser más riguroso, no menos. Tiene que ganarse lo que otros heredan.</p>
+  </div>
+  <div class="sec">Origen</div><div class="sl">009 / 025</div>
+</div>
+
+<!-- 10 ORIGEN IV -->
+<div class="slide lh bg2b" data-s="Origen" data-p="10">
+  <div class="dots"></div>
+  <div style="position:relative;z-index:1;max-width:680px;">
+    <div class="ey" style="text-align:center;">Origen · IV de IV · El punto cero</div>
+    <div class="h2" style="text-align:center;font-size:clamp(20px,3.2vw,42px);">Todo medio tiene un punto cero.<br>Este dossier es ese punto.</div>
+    <div style="width:38px;height:3px;background:var(--cel);margin:18px auto;"></div>
+    <div class="bt" style="text-align:center;margin:0 auto;">
+      <p>Aquí se tomaron las decisiones que van a definir todo lo que venga: <strong>qué se cubre y qué no, qué se dice y cómo, quién habla y desde dónde, cómo se mide el éxito.</strong></p>
+      <p>El punto cero es también el punto de responsabilidad. Porque una vez que esto existe, ya no es solo una idea.</p>
+    </div>
+    <div style="margin-top:24px;display:flex;justify-content:center;gap:6px;flex-wrap:wrap;">
+      <span class="tag c">Rufino, Abril 2026</span><span class="tag c">Documento vivo</span><span class="tag c">Decisiones tomadas</span>
+    </div>
+  </div>
+  <div class="sec">Origen</div><div class="sl">010 / 025</div>
+</div>
+
+<!-- 11 CONTEXTO I -->
+<div class="slide l2 bg3b" data-s="Contexto" data-p="11">
+  <div class="cl">
+    <div class="al"></div>
+    <div class="ey">Contexto · I de IV · Territorio</div>
+    <div class="h2">Rufino:<br>ciudad de<br>peso propio.</div>
+    <div class="bt">
+      <p>Rufino es la cabecera del Departamento General López, en el sur de la provincia de Santa Fe. Ciudad de nudo: cruce de rutas, cruce de personas, cruce de intereses.</p>
+      <p>El sur santafesino tiene su propia identidad, distinta al litoral, distinta a Rosario. Tiene historia política propia, historia sindical, historia cultural. Es una ciudad que se armó a sí misma.</p>
+    </div>
+  </div>
+  <div class="cr">
+    <div class="h3">Datos territoriales</div>
+    <table class="tbl">
+      <tr><th>Variable</th><th>Dato</th></tr>
+      <tr><td>Departamento</td><td>General López</td></tr>
+      <tr><td>Provincia</td><td>Santa Fe</td></tr>
+      <tr><td>Región</td><td>Sur santafesino / Pampa húmeda</td></tr>
+      <tr><td>Coordenadas</td><td>34°16′S · 62°42′O</td></tr>
+      <tr><td>Rutas</td><td>RN 8 · RN 7 · RP 93</td></tr>
+      <tr><td>A Rosario</td><td>~305 km</td></tr>
+      <tr><td>A Buenos Aires</td><td>~467 km</td></tr>
+      <tr><td>Fundación</td><td>1884</td></tr>
+    </table>
+  </div>
+  <div class="sec">Contexto</div><div class="sl">011 / 025</div>
+</div>
+
+<!-- 12 CONTEXTO II -->
+<div class="slide ld bg2b" data-s="Contexto" data-p="12">
+  <div class="ey">Contexto · II de IV · Economía y producción</div>
+  <div class="h2">El motor es el campo.<br>La ciudad es el procesador.</div>
+  <div class="dr dr4" style="margin-top:16px;">
+    <div class="dc"><div class="dn" style="font-size:clamp(12px,1.4vw,18px);">Agro</div><div class="dl">Eje principal</div><div class="ds">Soja, maíz, ganadería, tambos, cooperativas rurales.</div></div>
+    <div class="dc"><div class="dn" style="font-size:clamp(12px,1.4vw,18px);">Comercio</div><div class="dl">Segunda economía</div><div class="ds">Nodo regional. Atrae a localidades en radio de 60 km.</div></div>
+    <div class="dc"><div class="dn" style="font-size:clamp(12px,1.4vw,18px);">PyMEs</div><div class="dl">Industria local</div><div class="ds">Metalmecánica, alimentos, logística agro. Escala chica y mediana.</div></div>
+    <div class="dc"><div class="dn" style="font-size:clamp(12px,1.4vw,18px);">Estado</div><div class="dl">Empleador relevante</div><div class="ds">Municipal, provincial, educación, salud. Estabiliza el consumo.</div></div>
+  </div>
+  <div class="bt" style="margin-top:16px;max-width:100%;">
+    <p>La economía de Rufino tiene una tensión estructural: <strong>genera riqueza agropecuaria que no siempre se distribuye localmente.</strong> El precio de la soja impacta en el comercio, la construcción, el empleo y el humor social. Un medio que no entiende esa tensión no entiende Rufino.</p>
+  </div>
+  <div class="sec">Contexto</div><div class="sl">012 / 025</div>
+</div>
+
+<!-- 13 CONTEXTO III -->
+<div class="slide l2 bgd" data-s="Contexto" data-p="13">
+  <div class="cl">
+    <div class="al r"></div>
+    <div class="ey">Contexto · III de IV · Política e instituciones</div>
+    <div class="h2">Poder local:<br>estructura,<br>actores, disputa.</div>
+    <div class="bt">
+      <p>Rufino tiene vida institucional densa. El poder local no está solo en el intendente: está repartido, negociado, disputado.</p>
+      <p>El sur santafesino tiene historia política propia, con raíces peronistas fuertes y alternancia real. Un medio que cubre política en Rufino tiene que entender <strong>quién decide, quién ejecuta, quién financia, quién promete y quién rinde cuentas.</strong></p>
+    </div>
+  </div>
+  <div class="cr">
+    <div class="h3">Estructura institucional local</div>
+    <ul class="sl2">
+      <li><strong>Ejecutivo municipal</strong> — Intendente y secretarías</li>
+      <li><strong>Concejo Deliberante</strong> — Control legislativo y presupuesto</li>
+      <li><strong>Legislatura provincial</strong> — Diputados y senadores de la región</li>
+      <li><strong>Delegaciones provinciales</strong> — Salud, educación, justicia, obras</li>
+      <li><strong>Entidades del campo</strong> — Sociedad Rural, cooperativas agro</li>
+      <li><strong>Sindicatos y gremios</strong> — Docentes, estatales, camioneros, comercio</li>
+      <li><strong>Mutuales y cooperativas</strong> — Tejido social histórico</li>
+      <li><strong>Clubes e instituciones</strong> — Identidad social y cultural</li>
+    </ul>
+  </div>
+  <div class="sec">Contexto</div><div class="sl">013 / 025</div>
+</div>
+
+<!-- 14 CONTEXTO IV -->
+<div class="slide ld bg3b" data-s="Contexto" data-p="14">
+  <div class="ey">Contexto · IV de IV · Tejido digital</div>
+  <div class="h2">Una ciudad conectada<br>que no se ve a sí misma.</div>
+  <div class="bt" style="margin-bottom:16px;max-width:100%;">
+    <p>Rufino tiene penetración de celular y redes comparable al promedio urbano argentino. Sin embargo, esa conectividad no se traduce en información de calidad: <strong>el rumor viaja más rápido que la nota.</strong> El comunicado oficial llega sin contexto y se comparte como si fuera información.</p>
+  </div>
+  <div class="dr dr3">
+    <div class="dc"><div class="dn" style="color:var(--gold-l);font-size:clamp(12px,1.4vw,18px);">Facebook</div><div class="dl">Canal dominante</div><div class="ds">Los portales locales viven y mueren por su alcance en FB. Gana quien publica primero, no quien publica mejor.</div></div>
+    <div class="dc"><div class="dn" style="color:var(--gold-l);font-size:clamp(12px,1.4vw,18px);">WhatsApp</div><div class="dl">Distribución sin filtro</div><div class="ds">El rumor y la nota verificada compiten en igualdad dentro del mismo grupo.</div></div>
+    <div class="dc"><div class="dn" style="color:var(--red-l);font-size:clamp(12px,1.4vw,18px);">TikTok</div><div class="dl">Cancha vacía</div><div class="ds">Sin actor local relevante. Oportunidad real, pero no para el arranque del proyecto.</div></div>
+  </div>
+  <div class="sec">Contexto</div><div class="sl">014 / 025</div>
+</div>
+
+<!-- 15 ECOSISTEMA I -->
+<div class="slide lt bg2b" data-s="Ecosistema" data-p="15">
+  <div class="al g"></div>
+  <div class="ey">Ecosistema · I de IV · Campo mediático local</div>
+  <div class="h1">Hay medios.<br>No hay<br>periodismo.</div>
+  <div class="bt">
+    <p>Rufino tiene presencia mediática. Tiene portales que publican durante todo el día, radios con programas de actualidad, grupos de WhatsApp que distribuyen en tiempo real.</p>
+    <p>Lo que Rufino no tiene es un medio que <strong>procese la información en lugar de retransmitirla</strong>. Que agregue contexto, que recuerde el pasado para entender el presente, que le diga al lector qué falta saber además de qué pasó.</p>
+    <p>El ecosistema local es activo pero superficial. No por falta de capacidad: por lógica de plataforma. La velocidad premia. El contexto no tiene métrica inmediata. El seguimiento no tiene viralidad.</p>
+    <p><strong>El mercado no está lleno. El segmento que El Rufino viene a cubrir está vacío.</strong></p>
+  </div>
+  <div class="sec">Ecosistema</div><div class="sl">015 / 025</div>
+</div>
+
+<!-- 16 ECOSISTEMA II -->
+<div class="slide ld bg3b" data-s="Ecosistema" data-p="16">
+  <div class="ey">Ecosistema · II de IV · Actores y lógicas</div>
+  <div class="h2">El mapa de actores</div>
+  <table class="tbl" style="margin-top:12px;">
+    <tr><th>Tipo de actor</th><th>Lógica dominante</th><th>Fortaleza</th><th>Debilidad estructural</th></tr>
+    <tr><td>Portal digital (velocidad)</td><td>Volumen y primera pub.</td><td>Alcance masivo en Facebook</td><td>Sin segunda capa. Sin seguimiento. Sin archivo.</td></tr>
+    <tr><td>Portal digital (institucional)</td><td>Agenda oficial y policial</td><td>Acceso a fuentes de gobierno</td><td>Dependencia de comunicados. Reproducción acrítica.</td></tr>
+    <tr><td>Radios locales</td><td>Inmediatez y comunidad</td><td>Vínculo afectivo. Presencia barrial.</td><td>Sin archivo. Sin datos. Sin escala digital.</td></tr>
+    <tr><td>Grupos de WhatsApp</td><td>Distribución informal</td><td>Velocidad real. Penetración total.</td><td>Sin verificación. Sin autoría. Sin responsabilidad editorial.</td></tr>
+    <tr><td>Páginas FB institucionales</td><td>Comunicación propia</td><td>Fuente directa</td><td>Publicidad oficial disfrazada de noticia.</td></tr>
+  </table>
+  <div class="bt" style="margin-top:12px;"><p><strong>Conclusión:</strong> El ecosistema tiene actores, no tiene arquitectura. Tiene circulación, no tiene memoria. Tiene velocidad, no tiene espesor.</p></div>
+  <div class="sec">Ecosistema</div><div class="sl">016 / 025</div>
+</div>
+
+<!-- 17 ECOSISTEMA III -->
+<div class="slide l2 bgd" data-s="Ecosistema" data-p="17">
+  <div class="cl">
+    <div class="ey">Ecosistema · III de IV · Cobertura real vs. necesaria</div>
+    <div class="h2">Lo que<br>se cubre<br>y lo que falta.</div>
+    <div class="bt">
+      <p>Los medios locales cubren bien algunos segmentos: policiales, actos oficiales, eventos culturales masivos.</p>
+      <p>Lo que no se cubre define exactamente el espacio de El Rufino: <strong>contexto, seguimiento, campo, barrios, datos, promesas y su cumplimiento.</strong></p>
+    </div>
+  </div>
+  <div class="cr">
+    <div class="h3">Cobertura existente en Rufino hoy</div>
+    <div class="bars" style="margin-top:12px;">
+      <div class="br"><div class="bl">Policiales</div><div class="bt2"><div class="bf g" style="width:85%"></div></div><div class="bv">85%</div></div>
+      <div class="br"><div class="bl">Actos oficiales</div><div class="bt2"><div class="bf g" style="width:80%"></div></div><div class="bv">80%</div></div>
+      <div class="br"><div class="bl">Eventos culturales</div><div class="bt2"><div class="bf" style="width:62%"></div></div><div class="bv">62%</div></div>
+      <div class="br"><div class="bl">Contexto político</div><div class="bt2"><div class="bf d" style="width:18%"></div></div><div class="bv">18%</div></div>
+      <div class="br"><div class="bl">Cobertura del campo</div><div class="bt2"><div class="bf d" style="width:12%"></div></div><div class="bv">12%</div></div>
+      <div class="br"><div class="bl">Barrios periféricos</div><div class="bt2"><div class="bf r" style="width:8%"></div></div><div class="bv">8%</div></div>
+      <div class="br"><div class="bl">Seguimiento promesas</div><div class="bt2"><div class="bf r" style="width:4%"></div></div><div class="bv">4%</div></div>
+      <div class="br"><div class="bl">Datos e infografías</div><div class="bt2"><div class="bf r" style="width:2%"></div></div><div class="bv">2%</div></div>
+    </div>
+    <div style="margin-top:6px;font-family:'Space Mono',monospace;font-size:7.5px;color:var(--text-faint);">* estimación cualitativa · análisis propio</div>
+  </div>
+  <div class="sec">Ecosistema</div><div class="sl">017 / 025</div>
+</div>
+
+<!-- 18 ECOSISTEMA IV -->
+<div class="slide ld bg2b" data-s="Ecosistema" data-p="18">
+  <div class="ey">Ecosistema · IV de IV · Cómo consume información Rufino hoy</div>
+  <div class="h2">Ráfagas cortas.<br>Sin verificación. Sin contexto.</div>
+  <div class="bt" style="margin-bottom:16px;max-width:100%;">
+    <p><strong>Patrón de consumo:</strong> el usuario rufino consume información en ráfagas cortas a lo largo del día, principalmente en celular. Comparte lo que lo impacta emocionalmente. No busca contexto activamente: lo recibe si se lo das bien y donde ya está.</p>
+  </div>
+  <div class="dr dr3">
+    <div class="dc"><div class="dn" style="font-size:clamp(12px,1.4vw,18px);">Mañana</div><div class="dl">Pico principal · 6–8 AM</div><div class="ds">Verificación de lo que pasó de noche. Noticias policiales y urgentes.</div></div>
+    <div class="dc"><div class="dn" style="font-size:clamp(12px,1.4vw,18px);">Mediodía</div><div class="dl">Segundo pico · 12–14 hs</div><div class="ds">Descanso laboral. Alto consumo de noticias locales y regionales.</div></div>
+    <div class="dc"><div class="dn" style="font-size:clamp(12px,1.4vw,18px);">Noche</div><div class="dl">Consumo sostenido · 20–23 hs</div><div class="ds">Lectura más larga. Ventana ideal para contenido de profundidad.</div></div>
+  </div>
+  <div class="bt" style="margin-top:14px;max-width:100%;"><p>El contenido de profundidad tiene su ventana: la noche. Es cuando el lector tiene tiempo y disposición. <strong>El Rufino debe estar ahí.</strong></p></div>
+  <div class="sec">Ecosistema</div><div class="sl">018 / 025</div>
+</div>
+
+<!-- 19 BRECHAS I -->
+<div class="slide ld bgd" data-s="Brechas" data-p="19">
+  <div class="ey">Brechas · I de IV · Mapa de vacíos editoriales</div>
+  <div class="h2">Lo que nadie<br>está cubriendo.</div>
+  <div class="bg2">
+    <div class="bca"><div class="bcn">BRECHA 01</div><div class="bct">Contexto y seguimiento</div><div class="bcd">Nadie explica. Nadie recuerda. La noticia de ayer no existe hoy. Las promesas de campaña se evaporan en el primer acto de gobierno.</div></div>
+    <div class="bca"><div class="bcn">BRECHA 02</div><div class="bct">El campo sin voz propia</div><div class="bcd">Los productores generan la mayor parte de la riqueza local y tienen la menor presencia en los medios. Su agenda no existe.</div></div>
+    <div class="bca"><div class="bcn">BRECHA 03</div><div class="bct">Los barrios invisibles</div><div class="bcd">La cobertura local se concentra en el centro. Los barrios periféricos aparecen solo cuando hay un hecho policial.</div></div>
+    <div class="bca"><div class="bcn">BRECHA 04</div><div class="bct">Datos sin procesar</div><div class="bcd">Rufino genera datos: licitaciones, presupuestos, padrones, estadísticas. Ningún medio los trabaja como información periodística.</div></div>
+    <div class="bca"><div class="bcn">BRECHA 05</div><div class="bct">Policiales sin criterio</div><div class="bcd">Hechos publicados con la versión oficial como verdad cerrada, con imágenes que humillan, sin aclarar qué está confirmado.</div></div>
+    <div class="bca"><div class="bcn">BRECHA 06</div><div class="bct">Comunicados sin segunda capa</div><div class="bcd">El comunicado viaja tal cual: sin contexto, sin antecedente, sin pregunta. Los medios operan como altavoces, no como mediadores.</div></div>
+  </div>
+  <div class="sec">Brechas</div><div class="sl">019 / 025</div>
+</div>
+
+<!-- 20 BRECHAS II -->
+<div class="slide l2 bg2b" data-s="Brechas" data-p="20">
+  <div class="cl">
+    <div class="al r"></div>
+    <div class="ey">Brechas · II de IV · La brecha metodológica</div>
+    <div class="h2">Publicar<br>no es<br>informar.</div>
+    <div class="bt">
+      <p>La brecha más profunda no es de tema: es de metodología. Los medios locales publican eventos. El Rufino va a publicar información.</p>
+      <p>La diferencia es la segunda capa: <strong>qué significa lo que pasó, qué falta saber, qué antecedente lo explica, qué consecuencia puede tener.</strong></p>
+      <p>Sin esa segunda capa, el lector tiene más ruido, no más comprensión.</p>
+    </div>
+  </div>
+  <div class="cr">
+    <div class="h3">La regla de las dos capas</div>
+    <div style="margin-top:12px;">
+      <div class="lb" style="background:var(--bg3);border:1px solid var(--bdr-l);">
+        <div class="lbl2">Capa 1 — Obligatoria en todo medio</div>
+        <div class="lbt">Lo que pasó</div>
+        <div class="lbd">El hecho, el dato, el acto. Quién, qué, cuándo, dónde. Cualquier portal lo tiene.</div>
+      </div>
+      <div class="lb" style="background:var(--bg3);border:1px solid var(--cel);margin-top:2px;">
+        <div class="lbl2" style="color:var(--cel);">Capa 2 — La diferencia de El Rufino</div>
+        <div class="lbt">Lo que significa</div>
+        <div class="lbd">El contexto, el antecedente, la consecuencia, la pregunta que falta hacer, lo que el comunicado no dice.</div>
+      </div>
+      <div style="margin-top:10px;font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--red-l);">Regla interna: ninguna pieza sin Capa 2.</div>
+    </div>
+  </div>
+  <div class="sec">Brechas</div><div class="sl">020 / 025</div>
+</div>
+
+<!-- 21 BRECHAS III -->
+<div class="slide lt bgd" data-s="Brechas" data-p="21">
+  <div class="al g"></div>
+  <div class="ey">Brechas · III de IV · El campo invisible</div>
+  <div class="h1">El campo genera<br>la ciudad y no<br>aparece en ella.</div>
+  <div class="bt">
+    <p>El Departamento General López es uno de los distritos agropecuarios más productivos del sur santafesino. La soja, el maíz, el ganado, los tambos, las cooperativas rurales: todo eso es el motor real de Rufino.</p>
+    <p>Sin embargo, los medios locales <strong>no cubren el campo como actor</strong>. Cuando aparece, es en nota de color, en evento de la Sociedad Rural, o en cifras de cosecha copiadas de una agencia nacional.</p>
+    <p>Lo que falta: seguimiento de precios y su impacto en la economía local, voz de productores pequeños y medianos, agenda de cooperativas, perspectiva de trabajadores rurales.</p>
+    <p>El pilar <strong>"El campo habla"</strong> no es un adorno. Es la corrección de una brecha estructural que ningún otro medio local está dispuesto a cubrir.</p>
+  </div>
+  <div class="sec">Brechas</div><div class="sl">021 / 025</div>
+</div>
+
+<!-- 22 BRECHAS IV -->
+<div class="slide l2 bg3b" data-s="Brechas" data-p="22">
+  <div class="cl">
+    <div class="al r"></div>
+    <div class="ey">Brechas · IV de IV · La promesa sin seguimiento</div>
+    <div class="h2">Lo que<br>prometieron.<br>Lo que hicieron.</div>
+    <div class="bt">
+      <p>Toda elección produce promesas. Toda promesa produce una deuda con la ciudadanía. Ningún medio local en Rufino tiene como práctica el <strong>seguimiento de promesas</strong>.</p>
+      <p>El acto promete obras. La obra aparece en el presupuesto. El presupuesto se vota. La obra no avanza. Nadie lo dice. El año siguiente se vuelve a prometer.</p>
+      <p>El seguimiento de promesas es uno de los pilares editoriales más difíciles de sostener y más valiosos para la comunidad. El Rufino lo va a hacer.</p>
+    </div>
+  </div>
+  <div class="cr">
+    <div class="h3">Ciclo de la promesa incumplida</div>
+    <div style="margin-top:12px;display:flex;flex-direction:column;gap:2px;">
+      <div class="cs" style="background:var(--bg2);border-left:3px solid var(--gold);"><div class="csl" style="color:var(--gold);">01 · Campaña</div><div class="cst">Se promete la obra. El candidato habla al micrófono.</div></div>
+      <div class="cs" style="background:var(--bg2);border-left:3px solid var(--cel);"><div class="csl" style="color:var(--cel);">02 · Asunción</div><div class="cst">La promesa pasa al discurso de gestión. Se incluye en el presupuesto.</div></div>
+      <div class="cs" style="background:var(--bg2);border-left:3px solid var(--bdr-l);"><div class="csl" style="color:var(--text-faint);">03 · Silencio</div><div class="cst">Nadie pregunta. El medio no recuerda. El tiempo pasa. La obra no aparece.</div></div>
+      <div class="cs" style="background:var(--bg2);border-left:3px solid var(--red-l);"><div class="csl" style="color:var(--red-l);">04 · Reinicio</div><div class="cst">Nueva elección. Nueva promesa. El ciclo vuelve sin rendición de cuentas.</div></div>
+    </div>
+    <div style="margin-top:10px;font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--cel);">El Rufino interrumpe este ciclo.</div>
+  </div>
+  <div class="sec">Brechas</div><div class="sl">022 / 025</div>
+</div>
+
+<!-- 23 IDENTIDAD I -->
+<div class="slide lh bgd" data-s="Identidad" data-p="23">
+  <div class="dots"></div>
+  <div style="position:relative;z-index:1;max-width:800px;">
+    <div class="ey" style="text-align:center;">Identidad · I de III · Nombre y claim</div>
+    <div style="font-family:'Playfair Display SC',serif;font-size:clamp(48px,8.5vw,120px);font-weight:900;color:var(--text);line-height:.88;letter-spacing:-.02em;margin-bottom:22px;text-align:center;">El Rufino</div>
+    <div style="font-family:'Libre Baskerville',serif;font-size:clamp(14px,1.9vw,23px);font-style:italic;color:var(--gold-l);margin-bottom:28px;text-align:center;">"Lo que pasa y lo que significa."</div>
+    <div style="width:38px;height:3px;background:var(--cel);margin:0 auto 20px;"></div>
+    <div class="bt" style="text-align:center;margin:0 auto;max-width:540px;">
+      <p>El nombre no es un dominio. Es una declaración de pertenencia. <strong>El</strong> Rufino: el artículo como apropiación. No "Rufino hoy" ni "Noticias Rufino". Es el medio de la ciudad, que habla desde adentro.</p>
+      <p>El claim no describe un formato. Describe una promesa editorial. Cualquier nota que no tenga esas dos capas no es El Rufino.</p>
+    </div>
+  </div>
+  <div class="sec">Identidad</div><div class="sl">023 / 025</div>
+</div>
+
+<!-- 24 IDENTIDAD II -->
+<div class="slide l2 bg2b" data-s="Identidad" data-p="24">
+  <div class="cl">
+    <div class="al"></div>
+    <div class="ey">Identidad · II de III · Definición operativa</div>
+    <div class="h2">Qué es<br>El Rufino.</div>
+    <div class="bt">
+      <p><strong>Es un medio digital local</strong> con noticias, contexto y seguimiento. Publicación en web y redes sociales. Foco en Rufino y el Departamento General López.</p>
+      <p>Es un medio que trabaja con capas: lo que pasó y lo que significa. Que recuerda. Que va al campo. Que entra a los barrios. Que pregunta qué pasó con la promesa.</p>
+      <p>Es un medio construido para durar, no para viralizar. Con ritmo sostenible antes que con volumen imposible.</p>
+    </div>
+  </div>
+  <div class="cr">
+    <div class="h3">Qué NO es todavía</div>
+    <ul class="sl2">
+      <li>No es un <strong>portal total</strong> — no cubre todo, cubre bien</li>
+      <li>No es un <strong>multiservicio</strong> — sin clasificados ni delivery desde el día 1</li>
+      <li>No es un <strong>aparato partidario</strong> — el guiño simbólico no es línea editorial explícita</li>
+      <li>No es una <strong>agencia de comunicación</strong> — los comunicados son fuente, no contenido</li>
+      <li>No es un <strong>medio de velocidad</strong> — llega mejor, no primero</li>
+      <li>No es un <strong>proyecto personal</strong> — es una construcción colectiva con firma institucional</li>
+    </ul>
+  </div>
+  <div class="sec">Identidad</div><div class="sl">024 / 025</div>
+</div>
+
+<!-- 25 CIERRE -->
+<div class="slide lh bgd" data-s="Cierre · Fase 0" data-p="25">
+  <div class="cbg">0</div>
+  <div style="position:relative;z-index:1;max-width:680px;text-align:center;">
+    <div class="ey" style="text-align:center;">Identidad · III de III · Cierre de Fase 0</div>
+    <div style="font-family:'Playfair Display SC',serif;font-size:clamp(20px,2.8vw,38px);color:var(--text);line-height:1.26;margin-bottom:24px;">El suelo está.<br>Ahora viene la construcción.</div>
+    <div style="width:38px;height:3px;background:var(--cel);margin:0 auto 20px;"></div>
+    <div class="bt" style="text-align:center;margin:0 auto;max-width:490px;">
+      <p>Fase 0 establece el por qué antes del qué. El contexto antes del producto. El suelo antes de la estructura.</p>
+      <p>Lo que sigue construye sobre este suelo: identidad cerrada, pilares editoriales, audiencias, roles, herramientas, protocolos, y el primer mes de publicación.</p>
+      <p><strong>El Rufino ya existe. Ahora hay que armarlo.</strong></p>
+    </div>
+    <div style="margin-top:24px;display:flex;justify-content:center;gap:5px;flex-wrap:wrap;">
+      <span class="tag g">Fase 0 — completa</span><span class="tag">Fase 1 — próxima</span><span class="tag">Fase 2 — pendiente</span>
+    </div>
+    <div style="margin-top:22px;font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-faint);">PROYECTO EL RUFINO · Rufino, Santa Fe, Argentina · Abril 2026</div>
+  </div>
+  <div class="sl">025 / 025</div>
+</div>
+
+<!-- NAV -->
+<div id="nav">
+  <button class="nb" id="bp" onclick="prev()" disabled>← Anterior</button>
+  <div id="ni">
+    <span id="ns">Portada</span> &nbsp;·&nbsp; <span id="np">1 / 25</span>
+    &nbsp;·&nbsp; <span style="color:var(--cel);">Fase 0</span>
+    &nbsp;·&nbsp; <span style="color:var(--text-faint);font-size:8px;">← → teclado · swipe táctil</span>
+  </div>
+  <button class="nb" id="bn" onclick="next()">Siguiente →</button>
+</div>
+</div>
+
+<script>
+(function(){
+  const slides=[...document.querySelectorAll('.slide')];
+  const n=slides.length;
+  let c=0;
+  const bar=document.getElementById('pbar');
+  const ns=document.getElementById('ns');
+  const np=document.getElementById('np');
+  const bp=document.getElementById('bp');
+  const bn=document.getElementById('bn');
+
+  function show(i){
+    slides[c].classList.remove('on');
+    c=Math.max(0,Math.min(i,n-1));
+    slides[c].classList.add('on');
+    ns.textContent=slides[c].dataset.s;
+    np.textContent=slides[c].dataset.p+' / 25';
+    bar.style.width=(c/(n-1)*100)+'%';
+    bp.disabled=c===0;
+    bn.disabled=c===n-1;
+  }
+
+  window.next=()=>show(c+1);
+  window.prev=()=>show(c-1);
+  window.goTo=(i)=>show(i);
+
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key==='ArrowDown')window.next();
+    if(e.key==='ArrowLeft'||e.key==='ArrowUp')window.prev();
+  });
+
+  let tx=0;
+  document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
+  document.addEventListener('touchend',e=>{
+    const dx=e.changedTouches[0].clientX-tx;
+    if(dx<-50)window.next();
+    if(dx>50)window.prev();
+  },{passive:true});
+})();
+</script>
+</body>
+</html>

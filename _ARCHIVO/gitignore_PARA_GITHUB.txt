@@ -1,0 +1,69 @@
+# WordPress core files
+wp-config.php
+wp-content/uploads/
+wp-content/cache/
+wp-content/upgrade/
+.htaccess
+*.log
+
+# WordPress database backup
+*.sql
+*.sql.gz
+
+# Archivos del sistema operativo
+.DS_Store
+.DS_Store?
+Thumbs.db
+desktop.ini
+._*
+.Spotlight-V100
+.Trashes
+
+# Node / NPM
+node_modules/
+npm-debug.log
+package-lock.json
+yarn.lock
+.npm/
+
+# Archivos de compilación
+*.sass-cache/
+.cache/
+dist/
+build/
+
+# Archivos temporales del proyecto
+_ARCHIVO/
+*-OBSOLETO.*
+*.tmp
+*.bak
+*.swp
+*~
+
+# Credenciales y configuración local
+.env
+.env.local
+.env.production
+.env.development
+*.key
+*.pem
+
+# IDEs y editores
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Logs y debugging
+*.log
+debug.log
+error_log
+
+# Archivos de respaldo
+backup/
+backups/
+*.backup
+
+# Archivos de sistema PHP
+.user.ini
+php_errors.log

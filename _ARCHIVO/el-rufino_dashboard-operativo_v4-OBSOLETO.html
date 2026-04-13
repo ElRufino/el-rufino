@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Rufino — Panel de Operaciones</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --red:#c0271b;
+  --dark:#1a1a1a;
+  --cream:#f5f0e8;
+  --bg:#fff;
+  --bg2:#f8f7f4;
+  --border:#e0ddd8;
+  --text:#1a1a1a;
+  --text2:#666;
+  --text3:#999;
+}
+@media(prefers-color-scheme:dark){
+  :root{--bg:#1a1a1a;--bg2:#242424;--border:#333;--text:#f0ede8;--text2:#aaa;--text3:#666;--cream:#2a2520}
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px;color:var(--text);background:var(--bg2);min-height:100vh}
+.wrapper{max-width:1100px;margin:0 auto;padding:20px}
+.masthead{background:var(--red);color:#fff;padding:16px 24px 12px;display:flex;align-items:baseline;gap:14px;border-radius:12px 12px 0 0}
+.masthead h1{font-family:Georgia,serif;font-size:28px;font-weight:700;line-height:1}
+.masthead .claim{font-size:11px;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.6px;align-self:center}
+.badge{margin-left:auto;background:rgba(0,0,0,.25);border-radius:20px;padding:3px 12px;font-size:11px;color:#fff;white-space:nowrap}
+.nav{display:flex;background:var(--bg2);border-bottom:1px solid var(--border);overflow-x:auto;gap:0}
+.nb{padding:10px 18px;font-size:13px;font-weight:500;border:none;background:none;cursor:pointer;color:var(--text2);border-bottom:2px solid transparent;white-space:nowrap;transition:all .15s;font-family:inherit}
+.nb.on{color:var(--red);border-bottom-color:var(--red)}
+.nb:hover:not(.on){color:var(--text);background:var(--bg)}
+.content{background:var(--bg);border:1px solid var(--border);border-top:none;border-radius:0 0 12px 12px;padding:20px 24px}
+.panel{display:none}
+.panel.on{display:block}
+.st{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:10px;padding-bottom:7px;border-bottom:1px solid var(--border)}
+.mg{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+@media(max-width:600px){.mg{grid-template-columns:repeat(2,1fr)}}
+.mc{background:var(--bg2);border-radius:8px;padding:14px;text-align:center;border:1px solid var(--border)}
+.mc .v{font-size:24px;font-weight:600;line-height:1.1;margin-bottom:3px}
+.mc .l{font-size:11px;color:var(--text2)}
+.mc .tr{font-size:10px;color:var(--text3);margin-top:2px}
+.mc.red .v{color:var(--red)}
+.mc.amb .v{color:#d97706}
+.semg{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+@media(max-width:600px){.semg{grid-template-columns:1fr 1fr}}
+.semc{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:5px;vertical-align:middle}
+.dot.r{background:#e53935} .dot.y{background:#f9a825} .dot.g{background:#43a047}
+.pn{font-size:12px;font-weight:600}
+.pd{font-size:11px;color:var(--text2);margin-top:4px;line-height:1.4}
+.alert-box{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:9px}
+.alr{display:flex;gap:9px;align-items:flex-start}
+.tag{display:inline-block;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:600;flex-shrink:0;text-transform:uppercase;letter-spacing:.4px}
+.tag.u{background:#fee2e2;color:#991b1b}
+.tag.t{background:#dbeafe;color:#1e40af}
+.tag.e{background:#dcfce7;color:#166534}
+.alr span{font-size:12px;line-height:1.5}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:600px){.two{grid-template-columns:1fr}}
+.si{max-height:340px;overflow-y:auto;padding-right:4px}
+.si::-webkit-scrollbar{width:4px} .si::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.ci{display:flex;align-items:flex-start;gap:9px;padding:7px 5px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .1s;border-radius:4px}
+.ci:last-child{border-bottom:none}
+.ci:hover{background:var(--bg2)}
+.cb{width:17px;height:17px;border:1.5px solid var(--border);border-radius:4px;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all .15s;font-size:11px;color:#fff}
+.cb.done{background:var(--red);border-color:var(--red)}
+.it{font-size:12px;line-height:1.4;flex:1}
+.it.done{text-decoration:line-through;color:var(--text3)}
+.itg{font-size:10px;background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:1px 7px;color:var(--text3);white-space:nowrap;flex-shrink:0;font-weight:500}
+.pbar{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+.pfill{height:100%;background:var(--red);border-radius:3px;transition:width .3s}
+.br{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center}
+.abtn{display:inline-flex;align-items:center;gap:5px;padding:6px 14px;border-radius:20px;background:var(--red);color:#fff;font-size:12px;font-weight:600;border:none;cursor:pointer;font-family:inherit;transition:opacity .15s}
+.abtn:hover{opacity:.85}
+.sbtn{background:transparent;border:1px solid var(--border);color:var(--text);padding:6px 14px;border-radius:20px;font-size:12px;cursor:pointer;font-family:inherit;transition:background .15s}
+.sbtn:hover{background:var(--bg2)}
+table.pt{width:100%;border-collapse:collapse;font-size:12px}
+table.pt th{text-align:left;padding:7px 10px;font-size:11px;font-weight:600;color:var(--text2);border-bottom:1px solid var(--border);background:var(--bg2)}
+table.pt td{padding:7px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+table.pt tr:last-child td{border-bottom:none}
+.sp{display:inline-block;padding:1px 9px;border-radius:20px;font-size:10px;font-weight:600}
+.sp.pen{background:#fef9c3;color:#854d0e}
+.sp.proc{background:#dbeafe;color:#1e40af}
+.sp.bro{background:#fee2e2;color:#991b1b}
+.sp.done{background:#dcfce7;color:#166534}
+.cg{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-bottom:14px}
+@media(max-width:600px){.cg{grid-template-columns:repeat(4,1fr)}}
+.cday{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:8px 7px;min-height:70px}
+.cday .dn{font-size:10px;font-weight:700;text-transform:uppercase;color:var(--text3);margin-bottom:5px;letter-spacing:.5px}
+.cp{font-size:10px;padding:2px 6px;border-radius:4px;margin-bottom:3px;line-height:1.4;font-weight:500}
+.cp.p1{background:#fee2e2;color:#991b1b}
+.cp.p2{background:#dcfce7;color:#14532d}
+.cp.p3{background:#dbeafe;color:#1e3a8a}
+.cp.p4{background:#fce7f3;color:#831843}
+.cp.p5{background:#fef9c3;color:#713f12}
+.cp.p6{background:#f3e8ff;color:#581c87}
+.platg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+@media(max-width:600px){.platg{grid-template-columns:1fr}}
+.platc{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:14px}
+.platc.priority{border-color:var(--red)}
+.ph{display:flex;align-items:center;gap:9px;margin-bottom:8px}
+.pi{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;color:#fff}
+.pi.fb{background:#1877f2} .pi.ig{background:#e1306c} .pi.tk{background:#111} .pi.wa{background:#25d366}
+.pln{font-size:13px;font-weight:600}
+.plk{font-size:11px;color:var(--text2);margin-top:2px}
+.dg{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+@media(max-width:600px){.dg{grid-template-columns:1fr 1fr}}
+.df{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:14px;cursor:pointer;transition:border-color .15s}
+.df:hover{border-color:var(--red)}
+.df .di{font-size:22px;margin-bottom:7px}
+.df .dn2{font-size:12px;font-weight:700;line-height:1.3}
+.df .dm{font-size:11px;color:var(--text2);margin-top:4px;line-height:1.4}
+.codeblock{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px;font-family:'Courier New',monospace;font-size:11px;line-height:2;margin-top:14px;overflow-x:auto}
+.empty-state{text-align:center;padding:24px 0;color:var(--text2);font-size:12px}
+.pl{color:var(--red);text-decoration:underline;cursor:pointer}
+.pl:hover{opacity:.75}
+.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:100;align-items:center;justify-content:center}
+.modal-overlay.on{display:flex}
+.modal{background:var(--bg);border-radius:12px;padding:24px;max-width:520px;width:90%;max-height:90vh;overflow-y:auto}
+.modal h2{font-size:16px;font-weight:700;margin-bottom:16px}
+.form-group{margin-bottom:14px}
+.form-group label{display:block;font-size:12px;font-weight:600;color:var(--text2);margin-bottom:5px;text-transform:uppercase;letter-spacing:.4px}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:13px;font-family:inherit;background:var(--bg);color:var(--text);outline:none}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--red)}
+.form-group textarea{resize:vertical;min-height:60px}
+.modal-footer{display:flex;gap:8px;justify-content:flex-end;margin-top:18px}
+.leyenda{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.prog-label{font-size:12px;color:var(--text2);margin-bottom:6px}
+.prog-row{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.twolink{font-size:12px;margin-top:8px;padding:8px 0;border-top:1px solid var(--border);color:var(--text2);line-height:1.6}
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+<div class="masthead">
+  <h1>El Rufino</h1>
+  <div class="claim">Lo que pasa y lo que significa</div>
+  <div class="badge">● Fase 0 — Reconstrucción</div>
+</div>
+
+<div class="nav">
+  <button class="nb on" onclick="show('p0')">Resumen</button>
+  <button class="nb" onclick="show('p1')">Fase 0</button>
+  <button class="nb" onclick="show('p2')">Promesas</button>
+  <button class="nb" onclick="show('p3')">Calendario</button>
+  <button class="nb" onclick="show('p4')">Redes</button>
+  <button class="nb" onclick="show('p5')">Drive</button>
+</div>
+
+<div class="content">
+
+<!-- RESUMEN -->
+<div id="p0" class="panel on">
+  <div class="st">Estado general del proyecto</div>
+  <div class="mg">
+    <div class="mc amb"><div class="v">Fase 0</div><div class="l">Etapa actual</div><div class="tr">Reconstrucción</div></div>
+    <div class="mc red"><div class="v" id="mv-wp">0%</div><div class="l">Avance Fase 0</div><div class="tr">Ver checklist →</div></div>
+    <div class="mc"><div class="v" id="mv-wa">0</div><div class="l">Suscriptores WA</div><div class="tr">Meta sem 1: 50</div></div>
+    <div class="mc"><div class="v" id="mv-pr">0</div><div class="l">Promesas reg.</div><div class="tr">Iniciar hoy</div></div>
+  </div>
+
+  <div class="st">Semáforos de fase</div>
+  <div class="semg">
+    <div class="semc"><span class="dot y"></span><span class="pn">Fase 0</span><div class="pd">Infraestructura técnica — en reconstrucción activa</div></div>
+    <div class="semc"><span class="dot r"></span><span class="pn">Fase 1</span><div class="pd">Lanzamiento — pendiente cierre de Fase 0</div></div>
+    <div class="semc"><span class="dot r"></span><span class="pn">Fase 2</span><div class="pd">Hábito editorial — espera Fase 1</div></div>
+    <div class="semc"><span class="dot r"></span><span class="pn">Fase 3</span><div class="pd">Monetización — horizonte mes 4–6</div></div>
+  </div>
+
+  <div class="st">Prioridades críticas activas</div>
+  <div class="alert-box">
+    <div class="alr"><span class="tag u">URGENTE</span><span>Construir lista de suscriptores de WhatsApp — tarea más urgente del momento.</span></div>
+    <div class="alr"><span class="tag u">URGENTE</span><span>Registrar la primera promesa municipal con fecha y quién la hizo.</span></div>
+    <div class="alr"><span class="tag t">TÉCNICO</span><span>Configurar UpdraftPlus (backup automático) desde día 1 — que no vuelva a pasar lo del servidor.</span></div>
+    <div class="alr"><span class="tag e">EDITORIAL</span><span>Nota inaugural: 2 capas obligatorias. Sin segunda capa no se publica.</span></div>
+    <div class="alr"><span class="tag e">EDITORIAL</span><span>Banco de 10 contenidos listos antes del primer post público.</span></div>
+  </div>
+
+  <div class="twolink">
+    <strong>Regla central:</strong> Cada pieza tiene al menos DOS CAPAS: (1) lo que pasó + (2) lo que significa. Sin segunda capa, no se publica.<br>
+    <strong>Ventaja competitiva:</strong> Contexto · Seguimiento de promesas · Campo agropecuario · TikTok virgen<br>
+    <strong>URL de trabajo:</strong> elrufino.infoconectados.com.ar · <strong>Dominio objetivo:</strong> elrufino.ar
+  </div>
+</div>
+
+<!-- FASE 0 -->
+<div id="p1" class="panel">
+  <div class="st">Fase 0 — Checklist completo de reconstrucción</div>
+  <div class="prog-row">
+    <span class="prog-label">Progreso total: <strong id="f0p">0%</strong></span>
+    <div class="pbar" style="flex:1"><div class="pfill" id="f0b" style="width:0%"></div></div>
+    <span style="font-size:11px;color:var(--text3)" id="f0count">0/35</span>
+  </div>
+  <div class="two">
+    <div>
+      <div class="st" style="margin-top:0">Sitio WordPress</div>
+      <div class="si" id="cl-wp">
+        <div class="ci" onclick="tog(this)"><div class="cb"></div><span class="it">Reinstalar WordPress en el servidor</span><span class="itg">Infra</span></div>
+        <div class="ci" onclick="tog(this)"><div class="cb"></div><span class="it">Seleccionar y configurar tema visual (limpio, rápido, responsive)</span><span class="itg">Diseño</span></div>
+        <div class="ci" onclick="tog(this)"><div class="cb"></div><span class="it">Logo, colores (#c0271b rojo + negro + blanco + crema), tipografías</span><span class="itg">Diseño</span></div>
+        <div class="ci" onclick="tog(this)"><div class="cb"></div><span class="it">Crear secciones: Actualidad, Seguimiento, Poder y gestión, Barrio a barrio, El campo habla, Rufino en datos, Sobre El Rufino, Contacto</span><span class="itg">Infra</span></div>
+        <div class="ci" onclick="tog(this)"><div class="cb"></div><span class="it">Plugin SEO: Yoast SEO o Rank Math</span><span class="itg">Plugin</span></div>
+        <div class="ci" onclick="tog(this)"><div class="cb"></div><span class="it">Plugin caché/velocidad: WP Rocket, LiteSpeed Cache o W3 Total Cache</span><span class="itg">Plugin</span></div>
+        <div class="ci" onclick="tog(this)"><div class="cb"></div><span class="it">Seguridad: Wordfence o iThemes Security</span><span class="itg">Plugin</span></div>
+        <div class="ci" onclick="tog(this)"><div class="cb"></div><span class="it">Formulario de contacto: Contact Form 7 o WPForms</span><span class="itg">Plugin</span></div>
+        <div class="ci" onclick="tog(this)"><div class="cb"></div><span class="it">Optimización imágenes: Smush o ShortPixel</span><span class="itg">Plugin</span></div>
+        <div class="ci" onclick="tog(this)"><div class="cb"></div><span class="it">Google Analytics 4 + Google Search Console</span><span class="itg">Analytics</span></div>
+        <div class="ci" onclick="tog(this)"><div class="cb"></div><span class="it">Backup automático: UpdraftPlus — configurar DESDE DÍA 1</span><span class="itg">Plugin</span></div>
+        <div class="ci" onclick="tog(this)"><div class="cb"></div><span class="it">Anti-spam: Akismet</span><span class="itg">Plugin</span></div>
+        <div class="ci" onclick="tog(this)"><div class="cb"></div><span class="it">SSL / HTTPS activo</span><span class="itg">Infra</span></div>
+        <div class="ci" onclick="tog(this)"><div class="cb"></div><span class="it">Sitemap XML + robots.txt configurados</span><span class="itg">SEO</span></div>
+        <div class="ci" onclick="tog(this)"><div class="cb"></div><span class="it">Velocidad de carga menor a 3 segundos</span><span class="itg">Perf</span></div>
+        <div class="ci" onclick="tog(this)"><div class="cb"></div><span class="it">Visualización mobile verificada (70%+ del tráfico)</span><span class="itg">Perf</span></div>
+        <div class="ci" onclick="tog(this)"><div class="cb"></div><span class="it">Breaking news ticker barra superior</span><span class="itg">Plugin</span></div>
+        <div class="ci" onclick="tog(this)"><div class="cb"></div><span class="it">Home: masthead rojo, ticker, destacado principal, grilla pilares, bloque seguimiento, bloque WA/suscripción, footer</span><span class="itg">Diseño</span></div>
+        <div class="ci" onclick="tog(this)"><div class="cb"></div><span class="it">Páginas "Sobre El Rufino" y "Contacto" configuradas</span><span class="itg">Infra</span></div>
+      </div>
+    </div>
+    <div>
+      <div class="st" style="margin-top:0">Redes, dominios y contenidos</div>
+      <div class="si" id="cl-rest">
+        <div class="ci" onclick="tog(this)"><div class="cb"></div><span class="it">Facebook: crear/verificar página @elrufino</span><span class="itg">Social</span></div>
+        <div class="ci" onclick="tog(this)"><div class="cb"></div><span class="it">Instagram: crear @elrufino</span><span class="itg">Social</span></div>
+        <div class="ci" onclick="tog(this)"><div class="cb"></div><span class="it">TikTok: crear @elrufino</span><span class="itg">Social</span></div>
+        <div class="ci" onclick="tog(this)"><div class="cb"></div><span class="it">Canal WhatsApp Broadcast "El Rufino" configurado con descripción</span><span class="itg">WA</span></div>
+        <div class="ci" onclick="tog(this)"><div class="cb"></div><span class="it">Foto de perfil y bio unificadas en todas las plataformas</span><span class="itg">Social</span></div>
+        <div class="ci" onclick="tog(this)"><div class="cb"></div><span class="it">Todas las redes vinculadas al sitio web</span><span class="itg">Infra</span></div>
+        <div class="ci" onclick="tog(this)"><div class="cb"></div><span class="it">Post "algo viene" publicado en redes (anticipación sin revelar qué)</span><span class="itg">Social</span></div>
+        <div class="ci" onclick="tog(this)"><div class="cb"></div><span class="it">Lista de pre-suscriptores de WhatsApp iniciada</span><span class="itg">WA</span></div>
+        <div class="ci" onclick="tog(this)"><div class="cb"></div><span class="it">Verificar disponibilidad elrufino.ar en NIC Argentina</span><span class="itg">Dominio</span></div>
+        <div class="ci" onclick="tog(this)"><div class="cb"></div><span class="it">Registrar elrufino.ar como dominio principal</span><span class="itg">Dominio</span></div>
+        <div class="ci" onclick="tog(this)"><div class="cb"></div><span class="it">Registrar elrufino.com.ar (defensivo, redirección 301)</span><span class="itg">Dominio</span></div>
+        <div class="ci" onclick="tog(this)"><div class="cb"></div><span class="it">Configurar redirección desde infoconectados.com.ar al dominio propio</span><span class="itg">Dominio</span></div>
+        <div class="ci" onclick="tog(this)"><div class="cb"></div><span class="it">Banco de 10 contenidos listos antes del lanzamiento</span><span class="itg">Contenido</span></div>
+        <div class="ci" onclick="tog(this)"><div class="cb"></div><span class="it">Plantillas visuales por tipo: noticia, infografía, Reel, story IG, resumen WA</span><span class="itg">Diseño</span></div>
+        <div class="ci" onclick="tog(this)"><div class="cb"></div><span class="it">Plantilla resumen matutino WhatsApp definida</span><span class="itg">WA</span></div>
+        <div class="ci" onclick="tog(this)"><div class="cb"></div><span class="it">Tablero editorial configurado (Trello/Notion/Google Sheets)</span><span class="itg">Herr.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROMESAS -->
+<div id="p2" class="panel">
+  <div class="st">Registro público de promesas municipales</div>
+  <div class="br">
+    <button class="abtn" onclick="openModal()">+ Nueva promesa</button>
+    <button class="sbtn" onclick="exportPromesas()">Exportar CSV</button>
+    <button class="sbtn" onclick="clearPromesas()">Limpiar registro</button>
+  </div>
+  <div style="overflow-x:auto">
+    <table class="pt" id="ptable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Fecha</th>
+          <th>Quién</th>
+          <th>Promesa</th>
+          <th>Plataforma</th>
+          <th>30d</th>
+          <th>90d</th>
+          <th>Estado</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="ptbody">
+        <tr><td colspan="9" class="empty-state">
+          Sin promesas registradas.<br>
+          <span class="pl" onclick="cargarEjemplos()">Cargar 3 ejemplos para empezar →</span>
+        </td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div style="margin-top:10px;font-size:11px;color:var(--text3)">
+    Seguimiento sistemático: cada anuncio registrado con fecha / quién / qué exactamente / seguimiento a 30 días / a 90 días / estado final.
+  </div>
+</div>
+
+<!-- CALENDARIO -->
+<div id="p3" class="panel">
+  <div class="st">Calendario semanal tipo</div>
+  <div class="cg">
+    <div class="cday"><div class="dn">Lun</div><div class="cp p1">P01 Actualidad</div><div class="cp p6">P06 Dato local</div></div>
+    <div class="cday"><div class="dn">Mar</div><div class="cp p2">P02 El campo habla</div></div>
+    <div class="cday"><div class="dn">Mié</div><div class="cp p4">TikTok / Reel</div></div>
+    <div class="cday"><div class="dn">Jue</div><div class="cp p5">P05 Poder y gestión</div></div>
+    <div class="cday"><div class="dn">Vie</div><div class="cp p3">P03 Barrio a barrio</div></div>
+    <div class="cday"><div class="dn">Sáb</div><div class="cp p4">P04 Perfil local</div></div>
+    <div class="cday"><div class="dn">Dom</div><div class="cp p6">Evergreen</div></div>
+  </div>
+  <div class="leyenda">
+    <span class="cp p1" style="padding:3px 10px;border-radius:20px">P01 Rufino Real</span>
+    <span class="cp p2" style="padding:3px 10px;border-radius:20px">P02 El campo habla</span>
+    <span class="cp p3" style="padding:3px 10px;border-radius:20px">P03 Barrio a barrio</span>
+    <span class="cp p4" style="padding:3px 10px;border-radius:20px">P04 Generación Rufino</span>
+    <span class="cp p5" style="padding:3px 10px;border-radius:20px">P05 Poder y gestión</span>
+    <span class="cp p6" style="padding:3px 10px;border-radius:20px">P06 Rufino en datos</span>
+  </div>
+  <div class="st">Frecuencia por plataforma</div>
+  <table class="pt" style="margin-bottom:18px">
+    <thead><tr><th>Plataforma</th><th>Frecuencia</th><th>Horario clave</th><th>Audiencia core</th></tr></thead>
+    <tbody>
+      <tr><td>Facebook</td><td>3–5 posts/día</td><td>8AM, 12PM, 7PM</td><td>25–60 años</td></tr>
+      <tr><td>Instagram</td><td>1 post + 3–5 stories/día</td><td>11AM, 7PM stories</td><td>18–40, mujeres 25–45</td></tr>
+      <tr><td>WhatsApp Canal</td><td>1 mensaje diario — SIN FALLAR</td><td>7:30 AM</td><td>Toda la audiencia</td></tr>
+      <tr><td>TikTok</td><td>3–4 videos/semana (60–90 seg)</td><td>Miércoles + 1 más</td><td>14–30 años</td></tr>
+    </tbody>
+  </table>
+  <div class="st">Plantilla resumen matutino WhatsApp 7:30 AM</div>
+  <div class="codeblock">
+Buenos días Rufino. Las 3 noticias de hoy:<br><br>
+[1] [TÍTULO BREVE Y CONCRETO]<br>
+[2] [TÍTULO BREVE Y CONCRETO]<br>
+[3] [TÍTULO BREVE Y CONCRETO]<br><br>
+→ Leé todo en elrufino.ar
+  </div>
+</div>
+
+<!-- REDES -->
+<div id="p4" class="panel">
+  <div class="st">Estado de plataformas y KPIs</div>
+  <div class="platg">
+    <div class="platc">
+      <div class="ph"><div class="pi fb">f</div><div><div class="pln">Facebook</div><div class="plk">Meta mes 6: 5.000 likes · ER >3%</div></div></div>
+      <div style="font-size:11px;color:var(--text2);margin-bottom:8px">3–5 posts/día · Canal principal de credibilidad · Audiencia 25–60</div>
+      <div class="pbar"><div class="pfill" style="width:0%"></div></div>
+    </div>
+    <div class="platc">
+      <div class="ph"><div class="pi ig">IG</div><div><div class="pln">Instagram</div><div class="plk">Meta mes 6: 2.000 seguidores · ER >5%</div></div></div>
+      <div style="font-size:11px;color:var(--text2);margin-bottom:8px">1 post + 3–5 stories/día · Reels explicativos · Mujeres 25–45</div>
+      <div class="pbar"><div class="pfill" style="width:0%"></div></div>
+    </div>
+    <div class="platc priority">
+      <div class="ph"><div class="pi wa">WA</div><div><div class="pln">WhatsApp Canal</div><div class="plk">Meta mes 3: 500 suscriptores · apertura >60%</div></div></div>
+      <div style="font-size:11px;color:var(--red);font-weight:600;margin-bottom:8px">⚠ MÁXIMA PRIORIDAD — 7:30 AM todos los días sin fallar</div>
+      <div class="pbar"><div class="pfill" style="width:0%"></div></div>
+    </div>
+    <div class="platc">
+      <div class="ph"><div class="pi tk">TK</div><div><div class="pln">TikTok</div><div class="plk">Meta mes 4: 1.000 seguidores · 1 viral antes del día 60</div></div></div>
+      <div style="font-size:11px;color:var(--text2);margin-bottom:8px">3–4 videos/semana · 60–90 seg · CANCHA VACÍA en Rufino</div>
+      <div class="pbar"><div class="pfill" style="width:0%"></div></div>
+    </div>
+  </div>
+
+  <div class="st">Competencia — mapa de brechas</div>
+  <div style="overflow-x:auto">
+    <table class="pt">
+      <thead><tr><th>Medio</th><th>FB likes</th><th>Fortaleza</th><th>Brecha que explotamos</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Sucesos</strong></td><td>29.731</td><td>Breaking news, velocidad</td><td>Sin contexto, sin campo agropecuario, sin seguimiento</td></tr>
+        <tr><td>FM Rufino 106.3</td><td>28.712</td><td>Audiencia 45+, radio</td><td>No nativo digital. Instagram y TikTok inexistentes</td></tr>
+        <tr><td>La Tribuna del Sur</td><td>19.327</td><td>Tradición, diario local</td><td>Sin seguimiento de promesas</td></tr>
+        <tr><td>Municipalidad</td><td>17.983</td><td>Canal oficial</td><td>No cubre a los vecinos ni al campo</td></tr>
+        <tr><td>Rufino Web</td><td>10.634</td><td>Única referencia en IG</td><td>Sin TikTok, sin análisis ni contexto</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="margin-top:14px" class="st">Temas con mayor volumen digital — Rufino</div>
+  <table class="pt">
+    <thead><tr><th>Tema</th><th>Volumen</th><th>Sentimiento</th><th>Pilar editorial</th></tr></thead>
+    <tbody>
+      <tr><td>Rutas RN 33 y 7</td><td>95%</td><td>Negativo alto</td><td>P02 / P05</td></tr>
+      <tr><td>Seguridad y violencia</td><td>88%</td><td>Enojo / miedo</td><td>P01</td></tr>
+      <tr><td>Política local / Lattanzi</td><td>82%</td><td>Polarizado</td><td>P05</td></tr>
+      <tr><td>Inundaciones / agua</td><td>75%</td><td>Resignación</td><td>P03</td></tr>
+      <tr><td>Precios e inflación</td><td>72%</td><td>Negativo alto</td><td>P01 / P06</td></tr>
+      <tr><td>Obras municipales</td><td>65%</td><td>Escéptico</td><td>P05 / Seguimiento</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- DRIVE -->
+<div id="p5" class="panel">
+  <div class="st">Estructura de archivo — Google Drive</div>
+  <div class="br">
+    <button class="abtn" onclick="copiarEstructura()">Copiar estructura de carpetas</button>
+  </div>
+  <div class="dg">
+    <div class="df">
+      <div class="di">📁</div><div class="dn2">01_SITIO_WEB</div>
+      <div class="dm">01a_Tema-y-plugins / 01b_Credenciales / 01c_Backups / 01d_Capturas-sitio / 01e_Documentacion-tecnica</div>
+    </div>
+    <div class="df">
+      <div class="di">📁</div><div class="dn2">02_CONTENIDOS</div>
+      <div class="dm">02a_P01-Rufino-Real / 02b_P02-El-campo-habla / 02c_P03-Barrio-a-barrio / 02d_P04-Generacion-Rufino / 02e_P05-Poder-y-gestion / 02f_P06-Rufino-en-datos / 02g_Banco-de-notas / 02h_Publicados / 02i_Borradores</div>
+    </div>
+    <div class="df">
+      <div class="di">📁</div><div class="dn2">03_IMAGENES</div>
+      <div class="dm">03a_Fotos-propias / 03b_Stock / 03c_Logos-e-identidad / 03d_Infografias / 03e_Plantillas-Canva / 03f_Por-plataforma (FB · IG · TK · WA)</div>
+    </div>
+    <div class="df">
+      <div class="di">📁</div><div class="dn2">04_REDES_SOCIALES</div>
+      <div class="dm">04a_Facebook / 04b_Instagram / 04c_TikTok / 04d_WhatsApp / 04e_Publicado-archivo / 04f_Metricas-mensuales</div>
+    </div>
+    <div class="df">
+      <div class="di">📁</div><div class="dn2">05_SEGUIMIENTO_PROMESAS</div>
+      <div class="dm">05a_Base-de-datos (Sheets) / 05b_Capturas-anuncios / 05c_Historial-publicado / 05d_Informes-mensuales / 05e_Notas-de-seguimiento</div>
+    </div>
+    <div class="df">
+      <div class="di">📁</div><div class="dn2">06_COMERCIAL</div>
+      <div class="dm">06a_Propuestas-anunciantes / 06b_Paquetes-sponsoreo / 06c_Contratos / 06d_Anunciantes-activos / 06e_Membresias</div>
+    </div>
+    <div class="df">
+      <div class="di">📁</div><div class="dn2">07_EDITORIAL</div>
+      <div class="dm">07a_Manual-de-tono / 07b_Protocolos / 07c_Tablero-editorial (Sheets) / 07d_Guias-de-estilo / 07e_Capacitacion</div>
+    </div>
+    <div class="df">
+      <div class="di">📁</div><div class="dn2">08_DATOS_LOCALES</div>
+      <div class="dm">08a_INDEC-Rufino / 08b_Presupuesto-municipal / 08c_Estadisticas-propias / 08d_Datos-audiencia / 08e_Fuentes-agropecuarias</div>
+    </div>
+    <div class="df">
+      <div class="di">📁</div><div class="dn2">09_MULTIMEDIA</div>
+      <div class="dm">09a_Videos-brutos (por fecha) / 09b_Videos-exportados / 09c_Audios / 09d_Grabaciones-entrevistas / 09e_Archivos-de-edicion</div>
+    </div>
+  </div>
+
+  <div class="st" style="margin-top:18px">Convenciones de nombres de archivo</div>
+  <div class="codeblock">
+    <div><strong>Notas:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AAAA-MM-DD_P01_slug-del-titulo.docx</div>
+    <div><strong>Imágenes:</strong> &nbsp;&nbsp;&nbsp;AAAA-MM-DD_FB_descripcion-breve.jpg</div>
+    <div><strong>Promesas:</strong> &nbsp;&nbsp;&nbsp;PROM-001_AAAA-MM-DD_Lattanzi_ruta33.xlsx</div>
+    <div><strong>Videos TK:</strong> &nbsp;&nbsp;AAAA-MM-DD_TK_tema-del-video_v1.mp4</div>
+    <div><strong>Plantillas:</strong> &nbsp;&nbsp;TEMPLATE_IG_post-noticia_v2.psd</div>
+    <div><strong>Resumen WA:</strong> AAAA-MM-DD_WA_resumen-matutino.txt</div>
+  </div>
+
+  <div class="st" style="margin-top:18px">Tablero editorial — columnas mínimas (Google Sheets)</div>
+  <table class="pt">
+    <thead><tr><th>Fecha</th><th>Plataforma</th><th>Pilar</th><th>Título / Idea</th><th>Responsable</th><th>Estado</th><th>Link publicado</th></tr></thead>
+    <tbody>
+      <tr><td style="color:var(--text3)">02/04/2026</td><td>Facebook</td><td>P01</td><td>Ejemplo: Ruta 33 — lo que pasó y lo que significa</td><td>—</td><td><span class="sp pen">Borrador</span></td><td>—</td></tr>
+      <tr><td style="color:var(--text3)">03/04/2026</td><td>WhatsApp</td><td>—</td><td>Resumen matutino 7:30 AM</td><td>—</td><td><span class="sp pen">Pendiente</span></td><td>—</td></tr>
+    </tbody>
+  </table>
+</div>
+
+</div><!-- /content -->
+</div><!-- /wrapper -->
+
+<!-- MODAL NUEVA PROMESA -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <h2>Registrar nueva promesa</h2>
+    <div class="form-group">
+      <label>Quién lo prometió</label>
+      <input type="text" id="f-quien" placeholder="Ej: Intendente Lattanzi">
+    </div>
+    <div class="form-group">
+      <label>Fecha del anuncio</label>
+      <input type="date" id="f-fecha">
+    </div>
+    <div class="form-group">
+      <label>Promesa exacta</label>
+      <textarea id="f-promesa" placeholder="Transcribir las palabras exactas del anuncio..."></textarea>
+    </div>
+    <div class="form-group">
+      <label>Plataforma / medio donde se anunció</label>
+      <select id="f-plataforma">
+        <option value="">— Seleccionar —</option>
+        <option>Facebook oficial</option>
+        <option>Conferencia de prensa</option>
+        <option>Nota en medio local</option>
+        <option>Acto público</option>
+        <option>WhatsApp / comunicado</option>
+        <option>Entrevista radial</option>
+        <option>Otro</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Estado actual</label>
+      <select id="f-estado">
+        <option value="pen">Pendiente seguimiento</option>
+        <option value="proc">En proceso</option>
+        <option value="done">Cumplida</option>
+        <option value="bro">Incumplida</option>
+      </select>
+    </div>
+    <div class="modal-footer">
+      <button class="sbtn" onclick="closeModal()">Cancelar</button>
+      <button class="abtn" onclick="guardarPromesa()">Guardar promesa</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// --- Panel navigation ---
+function show(id){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  const map={p0:0,p1:1,p2:2,p3:3,p4:4,p5:5};
+  document.querySelectorAll('.nb')[map[id]].classList.add('on');
+}
+
+// --- Checklist ---
+function tog(item){
+  const cb=item.querySelector('.cb');
+  const it=item.querySelector('.it');
+  const done=cb.classList.toggle('done');
+  cb.textContent=done?'✓':'';
+  it.classList.toggle('done',done);
+  upd();
+}
+function upd(){
+  const all=document.querySelectorAll('.ci').length;
+  const done=document.querySelectorAll('.cb.done').length;
+  const p=all?Math.round(done/all*100):0;
+  document.getElementById('f0p').textContent=p+'%';
+  document.getElementById('f0b').style.width=p+'%';
+  document.getElementById('f0count').textContent=done+'/'+all;
+  document.getElementById('mv-wp').textContent=p+'%';
+}
+
+// --- Promesas ---
+let promesas=[];
+let nextId=1;
+
+function openModal(){
+  document.getElementById('modal').classList.add('on');
+  document.getElementById('f-fecha').valueAsDate=new Date();
+}
+function closeModal(){
+  document.getElementById('modal').classList.remove('on');
+}
+document.getElementById('modal').addEventListener('click',function(e){
+  if(e.target===this) closeModal();
+});
+
+function guardarPromesa(){
+  const quien=document.getElementById('f-quien').value.trim();
+  const fecha=document.getElementById('f-fecha').value;
+  const promesa=document.getElementById('f-promesa').value.trim();
+  const plataforma=document.getElementById('f-plataforma').value;
+  const estado=document.getElementById('f-estado').value;
+  if(!quien||!fecha||!promesa){alert('Completá quién, fecha y promesa.');return;}
+  const id='PROM-'+(String(nextId).padStart(3,'0'));
+  nextId++;
+  promesas.push({id,fecha,quien,promesa,plataforma,estado,seg30:'—',seg90:'—'});
+  renderPromesas();
+  document.getElementById('mv-pr').textContent=promesas.length;
+  closeModal();
+  document.getElementById('f-quien').value='';
+  document.getElementById('f-promesa').value='';
+  document.getElementById('f-plataforma').value='';
+}
+
+function renderPromesas(){
+  const tb=document.getElementById('ptbody');
+  if(!promesas.length){
+    tb.innerHTML='<tr><td colspan="9" class="empty-state">Sin promesas registradas.<br><span class="pl" onclick="cargarEjemplos()">Cargar 3 ejemplos para empezar →</span></td></tr>';
+    return;
+  }
+  tb.innerHTML=promesas.map((p,i)=>`
+    <tr>
+      <td style="font-weight:600;font-size:11px">${p.id}</td>
+      <td>${p.fecha}</td>
+      <td>${p.quien}</td>
+      <td style="max-width:220px">${p.promesa}</td>
+      <td>${p.plataforma||'—'}</td>
+      <td>${p.seg30}</td>
+      <td>${p.seg90}</td>
+      <td><span class="sp ${p.estado}">${estadoLabel(p.estado)}</span></td>
+      <td><span class="pl" onclick="eliminarPromesa(${i})">✕</span></td>
+    </tr>
+  `).join('');
+}
+
+function estadoLabel(e){
+  return{pen:'Pendiente',proc:'En proceso',done:'Cumplida',bro:'Incumplida'}[e]||e;
+}
+function eliminarPromesa(i){
+  if(confirm('¿Eliminar esta promesa?')){
+    promesas.splice(i,1);
+    renderPromesas();
+    document.getElementById('mv-pr').textContent=promesas.length;
+  }
+}
+function clearPromesas(){
+  if(promesas.length&&confirm('¿Borrar todo el registro?')){
+    promesas=[];renderPromesas();
+    document.getElementById('mv-pr').textContent=0;
+  }
+}
+function exportPromesas(){
+  if(!promesas.length){alert('No hay promesas para exportar.');return;}
+  const h='ID,Fecha,Quién,Promesa,Plataforma,Seguimiento 30d,Seguimiento 90d,Estado';
+  const rows=promesas.map(p=>[p.id,p.fecha,p.quien,'"'+p.promesa.replace(/"/g,'""')+'"',p.plataforma,p.seg30,p.seg90,estadoLabel(p.estado)].join(','));
+  const csv='data:text/csv;charset=utf-8,'+encodeURIComponent([h,...rows].join('\n'));
+  const a=document.createElement('a');a.href=csv;a.download='promesas-el-rufino.csv';a.click();
+}
+function cargarEjemplos(){
+  promesas=[
+    {id:'PROM-001',fecha:'2025-10-15',quien:'Intendente Lattanzi',promesa:'Asfalto de Calle XX en Barrio Norte: "En 60 días comenzamos las obras de pavimentación."',plataforma:'Facebook oficial',estado:'pen',seg30:'Sin novedades',seg90:'—'},
+    {id:'PROM-002',fecha:'2025-11-03',quien:'Municipalidad de Rufino',promesa:'Nuevo patrullaje nocturno en zona céntrica: "Incorporamos 2 móviles a partir de la semana que viene."',plataforma:'Conferencia de prensa',estado:'proc',seg30:'Se verificó 1 móvil nuevo',seg90:'—'},
+    {id:'PROM-003',fecha:'2025-08-22',quien:'Gobierno provincial',promesa:'Ruta 33 — bacheo de emergencia: "Esta semana inicia la cuadrilla en el tramo Rufino-Carreras."',plataforma:'Nota en medio local',estado:'bro',seg30:'No se iniciaron trabajos',seg90:'Sigue sin intervención'},
+  ];
+  nextId=4;
+  renderPromesas();
+  document.getElementById('mv-pr').textContent=promesas.length;
+}
+
+function copiarEstructura(){
+  const txt=`EL RUFINO — Estructura Google Drive
+===================================
+📁 01_SITIO_WEB
+   ├── 01a_Tema-y-plugins
+   ├── 01b_Credenciales
+   ├── 01c_Backups
+   ├── 01d_Capturas-sitio
+   └── 01e_Documentacion-tecnica
+
+📁 02_CONTENIDOS
+   ├── 02a_P01-Rufino-Real
+   ├── 02b_P02-El-campo-habla
+   ├── 02c_P03-Barrio-a-barrio
+   ├── 02d_P04-Generacion-Rufino
+   ├── 02e_P05-Poder-y-gestion
+   ├── 02f_P06-Rufino-en-datos
+   ├── 02g_Banco-de-notas
+   ├── 02h_Publicados
+   └── 02i_Borradores
+
+📁 03_IMAGENES
+   ├── 03a_Fotos-propias
+   ├── 03b_Stock
+   ├── 03c_Logos-e-identidad
+   ├── 03d_Infografias
+   ├── 03e_Plantillas-Canva
+   └── 03f_Por-plataforma (FB / IG / TK / WA)
+
+📁 04_REDES_SOCIALES
+   ├── 04a_Facebook
+   ├── 04b_Instagram
+   ├── 04c_TikTok
+   ├── 04d_WhatsApp
+   ├── 04e_Publicado-archivo
+   └── 04f_Metricas-mensuales
+
+📁 05_SEGUIMIENTO_PROMESAS
+   ├── 05a_Base-de-datos (Sheets)
+   ├── 05b_Capturas-anuncios
+   ├── 05c_Historial-publicado
+   ├── 05d_Informes-mensuales
+   └── 05e_Notas-de-seguimiento
+
+📁 06_COMERCIAL
+   ├── 06a_Propuestas-anunciantes
+   ├── 06b_Paquetes-sponsoreo
+   ├── 06c_Contratos
+   ├── 06d_Anunciantes-activos
+   └── 06e_Membresias
+
+📁 07_EDITORIAL
+   ├── 07a_Manual-de-tono
+   ├── 07b_Protocolos
+   ├── 07c_Tablero-editorial (Sheets)
+   ├── 07d_Guias-de-estilo
+   └── 07e_Capacitacion
+
+📁 08_DATOS_LOCALES
+   ├── 08a_INDEC-Rufino
+   ├── 08b_Presupuesto-municipal
+   ├── 08c_Estadisticas-propias
+   ├── 08d_Datos-audiencia
+   └── 08e_Fuentes-agropecuarias
+
+📁 09_MULTIMEDIA
+   ├── 09a_Videos-brutos (por fecha)
+   ├── 09b_Videos-exportados
+   ├── 09c_Audios
+   ├── 09d_Grabaciones-entrevistas
+   └── 09e_Archivos-de-edicion
+
+CONVENCIÓN DE NOMBRES
+---------------------
+Notas:        AAAA-MM-DD_P01_slug-titulo.docx
+Imágenes:     AAAA-MM-DD_FB_descripcion.jpg
+Promesas:     PROM-001_AAAA-MM-DD_quien_tema.xlsx
+Videos TK:    AAAA-MM-DD_TK_tema_v1.mp4
+Plantillas:   TEMPLATE_IG_post-noticia_v2.psd
+Resumen WA:   AAAA-MM-DD_WA_resumen-matutino.txt`;
+  navigator.clipboard.writeText(txt).then(()=>alert('Estructura copiada al portapapeles.')).catch(()=>alert('No se pudo copiar. Seleccioná el texto manualmente.'));
+}
+</script>
+</body>
+</html>
