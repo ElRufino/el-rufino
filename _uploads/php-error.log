@@ -1,0 +1,71 @@
+[28-Dec-2025 01:58:27 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function add_filter() in /home/u369796910/domains/infoconectados.com/public_html/wp-config.php:101
+Stack trace:
+#0 /home/u369796910/domains/infoconectados.com/public_html/wp-load.php(50): require_once()
+#1 /home/u369796910/domains/infoconectados.com/public_html/wp-blog-header.php(13): require_once('/home/u36979691...')
+#2 /home/u369796910/domains/infoconectados.com/public_html/index.php(17): require('/home/u36979691...')
+#3 {main}
+  thrown in /home/u369796910/domains/infoconectados.com/public_html/wp-config.php on line 101
+[28-Dec-2025 01:58:44 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function add_filter() in /home/u369796910/domains/infoconectados.com/public_html/wp-config.php:101
+Stack trace:
+#0 /home/u369796910/domains/infoconectados.com/public_html/wp-load.php(50): require_once()
+#1 /home/u369796910/domains/infoconectados.com/public_html/wp-blog-header.php(13): require_once('/home/u36979691...')
+#2 /home/u369796910/domains/infoconectados.com/public_html/index.php(17): require('/home/u36979691...')
+#3 {main}
+  thrown in /home/u369796910/domains/infoconectados.com/public_html/wp-config.php on line 101
+[28-Dec-2025 01:59:24 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function add_filter() in /home/u369796910/domains/infoconectados.com/public_html/wp-config.php:101
+Stack trace:
+#0 /home/u369796910/domains/infoconectados.com/public_html/wp-load.php(50): require_once()
+#1 /home/u369796910/domains/infoconectados.com/public_html/wp-admin/admin-ajax.php(22): require_once('/home/u36979691...')
+#2 {main}
+  thrown in /home/u369796910/domains/infoconectados.com/public_html/wp-config.php on line 101
+[28-Dec-2025 01:59:32 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function add_filter() in /home/u369796910/domains/infoconectados.com/public_html/wp-config.php:101
+Stack trace:
+#0 /home/u369796910/domains/infoconectados.com/public_html/wp-load.php(50): require_once()
+#1 /home/u369796910/domains/infoconectados.com/public_html/wp-blog-header.php(13): require_once('/home/u36979691...')
+#2 /home/u369796910/domains/infoconectados.com/public_html/index.php(17): require('/home/u36979691...')
+#3 {main}
+  thrown in /home/u369796910/domains/infoconectados.com/public_html/wp-config.php on line 101
+[28-Dec-2025 01:59:33 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function add_filter() in /home/u369796910/domains/infoconectados.com/public_html/wp-config.php:101
+Stack trace:
+#0 /home/u369796910/domains/infoconectados.com/public_html/wp-load.php(50): require_once()
+#1 /home/u369796910/domains/infoconectados.com/public_html/wp-admin/admin-ajax.php(22): require_once('/home/u36979691...')
+#2 {main}
+  thrown in /home/u369796910/domains/infoconectados.com/public_html/wp-config.php on line 101
+[28-Dec-2025 02:00:11 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function add_filter() in /home/u369796910/domains/infoconectados.com/public_html/wp-config.php:101
+Stack trace:
+#0 /home/u369796910/domains/infoconectados.com/public_html/wp-load.php(50): require_once()
+#1 /home/u369796910/domains/infoconectados.com/public_html/wp-login.php(12): require('/home/u36979691...')
+#2 {main}
+  thrown in /home/u369796910/domains/infoconectados.com/public_html/wp-config.php on line 101
+[28-Dec-2025 02:00:11 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function add_filter() in /home/u369796910/domains/infoconectados.com/public_html/wp-config.php:101
+Stack trace:
+#0 /home/u369796910/domains/infoconectados.com/public_html/wp-load.php(50): require_once()
+#1 /home/u369796910/domains/infoconectados.com/public_html/wp-login.php(12): require('/home/u36979691...')
+#2 {main}
+  thrown in /home/u369796910/domains/infoconectados.com/public_html/wp-config.php on line 101
+[28-Dec-2025 02:00:59 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function add_filter() in /home/u369796910/domains/infoconectados.com/public_html/wp-config.php:101
+Stack trace:
+#0 /home/u369796910/domains/infoconectados.com/public_html/wp-load.php(50): require_once()
+#1 /home/u369796910/domains/infoconectados.com/public_html/wp-admin/admin.php(35): require_once('/home/u36979691...')
+#2 /home/u369796910/domains/infoconectados.com/public_html/wp-admin/post.php(12): require_once('/home/u36979691...')
+#3 {main}
+  thrown in /home/u369796910/domains/infoconectados.com/public_html/wp-config.php on line 101
+[28-Dec-2025 02:01:24 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function add_filter() in /home/u369796910/domains/infoconectados.com/public_html/wp-config.php:101
+Stack trace:
+#0 /home/u369796910/domains/infoconectados.com/public_html/wp-load.php(50): require_once()
+#1 /home/u369796910/domains/infoconectados.com/public_html/wp-admin/admin-ajax.php(22): require_once('/home/u36979691...')
+#2 {main}
+  thrown in /home/u369796910/domains/infoconectados.com/public_html/wp-config.php on line 101
+[28-Dec-2025 02:01:33 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function add_filter() in /home/u369796910/domains/infoconectados.com/public_html/wp-config.php:101
+Stack trace:
+#0 /home/u369796910/domains/infoconectados.com/public_html/wp-load.php(50): require_once()
+#1 /home/u369796910/domains/infoconectados.com/public_html/wp-admin/admin-ajax.php(22): require_once('/home/u36979691...')
+#2 {main}
+  thrown in /home/u369796910/domains/infoconectados.com/public_html/wp-config.php on line 101
+[28-Dec-2025 02:01:42 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function add_filter() in /home/u369796910/domains/infoconectados.com/public_html/wp-config.php:101
+Stack trace:
+#0 /home/u369796910/domains/infoconectados.com/public_html/wp-load.php(50): require_once()
+#1 /home/u369796910/domains/infoconectados.com/public_html/wp-blog-header.php(13): require_once('/home/u36979691...')
+#2 /home/u369796910/domains/infoconectados.com/public_html/index.php(17): require('/home/u36979691...')
+#3 {main}
+  thrown in /home/u369796910/domains/infoconectados.com/public_html/wp-config.php on line 101
