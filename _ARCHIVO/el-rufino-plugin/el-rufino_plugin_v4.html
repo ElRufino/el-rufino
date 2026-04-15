@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Rufino — Panel v4</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:wght@300;400;600&family=JetBrains+Mono:wght@400;700&display=swap');
+
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --rojo:#c0271b;--rojo-d:#9e1f16;--rojo-l:#fff0ef;--rojo-t:#c0271b18;
+  --negro:#1a1a1a;--crema:#f5f0e8;--crema2:#ece7dd;--crema3:#ddd8ce;
+  --blanco:#ffffff;
+  --verde:#2e7d32;--verde-l:#e8f5e9;
+  --amarillo:#e65100;--amarillo-l:#fff3e0;
+  --azul:#1565c0;--azul-l:#e3f2fd;
+  --gris:#888;--gris2:#555;
+  --pausa:#78909c;--pausa-l:#eceff1;
+  --shadow:0 1px 4px rgba(0,0,0,.08);
+  --shadow-md:0 4px 16px rgba(0,0,0,.1);
+}
+
+/* LAYOUT */
+.shell{display:flex;height:100vh;min-height:600px;background:var(--crema);font-family:'Source Serif 4',Georgia,serif}
+.sidebar{width:210px;flex-shrink:0;background:#111;display:flex;flex-direction:column;border-right:1px solid #1e1e1e}
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+
+/* SIDEBAR */
+.sb-head{padding:16px 14px 14px;border-bottom:1px solid #1a1a1a}
+.logo-mark{background:var(--rojo);color:#fff;font-family:'Playfair Display',Georgia,serif;font-weight:900;font-size:15px;padding:5px 10px;border-radius:3px;display:inline-block;letter-spacing:.5px}
+.ver-tag{font-size:9px;color:#333;margin-top:5px;font-family:'JetBrains Mono',monospace;display:flex;align-items:center;gap:5px}
+.ver-dot{width:5px;height:5px;border-radius:50%;background:#2e7d32}
+
+.sb-nav{flex:1;overflow-y:auto;padding:8px 0;scrollbar-width:none}
+.sb-nav::-webkit-scrollbar{display:none}
+.ns{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:#2a2a2a;padding:10px 14px 4px;font-weight:700;font-family:'JetBrains Mono',monospace}
+.ni{display:flex;align-items:center;gap:8px;padding:7px 14px;cursor:pointer;border-left:2px solid transparent;font-size:11px;color:#444;transition:all .12s;user-select:none}
+.ni:hover{background:#161616;color:#777}
+.ni.active{background:#181818;color:var(--crema);border-left-color:var(--rojo)}
+.ni-dot{width:4px;height:4px;border-radius:50%;background:#1e1e1e;flex-shrink:0;transition:background .12s}
+.ni.active .ni-dot{background:var(--rojo)}
+.nb{margin-left:auto;font-size:9px;padding:1px 6px;border-radius:8px;font-weight:700;font-family:'JetBrains Mono',monospace}
+.nb-v{background:#c0271b22;color:var(--rojo)}
+.nb-ok{background:#1b5e2022;color:#43a047}
+.nb-new{background:#1565c022;color:#1565c0}
+.nb-num{background:#ffffff10;color:#555}
+
+.sb-foot{padding:10px 14px;border-top:1px solid #1a1a1a;display:flex;flex-direction:column;gap:6px}
+.gh-status{display:flex;align-items:center;gap:6px;font-size:9px;color:#333;font-family:'JetBrains Mono',monospace}
+.gh-dot{width:5px;height:5px;border-radius:50%;background:#1e1e1e;transition:background .3s}
+.gh-dot.on{background:#43a047;box-shadow:0 0 6px #43a04760}
+.gh-dot.err{background:#e53935}
+.phase-pill{font-size:9px;background:#1e1e1e;color:#444;padding:3px 7px;border-radius:3px;font-family:'JetBrains Mono',monospace;text-align:center}
+
+/* TOPBAR */
+.topbar{background:#161616;color:var(--crema);padding:10px 24px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #1e1e1e;flex-shrink:0}
+.tb-section{font-size:9px;color:#333;font-family:'JetBrains Mono',monospace;letter-spacing:1px;text-transform:uppercase}
+.tb-title{font-family:'Playfair Display',Georgia,serif;font-size:14px;opacity:.75;flex:1}
+.progress-wrap{display:flex;align-items:center;gap:8px}
+.pb-label{font-size:9px;color:#333;font-family:'JetBrains Mono',monospace}
+.pb{width:80px;height:2px;background:#1e1e1e;border-radius:1px}
+.pf{height:100%;background:var(--rojo);border-radius:1px;transition:width .3s ease}
+.env-tag{font-size:9px;font-family:'JetBrains Mono',monospace;color:#2a2a2a;padding:2px 8px;border:1px solid #1e1e1e;border-radius:3px}
+
+/* CONTENT */
+.content{flex:1;overflow-y:auto;padding:26px 30px;scrollbar-width:thin;scrollbar-color:var(--crema3) transparent}
+.content::-webkit-scrollbar{width:3px}
+.content::-webkit-scrollbar-thumb{background:var(--crema3);border-radius:2px}
+
+/* PANELS */
+.panel{display:none;animation:fi .15s ease}
+.panel.active{display:block}
+@keyframes fi{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+/* TYPOGRAPHY */
+.eyebrow{font-size:9px;color:var(--rojo);letter-spacing:3px;text-transform:uppercase;font-weight:700;margin-bottom:6px;font-family:'JetBrains Mono',monospace}
+.ptitle{font-family:'Playfair Display',Georgia,serif;font-size:28px;color:var(--negro);line-height:1.1;margin-bottom:8px}
+.pdesc{font-size:12px;color:var(--gris2);line-height:1.8;max-width:620px}
+.div{height:1px;background:var(--crema3);margin:20px 0}
+.slabel{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--rojo);font-weight:700;margin-bottom:12px;font-family:'JetBrains Mono',monospace}
+
+/* GRIDS */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+
+/* CARDS */
+.card{background:var(--blanco);border-radius:6px;border:1px solid var(--crema3);padding:14px;box-shadow:var(--shadow)}
+.ct{font-family:'Playfair Display',Georgia,serif;font-size:13px;color:var(--negro);margin-bottom:5px;font-weight:700}
+.cx{font-size:11px;color:#666;line-height:1.6}
+
+/* BADGES */
+.badge{display:inline-flex;align-items:center;gap:3px;font-size:8px;padding:2px 7px;border-radius:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;font-family:'JetBrains Mono',monospace}
+.bg{background:var(--verde-l);color:var(--verde)}
+.by{background:var(--amarillo-l);color:var(--amarillo)}
+.br{background:#ffebee;color:#c62828}
+.bb{background:var(--azul-l);color:var(--azul)}
+.bgr{background:#f5f5f5;color:#555}
+.bp{background:var(--pausa-l);color:var(--pausa)}
+
+/* BUTTONS */
+.btn{font-size:11px;padding:7px 14px;border-radius:4px;border:none;cursor:pointer;font-family:'Source Serif 4',Georgia,serif;font-weight:600;letter-spacing:.2px;transition:all .13s;display:inline-flex;align-items:center;gap:5px}
+.btn-p{background:var(--rojo);color:#fff}.btn-p:hover{background:var(--rojo-d)}
+.btn-o{background:transparent;color:var(--rojo);border:1px solid var(--rojo)}.btn-o:hover{background:var(--rojo-l)}
+.btn-g{background:transparent;color:#888;border:1px solid var(--crema3)}.btn-g:hover{background:#fff;color:var(--negro)}
+.btn-b{background:var(--azul);color:#fff}.btn-b:hover{background:#0d47a1}
+.btn-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:14px}
+.btn-sm{font-size:10px;padding:4px 10px}
+
+/* CALLOUTS */
+.tip{background:#fffaf9;border:1px solid #f0d9d7;border-radius:5px;padding:12px 14px;margin-top:12px}
+.tip p{font-size:11px;color:var(--gris2);line-height:1.65}
+.tip-l{font-size:9px;font-weight:700;color:var(--rojo);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px;font-family:'JetBrains Mono',monospace}
+.info{background:#f4f8ff;border:1px solid #c5d9f0;border-radius:5px;padding:12px 14px;margin-top:10px}
+.info p{font-size:11px;color:var(--azul);line-height:1.65}
+.info-l{font-size:9px;font-weight:700;color:var(--azul);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px;font-family:'JetBrains Mono',monospace}
+.warn{background:#fffbf0;border:1px solid #ffe082;border-radius:5px;padding:12px 14px;margin-top:10px}
+.warn p{font-size:11px;color:#5d4037;line-height:1.65}
+.warn-l{font-size:9px;font-weight:700;color:#e65100;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px;font-family:'JetBrains Mono',monospace}
+
+/* HERO */
+.hero{background:var(--negro);border-radius:8px;padding:24px;margin-bottom:20px;display:flex;gap:20px;align-items:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;right:-20px;top:-20px;width:130px;height:130px;border:2px solid #c0271b18;border-radius:50%}
+.hero::after{content:'';position:absolute;right:30px;bottom:-30px;width:80px;height:80px;border:1px solid #c0271b10;border-radius:50%}
+.hero-icon{width:60px;height:60px;flex-shrink:0;background:var(--rojo);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:900;font-size:20px;color:#fff;z-index:1;letter-spacing:-1px}
+.hero-text h2{font-family:'Playfair Display',serif;color:var(--crema);font-size:22px;margin-bottom:7px;line-height:1.15}
+.hero-text p{color:#444;font-size:11px;line-height:1.7}
+.hero-badges{display:flex;gap:5px;margin-top:10px;flex-wrap:wrap}
+
+/* CHECKLIST */
+.chk{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #ede8df;font-size:11px;color:var(--negro);cursor:pointer;transition:background .1s}
+.chk:hover{background:#faf9f7;margin:0 -6px;padding-left:6px;padding-right:6px;border-radius:3px}
+.chk-i{width:18px;height:18px;border-radius:3px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;transition:all .15s;cursor:pointer}
+.c-ok{background:var(--verde-l);color:var(--verde)}
+.c-p{background:var(--amarillo-l);color:var(--amarillo)}
+.c-no{background:#ffebee;color:#c62828}
+.chk-txt{flex:1}
+.chk-meta{font-size:9px;color:#bbb;font-family:'JetBrains Mono',monospace;margin-left:auto}
+
+/* SEMAPHORES */
+.sem{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--crema3)}
+.sd{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.dg{background:#43a047;box-shadow:0 0 6px #43a04750}
+.dy{background:#fb8c00;box-shadow:0 0 6px #fb8c0050}
+.dr{background:#e53935;box-shadow:0 0 6px #e5393550}
+.dp{background:var(--pausa);opacity:.6}
+.sl{font-size:11px;color:var(--negro);flex:1}
+.ss{font-size:9px;color:#999;font-family:'JetBrains Mono',monospace}
+
+/* PALETTE */
+.pal{display:flex;border-radius:6px;overflow:hidden;height:44px;margin-bottom:12px;box-shadow:var(--shadow)}
+.pc{flex:1;display:flex;align-items:flex-end;padding:4px 6px}
+.pl{font-size:8px;font-weight:600;opacity:.7;font-family:'JetBrains Mono',monospace}
+
+/* CALENDAR */
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.cday{text-align:center;font-size:9px;padding:8px 3px;background:#fff;border-radius:4px;border:1px solid var(--crema3)}
+.cdn{font-weight:700;color:var(--rojo);margin-bottom:3px;font-family:'JetBrains Mono',monospace;font-size:8px}
+.cdp{color:#888;font-size:9px}
+
+/* CODE / CONTEXT */
+.ctx-block{background:#080808;border:1px solid #141414;border-radius:6px;padding:14px;font-size:10px;font-family:'JetBrains Mono',monospace;color:#6a9955;line-height:1.7;max-height:180px;overflow-y:auto;position:relative}
+.ctx-k{color:#9cdcfe}
+.ctx-v{color:#ce9178}
+.ctx-comment{color:#444}
+.copy-btn{position:absolute;top:8px;right:8px;font-size:9px;color:#444;cursor:pointer;padding:2px 6px;border:1px solid #222;border-radius:3px;transition:all .15s;font-family:'JetBrains Mono',monospace}
+.copy-btn:hover{color:var(--rojo);border-color:var(--rojo)}
+
+/* SEO ROWS */
+.seo-row{padding:9px 0;border-bottom:1px solid var(--crema3);display:flex;gap:10px;align-items:flex-start}
+.sk{font-size:10px;font-weight:700;color:var(--negro);min-width:140px;flex-shrink:0;font-family:'JetBrains Mono',monospace}
+.sv{font-size:11px;color:#555;line-height:1.5;flex:1}
+
+/* PLUGIN LIST */
+.plr{background:#fff;border:1px solid var(--crema3);border-radius:6px;padding:11px 14px;display:flex;align-items:center;gap:12px;margin-bottom:6px;box-shadow:var(--shadow)}
+.pi{width:30px;height:30px;border-radius:5px;background:var(--rojo);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.pi svg{width:14px;height:14px;fill:#fff}
+.pn{font-size:12px;font-weight:700;color:var(--negro);font-family:'Playfair Display',serif}
+.pd{font-size:10px;color:#888;margin-top:2px;line-height:1.4}
+
+/* AGENTS */
+.agc{background:#fff;border-radius:6px;border:1px solid var(--crema3);padding:13px;margin-bottom:7px;transition:border-color .15s,box-shadow .15s;box-shadow:var(--shadow)}
+.agc:hover{border-color:#ddd0cc;box-shadow:0 2px 12px rgba(192,39,27,.08)}
+.agc.ag-new{border-color:#f0d9d7;background:#fffcfc}
+.agc.ag-stack{border-color:#c5d9f0;background:#f8fbff}
+.agh{display:flex;align-items:flex-start;gap:10px;margin-bottom:6px}
+.agn{background:var(--rojo);color:#fff;font-size:9px;font-weight:800;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;font-family:'JetBrains Mono',monospace}
+.ag-name{font-family:'Playfair Display',serif;font-size:13px;color:var(--negro);font-weight:700}
+.ag-role{font-size:10px;color:var(--rojo);margin-top:2px}
+.ag-text{font-size:11px;color:#666;line-height:1.6;padding-left:30px}
+.ag-act{padding-left:30px;margin-top:8px;display:flex;gap:5px;flex-wrap:wrap}
+
+/* THEME CARDS */
+.theme-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.theme-card{background:#fff;border-radius:7px;border:2px solid var(--crema3);overflow:hidden;cursor:pointer;transition:all .2s;box-shadow:var(--shadow)}
+.theme-card:hover{border-color:#bbb;box-shadow:var(--shadow-md)}
+.theme-card.at{border-color:var(--rojo);box-shadow:0 0 0 3px var(--rojo-t)}
+.tp{height:70px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.tl{padding:10px 12px;border-top:1px solid var(--crema3)}
+.tn{font-family:'Playfair Display',serif;font-size:12px;color:var(--negro);font-weight:700}
+.tr{font-size:10px;color:#888;margin-top:1px}
+.tbg{font-size:9px;color:var(--rojo);font-weight:700;margin-top:4px;letter-spacing:.5px;font-family:'JetBrains Mono',monospace}
+
+/* IMAGES */
+.img-opt{background:#fff;border:1px solid var(--crema3);border-radius:6px;padding:14px;margin-bottom:8px;display:flex;gap:12px;align-items:flex-start;box-shadow:var(--shadow)}
+.img-num{background:var(--negro);color:var(--crema);font-size:10px;font-weight:700;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'JetBrains Mono',monospace}
+.img-inf h4{font-size:12px;font-weight:700;color:var(--negro);margin-bottom:3px}
+.img-inf p{font-size:10px;color:#888;line-height:1.5;margin-bottom:6px}
+.pbox{background:#f8f7f4;border:1px solid var(--crema3);border-radius:4px;padding:9px 10px;font-size:10px;color:#555;font-family:'JetBrains Mono',monospace;line-height:1.5;position:relative}
+.cp{position:absolute;top:5px;right:7px;font-size:9px;color:#bbb;cursor:pointer;transition:color .15s}
+.cp:hover{color:var(--rojo)}
+
+/* GH BLOCK */
+.gh-block{background:var(--negro);border-radius:8px;padding:20px;color:var(--crema);margin-bottom:14px}
+.gh-block h3{font-family:'Playfair Display',serif;font-size:18px;margin-bottom:5px}
+.gh-block p{font-size:11px;color:#444;line-height:1.65;margin-bottom:14px}
+.gh-in{background:#0a0a0a;border:1px solid #2a2a2a;border-radius:4px;color:#999;font-size:11px;padding:8px 11px;width:100%;font-family:'JetBrains Mono',monospace;outline:none;margin-bottom:8px;transition:border-color .15s}
+.gh-in:focus{border-color:var(--rojo);color:#ccc}
+.gh-in::placeholder{color:#2a2a2a}
+.file-tree{background:#0a0a0a;border:1px solid #1a1a1a;border-radius:5px;padding:12px}
+.fi{display:flex;align-items:center;gap:8px;padding:3px 0;font-size:10px;font-family:'JetBrains Mono',monospace;color:#444}
+.fi.key{color:var(--rojo)}
+.fi.ok{color:#43a047}
+.fi-icon{font-size:11px}
+
+/* PROMISES */
+.promise-card{background:#fff;border:1px solid var(--crema3);border-radius:6px;padding:13px;margin-bottom:8px;box-shadow:var(--shadow);transition:border-color .15s}
+.promise-card:hover{border-color:var(--rojo-t)}
+.promise-header{display:flex;align-items:flex-start;gap:8px;margin-bottom:6px}
+.promise-id{font-size:9px;font-family:'JetBrains Mono',monospace;color:#bbb;background:#f5f5f5;padding:2px 6px;border-radius:3px}
+.promise-title{font-family:'Playfair Display',serif;font-size:13px;color:var(--negro);flex:1}
+.promise-meta{display:flex;gap:12px;font-size:10px;color:#888;font-family:'JetBrains Mono',monospace;margin-bottom:6px}
+.promise-state{display:flex;align-items:center;gap:6px}
+.promise-actions{display:flex;gap:5px;margin-top:8px}
+
+.promise-form{background:#fff;border:1px solid var(--crema3);border-radius:6px;padding:16px;margin-bottom:14px;box-shadow:var(--shadow);display:none}
+.promise-form.active{display:block}
+.form-row{margin-bottom:10px}
+.form-label{font-size:10px;font-weight:700;color:var(--negro);margin-bottom:4px;display:block;font-family:'JetBrains Mono',monospace;letter-spacing:.5px}
+.form-input{width:100%;padding:8px 10px;border:1px solid var(--crema3);border-radius:4px;font-size:11px;font-family:'Source Serif 4',serif;color:var(--negro);background:#fafaf8;outline:none;transition:border-color .15s}
+.form-input:focus{border-color:var(--rojo)}
+.form-textarea{width:100%;padding:8px 10px;border:1px solid var(--crema3);border-radius:4px;font-size:11px;font-family:'Source Serif 4',serif;color:var(--negro);background:#fafaf8;outline:none;resize:vertical;min-height:60px;transition:border-color .15s}
+.form-textarea:focus{border-color:var(--rojo)}
+.form-select{width:100%;padding:8px 10px;border:1px solid var(--crema3);border-radius:4px;font-size:11px;font-family:'Source Serif 4',serif;color:var(--negro);background:#fafaf8;outline:none;cursor:pointer}
+.form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+/* LOADER */
+.lb-wrap{background:#fff;border:1px solid var(--crema3);border-radius:5px;padding:10px 12px;margin-top:10px;display:none}
+.lb-wrap.vis{display:block}
+.lb-lbl{font-size:10px;color:#666;font-family:'JetBrains Mono',monospace;margin-bottom:6px}
+.lb-trk{height:3px;background:var(--crema3);border-radius:2px;overflow:hidden}
+.lb-fill{height:100%;background:var(--rojo);border-radius:2px;width:0;transition:width .35s}
+
+/* FOOTER NAV */
+.nav-ft{padding:12px 24px;background:var(--crema2);display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--crema3);flex-shrink:0}
+.nb-btn{font-size:11px;padding:7px 18px;border-radius:4px;border:none;cursor:pointer;font-family:'Source Serif 4',serif;font-weight:700;transition:all .15s}
+.nb-btn:disabled{opacity:.3;cursor:default}
+.np{background:transparent;color:#888;border:1px solid var(--crema3)}
+.nn{background:var(--rojo);color:#fff}.nn:hover:not(:disabled){background:var(--rojo-d)}
+.sc{font-size:10px;color:#aaa;font-family:'JetBrains Mono',monospace}
+
+/* TOAST */
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1a1a1a;color:var(--crema);font-size:11px;padding:8px 18px;border-radius:20px;z-index:9999;font-family:'Source Serif 4',serif;border:1px solid var(--rojo);pointer-events:none;white-space:nowrap;display:none;box-shadow:0 4px 16px rgba(0,0,0,.3)}
+
+/* STATS ROW */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:18px}
+.stat{background:#fff;border:1px solid var(--crema3);border-radius:6px;padding:12px;text-align:center;box-shadow:var(--shadow)}
+.stat-n{font-family:'Playfair Display',serif;font-size:22px;color:var(--rojo);font-weight:900}
+.stat-l{font-size:9px;color:#888;margin-top:2px;text-transform:uppercase;letter-spacing:1px;font-family:'JetBrains Mono',monospace}
+
+/* CONTEXT EDITOR */
+.ctx-editor{background:#0a0a0a;border:1px solid #1e1e1e;border-radius:6px;overflow:hidden}
+.ctx-editor-head{background:#111;padding:8px 12px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #1a1a1a}
+.ctx-editor-title{font-size:9px;color:#444;font-family:'JetBrains Mono',monospace;letter-spacing:1px}
+.ctx-editor-actions{display:flex;gap:5px}
+.ctx-textarea{width:100%;background:#0a0a0a;border:none;color:#6a9955;font-size:10px;font-family:'JetBrains Mono',monospace;padding:14px;line-height:1.7;resize:vertical;min-height:160px;outline:none}
+
+/* PILLAR GRID */
+.pillar-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.pillar{background:#fff;border-radius:6px;border:1px solid var(--crema3);padding:12px;border-left:3px solid var(--rojo);box-shadow:var(--shadow)}
+.pillar-code{font-size:9px;font-family:'JetBrains Mono',monospace;color:var(--rojo);font-weight:700;margin-bottom:4px}
+.pillar-name{font-family:'Playfair Display',serif;font-size:13px;color:var(--negro);font-weight:700;margin-bottom:3px}
+.pillar-fmt{font-size:10px;color:#888}
+
+/* PLATFORM CARD */
+.platform{background:#fff;border:1px solid var(--crema3);border-radius:6px;padding:13px;display:grid;grid-template-columns:1fr auto;gap:8px;align-items:start;box-shadow:var(--shadow);margin-bottom:6px}
+.platform-name{font-family:'Playfair Display',serif;font-size:13px;color:var(--negro);font-weight:700;margin-bottom:3px}
+.platform-meta{font-size:10px;color:#888}
+.platform-kpi{text-align:right}
+.platform-num{font-family:'Playfair Display',serif;font-size:18px;color:var(--rojo);font-weight:900}
+.platform-kpi-l{font-size:9px;color:#aaa;font-family:'JetBrains Mono',monospace}
+
+/* DIVIDER */
+.section-divider{display:flex;align-items:center;gap:10px;margin:18px 0}
+.section-divider::before,.section-divider::after{content:'';flex:1;height:1px;background:var(--crema3)}
+.section-divider span{font-size:9px;color:#bbb;font-family:'JetBrains Mono',monospace;letter-spacing:1px;text-transform:uppercase}
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sb-head">
+      <div class="logo-mark">EL RUFINO</div>
+      <div class="ver-tag"><div class="ver-dot"></div>Plugin v4.0 · Panel IA</div>
+    </div>
+    <div class="sb-nav" id="sbNav">
+      <div class="ns">Base</div>
+      <div class="ni active" onclick="go(0)"><div class="ni-dot"></div>Inicio <span class="nb nb-v">v4</span></div>
+      <div class="ni" onclick="go(1)"><div class="ni-dot"></div>GitHub <span class="nb nb-ok">OK</span></div>
+      <div class="ni" onclick="go(2)"><div class="ni-dot"></div>Infraestructura</div>
+      <div class="ni" onclick="go(3)"><div class="ni-dot"></div>Plugins</div>
+      <div class="ns">Identidad</div>
+      <div class="ni" onclick="go(4)"><div class="ni-dot"></div>Tema visual</div>
+      <div class="ni" onclick="go(5)"><div class="ni-dot"></div>Themes Región</div>
+      <div class="ni" onclick="go(6)"><div class="ni-dot"></div>Imágenes</div>
+      <div class="ns">Editorial</div>
+      <div class="ni" onclick="go(7)"><div class="ni-dot"></div>SEO</div>
+      <div class="ni" onclick="go(8)"><div class="ni-dot"></div>Contenido</div>
+      <div class="ni" onclick="go(9)"><div class="ni-dot"></div>Promesas <span class="nb nb-new" id="promCountBadge">0</span></div>
+      <div class="ns">Inteligencia</div>
+      <div class="ni" onclick="go(10)"><div class="ni-dot"></div>usInA <span class="nb nb-num">11</span></div>
+      <div class="ni" onclick="go(11)"><div class="ni-dot"></div>Contexto IA</div>
+      <div class="ni" onclick="go(12)"><div class="ni-dot"></div>Redes</div>
+      <div class="ni" onclick="go(13)"><div class="ni-dot"></div>Roadmap</div>
+    </div>
+    <div class="sb-foot">
+      <div class="gh-status"><div class="gh-dot on" id="ghDot"></div><span id="ghTxt">ElRufino/el-rufino</span></div>
+      <div class="phase-pill" id="phasePill">FASE 0 · RECONSTRUCCIÓN TÉCNICA</div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <div class="tb-section" id="tbSection">BASE</div>
+      <div style="width:1px;height:12px;background:#222;flex-shrink:0"></div>
+      <div class="tb-title" id="tbTitle">Inicio</div>
+      <div class="progress-wrap">
+        <div class="pb-label" id="pbLbl">1/14</div>
+        <div class="pb"><div class="pf" id="pFill" style="width:7%"></div></div>
+      </div>
+      <div class="env-tag">infoconectados.com.ar</div>
+    </div>
+
+    <div class="content">
+
+      <!-- 0: INICIO -->
+      <div class="panel active" id="p0">
+        <div class="hero">
+          <div class="hero-icon">ER</div>
+          <div class="hero-text">
+            <h2>Panel El Rufino v4</h2>
+            <p>Sistema operativo del medio. 14 módulos · 11 agentes · Registro de promesas · Contexto IA editable.</p>
+            <div class="hero-badges">
+              <span class="badge bg">FASE 0</span>
+              <span class="badge bb">GitHub conectado</span>
+              <span class="badge by">Dominios pendientes</span>
+              <span class="badge bgr">WordPress en test</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats-row">
+          <div class="stat"><div class="stat-n">11</div><div class="stat-l">Agentes IA</div></div>
+          <div class="stat"><div class="stat-n" id="statProm">0</div><div class="stat-l">Promesas</div></div>
+          <div class="stat"><div class="stat-n">3</div><div class="stat-l">Archivos repo</div></div>
+          <div class="stat"><div class="stat-n" id="statChk">0%</div><div class="stat-l">Checklist WP</div></div>
+        </div>
+
+        <div class="slabel">Novedades v4</div>
+        <div class="g3" style="margin-bottom:16px">
+          <div class="card"><span class="badge bg" style="margin-bottom:6px">NUEVO</span><div class="ct">Registro de Promesas</div><div class="cx">Módulo propio (paso 10). Fichas con estado, fecha, evidencia y generación de nota con un clic.</div></div>
+          <div class="card"><span class="badge bg" style="margin-bottom:6px">NUEVO</span><div class="ct">Contexto IA editable</div><div class="cx">Editor del bloque de transferencia directamente en el panel. Exportá, copiá o actualizá sin salir.</div></div>
+          <div class="card"><span class="badge bg" style="margin-bottom:6px">NUEVO</span><div class="ct">Checklist interactivo</div><div class="cx">Los ítems se pueden marcar como completados. El panel registra el avance y actualiza el semáforo.</div></div>
+        </div>
+
+        <div class="slabel">Contexto de transferencia rápida</div>
+        <div class="ctx-block">
+          <span class="copy-btn" onclick="copyCtx()">copiar</span>
+<span class="ctx-k">PROYECTO</span> = <span class="ctx-v">"EL RUFINO"</span>
+<span class="ctx-k">CIUDAD</span> = <span class="ctx-v">"Rufino, Santa Fe, Argentina"</span>
+<span class="ctx-k">CLAIM</span> = <span class="ctx-v">"Lo que pasa y lo que significa"</span>
+<span class="ctx-k">FASE_ACTUAL</span> = <span class="ctx-v">"Fase 0 · reconstrucción técnica"</span>
+<span class="ctx-k">PALETA</span> = <span class="ctx-v">"B: #c0271b · #1a1a1a · #ffffff · #f5f0e8"</span>
+<span class="ctx-k">REPOSITORIO</span> = <span class="ctx-v">"ElRufino/el-rufino"</span>
+<span class="ctx-k">ENTORNO_TEST</span> = <span class="ctx-v">"elrufino.infoconectados.com.ar"</span>
+<span class="ctx-k">AGENTES</span> = <span class="ctx-v">"11 operativos · v4"</span>
+<span class="ctx-k">PLUGIN</span> = <span class="ctx-v">"v4 activo"</span></div>
+
+        <div class="btn-row">
+          <button class="btn btn-p" onclick="sendP('Actuá como consultor de El Rufino. Contexto: PROYECTO=EL RUFINO · CIUDAD=Rufino, Santa Fe · FASE=Fase 0 · REPOSITORIO=ElRufino/el-rufino · PLUGIN=v4 activo · dominios pendientes NIC Argentina. ¿Cuáles son las 3 acciones más urgentes para avanzar esta semana? Sé específico y práctico.')">Próximas acciones ↗</button>
+          <button class="btn btn-o" onclick="sendP('Actuá como consultor de El Rufino. Revisá el estado actual y generá el bloque de transferencia rápida actualizado en formato clave=valor para pegar al inicio de cualquier sesión nueva de IA. Incluí todos los campos del repositorio v1.1.')">Actualizar bloque IA ↗</button>
+          <button class="btn btn-g" onclick="go(11)">Editor de contexto →</button>
+        </div>
+      </div>
+
+      <!-- 1: GITHUB -->
+      <div class="panel" id="p1">
+        <div class="eyebrow">MÓDULO 02 / 14</div>
+        <div class="ptitle">Repositorio GitHub</div>
+        <div class="pdesc">Fuente única de verdad del proyecto. Los 3 archivos de contexto IA deben estar sincronizados en ElRufino/el-rufino.</div>
+        <div class="div"></div>
+        <div class="gh-block">
+          <h3>ElRufino/el-rufino</h3>
+          <p>Repositorio privado con los archivos de contexto para transferencia entre instancias de IA. Cada sesión nueva pega el bloque de transferencia del prompt maestro.</p>
+          <div class="file-tree">
+            <div class="fi ok"><span class="fi-icon">📁</span> 00_CONTEXTO_IA/</div>
+            <div class="fi ok" style="padding-left:16px"><span class="fi-icon">✓</span> el-rufino_prompt-maestro_v1.1.md</div>
+            <div class="fi ok" style="padding-left:16px"><span class="fi-icon">✓</span> el-rufino_agentes-ia_v1.md</div>
+            <div class="fi ok" style="padding-left:16px"><span class="fi-icon">✓</span> el-rufino_repositorio-ia_v1.1.md</div>
+            <div class="fi" style="padding-left:16px;opacity:.4"><span class="fi-icon">○</span> el-rufino_plugin_v4.html <span style="color:#333;margin-left:6px">— pendiente subir</span></div>
+            <div class="fi" style="margin-top:5px;opacity:.4"><span class="fi-icon">📁</span> 02_WORDPRESS_TEST/ — pendiente</div>
+            <div class="fi" style="padding-left:16px;opacity:.4"><span class="fi-icon">○</span> el-rufino_plugin_v4-FINAL.zip</div>
+            <div class="fi" style="padding-left:16px;opacity:.4"><span class="fi-icon">○</span> el-rufino_child-theme_ACTIVO.zip</div>
+          </div>
+        </div>
+        <div class="slabel">URL de acceso rápido</div>
+        <div class="ctx-block" style="max-height:70px">
+<span class="ctx-k">REPO</span>     <span class="ctx-v">https://github.com/ElRufino/el-rufino</span>
+<span class="ctx-k">CONTEXTO</span> <span class="ctx-v">https://github.com/ElRufino/el-rufino/tree/main/00_CONTEXTO_IA</span></div>
+        <div class="btn-row">
+          <button class="btn btn-p" onclick="sendP('Abrí github.com/ElRufino/el-rufino y verificá que los 3 archivos de 00_CONTEXTO_IA estén correctamente subidos y tengan contenido: el-rufino_prompt-maestro_v1.1.md, el-rufino_agentes-ia_v1.md y el-rufino_repositorio-ia_v1.1.md. Confirmá el estado de cada uno.')">Verificar archivos ↗</button>
+          <button class="btn btn-o" onclick="sendP('Necesito subir el plugin v4 al repositorio ElRufino/el-rufino en la carpeta 02_WORDPRESS_TEST. Generá las instrucciones paso a paso para subirlo desde GitHub.com (sin línea de comandos), con la convención de nombres correcta según el repositorio.')">Cómo subir el plugin ↗</button>
+        </div>
+      </div>
+
+      <!-- 2: INFRAESTRUCTURA -->
+      <div class="panel" id="p2">
+        <div class="eyebrow">MÓDULO 03 / 14</div>
+        <div class="ptitle">Infraestructura técnica</div>
+        <div class="pdesc">Checklist interactivo. Hacé clic en cada ítem para marcarlo como completado. El avance se registra en el dashboard.</div>
+        <div class="div"></div>
+        <div class="slabel">WordPress — <span id="wpPct">0</span>% completado</div>
+        <div id="wpChecklist">
+          <div class="chk" onclick="toggle(this,'wp')" data-done="true"><div class="chk-i c-ok">✓</div><div class="chk-txt">Plugin v4 instalado y activo</div><div class="chk-meta">OK</div></div>
+          <div class="chk" onclick="toggle(this,'wp')" data-done="true"><div class="chk-i c-ok">✓</div><div class="chk-txt">Child theme instalado y activo (Newsup padre)</div><div class="chk-meta">OK</div></div>
+          <div class="chk" onclick="toggle(this,'wp')" data-done="false"><div class="chk-i c-p">—</div><div class="chk-txt">SEO configurado (Rank Math recomendado)</div><div class="chk-meta">pendiente</div></div>
+          <div class="chk" onclick="toggle(this,'wp')" data-done="false"><div class="chk-i c-p">—</div><div class="chk-txt">Categorías y slugs P01–P06 creados</div><div class="chk-meta">pendiente</div></div>
+          <div class="chk" onclick="toggle(this,'wp')" data-done="false"><div class="chk-i c-p">—</div><div class="chk-txt">Customizer: colores, tipografías y menús</div><div class="chk-meta">pendiente</div></div>
+          <div class="chk" onclick="toggle(this,'wp')" data-done="false"><div class="chk-i c-no">✗</div><div class="chk-txt">Schema.org NewsMediaOrganization configurado</div><div class="chk-meta">crítico</div></div>
+          <div class="chk" onclick="toggle(this,'wp')" data-done="false"><div class="chk-i c-no">✗</div><div class="chk-txt">Canal WhatsApp broadcast abierto y configurado</div><div class="chk-meta">crítico</div></div>
+          <div class="chk" onclick="toggle(this,'wp')" data-done="false"><div class="chk-i c-no">✗</div><div class="chk-txt">Logo, favicon y Open Graph image subidos</div><div class="chk-meta">crítico</div></div>
+        </div>
+        <div class="slabel" style="margin-top:18px">Dominios</div>
+        <div id="domChecklist">
+          <div class="chk" onclick="toggle(this,'dom')" data-done="false"><div class="chk-i c-no">✗</div><div class="chk-txt">elrufino.ar — registrar en NIC Argentina (~$25.500 ARS)</div><div class="chk-meta">crítico</div></div>
+          <div class="chk" onclick="toggle(this,'dom')" data-done="false"><div class="chk-i c-no">✗</div><div class="chk-txt">elrufino.com.ar — registrar y configurar 301 → elrufino.ar</div><div class="chk-meta">defensivo</div></div>
+          <div class="chk" onclick="toggle(this,'dom')" data-done="false"><div class="chk-i c-p">—</div><div class="chk-txt">SSL/HTTPS activo en dominio definitivo</div><div class="chk-meta">post-registro</div></div>
+          <div class="chk" onclick="toggle(this,'dom')" data-done="false"><div class="chk-i c-p">—</div><div class="chk-txt">Redirección 301 configurada (infoconectados → elrufino.ar)</div><div class="chk-meta">post-registro</div></div>
+        </div>
+        <div class="lb-wrap" id="wpLdr"><div class="lb-lbl" id="wpLbl">Verificando...</div><div class="lb-trk"><div class="lb-fill" id="wpFill"></div></div></div>
+        <div class="btn-row">
+          <button class="btn btn-p" onclick="runWP()">Diagnóstico automático</button>
+          <button class="btn btn-o" onclick="sendP('Actuá como Agente Stack de El Rufino. Verificá el estado de WordPress en infoconectados.com.ar: versión instalada, plugins activos, child theme activo, versión de PHP, velocidad estimada y próximos 5 pasos técnicos ordenados por prioridad.')">Diagnóstico con IA ↗</button>
+          <button class="btn btn-g" onclick="window.open('https://nic.ar/verificar-dominio','_blank')">NIC Argentina ↗</button>
+        </div>
+      </div>
+
+      <!-- 3: PLUGINS -->
+      <div class="panel" id="p3">
+        <div class="eyebrow">MÓDULO 04 / 14</div>
+        <div class="ptitle">Plugins requeridos</div>
+        <div class="pdesc">Stack mínimo para el lanzamiento. Instalar en este orden para evitar conflictos. Objetivo de carga: menos de 3 segundos en mobile.</div>
+        <div class="div"></div>
+        <div class="plr"><div class="pi"><svg viewBox="0 0 16 16"><rect x="2" y="2" width="12" height="12" rx="2"/></svg></div><div style="flex:1"><div class="pn">Rank Math SEO</div><div class="pd">SEO técnico, Schema NewsMediaOrganization, sitemap. Reemplaza Yoast. Instalar primero.</div></div><span class="badge by">INSTALAR</span></div>
+        <div class="plr"><div class="pi"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/></svg></div><div style="flex:1"><div class="pn">WP Super Cache</div><div class="pd">Caché de páginas. Objetivo: carga &lt;3 segundos. Configurar después del child theme.</div></div><span class="badge by">INSTALAR</span></div>
+        <div class="plr"><div class="pi"><svg viewBox="0 0 16 16"><polygon points="8,2 14,14 2,14"/></svg></div><div style="flex:1"><div class="pn">Smush / Imagify</div><div class="pd">Compresión automática de imágenes. Crítico para mobile-first (70%+ del tráfico).</div></div><span class="badge by">INSTALAR</span></div>
+        <div class="plr"><div class="pi"><svg viewBox="0 0 16 16"><rect x="2" y="6" width="12" height="8" rx="1"/><rect x="5" y="2" width="6" height="6" rx="1"/></svg></div><div style="flex:1"><div class="pn">UpdraftPlus</div><div class="pd">Backups automáticos en Google Drive. Configurar antes de publicar el primer contenido.</div></div><span class="badge by">INSTALAR</span></div>
+        <div class="plr"><div class="pi" style="background:#1a1a1a"><svg viewBox="0 0 16 16"><path d="M8 2l2 4 5 .5-3.5 3.5L13 15 8 12l-5 3 1.5-5L1 6.5l5-.5z" fill="#fff"/></svg></div><div style="flex:1"><div class="pn">El Rufino Plugin v4</div><div class="pd">Panel IA, agentes, registro de promesas, contexto editable y sincronización GitHub.</div></div><span class="badge bg">ACTIVO</span></div>
+        <div class="btn-row">
+          <button class="btn btn-p" onclick="sendP('Actuá como Agente Stack de El Rufino. Generá la guía completa de instalación del stack: orden exacto de instalación, configuración mínima de cada plugin, posibles conflictos entre Rank Math y WP Super Cache, y cómo verificar que todo funciona correctamente.')">Guía de instalación ↗</button>
+        </div>
+      </div>
+
+      <!-- 4: TEMA VISUAL -->
+      <div class="panel" id="p4">
+        <div class="eyebrow">MÓDULO 05 / 14</div>
+        <div class="ptitle">Tema visual</div>
+        <div class="pdesc">Identidad visual cerrada. Paleta B confirmada. Child theme activo. Pendiente: código de producción completo con CSS y functions.php definitivos.</div>
+        <div class="div"></div>
+        <div class="slabel">Paleta B — cerrada ✓</div>
+        <div class="pal">
+          <div class="pc" style="background:#c0271b;flex:2"><div class="pl" style="color:#fff">#c0271b — ROJO</div></div>
+          <div class="pc" style="background:#1a1a1a;flex:2"><div class="pl" style="color:#fff">#1a1a1a — NEGRO</div></div>
+          <div class="pc" style="background:#f5f0e8;flex:2;border:1px solid #ddd8ce"><div class="pl" style="color:#888">#f5f0e8 — CREMA</div></div>
+          <div class="pc" style="background:#fff;flex:1;border:1px solid #ddd8ce"><div class="pl" style="color:#aaa">#fff</div></div>
+        </div>
+        <div class="slabel">Tipografías — cerradas ✓</div>
+        <div class="g2" style="margin-bottom:16px">
+          <div class="card"><div class="ct" style="font-size:20px;font-family:'Playfair Display',serif">Playfair Display</div><div class="cx">Títulos, mastheads, destacados. Serif clásico con autoridad editorial. Peso 700/900.</div></div>
+          <div class="card"><div class="ct">Source Serif 4 / Inter</div><div class="cx">Cuerpo de texto y UI. Legibilidad en mobile-first. 70%+ del tráfico es mobile.</div></div>
+        </div>
+        <div class="slabel">Checklist del child theme</div>
+        <div class="chk" data-done="true"><div class="chk-i c-ok">✓</div><div class="chk-txt">Child theme instalado (Newsup como padre)</div></div>
+        <div class="chk" onclick="toggle(this,'theme')" data-done="false"><div class="chk-i c-p">—</div><div class="chk-txt">style.css con paleta B completa y variables CSS</div></div>
+        <div class="chk" onclick="toggle(this,'theme')" data-done="false"><div class="chk-i c-p">—</div><div class="chk-txt">functions.php: enqueue, tipografías, tamaños de imagen</div></div>
+        <div class="chk" onclick="toggle(this,'theme')" data-done="false"><div class="chk-i c-p">—</div><div class="chk-txt">Header masthead rojo con nombre en serif blanco</div></div>
+        <div class="chk" onclick="toggle(this,'theme')" data-done="false"><div class="chk-i c-p">—</div><div class="chk-txt">Ticker de noticias configurado</div></div>
+        <div class="chk" onclick="toggle(this,'theme')" data-done="false"><div class="chk-i c-p">—</div><div class="chk-txt">Grilla de artículos responsive mobile-first</div></div>
+        <div class="chk" onclick="toggle(this,'theme')" data-done="false"><div class="chk-i c-no">✗</div><div class="chk-txt">Sistema de plantillas para redes sociales</div></div>
+        <div class="btn-row">
+          <button class="btn btn-p" onclick="sendP('Actuá como Agente 3 (Configurador de tema visual) de El Rufino. Generá el código completo del child theme para WordPress: 1) style.css con paleta B (#c0271b rojo, #1a1a1a negro, #f5f0e8 crema, #ffffff blanco) y todas las variables CSS, 2) functions.php con enqueue de Playfair Display + Source Serif 4 desde Google Fonts, tamaños de imagen, registro de menús, 3) CSS adicional para header masthead, ticker de noticias, grilla de artículos responsive mobile-first y footer. Tema padre: Newsup.')">Generar child theme completo ↗</button>
+          <button class="btn btn-o" onclick="sendP('Generá la configuración exacta del Customizer de WordPress para El Rufino con el tema Newsup. Sección por sección: colores, tipografías, layout, header, footer y menús. Valores exactos para copiar en cada campo. Paleta B confirmada.')">Configurar Customizer ↗</button>
+        </div>
+      </div>
+
+      <!-- 5: THEMES REGIÓN -->
+      <div class="panel" id="p5">
+        <div class="eyebrow">MÓDULO 06 / 14 · HORIZONTE FUTURO</div>
+        <div class="ptitle">Themes Región</div>
+        <div class="pdesc">Sistema de replicación del modelo para otras ciudades del corredor. Estructura lista, activación en Fase 3. No activar antes de consolidar El Rufino.</div>
+        <div class="div"></div>
+        <div class="theme-grid">
+          <div class="theme-card at" onclick="selTheme(this,'El Rufino','#c0271b','Rufino, Santa Fe')">
+            <div class="tp" style="background:#c0271b"><span style="font-family:'Playfair Display',serif;font-weight:900;color:#fff;font-size:17px">EL RUFINO</span></div>
+            <div class="tl"><div class="tn">El Rufino</div><div class="tr">Rufino, Santa Fe · 19.211 hab.</div><div class="tbg">ACTIVO — MEDIO MADRE</div></div>
+          </div>
+          <div class="theme-card" onclick="selTheme(this,'El Sacti','#1a5c9e','Sancti Spíritu, Bs As')">
+            <div class="tp" style="background:#1a5c9e"><span style="font-family:'Playfair Display',serif;font-weight:900;color:#fff;font-size:16px">EL SACTI</span></div>
+            <div class="tl"><div class="tn">El Sacti</div><div class="tr">Sancti Spíritu, Buenos Aires</div><div class="tbg">PAUSA — FASE 3</div></div>
+          </div>
+          <div class="theme-card" onclick="selTheme(this,'Amenábar Hoy','#2a7a3a','Amenábar, Santa Fe')">
+            <div class="tp" style="background:#2a7a3a"><span style="font-family:'Playfair Display',serif;font-weight:900;color:#fff;font-size:14px">AMENÁBAR HOY</span></div>
+            <div class="tl"><div class="tn">Amenábar Hoy</div><div class="tr">Amenábar, Santa Fe</div><div class="tbg">PAUSA — FASE 3</div></div>
+          </div>
+          <div class="theme-card" onclick="selTheme(this,'Castellanos Media','#7a2a7a','Rafaela, Santa Fe')">
+            <div class="tp" style="background:#7a2a7a"><span style="font-family:'Playfair Display',serif;font-weight:900;color:#fff;font-size:13px">CASTELLANOS MEDIA</span></div>
+            <div class="tl"><div class="tn">Castellanos Media</div><div class="tr">Rafaela, Santa Fe</div><div class="tbg">PAUSA — FASE 3</div></div>
+          </div>
+        </div>
+        <div id="themeDetail" style="display:none">
+          <div class="div"></div>
+          <div class="slabel" id="themeDetailLbl">EL RUFINO — DETALLE</div>
+          <div class="info"><div class="info-l">Prompt Maestro regional</div><p>Al activar un theme región, el Agente genera el Prompt Maestro completo adaptado a esa ciudad: contexto demográfico, mapa de medios locales, audiencias, 6 pilares editoriales y tono editorial.</p></div>
+          <div class="btn-row">
+            <button class="btn btn-p" id="themeGenBtn">Generar Prompt Maestro ↗</button>
+            <button class="btn btn-g" id="themePreviewBtn">Ver estructura</button>
+          </div>
+        </div>
+        <div class="warn" style="margin-top:14px"><div class="warn-l">⏸ Expansión en pausa</div><p>No activar antes de consolidar El Rufino con hábito de audiencia, reputación y al menos 1 alianza local. La estructura técnica ya está lista para replicar cuando llegue el momento.</p></div>
+      </div>
+
+      <!-- 6: IMÁGENES -->
+      <div class="panel" id="p6">
+        <div class="eyebrow">MÓDULO 07 / 14</div>
+        <div class="ptitle">Imágenes institucionales</div>
+        <div class="pdesc">4 imágenes clave para el lanzamiento. Prompts listos para Gemini Imagen, Midjourney o DALL-E. Copiar y pegar en el generador.</div>
+        <div class="div"></div>
+        <div class="img-opt">
+          <div class="img-num">1</div>
+          <div class="img-inf">
+            <h4>Logo principal — SVG horizontal</h4>
+            <p>Fondo blanco + versión negativo (sobre rojo). Formato SVG vector.</p>
+            <div class="pbox">A bold newspaper masthead logo for "EL RUFINO", local news from Rufino, Santa Fe, Argentina. Classic editorial serif font similar to Playfair Display. Deep red #c0271b on white background. Clean, professional, no decorative elements. SVG vector style. Horizontal layout.<span class="cp" onclick="cpBox(this)">copiar</span></div>
+          </div>
+        </div>
+        <div class="img-opt">
+          <div class="img-num">2</div>
+          <div class="img-inf">
+            <h4>Open Graph — 1200×630px</h4>
+            <p>Imagen por defecto al compartir en Facebook, WhatsApp e Instagram.</p>
+            <div class="pbox">Editorial Open Graph image 1200x630px. "EL RUFINO" masthead large Playfair Display serif on deep red #c0271b background. Subtitle "Lo que pasa y lo que significa" in white below. Bottom: "Rufino · Santa Fe" small caption. Simple, high contrast. No photos.<span class="cp" onclick="cpBox(this)">copiar</span></div>
+          </div>
+        </div>
+        <div class="img-opt">
+          <div class="img-num">3</div>
+          <div class="img-inf">
+            <h4>Favicon — 512×512px</h4>
+            <p>Ícono del sitio. Legible a 16px.</p>
+            <div class="pbox">Simple favicon 512x512px. White serif letters "ER" on deep red #c0271b square background, slight rounded corners. Playfair Display font style. Clean, bold, legible at 16px. Flat design, no shadows.<span class="cp" onclick="cpBox(this)">copiar</span></div>
+          </div>
+        </div>
+        <div class="img-opt">
+          <div class="img-num">4</div>
+          <div class="img-inf">
+            <h4>Portada canal WhatsApp — 800×640px</h4>
+            <p>Imagen de bienvenida del canal broadcast diario 7:30 AM.</p>
+            <div class="pbox">WhatsApp channel cover 800x640px. Dark background #1a1a1a, bold red horizontal band with "EL RUFINO" white serif. Below: "Rufino, Santa Fe" and "Lo que pasa y lo que significa" in cream #f5f0e8. Clean editorial, Argentine pampa atmosphere.<span class="cp" onclick="cpBox(this)">copiar</span></div>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-p" onclick="sendP('Actuá como Agente Imágenes de El Rufino. Generá los 4 prompts institucionales optimizados para Gemini Imagen 3: logo SVG, Open Graph 1200×630, favicon 512×512 y portada WhatsApp 800×640. Para cada uno: prompt en español e inglés, especificaciones técnicas exactas, colores en hex (#c0271b rojo, #1a1a1a negro, #f5f0e8 crema), tipografía Playfair Display y estilo editorial periodístico clásico.')">Generar todos los prompts ↗</button>
+          <button class="btn btn-o" onclick="sendP('¿Cómo creo el logo de El Rufino usando solo Canva gratuito? Quiero el masthead con fondo rojo #c0271b, texto EL RUFINO en serif blanco tipo Playfair Display, formato horizontal para web y cuadrado para redes. Instrucciones paso a paso.')">Crear logo en Canva ↗</button>
+        </div>
+      </div>
+
+      <!-- 7: SEO -->
+      <div class="panel" id="p7">
+        <div class="eyebrow">MÓDULO 08 / 14</div>
+        <div class="ptitle">SEO — Rank Math</div>
+        <div class="pdesc">Configuración técnica con valores exactos para copiar campo por campo en el plugin SEO.</div>
+        <div class="div"></div>
+        <div class="seo-row"><div class="sk">Título del sitio</div><div class="sv">El Rufino — Lo que pasa y lo que significa · Rufino, Santa Fe</div></div>
+        <div class="seo-row"><div class="sk">Meta descripción</div><div class="sv">Medio digital local de Rufino, Santa Fe. Noticias verificadas, contexto y seguimiento de lo que importa en la ciudad y la región pampeana.</div></div>
+        <div class="seo-row"><div class="sk">Schema.org</div><div class="sv"><span class="badge by">PENDIENTE</span> NewsMediaOrganization · name: "El Rufino" · url: elrufino.ar · logo: pendiente imagen</div></div>
+        <div class="seo-row"><div class="sk">Open Graph</div><div class="sv"><span class="badge by">PENDIENTE</span> Imagen OG 1200×630 (ver Módulo 7 · Imágenes)</div></div>
+        <div class="seo-row"><div class="sk">Twitter/X Card</div><div class="sv">summary_large_image · título y descripción igual que OG</div></div>
+        <div class="seo-row"><div class="sk">Sitemap XML</div><div class="sv"><span class="badge bg">ACTIVAR</span> Posts + Páginas. Excluir: autores, archivos de fecha, resultados de búsqueda.</div></div>
+        <div class="seo-row"><div class="sk">Indexación</div><div class="sv">Indexar: posts, páginas, categorías P01–P06. No indexar: tags, autores, búsqueda interna.</div></div>
+        <div class="seo-row"><div class="sk">Breadcrumbs</div><div class="sv"><span class="badge bg">ACTIVAR</span> Inicio › Categoría › Nota. Mejora UX y rastreo Google News.</div></div>
+        <div class="seo-row"><div class="sk">Redirección 301</div><div class="sv"><span class="badge bgr">POST-DOMINIO</span> infoconectados.com.ar → elrufino.ar (configurar cuando estén los dominios)</div></div>
+        <div class="seo-row"><div class="sk">Keywords P01</div><div class="sv">rufino noticias · rufino santa fe · que pasa en rufino · rufino hoy</div></div>
+        <div class="seo-row"><div class="sk">Keywords P02</div><div class="sv">campo rufino · agropecuario santa fe · ruta 33 · soja general lopez</div></div>
+        <div class="btn-row">
+          <button class="btn btn-p" onclick="sendP('Actuá como Agente SEO de El Rufino. Generá la configuración completa de Rank Math con valores exactos para copiar en cada campo: title tags por sección, meta descripción, Schema NewsMediaOrganization completo con JSON-LD, configuración Open Graph y Twitter Card, sitemap XML, reglas de indexación y keywords semilla para los 6 pilares P01–P06. URL objetivo: elrufino.ar.')">Configurar con Agente SEO ↗</button>
+        </div>
+      </div>
+
+      <!-- 8: CONTENIDO -->
+      <div class="panel" id="p8">
+        <div class="eyebrow">MÓDULO 09 / 14</div>
+        <div class="ptitle">Contenido editorial</div>
+        <div class="pdesc">Pilares editoriales, calendario semanal y estado de producción. La regla madre: toda pieza tiene dos capas.</div>
+        <div class="div"></div>
+        <div class="slabel">6 Pilares editoriales</div>
+        <div class="pillar-grid" style="margin-bottom:16px">
+          <div class="pillar"><div class="pillar-code">P01</div><div class="pillar-name">Rufino real</div><div class="pillar-fmt">nota · hilo · infografía</div></div>
+          <div class="pillar"><div class="pillar-code">P02</div><div class="pillar-name">El campo habla</div><div class="pillar-fmt">entrevista · dato · WhatsApp</div></div>
+          <div class="pillar"><div class="pillar-code">P03</div><div class="pillar-name">Barrio a barrio</div><div class="pillar-fmt">seguimiento · mapa · vecinos</div></div>
+          <div class="pillar"><div class="pillar-code">P04</div><div class="pillar-name">Generación Rufino</div><div class="pillar-fmt">reels · perfil · TikTok</div></div>
+          <div class="pillar"><div class="pillar-code">P05</div><div class="pillar-name">Poder y gestión</div><div class="pillar-fmt">fact-check · seguimiento · archivo</div></div>
+          <div class="pillar"><div class="pillar-code">P06</div><div class="pillar-name">Rufino en datos</div><div class="pillar-fmt">datos · placas · explicador</div></div>
+        </div>
+        <div class="slabel">Calendario semanal tipo</div>
+        <div style="background:#fff;border-radius:6px;border:1px solid var(--crema3);padding:13px;margin-bottom:14px;box-shadow:var(--shadow)">
+          <div class="cal">
+            <div class="cday"><div class="cdn">LUN</div><div class="cdp">P01+P06</div></div>
+            <div class="cday"><div class="cdn">MAR</div><div class="cdp">P02</div></div>
+            <div class="cday"><div class="cdn">MIÉ</div><div class="cdp">P04</div></div>
+            <div class="cday"><div class="cdn">JUE</div><div class="cdp">P05</div></div>
+            <div class="cday"><div class="cdn">VIE</div><div class="cdp">P03</div></div>
+            <div class="cday"><div class="cdn">SÁB</div><div class="cdp">P04</div></div>
+            <div class="cday"><div class="cdn" style="color:#aaa">DOM</div><div class="cdp" style="color:#ccc">↓</div></div>
+          </div>
+          <div style="margin-top:10px;font-size:10px;color:#888;font-family:'JetBrains Mono',monospace">7:30 AM — Resumen WhatsApp todos los días · Sin segunda capa = no va</div>
+        </div>
+        <div class="slabel">Estado de producción</div>
+        <div class="g3" style="margin-bottom:14px">
+          <div class="card"><div class="badge by" style="margin-bottom:6px">PENDIENTE</div><div class="ct">Notas base</div><div class="cx">3 por pilar P01–P06. Usar Agente 2 (Arquitectura).</div></div>
+          <div class="card"><div class="badge bb" style="margin-bottom:6px">PLANIFICADO</div><div class="ct">5 evergreen</div><div class="cx">Puertas de entrada para nuevos lectores. Sin vencimiento.</div></div>
+          <div class="card"><div class="badge bgr" style="margin-bottom:6px">VER P.10</div><div class="ct">Promesas</div><div class="cx">Cada anuncio oficial abre ficha en el Módulo 10.</div></div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-p" onclick="sendP('Actuá como Agente 2 (Generador de categorías y entradas) de El Rufino. Generá la arquitectura editorial completa para WordPress: las 6 categorías P01–P06 con nombre, slug, descripción (2-3 oraciones) y categoría padre si corresponde. Luego 3 entradas base por categoría con título (regla de 2 capas), bajada, esquema del cuerpo, tags y nota al editor. Finalmente 5 piezas evergreen.')">Generar categorías y entradas ↗</button>
+          <button class="btn btn-o" onclick="sendP('Actuá como Agente Planificador de El Rufino. Generá el calendario editorial para la próxima semana. Por cada pieza: día y fecha, pilar P01-P06, título completo con 2 capas, formato, plataforma, audiencia target, fuentes sugeridas y tiempo de producción estimado. Incluir resumen WA diario a 7:30 AM.')">Planificar semana ↗</button>
+          <button class="btn btn-g" onclick="sendP('Actuá como periodista de El Rufino. Generá el resumen matutino de hoy para el canal de WhatsApp: 3-5 noticias relevantes de Rufino y la región, 2 líneas por noticia, tono directo, sin markdown, con fecha y hora de envío 7:30 AM.')">Resumen WhatsApp de hoy</button>
+        </div>
+      </div>
+
+      <!-- 9: PROMESAS -->
+      <div class="panel" id="p9">
+        <div class="eyebrow">MÓDULO 10 / 14 · NUEVO EN v4</div>
+        <div class="ptitle">Registro de Promesas</div>
+        <div class="pdesc">Cada anuncio oficial abre una ficha. El sistema más diferenciador del medio. Protocolo: verificador, no opositor.</div>
+        <div class="div"></div>
+
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+          <div class="slabel" style="margin:0">Fichas activas (<span id="promTotal">0</span>)</div>
+          <button class="btn btn-p btn-sm" onclick="toggleForm()">+ Nueva ficha</button>
+        </div>
+
+        <!-- FORM -->
+        <div class="promise-form" id="promForm">
+          <div class="slabel">Nueva ficha de promesa</div>
+          <div class="form-row">
+            <label class="form-label">Qué se prometió *</label>
+            <input class="form-input" id="fProm" placeholder="Ej: Asfaltar las calles del Barrio Norte en 90 días" />
+          </div>
+          <div class="form-row-2">
+            <div class="form-row" style="margin:0">
+              <label class="form-label">Quién prometió *</label>
+              <input class="form-input" id="fWho" placeholder="Ej: Intendente Lattanzi" />
+            </div>
+            <div class="form-row" style="margin:0">
+              <label class="form-label">Fecha de la promesa *</label>
+              <input class="form-input" id="fDate" type="date" />
+            </div>
+          </div>
+          <div class="form-row">
+            <label class="form-label">Pilar editorial</label>
+            <select class="form-select" id="fPilar">
+              <option value="P05">P05 — Poder y gestión</option>
+              <option value="P01">P01 — Rufino real</option>
+              <option value="P03">P03 — Barrio a barrio</option>
+              <option value="P02">P02 — El campo habla</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label class="form-label">Fuente verificable</label>
+            <input class="form-input" id="fSource" placeholder="Ej: Conferencia de prensa, 5/4/2026 · La Tribuna del Sur" />
+          </div>
+          <div class="form-row">
+            <label class="form-label">Evidencia actual</label>
+            <textarea class="form-textarea" id="fEvidence" placeholder="Lo que se sabe hasta ahora. Si no hay nada confirmado, escribir 'Sin evidencia de avance'"></textarea>
+          </div>
+          <div class="btn-row" style="margin-top:8px">
+            <button class="btn btn-p" onclick="saveProm()">Guardar ficha</button>
+            <button class="btn btn-g" onclick="toggleForm()">Cancelar</button>
+          </div>
+        </div>
+
+        <!-- LIST -->
+        <div id="promList">
+          <div style="text-align:center;padding:30px;color:#bbb;font-size:12px;font-family:'JetBrains Mono',monospace" id="promEmpty">
+            No hay fichas registradas.<br>
+            <span style="font-size:10px;opacity:.6">Cada anuncio oficial genera una ficha de seguimiento.</span>
+          </div>
+        </div>
+
+        <div class="tip" style="margin-top:4px"><div class="tip-l">Protocolo de promesas</div><p>Registrar cada anuncio oficial con fecha y fuente. Hacer seguimiento público. Tono: verificador, no opositor. "Según la versión oficial..." cuando no está confirmado. Esta es la herramienta de diferenciación más potente del medio.</p></div>
+
+        <div class="btn-row">
+          <button class="btn btn-o" onclick="genPromNote()">Generar nota de seguimiento ↗</button>
+          <button class="btn btn-g" onclick="exportProm()">Exportar CSV</button>
+        </div>
+      </div>
+
+      <!-- 10: USINA -->
+      <div class="panel" id="p10">
+        <div class="eyebrow">MÓDULO 11 / 14 · USINA DE IA</div>
+        <div class="ptitle">usInA</div>
+        <div class="pdesc">11 agentes especializados con contexto del medio precargado. Hacé clic en Activar para copiar el prompt y usarlo en Claude.</div>
+        <div class="div"></div>
+
+        <div class="slabel">Agentes operativos — originales (1–7)</div>
+        <div class="agc">
+          <div class="agh"><div class="agn">1</div><div><div class="ag-name">Agente SEO</div><div class="ag-role">Rank Math · Schema · Keywords P01–P06</div></div></div>
+          <div class="ag-text">Genera la configuración de Rank Math con valores exactos: title tags, meta, Schema NewsMediaOrganization, OG, sitemap y keywords semilla.</div>
+          <div class="ag-act"><button class="btn btn-o btn-sm" onclick="sendP('Actuá como Agente SEO de El Rufino. Generá la configuración completa y exacta para Rank Math: todos los valores campo por campo, Schema NewsMediaOrganization en JSON-LD, Open Graph, sitemap y keywords semilla para los 6 pilares editoriales P01-P06. URL objetivo: elrufino.ar.')">Activar ↗</button></div>
+        </div>
+        <div class="agc">
+          <div class="agh"><div class="agn">2</div><div><div class="ag-name">Agente Arquitectura</div><div class="ag-role">Categorías, slugs y entradas base</div></div></div>
+          <div class="ag-text">Genera las 6 categorías P01–P06 con slugs, descripción y 3 entradas base por categoría más 5 piezas evergreen.</div>
+          <div class="ag-act"><button class="btn btn-o btn-sm" onclick="sendP('Actuá como Agente 2 (Generador de categorías y entradas) de El Rufino. Generá la arquitectura editorial completa para WordPress: 6 categorías con slugs, 3 entradas base por categoría con la regla de las 2 capas, y 5 entradas evergreen. Tono: directo, verificado, local sin localismo.')">Activar ↗</button></div>
+        </div>
+        <div class="agc">
+          <div class="agh"><div class="agn">3</div><div><div class="ag-name">Agente Tema Visual</div><div class="ag-role">PHP/CSS del child theme</div></div></div>
+          <div class="ag-text">Genera el código completo del child theme: style.css con paleta B, functions.php, CSS para header masthead, ticker, grilla mobile-first.</div>
+          <div class="ag-act"><button class="btn btn-o btn-sm" onclick="sendP('Actuá como Agente 3 (Configurador de tema visual) de El Rufino. Generá el código del child theme completo: style.css con paleta B (#c0271b rojo, #1a1a1a negro, #f5f0e8 crema), functions.php con enqueue de Playfair Display + Source Serif 4, CSS para header masthead rojo, ticker, grilla responsive mobile-first y footer. Tema padre: Newsup.')">Activar ↗</button></div>
+        </div>
+        <div class="agc">
+          <div class="agh"><div class="agn">4</div><div><div class="ag-name">Agente Planificador</div><div class="ag-role">Calendario editorial semanal</div></div></div>
+          <div class="ag-text">Genera el calendario completo de la semana con pilar, formato, plataforma, audiencia target, fuentes y tiempo de producción por pieza.</div>
+          <div class="ag-act"><button class="btn btn-o btn-sm" onclick="sendP('Actuá como Agente Planificador de El Rufino. Generá el calendario editorial para la próxima semana con todos los campos: día, pilar P01-P06, título con las 2 capas, formato, plataforma, audiencia target, fuentes sugeridas y tiempo de producción estimado. Incluir resumen WA diario 7:30 AM.')">Activar ↗</button></div>
+        </div>
+        <div class="agc">
+          <div class="agh"><div class="agn">5</div><div><div class="ag-name">Agente Redactor</div><div class="ag-role">Notas periodísticas listas para publicar</div></div></div>
+          <div class="ag-text">Escribe notas con la regla de las 2 capas: hecho verificado + contexto que falta. 600–1000 palabras, tono directo y humano.</div>
+          <div class="ag-act"><button class="btn btn-o btn-sm" onclick="sendP('Actuá como Agente Redactor de El Rufino. Esperá que te dé el tema, datos disponibles y el pilar editorial. Redactarás la nota completa: título con las 2 capas, bajada (2-3 oraciones), cuerpo 600-1000 palabras, cierre, tags sugeridos y nota al editor.')">Activar ↗</button></div>
+        </div>
+        <div class="agc">
+          <div class="agh"><div class="agn">6</div><div><div class="ag-name">Agente TikTok / Reel</div><div class="ag-role">Guiones 60–90 segundos</div></div></div>
+          <div class="ag-text">Convierte un dato o historia local en guion de video. Hook 5 seg, desarrollo con indicaciones en [corchetes], CTA. Voz rufineña auténtica.</div>
+          <div class="ag-act"><button class="btn btn-o btn-sm" onclick="sendP('Actuá como Agente TikTok de El Rufino. Convertís noticias y datos locales en guiones de video de 60-90 segundos. Hook de 5 seg que detenga el scroll, desarrollo con texto a cámara exacto e indicaciones entre [corchetes], CTA. Voz rufineña, audiencia 14-30 años. Esperá el tema.')">Activar ↗</button></div>
+        </div>
+        <div class="agc">
+          <div class="agh"><div class="agn">7</div><div><div class="ag-name">Agente Accountability</div><div class="ag-role">Seguimiento de promesas — nota + hilo + WA</div></div></div>
+          <div class="ag-text">Toma el registro de promesas y redacta la nota de seguimiento, el hilo de Facebook y el resumen WhatsApp. Protocolo verificador, no opositor.</div>
+          <div class="ag-act"><button class="btn btn-o btn-sm" onclick="sendP('Actuá como Agente de Accountability de El Rufino. Redactá: 1) nota principal 600-800 palabras con el seguimiento de una promesa municipal, 2) hilo de Facebook de 5-7 posts, 3) resumen WhatsApp máx 3 líneas. Protocolo verificador, no opositor. Primero preguntame qué promesa querés cubrir.')">Activar ↗</button></div>
+        </div>
+
+        <div class="section-divider"><span>Agentes técnicos (8–9)</span></div>
+        <div class="agc ag-stack">
+          <div class="agh"><div class="agn" style="background:var(--azul)">8</div><div><div class="ag-name">Agente Stack</div><div class="ag-role">WordPress y plugins · configuración técnica</div></div></div>
+          <div class="ag-text">Configura el stack técnico completo con valores exactos. Genera código PHP/CSS funcional y guías paso a paso.</div>
+          <div class="ag-act"><button class="btn btn-b btn-sm" onclick="sendP('Actuá como Agente Stack de El Rufino. Sos desarrollador WordPress especializado en medios digitales. Configurás el stack técnico completo: plugins, child theme Newsup, Customizer, menús y opciones de WordPress. Generás código PHP/CSS funcional y valores exactos para copiar. ¿Por dónde empezamos?')">Activar ↗</button></div>
+        </div>
+        <div class="agc ag-stack">
+          <div class="agh"><div class="agn" style="background:var(--azul)">9</div><div><div class="ag-name">Agente Servidor</div><div class="ag-role">Infraestructura · hosting · velocidad</div></div></div>
+          <div class="ag-text">Diagnóstico de velocidad, caché, SSL, .htaccess y migraciones de dominio. Objetivo: menos de 3 segundos de carga en mobile.</div>
+          <div class="ag-act"><button class="btn btn-b btn-sm" onclick="sendP('Actuá como Agente Servidor de El Rufino. Diagnosticá el entorno infoconectados.com.ar: velocidad de carga actual, PHP version, plugins de caché disponibles, configuración SSL y plan de migración a elrufino.ar cuando estén los dominios. Objetivo: carga menor a 3 segundos en mobile.')">Activar ↗</button></div>
+        </div>
+
+        <div class="section-divider"><span>Agentes de contenido (10–11)</span></div>
+        <div class="agc ag-new">
+          <div class="agh"><div class="agn" style="background:#e65100">10</div><div><div class="ag-name">Agente Agenda de Datos</div><div class="ag-role">Pilar P06 · INDEC · SAMCO · presupuesto</div></div></div>
+          <div class="ag-text">Construye la agenda de datos de Rufino: INDEC, presupuesto municipal, SAMCO, educación, producción agropecuaria. Base del Pilar P06.</div>
+          <div class="ag-act"><button class="btn btn-o btn-sm" onclick="sendP('Actuá como Agente Agenda de Datos de El Rufino. Generá la agenda de datos completa para Rufino, Santa Fe: fuentes verificables (INDEC, municipio, SAMCO, INTA, provincia), métricas clave por área temática y estructura de tabla para el Pilar P06 — Rufino en datos.')">Activar ↗</button></div>
+        </div>
+        <div class="agc ag-new">
+          <div class="agh"><div class="agn" style="background:#e65100">11</div><div><div class="ag-name">Agente Imágenes</div><div class="ag-role">Prompts para generación visual · Gemini · MJ</div></div></div>
+          <div class="ag-text">Genera prompts en español e inglés para Gemini, Midjourney o DALL-E. Cubre imágenes institucionales y visuales para notas del medio.</div>
+          <div class="ag-act"><button class="btn btn-o btn-sm" onclick="sendP('Actuá como Agente Imágenes de El Rufino. Generás prompts precisos para IAs de generación de imágenes. Pedís especificaciones de la imagen necesaria y devolvés el prompt optimizado en español e inglés con las especificaciones técnicas exactas del formato requerido.')">Activar ↗</button></div>
+        </div>
+
+        <div class="warn" style="margin-top:14px"><div class="warn-l">⏸ Agentes Fase 3 (no activar aún)</div><p>Agente SEO por nota (integración Rank Math API) y Agente Monetización — activar recién cuando haya hábito de audiencia y reputación consolidada.</p></div>
+      </div>
+
+      <!-- 11: CONTEXTO IA -->
+      <div class="panel" id="p11">
+        <div class="eyebrow">MÓDULO 12 / 14 · NUEVO EN v4</div>
+        <div class="ptitle">Contexto IA</div>
+        <div class="pdesc">Editor del bloque de transferencia. Actualizá el contexto directamente desde el panel y copialo para nuevas sesiones de IA.</div>
+        <div class="div"></div>
+        <div class="slabel">Bloque de transferencia rápida — editable</div>
+        <div class="ctx-editor">
+          <div class="ctx-editor-head">
+            <div class="ctx-editor-title">EL RUFINO · CONTEXT TRANSFER BLOCK · v1.1</div>
+            <div class="ctx-editor-actions">
+              <button class="btn btn-sm" style="font-size:9px;padding:3px 8px;background:#1e1e1e;color:#555;border:1px solid #2a2a2a;border-radius:3px;cursor:pointer" onclick="resetCtx()">Restaurar</button>
+              <button class="btn btn-sm" style="font-size:9px;padding:3px 8px;background:var(--rojo);color:#fff;border:none;border-radius:3px;cursor:pointer" onclick="copyCtxEditor()">Copiar todo</button>
+            </div>
+          </div>
+          <textarea class="ctx-textarea" id="ctxEditor" spellcheck="false">PROYECTO = EL RUFINO
+CIUDAD = Rufino, Santa Fe, Argentina
+HABITANTES = 19.211 (INDEC, 2022)
+CLAIM = "Lo que pasa y lo que significa"
+TIPO = medio digital local con noticias, contexto y seguimiento
+SECUENCIA = medio confiable → portal útil → infraestructura territorial
+SIMBOLICA = patriótica / territorial / argentina · guiño peronista sutil (VARIANTE B)
+PALETA_B = #c0271b rojo · #1a1a1a negro · #ffffff blanco · #f5f0e8 crema
+TIPOGRAFIA = Playfair Display (títulos) + Source Serif 4 o Inter (cuerpo)
+NO_HACER = portal total prematuro · panfleto frontal · comunicado sin segunda capa
+VENTAJA = contexto + seguimiento + campo + lectura territorial
+DOMINIO_PRINCIPAL = elrufino.ar (pendiente registro NIC Argentina)
+DOMINIO_DEFENSIVO = elrufino.com.ar → 301 → elrufino.ar
+ENTORNO_TEST = elrufino.infoconectados.com.ar (solo prueba técnica)
+EXPANSION_REGIONAL = PAUSADA · corredor RN33 horizonte futuro
+FASE_ACTUAL = Fase 0 · reconstrucción técnica
+FASE_1 = identidad cerrada (COMPLETADA)
+FASE_2 = producto mínimo (en ejecución)
+REPOSITORIO = ElRufino/el-rufino (GitHub)
+ARCHIVOS = el-rufino_prompt-maestro_v1.1.md · el-rufino_agentes-ia_v1.md · el-rufino_repositorio-ia_v1.1.md
+PLUGIN = v4 activo · infoconectados.com.ar
+AGENTES = 11 operativos
+NORMAS_CITAS = APA 7ma edición
+DECISIONES = NO reabrir sin indicación explícita del usuario</textarea>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-p" onclick="copyCtxEditor()">Copiar bloque completo</button>
+          <button class="btn btn-o" onclick="sendCtxToAI()">Actualizar con IA ↗</button>
+          <button class="btn btn-g" onclick="resetCtx()">Restaurar original</button>
+        </div>
+        <div class="info" style="margin-top:14px"><div class="info-l">Cómo usarlo</div><p>Al inicio de cada sesión nueva de IA, copiá este bloque y pegalo antes del pedido. La IA tendrá todo el contexto necesario sin reexplicaciones. Actualizá el bloque cada vez que tomés una decisión nueva en el proyecto.</p></div>
+      </div>
+
+      <!-- 12: REDES -->
+      <div class="panel" id="p12">
+        <div class="eyebrow">MÓDULO 13 / 14</div>
+        <div class="ptitle">Redes sociales</div>
+        <div class="pdesc">Estado de cuentas y KPIs objetivo por plataforma al mes 6 de operación.</div>
+        <div class="div"></div>
+        <div class="platform">
+          <div><div class="platform-name">Facebook</div><div class="platform-meta">Base y credibilidad · 25–60 años · 3–5 posts/día</div><div style="margin-top:8px"><span class="badge by">CONFIGURAR</span></div></div>
+          <div class="platform-kpi"><div class="platform-num">5.000</div><div class="platform-kpi-l">likes · mes 6</div><div style="margin-top:2px;font-size:9px;color:#bbb;font-family:'JetBrains Mono',monospace">&gt;3% interacción</div></div>
+        </div>
+        <div class="platform">
+          <div><div class="platform-name">Instagram</div><div class="platform-meta">Marca visual · 18–40 años · 1 post + stories/día</div><div style="margin-top:8px"><span class="badge by">CONFIGURAR</span></div></div>
+          <div class="platform-kpi"><div class="platform-num">2.000</div><div class="platform-kpi-l">seguidores · mes 6</div><div style="margin-top:2px;font-size:9px;color:#bbb;font-family:'JetBrains Mono',monospace">&gt;5% engagement</div></div>
+        </div>
+        <div class="platform">
+          <div><div class="platform-name">WhatsApp Canal</div><div class="platform-meta">Distribución directa sin algoritmo · todos · 7:30 AM</div><div style="margin-top:8px"><span class="badge br">PENDIENTE</span></div></div>
+          <div class="platform-kpi"><div class="platform-num">500</div><div class="platform-kpi-l">suscriptores · mes 3</div><div style="margin-top:2px;font-size:9px;color:#bbb;font-family:'JetBrains Mono',monospace">&gt;60% apertura</div></div>
+        </div>
+        <div class="platform">
+          <div><div class="platform-name">TikTok / Reels</div><div class="platform-meta">Cancha vacía · 14–30 años · 3–4 videos/semana</div><div style="margin-top:8px"><span class="badge bgr">HORIZONTE</span></div></div>
+          <div class="platform-kpi"><div class="platform-num">1</div><div class="platform-kpi-l">viral · 60 días</div><div style="margin-top:2px;font-size:9px;color:#bbb;font-family:'JetBrains Mono',monospace">1.000 seg. mes 4</div></div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-p" onclick="sendP('Actuá como Agente WhatsApp de El Rufino. Generá el resumen matutino de hoy: máximo 5 noticias, 2-3 líneas por noticia, tono directo y humano, sin formato markdown, con fecha de hoy. Listo para pegar en canal broadcast de WhatsApp.')">Resumen WhatsApp ahora ↗</button>
+          <button class="btn btn-o" onclick="sendP('Generá el plan de arranque de redes para El Rufino para los primeros 30 días de operación: qué publicar en Facebook, Instagram y WhatsApp, con qué frecuencia, en qué horarios y 3 métricas clave para saber si está funcionando.')">Plan de arranque 30 días ↗</button>
+        </div>
+      </div>
+
+      <!-- 13: ROADMAP -->
+      <div class="panel" id="p13">
+        <div class="eyebrow">MÓDULO 14 / 14</div>
+        <div class="ptitle">Roadmap</div>
+        <div class="pdesc">Estado actual del proyecto. Semáforos actualizados. Las decisiones cerradas no se reabren sin indicación explícita.</div>
+        <div class="div"></div>
+        <div class="slabel">Semáforos de estado</div>
+        <div class="sem"><div class="sd dg"></div><div class="sl">Identidad — Fase 1</div><div class="ss">CERRADA DEFINITIVAMENTE</div></div>
+        <div class="sem"><div class="sd dy"></div><div class="sl">Producto mínimo — Fase 2</div><div class="ss">en ejecución</div></div>
+        <div class="sem"><div class="sd dg"></div><div class="sl">GitHub / contexto IA</div><div class="ss">ElRufino/el-rufino · 3 archivos OK</div></div>
+        <div class="sem"><div class="sd dy"></div><div class="sl">WordPress / técnica</div><div class="ss">plugin v4 + child theme en test</div></div>
+        <div class="sem"><div class="sd dr"></div><div class="sl">Dominios — NIC Argentina</div><div class="ss">elrufino.ar · pendiente registro</div></div>
+        <div class="sem"><div class="sd dy"></div><div class="sl">Sistema visual / plantillas</div><div class="ss">paleta cerrada · child theme pendiente producción</div></div>
+        <div class="sem"><div class="sd dr"></div><div class="sl">Imágenes institucionales</div><div class="ss">prompts listos · imágenes pendientes</div></div>
+        <div class="sem"><div class="sd dy"></div><div class="sl">Registro de promesas</div><div class="ss">módulo activo · fichas pendientes</div></div>
+        <div class="sem"><div class="sd dr"></div><div class="sl">Monetización</div><div class="ss">esperar hábito y reputación — FASE 3</div></div>
+        <div class="sem"><div class="sd dp"></div><div class="sl">Themes Región / corredor RN33</div><div class="ss">estructura lista · PAUSA FASE 3</div></div>
+
+        <div class="div"></div>
+        <div class="slabel">Objetivo 90 días</div>
+        <div class="g3" style="margin-bottom:14px">
+          <div class="card"><div class="badge bb" style="margin-bottom:5px">Día 1–15</div><div class="cx">Registrar dominios NIC · cerrar sistema visual · reserva de contenidos · abrir WhatsApp canal</div></div>
+          <div class="card"><div class="badge by" style="margin-bottom:5px">Día 16–45</div><div class="cx">Lanzar con pieza fuerte · sostener frecuencia · primera ficha pública de seguimiento · medir</div></div>
+          <div class="card"><div class="badge bgr" style="margin-bottom:5px">Día 46–90</div><div class="cx">Primera alianza local · consolidar hábito · validar formatos · preparar monetización compatible</div></div>
+        </div>
+
+        <div class="slabel">Riesgos activos</div>
+        <div class="g2">
+          <div class="card"><div class="badge br" style="margin-bottom:5px">ALTO</div><div class="ct">Portalitis</div><div class="cx">Querer ser todo desde el día 1. Identidad diluida.</div></div>
+          <div class="card"><div class="badge br" style="margin-bottom:5px">ALTO</div><div class="ct">Publicar por ansiedad</div><div class="cx">Competir en velocidad con Sucesos. No es la ventaja.</div></div>
+          <div class="card"><div class="badge by" style="margin-bottom:5px">MEDIO</div><div class="ct">Una sola voz</div><div class="cx">El proyecto necesita más de una persona funcional.</div></div>
+          <div class="card"><div class="badge by" style="margin-bottom:5px">MEDIO</div><div class="ct">Monetización precoz</div><div class="cx">Antes de construir hábito de audiencia.</div></div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-p" onclick="sendP('Contexto: PROYECTO=EL RUFINO · FASE=0 · REPOSITORIO=ElRufino/el-rufino · plugin v4 activo · dominios pendientes en NIC Argentina · WordPress en test en infoconectados.com.ar. Exportá el bloque de transferencia rápida actualizado con el estado actual del roadmap para usar en nuevas sesiones de IA.')">Exportar bloque IA ↗</button>
+          <button class="btn btn-o" onclick="sendP('Sos consultor de El Rufino. El proyecto está en Fase 0. Dominio pendiente en NIC Argentina, WordPress en test, plugin v4 activo, repositorio GitHub configurado. ¿Cuáles son las 3 acciones más urgentes esta semana? Sé específico: qué exactamente, en qué orden, qué bloquea cada paso.')">Próximas 3 acciones ↗</button>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+
+    <div class="nav-ft">
+      <button class="nb-btn np" id="btnPrev" onclick="nav(-1)" disabled>← Anterior</button>
+      <span class="sc" id="scnt">1 de 14</span>
+      <button class="nb-btn nn" id="btnNext" onclick="nav(1)">Siguiente →</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// STATE
+var cur=0, tot=14;
+var promises=[];
+var promIdCounter=1;
+
+var sections=['BASE','BASE','BASE','BASE','IDENTIDAD','IDENTIDAD','IDENTIDAD','EDITORIAL','EDITORIAL','EDITORIAL','INTELIGENCIA','INTELIGENCIA','INTELIGENCIA','INTELIGENCIA'];
+var titles=['Inicio','GitHub','Infraestructura','Plugins','Tema visual','Themes Región','Imágenes','SEO','Contenido','Promesas','usInA','Contexto IA','Redes','Roadmap'];
+
+var defaultCtx=document.getElementById('ctxEditor').value;
+
+// NAVIGATION
+function go(n){
+  document.getElementById('p'+cur).classList.remove('active');
+  document.querySelectorAll('.ni')[cur].classList.remove('active');
+  cur=n;
+  document.getElementById('p'+cur).classList.add('active');
+  document.querySelectorAll('.ni').forEach(function(x){x.classList.remove('active')});
+  document.querySelectorAll('.ni')[cur].classList.add('active');
+  document.getElementById('pFill').style.width=Math.round((cur+1)/tot*100)+'%';
+  document.getElementById('pbLbl').textContent=(cur+1)+'/'+tot;
+  document.getElementById('scnt').textContent=(cur+1)+' de '+tot;
+  document.getElementById('tbTitle').textContent=titles[cur];
+  document.getElementById('tbSection').textContent=sections[cur];
+  document.getElementById('btnPrev').disabled=cur===0;
+  document.getElementById('btnNext').disabled=cur===tot-1;
+  document.getElementById('btnNext').textContent=cur===tot-2?'Finalizar →':'Siguiente →';
+  document.querySelector('.content').scrollTop=0;
+}
+function nav(d){go(Math.max(0,Math.min(tot-1,cur+d)))}
+
+// TOAST
+function toast(msg,dur){
+  var t=document.getElementById('toast');
+  t.textContent=msg;t.style.display='block';
+  clearTimeout(t._t);
+  t._t=setTimeout(function(){t.style.display='none'},dur||2600);
+}
+
+// SEND PROMPT
+function sendP(txt){
+  if(window.sendPrompt){window.sendPrompt(txt);return}
+  navigator.clipboard.writeText(txt).then(function(){
+    toast('Prompt copiado — pegalo en Claude ↗');
+  }).catch(function(){toast('Prompt listo — copiá el texto')});
+}
+
+// COPY FUNCTIONS
+function cpBox(el){
+  var txt=el.parentElement.textContent.replace('copiar','').trim();
+  navigator.clipboard.writeText(txt).then(function(){
+    el.textContent='✓';
+    setTimeout(function(){el.textContent='copiar'},1800);
+  });
+}
+
+function copyCtx(){
+  var txt=document.querySelector('.ctx-block').innerText.replace('copiar','').trim();
+  navigator.clipboard.writeText(txt).then(function(){toast('Bloque copiado ✓')});
+}
+
+function copyCtxEditor(){
+  var txt=document.getElementById('ctxEditor').value;
+  navigator.clipboard.writeText(txt).then(function(){toast('Bloque de contexto copiado ✓')});
+}
+
+function resetCtx(){
+  document.getElementById('ctxEditor').value=defaultCtx;
+  toast('Contexto restaurado');
+}
+
+function sendCtxToAI(){
+  sendP('Actuá como gestor de contexto de El Rufino. Leé el bloque de transferencia del repositorio ElRufino/el-rufino (archivo el-rufino_repositorio-ia_v1.1.md) y generá una versión actualizada con el estado actual del proyecto al '+new Date().toLocaleDateString('es-AR')+'. Mantené el mismo formato clave=valor y actualizá los campos que correspondan según el progreso del proyecto.');
+}
+
+// CHECKLIST TOGGLE
+function toggle(el, group){
+  var done=el.dataset.done==='true';
+  var icon=el.querySelector('.chk-i');
+  var meta=el.querySelector('.chk-meta');
+  if(done){
+    el.dataset.done='false';
+    icon.className='chk-i c-p';
+    icon.textContent='—';
+    if(meta)meta.textContent='pendiente';
+  } else {
+    el.dataset.done='true';
+    icon.className='chk-i c-ok';
+    icon.textContent='✓';
+    if(meta)meta.textContent='OK';
+  }
+  updateWpPct();
+  updateStats();
+}
+
+function updateWpPct(){
+  var items=document.querySelectorAll('#wpChecklist .chk');
+  var done=0;
+  items.forEach(function(i){if(i.dataset.done==='true')done++});
+  var pct=Math.round(done/items.length*100);
+  var el=document.getElementById('wpPct');
+  if(el)el.textContent=pct;
+  document.getElementById('statChk').textContent=pct+'%';
+}
+
+// STATS
+function updateStats(){
+  document.getElementById('statProm').textContent=promises.length;
+  document.getElementById('promCountBadge').textContent=promises.length;
+  if(promises.length===0){
+    document.getElementById('promCountBadge').style.display='none';
+  } else {
+    document.getElementById('promCountBadge').style.display='inline-flex';
+  }
+}
+
+// PROMISES
+function toggleForm(){
+  var f=document.getElementById('promForm');
+  f.classList.toggle('active');
+  if(f.classList.contains('active')){
+    var d=new Date().toISOString().split('T')[0];
+    document.getElementById('fDate').value=d;
+    document.getElementById('fProm').focus();
+  }
+}
+
+function saveProm(){
+  var prom=document.getElementById('fProm').value.trim();
+  var who=document.getElementById('fWho').value.trim();
+  var date=document.getElementById('fDate').value;
+  var pilar=document.getElementById('fPilar').value;
+  var source=document.getElementById('fSource').value.trim();
+  var ev=document.getElementById('fEvidence').value.trim();
+
+  if(!prom||!who||!date){toast('Completá los campos obligatorios (*)');return}
+
+  var id='P'+String(promIdCounter).padStart(3,'0');
+  promIdCounter++;
+  var obj={id,prom,who,date,pilar,source,ev,estado:'Abierta',created:new Date().toLocaleDateString('es-AR')};
+  promises.push(obj);
+
+  renderPromises();
+  toggleForm();
+  clearForm();
+  updateStats();
+  toast('Ficha '+id+' registrada ✓');
+}
+
+function clearForm(){
+  ['fProm','fWho','fDate','fSource','fEvidence'].forEach(function(id){
+    document.getElementById(id).value='';
+  });
+}
+
+function setPromState(id, newState){
+  var p=promises.find(function(x){return x.id===id});
+  if(p){p.estado=newState;renderPromises();toast('Estado actualizado: '+newState)}
+}
+
+function deleteProm(id){
+  promises=promises.filter(function(x){return x.id!==id});
+  renderPromises();
+  updateStats();
+  toast('Ficha eliminada');
+}
+
+function renderPromises(){
+  var list=document.getElementById('promList');
+  var empty=document.getElementById('promEmpty');
+  var total=document.getElementById('promTotal');
+  total.textContent=promises.length;
+  if(promises.length===0){
+    if(empty)empty.style.display='block';
+    list.innerHTML='<div style="text-align:center;padding:30px;color:#bbb;font-size:12px;font-family:\'JetBrains Mono\',monospace" id="promEmpty">No hay fichas registradas.<br><span style="font-size:10px;opacity:.6">Cada anuncio oficial genera una ficha de seguimiento.</span></div>';
+    return;
+  }
+
+  var stateColors={'Abierta':'by','Cumplida':'bg','Incumplida':'br','Parcial':'bb','En curso':'bb'};
+  list.innerHTML=promises.map(function(p){
+    var sc=stateColors[p.estado]||'bgr';
+    return '<div class="promise-card">'+
+      '<div class="promise-header">'+
+        '<span class="promise-id">'+p.id+'</span>'+
+        '<div class="promise-title">'+p.prom+'</div>'+
+        '<span class="badge '+sc+'">'+p.estado+'</span>'+
+      '</div>'+
+      '<div class="promise-meta">'+
+        '<span>'+p.who+'</span>'+
+        '<span>'+p.date+'</span>'+
+        '<span>'+p.pilar+'</span>'+
+        (p.source?'<span>'+p.source+'</span>':'')+
+      '</div>'+
+      (p.ev?'<div style="font-size:11px;color:#666;line-height:1.5;padding:6px 0;border-top:1px solid #f0ece6">'+p.ev+'</div>':'')+
+      '<div class="promise-actions">'+
+        '<button class="btn btn-g btn-sm" onclick="setPromState(\''+p.id+'\',\'En curso\')">En curso</button>'+
+        '<button class="btn btn-g btn-sm" onclick="setPromState(\''+p.id+'\',\'Cumplida\')">Cumplida</button>'+
+        '<button class="btn btn-g btn-sm" onclick="setPromState(\''+p.id+'\',\'Incumplida\')">Incumplida</button>'+
+        '<button class="btn btn-o btn-sm" onclick="genNoteForProm(\''+p.id+'\')">Nota ↗</button>'+
+        '<button class="btn btn-g btn-sm" style="margin-left:auto;color:#e53935" onclick="deleteProm(\''+p.id+'\')">×</button>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+}
+
+function genPromNote(){
+  if(promises.length===0){toast('Registrá al menos una promesa primero');return}
+  var csv=promises.map(function(p){
+    return p.id+' | '+p.prom+' | '+p.who+' | '+p.date+' | Estado: '+p.estado+' | '+p.pilar;
+  }).join('\n');
+  sendP('Actuá como Agente Accountability de El Rufino. Con este registro de promesas:\n\n'+csv+'\n\nRedactá: 1) Nota principal 600-800 palabras con el seguimiento, 2) Hilo de Facebook 5-7 posts, 3) Resumen WhatsApp máx 3 líneas. Protocolo verificador, no opositor. Tono: "según la versión oficial..." cuando no está confirmado.');
+}
+
+function genNoteForProm(id){
+  var p=promises.find(function(x){return x.id===id});
+  if(!p)return;
+  sendP('Actuá como Agente Accountability de El Rufino. Seguí esta promesa registrada:\n\nQué se prometió: '+p.prom+'\nQuién prometió: '+p.who+'\nFecha: '+p.date+'\nFuente: '+(p.source||'sin fuente registrada')+'\nEstado actual: '+p.estado+'\nEvidencia: '+(p.ev||'sin evidencia')+'\n\nRedactá: 1) Nota 600-800 palabras, 2) Hilo FB 5-7 posts, 3) Resumen WA máx 3 líneas. Protocolo verificador, no opositor.');
+}
+
+function exportProm(){
+  if(promises.length===0){toast('No hay fichas para exportar');return}
+  var csv='ID,Promesa,Quién,Fecha,Pilar,Fuente,Evidencia,Estado\n';
+  csv+=promises.map(function(p){
+    return [p.id,'"'+p.prom+'"','"'+p.who+'"',p.date,p.pilar,'"'+(p.source||'')+'"','"'+(p.ev||'')+'"',p.estado].join(',');
+  }).join('\n');
+  navigator.clipboard.writeText(csv).then(function(){toast('CSV copiado al portapapeles ✓')});
+}
+
+// LOADER ANIMATIONS
+function runWP(){
+  var w=document.getElementById('wpLdr'),f=document.getElementById('wpFill'),l=document.getElementById('wpLbl');
+  w.classList.add('vis');
+  var seq=[[15,'Verificando versión de WordPress...'],[30,'Detectando plugins activos...'],[50,'Verificando child theme...'],[65,'Comprobando velocidad de carga...'],[80,'Verificando configuración SSL...'],[95,'Revisando actualizaciones...'],[100,'Diagnóstico completado ✓']];
+  var i=0,iv=setInterval(function(){
+    if(i<seq.length){f.style.width=seq[i][0]+'%';l.textContent=seq[i][1];i++}
+    else{clearInterval(iv);toast('Diagnóstico completado · revisá el log con el Agente Servidor ↗')}
+  },550);
+}
+
+// THEME SELECTOR
+function selTheme(el,name,color,region){
+  document.querySelectorAll('.theme-card').forEach(function(c){c.classList.remove('at')});
+  el.classList.add('at');
+  var d=document.getElementById('themeDetail');
+  d.style.display='block';
+  document.getElementById('themeDetailLbl').textContent=name.toUpperCase()+' — PROMPT MAESTRO';
+  document.getElementById('themeGenBtn').onclick=function(){
+    sendP('Actuá como Agente de Themes Región de El Rufino. Generá el Prompt Maestro completo para el medio digital de '+name+' ('+region+'): contexto demográfico y económico de la ciudad, análisis de medios locales existentes, audiencias prioritarias, 6 pilares editoriales adaptados a la realidad local, tono editorial y estrategia de plataformas. Usá el mismo formato que el Prompt Maestro de El Rufino v1.1.');
+  };
+  document.getElementById('themePreviewBtn').onclick=function(){
+    sendP('Describí brevemente cómo se vería el medio digital de '+name+' ('+region+') con el sistema editorial de El Rufino: nombre propuesto, paleta de colores, claim sugerido y los 3 temas más urgentes de esa ciudad para el lanzamiento.');
+  };
+}
+
+// INIT
+updateWpPct();
+updateStats();
+document.getElementById('promCountBadge').style.display='none';
+</script>
+</body>
+</html>
