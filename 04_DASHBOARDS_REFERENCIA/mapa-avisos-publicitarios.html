@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mapa de Avisos Publicitarios · Voces del Interior</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@500;600;700;800&family=Libre+Baskerville:wght@700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --rojo: #c8102e;
+  --rojo-dark: #9e0a22;
+  --negro: #111;
+  --gris-1: #333;
+  --gris-2: #555;
+  --gris-3: #888;
+  --gris-4: #bbb;
+  --gris-5: #e5e5e5;
+  --gris-6: #f4f4f4;
+  --blanco: #fff;
+  --linea: #e0e0e0;
+  --ad-color: #f59e0b;
+  --ad-bg: #fffbeb;
+  --ad-border: #f59e0b;
+
+  --f-sans: 'Barlow', sans-serif;
+  --f-cond: 'Barlow Condensed', sans-serif;
+  --f-serif: 'Libre Baskerville', serif;
+  --max-w: 1180px;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--f-sans); background: var(--gris-6); color: var(--negro); }
+
+/* ══ PANEL LATERAL FIJO ══ */
+.ad-panel {
+  position: fixed;
+  right: 0; top: 0; bottom: 0;
+  width: 280px;
+  background: var(--negro);
+  color: var(--blanco);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -4px 0 24px rgba(0,0,0,0.25);
+  overflow: hidden;
+}
+
+.ad-panel-head {
+  background: var(--rojo);
+  padding: 1.25rem 1.25rem 1rem;
+  flex-shrink: 0;
+}
+
+.ad-panel-head h2 {
+  font-family: var(--f-cond);
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+
+.ad-panel-head p {
+  font-size: 0.72rem;
+  opacity: 0.75;
+  line-height: 1.4;
+}
+
+.ad-panel-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.75rem 0;
+}
+
+.ad-panel-list::-webkit-scrollbar { width: 4px; }
+.ad-panel-list::-webkit-scrollbar-thumb { background: #444; border-radius: 2px; }
+
+.ad-entry {
+  padding: 0.65rem 1.25rem;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  cursor: pointer;
+  transition: background 0.15s;
+  display: flex;
+  gap: 0.65rem;
+  align-items: flex-start;
+}
+.ad-entry:hover, .ad-entry.active { background: rgba(200,16,46,0.18); }
+.ad-entry.active { border-left: 3px solid var(--rojo); }
+
+.ad-entry-num {
+  width: 22px; height: 22px;
+  background: var(--ad-color);
+  color: #000;
+  border-radius: 50%;
+  font-family: var(--f-cond);
+  font-size: 0.7rem;
+  font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.ad-entry-info { flex: 1; }
+.ad-entry-nombre {
+  font-family: var(--f-cond);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--blanco);
+  line-height: 1.2;
+  margin-bottom: 0.15rem;
+}
+.ad-entry-dim {
+  font-size: 0.62rem;
+  color: rgba(255,255,255,0.45);
+  font-family: monospace;
+  letter-spacing: 0.04em;
+}
+.ad-entry-precio {
+  font-family: var(--f-cond);
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--ad-color);
+  margin-top: 0.2rem;
+}
+
+.ad-panel-footer {
+  padding: 1rem 1.25rem;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  flex-shrink: 0;
+}
+
+.btn-contacto {
+  display: block;
+  width: 100%;
+  background: var(--rojo);
+  color: var(--blanco);
+  text-align: center;
+  padding: 0.7rem;
+  font-family: var(--f-cond);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-contacto:hover { background: var(--rojo-dark); }
+
+/* ══ PORTAL WRAPPER (con margen derecho para el panel) ══ */
+.portal-wrap {
+  margin-right: 280px;
+  min-height: 100vh;
+}
+
+/* ══ HEADER ══ */
+.site-header {
+  background: var(--blanco);
+  border-bottom: 3px solid var(--negro);
+}
+
+.header-top-bar {
+  background: var(--negro);
+  padding: 0.35rem 1.5rem;
+  font-family: var(--f-cond);
+  font-size: 0.68rem;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.06em;
+  display: flex;
+  justify-content: space-between;
+}
+
+.header-body {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 1.1rem 1.5rem 0.9rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.site-logo {
+  font-family: var(--f-serif);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--negro);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+.site-logo span { color: var(--rojo); }
+
+.site-tagline {
+  font-family: var(--f-cond);
+  font-size: 0.68rem;
+  color: var(--gris-3);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 0.2rem;
+}
+
+.site-nav {
+  background: var(--negro);
+  padding: 0 1.5rem;
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+}
+.nav-tab {
+  font-family: var(--f-cond);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  padding: 0.75rem 1rem;
+  white-space: nowrap;
+}
+.nav-tab.active { color: var(--blanco); border-bottom: 3px solid var(--rojo); }
+
+/* ══ AD SLOT OVERLAY ══ */
+.ad-slot {
+  position: relative;
+}
+
+.ad-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(245,158,11,0.13);
+  border: 2px dashed var(--ad-color);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.ad-overlay:hover { background: rgba(245,158,11,0.28); }
+
+.ad-badge {
+  background: var(--ad-color);
+  color: #000;
+  font-family: var(--f-cond);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.6rem;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.ad-badge-num {
+  width: 18px; height: 18px;
+  background: #000;
+  color: var(--ad-color);
+  border-radius: 50%;
+  font-size: 0.6rem;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 900;
+}
+
+.ad-dim {
+  font-family: monospace;
+  font-size: 0.62rem;
+  color: rgba(0,0,0,0.5);
+  background: rgba(255,255,255,0.7);
+  padding: 0.1rem 0.4rem;
+  border-radius: 2px;
+}
+
+/* ══ CONTENEDOR PRINCIPAL ══ */
+.contenedor { max-width: var(--max-w); margin: 0 auto; padding: 0 1.5rem; }
+
+/* ══ SECCIÓN SCROLL 1: PORTADA ══ */
+.scroll-section {
+  background: var(--blanco);
+  margin-bottom: 0.5rem;
+}
+
+.sec-label {
+  background: var(--rojo);
+  color: var(--blanco);
+  padding: 0.4rem 1.5rem;
+  font-family: var(--f-cond);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.sec-label::before {
+  content: '';
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.5);
+}
+
+/* ══ AD LEADERBOARD TOP ══ */
+.ad-leaderboard {
+  height: 90px;
+  background: linear-gradient(135deg, #f8f8f8 0%, #eee 100%);
+  display: flex; align-items: center; justify-content: center;
+  border-bottom: 1px solid var(--linea);
+}
+
+/* ══ GRID PORTADA ══ */
+.portada-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.portada-main {
+  grid-column: 1 / 2;
+  border-right: 1px solid var(--linea);
+}
+
+.portada-side { grid-column: 2 / 3; }
+
+/* NOTICIA GRANDE */
+.noticia-grande { border-bottom: 1px solid var(--linea); }
+.noticia-img { width: 100%; }
+.noticia-img svg { display: block; width: 100%; }
+
+.noticia-body { padding: 1rem 1.25rem; }
+.noticia-cat {
+  font-family: var(--f-cond);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--rojo);
+  margin-bottom: 0.4rem;
+  display: block;
+}
+.noticia-titulo {
+  font-family: var(--f-serif);
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--negro);
+  margin-bottom: 0.4rem;
+}
+.noticia-bajada {
+  font-size: 0.82rem;
+  color: var(--gris-2);
+  line-height: 1.5;
+}
+.noticia-autor {
+  font-family: var(--f-cond);
+  font-size: 0.68rem;
+  color: var(--gris-3);
+  margin-top: 0.5rem;
+}
+
+/* NOTICIAS CHICAS */
+.noticias-chicas { display: flex; flex-direction: column; }
+
+.noticia-chica {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--linea);
+}
+.noticia-chica-img { width: 40%; flex-shrink: 0; }
+.noticia-chica-img svg { display: block; width: 100%; height: 100%; }
+.noticia-chica-body { padding: 0.75rem; flex: 1; }
+.noticia-chica-cat {
+  font-family: var(--f-cond);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--rojo);
+  margin-bottom: 0.25rem;
+  display: block;
+}
+.noticia-chica-titulo {
+  font-family: var(--f-sans);
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1.28;
+  color: var(--negro);
+}
+
+/* ══ GRILLA 4 COLUMNAS ══ */
+.grilla-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--linea);
+}
+
+.card-4 { border-right: 1px solid var(--linea); }
+.card-4:last-child { border-right: none; }
+.card-4-img svg { display: block; width: 100%; }
+.card-4-body { padding: 0.75rem; }
+.card-4-cat {
+  font-family: var(--f-cond);
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--rojo);
+  margin-bottom: 0.2rem;
+  display: block;
+}
+.card-4-titulo {
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.28;
+  color: var(--negro);
+}
+
+/* ══ AD BOX CUADRADO ══ */
+.ad-box-wrap {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* ══ SECCIÓN SCROLL 2: TEMÁTICAS ══ */
+.tematica-bloque {
+  border-top: 1px solid var(--linea);
+  padding: 1.25rem 0;
+}
+
+.tematica-titulo {
+  font-family: var(--f-cond);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--negro);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.tematica-titulo::before {
+  content: '';
+  display: block;
+  width: 4px; height: 16px;
+  background: var(--rojo);
+  border-radius: 2px;
+}
+
+.grilla-tematica {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 1rem;
+}
+
+.card-tema-img svg { display: block; width: 100%; border-radius: 2px; }
+.card-tema-body { padding: 0.5rem 0 0; }
+.card-tema-cat { font-family: var(--f-cond); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--rojo); margin-bottom: 0.2rem; display: block; }
+.card-tema-titulo { font-size: 0.88rem; font-weight: 600; line-height: 1.3; color: var(--negro); }
+
+/* ══ LAYOUT CON SIDEBAR ══ */
+.layout-sidebar {
+  display: grid;
+  grid-template-columns: 1fr 270px;
+  gap: 1.5rem;
+  padding: 1.5rem 0;
+}
+
+.sidebar-bloque { display: flex; flex-direction: column; gap: 1rem; }
+.sidebar-widget { background: var(--gris-6); border: 1px solid var(--linea); }
+.sidebar-widget-head { background: var(--negro); color: var(--blanco); padding: 0.5rem 0.85rem; font-family: var(--f-cond); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+.sidebar-item { padding: 0.65rem 0.85rem; border-bottom: 1px solid var(--linea); font-size: 0.78rem; color: var(--gris-2); line-height: 1.4; }
+.sidebar-item:last-child { border-bottom: none; }
+.sidebar-item strong { display: block; font-size: 0.8rem; font-weight: 600; color: var(--negro); margin-bottom: 0.15rem; }
+
+/* ══ SECCIÓN SCROLL 3: CIERRE ══ */
+.destacado-full {
+  background: var(--negro);
+  color: var(--blanco);
+  padding: 2rem 0;
+}
+
+.destacado-full-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.dest-texto { padding-right: 1rem; }
+.dest-kicker {
+  font-family: var(--f-cond);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--rojo);
+  margin-bottom: 0.5rem;
+}
+.dest-titulo {
+  font-family: var(--f-serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.18;
+  margin-bottom: 0.75rem;
+}
+.dest-bajada { font-size: 0.88rem; color: rgba(255,255,255,0.65); line-height: 1.6; }
+.dest-img svg { display: block; width: 100%; border-radius: 4px; }
+
+.grilla-3-bottom {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--linea);
+  margin-top: 0.5rem;
+}
+.card-bottom { background: var(--blanco); padding: 1rem; }
+.card-bottom-img svg { display: block; width: 100%; margin-bottom: 0.5rem; }
+.card-bottom-cat { font-family: var(--f-cond); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--rojo); margin-bottom: 0.2rem; display: block; }
+.card-bottom-titulo { font-size: 0.85rem; font-weight: 600; line-height: 1.3; color: var(--negro); }
+
+/* ══ FOOTER ══ */
+.site-footer {
+  background: var(--negro);
+  color: rgba(255,255,255,0.45);
+  padding: 1.5rem;
+  text-align: center;
+  font-family: var(--f-cond);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  border-top: 3px solid var(--rojo);
+}
+
+/* ══ TOOLTIP AD ══ */
+.ad-tooltip {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--negro);
+  color: var(--blanco);
+  padding: 0.85rem 1.5rem;
+  border-radius: 4px;
+  border-left: 4px solid var(--ad-color);
+  font-family: var(--f-cond);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  z-index: 500;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+}
+.ad-tooltip.visible { opacity: 1; }
+.ad-tooltip strong { color: var(--ad-color); display: block; margin-bottom: 0.2rem; font-size: 0.9rem; }
+
+/* Scroll section labels */
+.scroll-marker {
+  background: var(--gris-5);
+  border-top: 2px solid var(--gris-4);
+  border-bottom: 2px solid var(--gris-4);
+  padding: 0.5rem 1.5rem;
+  font-family: var(--f-cond);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--gris-3);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.scroll-marker .dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  flex-shrink: 0;
+}
+
+@media (max-width: 900px) {
+  .ad-panel { display: none; }
+  .portal-wrap { margin-right: 0; }
+  .portada-grid, .grilla-4, .destacado-full-inner { grid-template-columns: 1fr; }
+  .layout-sidebar { grid-template-columns: 1fr; }
+  .grilla-tematica { grid-template-columns: 1fr 1fr; }
+  .grilla-3-bottom { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- PANEL LATERAL DE VENTA -->
+<aside class="ad-panel" id="adPanel">
+  <div class="ad-panel-head">
+    <h2>Espacios publicitarios</h2>
+    <p>Hacé clic en cualquier espacio marcado en el portal para ver sus características</p>
+  </div>
+  <div class="ad-panel-list" id="adList"></div>
+  <div class="ad-panel-footer">
+    <button class="btn-contacto">Consultar disponibilidad →</button>
+  </div>
+</aside>
+
+<!-- PORTAL -->
+<div class="portal-wrap">
+
+  <!-- TOPBAR -->
+  <div class="header-top-bar">
+    <span>Voces del Interior · Archivo periodístico · Rufino, Santa Fe</span>
+    <span>Martes 21 de marzo de 2026</span>
+  </div>
+
+  <!-- HEADER + LOGO -->
+  <header class="site-header">
+    <!-- AD: LEADERBOARD TOP -->
+    <div class="ad-slot">
+      <div class="ad-overlay" onclick="highlightAd(1)">
+        <div class="ad-badge"><div class="ad-badge-num">1</div> Leaderboard Superior</div>
+        <div class="ad-dim">970 × 90 px</div>
+      </div>
+      <div class="ad-leaderboard"></div>
+    </div>
+
+    <div class="header-body">
+      <div>
+        <div class="site-logo">Voces del <span>Interior</span></div>
+        <div class="site-tagline">Archivo periodístico · Sur santafesino · 2007–2012</div>
+      </div>
+
+      <!-- AD: TOP DERECHA -->
+      <div class="ad-slot" style="width:300px;height:80px">
+        <div class="ad-overlay" onclick="highlightAd(2)">
+          <div class="ad-badge"><div class="ad-badge-num">2</div> Header Derecha</div>
+          <div class="ad-dim">300 × 80 px</div>
+        </div>
+        <div style="width:300px;height:80px;background:var(--gris-6);border:1px solid var(--linea)"></div>
+      </div>
+    </div>
+
+    <nav class="site-nav">
+      <div class="nav-tab active">Todas</div>
+      <div class="nav-tab">Política</div>
+      <div class="nav-tab">Salud</div>
+      <div class="nav-tab">Economía</div>
+      <div class="nav-tab">Educación</div>
+      <div class="nav-tab">Cultura</div>
+      <div class="nav-tab">Sindical</div>
+      <div class="nav-tab">Agro</div>
+    </nav>
+  </header>
+
+  <!-- ══ SCROLL 1: PORTADA ══ -->
+  <div class="scroll-marker">
+    <div class="dot" style="background:#3b82f6"></div>
+    SECCIÓN 1 · PORTADA PRINCIPAL — PRIMER PANTALLA
+  </div>
+
+  <div class="scroll-section">
+    <div class="contenedor">
+      <div class="portada-grid">
+
+        <!-- COLUMNA PRINCIPAL -->
+        <div class="portada-main">
+          <div class="noticia-grande">
+            <div class="noticia-img">
+              <!-- SVG generado: fondo editorial política -->
+              <svg viewBox="0 0 580 280" xmlns="http://www.w3.org/2000/svg">
+                <rect width="580" height="280" fill="#1a1a2e"/>
+                <rect x="0" y="0" width="580" height="280" fill="url(#grad1)"/>
+                <defs>
+                  <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#1a1a2e"/>
+                    <stop offset="100%" style="stop-color:#16213e"/>
+                  </linearGradient>
+                </defs>
+                <!-- Micrófono estilizado -->
+                <circle cx="290" cy="100" r="30" fill="none" stroke="#c8102e" stroke-width="3" opacity="0.7"/>
+                <rect x="282" y="70" width="16" height="42" rx="8" fill="#c8102e" opacity="0.5"/>
+                <line x1="290" y1="130" x2="290" y2="155" stroke="#c8102e" stroke-width="2.5" opacity="0.6"/>
+                <line x1="270" y1="155" x2="310" y2="155" stroke="#c8102e" stroke-width="2.5" opacity="0.6"/>
+                <!-- Líneas decorativas -->
+                <line x1="40" y1="200" x2="540" y2="200" stroke="rgba(200,16,46,0.2)" stroke-width="1"/>
+                <line x1="40" y1="210" x2="540" y2="210" stroke="rgba(200,16,46,0.1)" stroke-width="1"/>
+                <text x="290" y="240" text-anchor="middle" font-family="serif" font-size="13" fill="rgba(255,255,255,0.35)" letter-spacing="3">ENTREVISTA DESTACADA</text>
+                <text x="290" y="260" text-anchor="middle" font-family="sans-serif" font-size="10" fill="rgba(255,255,255,0.2)">ENT-20070312-001 · 12-03-2007</text>
+              </svg>
+            </div>
+            <div class="noticia-body">
+              <span class="noticia-cat">Política</span>
+              <div class="noticia-titulo">Jorge Almada: plan de obras públicas y los desafíos de la gestión municipal en el interior provincial</div>
+              <div class="noticia-bajada">El intendente habló sobre el período 2007–2011, la relación con la provincia y las prioridades del sur santafesino en infraestructura y servicios básicos.</div>
+              <div class="noticia-autor">Archivo · 12-03-2007 · ◷ 8:24 min</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- COLUMNA LADO -->
+        <div class="portada-side">
+          <div class="noticias-chicas">
+
+            <div class="noticia-chica">
+              <div class="noticia-chica-img">
+                <svg viewBox="0 0 160 110" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="160" height="110" fill="#0f3460"/>
+                  <circle cx="80" cy="45" r="20" fill="none" stroke="#3a9fd8" stroke-width="2.5"/>
+                  <line x1="80" y1="65" x2="80" y2="85" stroke="#3a9fd8" stroke-width="2"/>
+                  <line x1="60" y1="75" x2="100" y2="75" stroke="#3a9fd8" stroke-width="2"/>
+                  <text x="80" y="100" text-anchor="middle" font-family="sans-serif" font-size="8" fill="rgba(255,255,255,0.4)" letter-spacing="1">SALUD</text>
+                </svg>
+              </div>
+              <div class="noticia-chica-body">
+                <span class="noticia-chica-cat">Salud</span>
+                <div class="noticia-chica-titulo">María Fernández: sistema sanitario regional y necesidad de inversión</div>
+              </div>
+            </div>
+
+            <!-- AD: BOX LATERAL IN-CONTENT -->
+            <div class="ad-slot noticia-chica" style="min-height:130px">
+              <div class="ad-overlay" onclick="highlightAd(3)" style="position:relative;height:130px">
+                <div class="ad-badge"><div class="ad-badge-num">3</div> Box Lateral 1</div>
+                <div class="ad-dim">300 × 250 px</div>
+              </div>
+            </div>
+
+            <div class="noticia-chica">
+              <div class="noticia-chica-img">
+                <svg viewBox="0 0 160 110" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="160" height="110" fill="#1b3a1b"/>
+                  <polygon points="80,25 100,60 60,60" fill="none" stroke="#5a8b2a" stroke-width="2.5"/>
+                  <line x1="80" y1="60" x2="80" y2="80" stroke="#5a8b2a" stroke-width="2"/>
+                  <circle cx="60" cy="83" r="5" fill="#5a8b2a" opacity="0.6"/>
+                  <circle cx="100" cy="83" r="5" fill="#5a8b2a" opacity="0.6"/>
+                  <text x="80" y="100" text-anchor="middle" font-family="sans-serif" font-size="8" fill="rgba(255,255,255,0.4)" letter-spacing="1">AGRO</text>
+                </svg>
+              </div>
+              <div class="noticia-chica-body">
+                <span class="noticia-chica-cat">Agro</span>
+                <div class="noticia-chica-titulo">INTA Rufino: campaña soja 2007/08 e impacto de la sequía en el sur</div>
+              </div>
+            </div>
+
+            <div class="noticia-chica">
+              <div class="noticia-chica-img">
+                <svg viewBox="0 0 160 110" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="160" height="110" fill="#1a0a2e"/>
+                  <rect x="55" y="25" width="50" height="38" rx="3" fill="none" stroke="#8b2ab8" stroke-width="2.5"/>
+                  <line x1="65" y1="35" x2="95" y2="35" stroke="#8b2ab8" stroke-width="1.5" opacity="0.6"/>
+                  <line x1="65" y1="42" x2="95" y2="42" stroke="#8b2ab8" stroke-width="1.5" opacity="0.4"/>
+                  <line x1="65" y1="49" x2="85" y2="49" stroke="#8b2ab8" stroke-width="1.5" opacity="0.3"/>
+                  <line x1="80" y1="63" x2="80" y2="75" stroke="#8b2ab8" stroke-width="2"/>
+                  <text x="80" y="92" text-anchor="middle" font-family="sans-serif" font-size="8" fill="rgba(255,255,255,0.4)" letter-spacing="1">EDUCACIÓN</text>
+                </svg>
+              </div>
+              <div class="noticia-chica-body">
+                <span class="noticia-chica-cat">Educación</span>
+                <div class="noticia-chica-titulo">Susana Garelli: Plan de Mejora Institucional en escuelas secundarias del sur</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- GRILLA 4 COL -->
+      <div class="grilla-4">
+        <div class="card-4">
+          <div class="card-4-img">
+            <svg viewBox="0 0 240 120" xmlns="http://www.w3.org/2000/svg">
+              <rect width="240" height="120" fill="#0d2137"/>
+              <circle cx="120" cy="50" r="22" fill="none" stroke="#2ab8a8" stroke-width="2"/>
+              <path d="M108 50 l8-10 l8 10 l8-10" fill="none" stroke="#2ab8a8" stroke-width="1.5"/>
+              <text x="120" y="95" text-anchor="middle" font-family="sans-serif" font-size="8" fill="rgba(255,255,255,0.35)" letter-spacing="2">SINDICAL</text>
+            </svg>
+          </div>
+          <div class="card-4-body">
+            <span class="card-4-cat">Sindical</span>
+            <div class="card-4-titulo">Hugo Pereyra: negociaciones paritarias del sector público provincial</div>
+          </div>
+        </div>
+        <div class="card-4">
+          <div class="card-4-img">
+            <svg viewBox="0 0 240 120" xmlns="http://www.w3.org/2000/svg">
+              <rect width="240" height="120" fill="#2e1515"/>
+              <circle cx="120" cy="55" r="25" fill="#b82a2a" opacity="0.2"/>
+              <line x1="95" y1="55" x2="145" y2="55" stroke="#b82a2a" stroke-width="2"/>
+              <line x1="120" y1="30" x2="120" y2="80" stroke="#b82a2a" stroke-width="2"/>
+              <text x="120" y="100" text-anchor="middle" font-family="sans-serif" font-size="8" fill="rgba(255,255,255,0.35)" letter-spacing="2">EMERGENCIA</text>
+            </svg>
+          </div>
+          <div class="card-4-body">
+            <span class="card-4-cat">Social</span>
+            <div class="card-4-titulo">Defensa Civil: inundaciones en el sur santafesino 2011</div>
+          </div>
+        </div>
+        <div class="card-4">
+          <div class="card-4-img">
+            <svg viewBox="0 0 240 120" xmlns="http://www.w3.org/2000/svg">
+              <rect width="240" height="120" fill="#1a1500"/>
+              <rect x="95" y="35" width="50" height="40" rx="25" fill="none" stroke="#b88a2a" stroke-width="2.5"/>
+              <circle cx="120" cy="55" r="8" fill="#b88a2a" opacity="0.4"/>
+              <text x="120" y="95" text-anchor="middle" font-family="sans-serif" font-size="8" fill="rgba(255,255,255,0.35)" letter-spacing="2">CULTURA</text>
+            </svg>
+          </div>
+          <div class="card-4-body">
+            <span class="card-4-cat">Cultura</span>
+            <div class="card-4-titulo">Elsa Quiroga: historia de la Sociedad Italiana de Rufino</div>
+          </div>
+        </div>
+
+        <!-- AD: BOX IN-GRILLA -->
+        <div class="card-4 ad-slot">
+          <div class="ad-overlay" onclick="highlightAd(4)" style="position:relative">
+            <div class="ad-badge"><div class="ad-badge-num">4</div> Box In-Grilla</div>
+            <div class="ad-dim">240 × 200 px</div>
+          </div>
+          <div style="height:200px"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEADERBOARD MEDIO -->
+  <div class="ad-slot" style="background:var(--blanco)">
+    <div class="ad-overlay" onclick="highlightAd(5)">
+      <div class="ad-badge"><div class="ad-badge-num">5</div> Leaderboard Intermedio</div>
+      <div class="ad-dim">970 × 90 px</div>
+    </div>
+    <div style="height:90px;background:var(--gris-6);border-top:1px solid var(--linea);border-bottom:1px solid var(--linea)"></div>
+  </div>
+
+  <!-- ══ SCROLL 2: SECCIONES TEMÁTICAS ══ -->
+  <div class="scroll-marker">
+    <div class="dot" style="background:#10b981"></div>
+    SECCIÓN 2 · BLOQUES TEMÁTICOS — SEGUNDO SCROLL
+  </div>
+
+  <div class="scroll-section">
+    <div class="contenedor">
+      <div class="layout-sidebar">
+
+        <!-- CONTENIDO TEMÁTICO -->
+        <div>
+          <!-- BLOQUE ECONOMÍA -->
+          <div class="tematica-bloque">
+            <div class="tematica-titulo">Economía y campo pampeano</div>
+            <div class="grilla-tematica">
+              <div>
+                <div class="card-tema-img">
+                  <svg viewBox="0 0 380 200" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="380" height="200" fill="#0d1f0d"/>
+                    <!-- Campo estilizado -->
+                    <rect x="0" y="120" width="380" height="80" fill="#1b3a1b"/>
+                    <ellipse cx="190" cy="120" rx="200" ry="20" fill="#142914"/>
+                    <!-- Sol -->
+                    <circle cx="300" cy="60" r="25" fill="#b88a2a" opacity="0.3"/>
+                    <circle cx="300" cy="60" r="18" fill="#b88a2a" opacity="0.4"/>
+                    <!-- Líneas de campo -->
+                    <line x1="20" y1="145" x2="360" y2="145" stroke="#5a8b2a" stroke-width="1" opacity="0.4"/>
+                    <line x1="20" y1="160" x2="360" y2="160" stroke="#5a8b2a" stroke-width="1" opacity="0.3"/>
+                    <text x="190" y="100" text-anchor="middle" font-family="serif" font-size="14" fill="rgba(255,255,255,0.4)" letter-spacing="3">CAMPO PAMPEANO</text>
+                    <text x="190" y="180" text-anchor="middle" font-family="sans-serif" font-size="10" fill="rgba(255,255,255,0.25)">Resolución 125 · Cooperativas · 2008</text>
+                  </svg>
+                </div>
+                <div class="card-tema-body">
+                  <span class="card-tema-cat">Economía</span>
+                  <div class="card-tema-titulo">Ramón Ledesma: consecuencias de la crisis campo-gobierno en cooperativas del sur pampeano</div>
+                </div>
+              </div>
+              <div>
+                <div class="card-tema-img">
+                  <svg viewBox="0 0 180 110" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="180" height="110" fill="#0a1a0a"/>
+                    <rect x="40" y="30" width="20" height="50" fill="#5a8b2a" opacity="0.5"/>
+                    <rect x="70" y="45" width="20" height="35" fill="#5a8b2a" opacity="0.4"/>
+                    <rect x="100" y="20" width="20" height="60" fill="#5a8b2a" opacity="0.6"/>
+                    <rect x="130" y="38" width="20" height="42" fill="#5a8b2a" opacity="0.35"/>
+                    <line x1="20" y1="82" x2="160" y2="82" stroke="#5a8b2a" stroke-width="1" opacity="0.4"/>
+                    <text x="90" y="100" text-anchor="middle" font-family="sans-serif" font-size="7" fill="rgba(255,255,255,0.3)" letter-spacing="1">PRODUCTORES</text>
+                  </svg>
+                </div>
+                <div class="card-tema-body">
+                  <span class="card-tema-cat">Economía</span>
+                  <div class="card-tema-titulo" style="font-size:0.78rem">Mesa de Enlace Regional: impacto de las retenciones 2008</div>
+                </div>
+              </div>
+              <div>
+                <div class="card-tema-img">
+                  <svg viewBox="0 0 180 110" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="180" height="110" fill="#0a1215"/>
+                    <circle cx="90" cy="50" r="30" fill="none" stroke="#2a4ab8" stroke-width="2" opacity="0.5"/>
+                    <text x="90" y="55" text-anchor="middle" font-family="sans-serif" font-size="18" font-weight="bold" fill="#2a4ab8" opacity="0.5">$</text>
+                    <text x="90" y="98" text-anchor="middle" font-family="sans-serif" font-size="7" fill="rgba(255,255,255,0.3)" letter-spacing="1">ECONOMÍA SOCIAL</text>
+                  </svg>
+                </div>
+                <div class="card-tema-body">
+                  <span class="card-tema-cat">Economía Social</span>
+                  <div class="card-tema-titulo" style="font-size:0.78rem">Omar Sposaro: cooperativismo y desarrollo local en el interior</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- AD: BANNER INTER-TEMATICA -->
+          <div class="ad-slot tematica-bloque" style="padding:0">
+            <div class="ad-overlay" onclick="highlightAd(6)">
+              <div class="ad-badge"><div class="ad-badge-num">6</div> Banner Intertemático</div>
+              <div class="ad-dim">728 × 90 px</div>
+            </div>
+            <div style="height:90px;background:var(--gris-6);border:1px solid var(--linea)"></div>
+          </div>
+
+          <!-- BLOQUE SALUD -->
+          <div class="tematica-bloque">
+            <div class="tematica-titulo">Salud en el interior</div>
+            <div class="grilla-tematica">
+              <div>
+                <div class="card-tema-img">
+                  <svg viewBox="0 0 380 200" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="380" height="200" fill="#071525"/>
+                    <rect x="160" y="70" width="60" height="60" fill="none" stroke="#3a9fd8" stroke-width="2.5"/>
+                    <line x1="190" y1="70" x2="190" y2="130" stroke="#3a9fd8" stroke-width="3"/>
+                    <line x1="160" y1="100" x2="220" y2="100" stroke="#3a9fd8" stroke-width="3"/>
+                    <circle cx="190" cy="100" r="35" fill="none" stroke="#3a9fd8" stroke-width="1" opacity="0.3"/>
+                    <text x="190" y="170" text-anchor="middle" font-family="serif" font-size="13" fill="rgba(255,255,255,0.3)" letter-spacing="3">SALUD RURAL</text>
+                  </svg>
+                </div>
+                <div class="card-tema-body">
+                  <span class="card-tema-cat">Salud</span>
+                  <div class="card-tema-titulo">Dra. Norma Páez: H1N1, protocolo de atención y centros de salud en el interior 2009</div>
+                </div>
+              </div>
+              <div>
+                <div class="card-tema-img">
+                  <svg viewBox="0 0 180 110" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="180" height="110" fill="#071520"/>
+                    <circle cx="90" cy="48" r="18" fill="none" stroke="#3a9fd8" stroke-width="2" opacity="0.7"/>
+                    <path d="M75 48 q0-15 15-15 q15 0 15 15 q0 15-15 15 q-15 0-15-15z" fill="#3a9fd8" opacity="0.1"/>
+                    <text x="90" y="98" text-anchor="middle" font-family="sans-serif" font-size="7" fill="rgba(255,255,255,0.3)" letter-spacing="1">HOSPITAL</text>
+                  </svg>
+                </div>
+                <div class="card-tema-body">
+                  <span class="card-tema-cat">Salud</span>
+                  <div class="card-tema-titulo" style="font-size:0.78rem">Dr. Pablo Quiroz: cobertura sanitaria en localidades rurales 2012</div>
+                </div>
+              </div>
+              <div>
+                <div class="card-tema-img">
+                  <svg viewBox="0 0 180 110" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="180" height="110" fill="#071520"/>
+                    <path d="M70 55 q0-25 20-25 q20 0 20 25 q0 25-20 25 q-20 0-20-25z" fill="none" stroke="#3a9fd8" stroke-width="2" opacity="0.5"/>
+                    <line x1="90" y1="30" x2="90" y2="85" stroke="#3a9fd8" stroke-width="1.5" opacity="0.4" stroke-dasharray="3,3"/>
+                    <text x="90" y="102" text-anchor="middle" font-family="sans-serif" font-size="7" fill="rgba(255,255,255,0.3)" letter-spacing="1">SALUD MENTAL</text>
+                  </svg>
+                </div>
+                <div class="card-tema-body">
+                  <span class="card-tema-cat">Salud</span>
+                  <div class="card-tema-titulo" style="font-size:0.78rem">Lic. Fernanda Salas: salud mental en comunidades del interior</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SIDEBAR -->
+        <div class="sidebar-bloque">
+          <div class="sidebar-widget">
+            <div class="sidebar-widget-head">Lo más consultado</div>
+            <div class="sidebar-item"><strong>Elsa Quiroga · Sociedad Italiana</strong>17:20 min · Cultura · 2010</div>
+            <div class="sidebar-item"><strong>Omar Sposaro · Cooperativas</strong>19:55 min · Economía · 2012</div>
+            <div class="sidebar-item"><strong>Dra. Norma Páez · H1N1</strong>15:20 min · Salud · 2009</div>
+            <div class="sidebar-item"><strong>Ramón Ledesma · Campo 2008</strong>17:52 min · Economía · 2008</div>
+          </div>
+
+          <!-- AD: BOX SIDEBAR STICKY -->
+          <div class="ad-slot">
+            <div class="ad-overlay" onclick="highlightAd(7)" style="position:relative;height:250px">
+              <div class="ad-badge"><div class="ad-badge-num">7</div> Box Sidebar (sticky)</div>
+              <div class="ad-dim">300 × 250 px</div>
+            </div>
+            <div style="height:250px;background:var(--gris-6);border:1px solid var(--linea)"></div>
+          </div>
+
+          <div class="sidebar-widget">
+            <div class="sidebar-widget-head">Estado del archivo</div>
+            <div class="sidebar-item"><strong>25 entrevistas indexadas</strong>Rango 2007–2012 · Sur santafesino</div>
+            <div class="sidebar-item"><strong>7 revisadas · 8 pendientes</strong>10 por digitalizar</div>
+            <div class="sidebar-item"><strong>8 categorías temáticas</strong>Política, Salud, Economía...</div>
+          </div>
+
+          <!-- AD: BOX SIDEBAR 2 -->
+          <div class="ad-slot">
+            <div class="ad-overlay" onclick="highlightAd(8)" style="position:relative;height:250px">
+              <div class="ad-badge"><div class="ad-badge-num">8</div> Box Sidebar inferior</div>
+              <div class="ad-dim">300 × 250 px</div>
+            </div>
+            <div style="height:250px;background:var(--gris-6);border:1px solid var(--linea)"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SCROLL 3: CIERRE ══ -->
+  <div class="scroll-marker">
+    <div class="dot" style="background:#f59e0b"></div>
+    SECCIÓN 3 · BLOQUE FINAL — TERCER SCROLL
+  </div>
+
+  <!-- DESTACADO FULL BLACK -->
+  <div class="destacado-full">
+    <div class="contenedor">
+      <div class="destacado-full-inner">
+        <div class="dest-texto">
+          <div class="dest-kicker">Editorial del archivo</div>
+          <div class="dest-titulo">Un registro que documenta cinco años de transformaciones en el sur santafesino</div>
+          <div class="dest-bajada">Entre 2007 y 2012, la radio local de Rufino registró voces que hoy son documentos históricos: intendentes, médicos, docentes, productores y referentes culturales. Este archivo preserva esas conversaciones en su formato original.</div>
+        </div>
+        <div class="dest-img">
+          <svg viewBox="0 0 480 260" xmlns="http://www.w3.org/2000/svg">
+            <rect width="480" height="260" fill="#1a1a2e" rx="4"/>
+            <!-- Mapa estilizado de la región -->
+            <circle cx="240" cy="130" r="80" fill="none" stroke="#c8102e" stroke-width="1.5" opacity="0.3"/>
+            <circle cx="240" cy="130" r="55" fill="none" stroke="#c8102e" stroke-width="1" opacity="0.2"/>
+            <circle cx="240" cy="130" r="30" fill="#c8102e" opacity="0.12"/>
+            <!-- Punto central Rufino -->
+            <circle cx="240" cy="130" r="6" fill="#c8102e"/>
+            <text x="255" y="126" font-family="sans-serif" font-size="10" fill="#c8102e" font-weight="bold">Rufino</text>
+            <text x="240" y="230" text-anchor="middle" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,0.25)" letter-spacing="3">SUR · SANTA FE · PAMPA HÚMEDA</text>
+            <!-- Líneas de latitud estilizadas -->
+            <line x1="100" y1="130" x2="380" y2="130" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+            <line x1="240" y1="50" x2="240" y2="210" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AD: LEADERBOARD FULL BLOQUE FINAL -->
+  <div class="ad-slot" style="background:var(--blanco)">
+    <div class="ad-overlay" onclick="highlightAd(9)">
+      <div class="ad-badge"><div class="ad-badge-num">9</div> Leaderboard Bloque Final</div>
+      <div class="ad-dim">970 × 250 px (half page)</div>
+    </div>
+    <div style="height:120px;background:var(--gris-6);border-top:1px solid var(--linea);border-bottom:1px solid var(--linea)"></div>
+  </div>
+
+  <!-- GRILLA 3 COLUMNAS CIERRE -->
+  <div style="background:var(--blanco);padding:0 0 2rem">
+    <div class="contenedor">
+      <div style="padding:1.25rem 0 0.75rem">
+        <div class="tematica-titulo">Más del archivo</div>
+      </div>
+      <div class="grilla-3-bottom">
+        <div class="card-bottom">
+          <div class="card-bottom-img">
+            <svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg">
+              <rect width="360" height="160" fill="#1a0a2e"/>
+              <rect x="120" y="45" width="120" height="70" rx="4" fill="none" stroke="#a855f7" stroke-width="2" opacity="0.5"/>
+              <line x1="140" y1="65" x2="220" y2="65" stroke="#a855f7" stroke-width="1.5" opacity="0.5"/>
+              <line x1="140" y1="75" x2="210" y2="75" stroke="#a855f7" stroke-width="1.5" opacity="0.35"/>
+              <line x1="140" y1="85" x2="195" y2="85" stroke="#a855f7" stroke-width="1.5" opacity="0.25"/>
+              <text x="180" y="140" text-anchor="middle" font-family="sans-serif" font-size="8" fill="rgba(255,255,255,0.3)" letter-spacing="2">EDUCACIÓN</text>
+            </svg>
+          </div>
+          <span class="card-bottom-cat">Educación</span>
+          <div class="card-bottom-titulo">Claudia Berón: cuarenta años de docencia rural en el sur santafesino</div>
+        </div>
+        <div class="card-bottom ad-slot">
+          <div class="ad-overlay" onclick="highlightAd(10)" style="position:relative;height:100%">
+            <div class="ad-badge"><div class="ad-badge-num">10</div> Box Grilla Final</div>
+            <div class="ad-dim">360 × 250 px</div>
+          </div>
+          <div style="height:200px"></div>
+        </div>
+        <div class="card-bottom">
+          <div class="card-bottom-img">
+            <svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg">
+              <rect width="360" height="160" fill="#141a0a"/>
+              <!-- Tractor / campo estilizado -->
+              <circle cx="170" cy="90" r="22" fill="none" stroke="#84cc16" stroke-width="2" opacity="0.5"/>
+              <circle cx="210" cy="95" r="15" fill="none" stroke="#84cc16" stroke-width="2" opacity="0.4"/>
+              <rect x="155" y="68" width="55" height="32" rx="3" fill="none" stroke="#84cc16" stroke-width="1.5" opacity="0.4"/>
+              <text x="180" y="140" text-anchor="middle" font-family="sans-serif" font-size="8" fill="rgba(255,255,255,0.3)" letter-spacing="2">AGRO 2012</text>
+            </svg>
+          </div>
+          <span class="card-bottom-cat">Agro</span>
+          <div class="card-bottom-titulo">Marcelo Roldán: perspectivas campaña agrícola 2011/12 y costos de producción</div>
+        </div>
+      </div>
+
+      <!-- AD: LEADERBOARD FINAL ABSOLUTO -->
+      <div class="ad-slot" style="margin-top:1.5rem">
+        <div class="ad-overlay" onclick="highlightAd(11)">
+          <div class="ad-badge"><div class="ad-badge-num">11</div> Leaderboard Pie de Página</div>
+          <div class="ad-dim">970 × 90 px</div>
+        </div>
+        <div style="height:90px;background:var(--gris-6);border:1px solid var(--linea)"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    Voces del Interior · Archivo Periodístico 2007–2012 · Rufino, Santa Fe ·
+    Maqueta de espacios publicitarios — uso interno
+  </footer>
+
+</div><!-- /portal-wrap -->
+
+<!-- TOOLTIP FLOTANTE -->
+<div class="ad-tooltip" id="adTooltip">
+  <strong id="tooltipNombre"></strong>
+  <span id="tooltipInfo"></span>
+</div>
+
+<script>
+/* ══ DATOS DE ESPACIOS PUBLICITARIOS ══ */
+const ADS = [
+  { id:1,  nombre:"Leaderboard Superior",       dim:"970 × 90 px",  ubicacion:"Encima del header", precio:"Alta visibilidad · Precio a consultar", seccion:1 },
+  { id:2,  nombre:"Header Derecha",              dim:"300 × 80 px",  ubicacion:"Junto al logo", precio:"Alta visibilidad · Precio a consultar", seccion:1 },
+  { id:3,  nombre:"Box Lateral 1 (in-content)",  dim:"300 × 250 px", ubicacion:"Columna derecha, portada", precio:"Visibilidad media · Precio a consultar", seccion:1 },
+  { id:4,  nombre:"Box In-Grilla",               dim:"240 × 200 px", ubicacion:"Dentro de la grilla de noticias", precio:"Nativo · Precio a consultar", seccion:1 },
+  { id:5,  nombre:"Leaderboard Intermedio",      dim:"970 × 90 px",  ubicacion:"Entre sección 1 y 2", precio:"Visibilidad alta · Precio a consultar", seccion:1 },
+  { id:6,  nombre:"Banner Inter-Temático",       dim:"728 × 90 px",  ubicacion:"Entre bloques de sección", precio:"Visibilidad media · Precio a consultar", seccion:2 },
+  { id:7,  nombre:"Box Sidebar Sticky",          dim:"300 × 250 px", ubicacion:"Sidebar, se desplaza con el scroll", precio:"Alta exposición · Precio a consultar", seccion:2 },
+  { id:8,  nombre:"Box Sidebar Inferior",        dim:"300 × 250 px", ubicacion:"Sidebar, posición inferior", precio:"Visibilidad media · Precio a consultar", seccion:2 },
+  { id:9,  nombre:"Leaderboard Bloque Final",    dim:"970 × 120 px", ubicacion:"Inicio del bloque final", precio:"Alta visibilidad · Precio a consultar", seccion:3 },
+  { id:10, nombre:"Box Grilla Final (nativo)",   dim:"360 × 250 px", ubicacion:"Grilla de cierre, posición central", precio:"Formato nativo · Precio a consultar", seccion:3 },
+  { id:11, nombre:"Leaderboard Pie de Página",   dim:"970 × 90 px",  ubicacion:"Última posición antes del footer", precio:"Visibilidad baja · Precio menor", seccion:3 },
+];
+
+/* ══ POBLAR PANEL LATERAL ══ */
+const list = document.getElementById('adList');
+ADS.forEach(ad => {
+  const entry = document.createElement('div');
+  entry.className = 'ad-entry';
+  entry.id = `ad-entry-${ad.id}`;
+  entry.onclick = () => highlightAd(ad.id);
+  entry.innerHTML = `
+    <div class="ad-entry-num">${ad.id}</div>
+    <div class="ad-entry-info">
+      <div class="ad-entry-nombre">${ad.nombre}</div>
+      <div class="ad-entry-dim">${ad.dim}</div>
+      <div class="ad-entry-precio">${ad.precio}</div>
+    </div>`;
+  list.appendChild(entry);
+});
+
+/* ══ HIGHLIGHT ══ */
+let activeAd = null;
+function highlightAd(id) {
+  // Quitar active anterior
+  document.querySelectorAll('.ad-entry').forEach(e => e.classList.remove('active'));
+  const entry = document.getElementById(`ad-entry-${id}`);
+  if (entry) {
+    entry.classList.add('active');
+    entry.scrollIntoView({ behavior:'smooth', block:'nearest' });
+  }
+  const ad = ADS.find(a => a.id === id);
+  if (!ad) return;
+
+  const tooltip = document.getElementById('adTooltip');
+  document.getElementById('tooltipNombre').textContent = `N°${ad.id} · ${ad.nombre}`;
+  document.getElementById('tooltipInfo').textContent = `${ad.dim} · ${ad.ubicacion}`;
+  tooltip.classList.add('visible');
+  clearTimeout(activeAd);
+  activeAd = setTimeout(() => tooltip.classList.remove('visible'), 3500);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voces del Interior · Archivo de Entrevistas 2007–2012</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #0d0d0f;
+  --surface:  #141418;
+  --surface2: #1c1c22;
+  --border:   #2a2a32;
+  --border2:  #38383f;
+  --text:     #e8e8f0;
+  --text2:    #9090a0;
+  --text3:    #5a5a6a;
+  --accent:   #ff4d1c;
+  --accent2:  #ff8c66;
+  --white:    #ffffff;
+
+  --f-display: 'Syne', system-ui, sans-serif;
+  --f-body:    'DM Sans', system-ui, sans-serif;
+  --f-mono:    'DM Mono', 'Courier New', monospace;
+
+  --r: 6px;
+  --r2: 12px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--f-body);
+  font-size: 15px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ─── TOPBAR ─── */
+.topbar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0.45rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--f-mono);
+  font-size: 0.65rem;
+  color: var(--text3);
+  letter-spacing: 0.06em;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.topbar-left { display: flex; gap: 1.5rem; align-items: center; }
+.topbar-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent); display: inline-block; margin-right: 0.4rem;
+  animation: pulse 2s ease infinite;
+}
+@keyframes pulse {
+  0%,100% { opacity: 1; }
+  50%      { opacity: 0.3; }
+}
+.topbar-right { display: flex; gap: 1.5rem; }
+.topbar-right a {
+  color: var(--text3); text-decoration: none;
+  transition: color 0.15s;
+}
+.topbar-right a:hover { color: var(--text); }
+
+/* ─── NAV ─── */
+nav {
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 64px;
+  position: sticky;
+  top: 32px;
+  z-index: 99;
+}
+
+.nav-logo {
+  font-family: var(--f-display);
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+.nav-logo span { color: var(--accent); }
+
+.nav-links {
+  display: flex;
+  gap: 0.15rem;
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: var(--f-body);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text2);
+  text-decoration: none;
+  padding: 0.45rem 0.85rem;
+  border-radius: var(--r);
+  transition: all 0.15s;
+  letter-spacing: 0.01em;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  background: var(--surface2);
+  color: var(--text);
+}
+
+.nav-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px; height: 18px;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 0.6rem;
+  font-weight: 700;
+  margin-left: 0.3rem;
+  vertical-align: middle;
+}
+
+/* ─── LAYOUT PRINCIPAL ─── */
+main {
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 0 2rem 4rem;
+}
+
+/* ─── EDITORIAL ─── */
+.editorial-band {
+  border-bottom: 1px solid var(--border);
+  padding: 2.5rem 0 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+.editorial-kicker {
+  font-family: var(--f-mono);
+  font-size: 0.65rem;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.editorial-kicker::before {
+  content: '';
+  display: block;
+  width: 24px; height: 2px;
+  background: var(--accent);
+}
+
+.editorial-titulo {
+  font-family: var(--f-display);
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: var(--white);
+  margin-bottom: 1rem;
+}
+
+.editorial-texto {
+  font-size: 0.95rem;
+  color: var(--text2);
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+.editorial-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  align-content: start;
+}
+
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  padding: 1.25rem 1.5rem;
+  transition: border-color 0.2s;
+}
+.stat-card:hover { border-color: var(--border2); }
+
+.stat-num {
+  font-family: var(--f-display);
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin-bottom: 0.3rem;
+}
+.stat-num span { color: var(--accent); }
+
+.stat-label {
+  font-family: var(--f-mono);
+  font-size: 0.65rem;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* ─── SECCIÓN CABECERA ─── */
+.sec-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 2.5rem 0 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.sec-titulo {
+  font-family: var(--f-display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--white);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.sec-titulo::before {
+  content: '';
+  display: block;
+  width: 4px; height: 18px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+.sec-link {
+  font-family: var(--f-mono);
+  font-size: 0.65rem;
+  color: var(--text3);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition: color 0.15s;
+  cursor: pointer;
+}
+.sec-link:hover { color: var(--accent); }
+
+/* ─── HERO DESTACADAS ─── */
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  overflow: hidden;
+  margin-bottom: 2.5rem;
+}
+
+.hero-main {
+  grid-column: 1 / 3;
+  grid-row: 1 / 3;
+}
+
+.hero-card {
+  background: var(--surface);
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 260px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.hero-main { min-height: 420px; }
+.hero-card:hover { background: var(--surface2); }
+
+.hero-card-bg {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.hero-card-bg .monogram {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 14rem;
+  color: rgba(255,77,28,0.04);
+  line-height: 1;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.hero-card-content { position: relative; z-index: 1; }
+
+.hero-cat {
+  font-family: var(--f-mono);
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  margin-bottom: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.cat-dot {
+  width: 6px; height: 6px; border-radius: 50%; display: inline-block;
+}
+
+.hero-titulo {
+  font-family: var(--f-display);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  color: var(--white);
+  margin-bottom: 0.6rem;
+}
+
+.hero-main .hero-titulo { font-size: clamp(1.3rem, 2.5vw, 1.9rem); }
+.hero-sub  .hero-titulo { font-size: 1.05rem; }
+
+.hero-cargo {
+  font-size: 0.82rem;
+  color: var(--text2);
+  margin-bottom: 0.75rem;
+  font-weight: 300;
+}
+
+.hero-meta {
+  display: flex;
+  gap: 1rem;
+  font-family: var(--f-mono);
+  font-size: 0.6rem;
+  color: var(--text3);
+  letter-spacing: 0.04em;
+  align-items: center;
+}
+
+.badge-estado {
+  padding: 0.12rem 0.5rem;
+  border-radius: 3px;
+  font-size: 0.58rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.be-revisado  { background: #0f3d1f; color: #4caf6e; }
+.be-pendiente { background: #2a2a3a; color: #8888aa; }
+.be-digitalizar{ background: #3a2800; color: #cc8833; }
+
+.hero-player {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* ─── PLAY BUTTON ─── */
+.play-btn {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.05);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.15s;
+  color: var(--text);
+}
+.play-btn:hover { border-color: var(--accent); background: var(--accent); color: #fff; }
+.play-btn svg { width: 12px; height: 12px; fill: currentColor; pointer-events: none; }
+.play-btn.playing { border-color: var(--accent); background: var(--accent); color: #fff; }
+
+.progreso-wrap { flex: 1; }
+
+.progreso-bar {
+  width: 100%;
+  height: 3px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 3px;
+  cursor: pointer;
+  margin-bottom: 0.3rem;
+  position: relative;
+}
+
+.progreso-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 3px;
+  width: 0%;
+  pointer-events: none;
+  transition: width 0.1s linear;
+}
+
+.progreso-times {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--f-mono);
+  font-size: 0.55rem;
+  color: var(--text3);
+  letter-spacing: 0.04em;
+}
+
+.sin-audio {
+  font-family: var(--f-mono);
+  font-size: 0.6rem;
+  color: var(--text3);
+  font-style: italic;
+  padding: 0.5rem 0 0;
+}
+
+/* ─── ÚLTIMAS INCORPORACIONES (lista horizontal) ─── */
+.ultimas-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  overflow: hidden;
+  margin-bottom: 2.5rem;
+}
+
+.ultima-card {
+  background: var(--surface);
+  padding: 1.25rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.ultima-card:hover { background: var(--surface2); }
+
+.ultima-num {
+  font-family: var(--f-display);
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--border2);
+  line-height: 1;
+  margin-bottom: 0.2rem;
+}
+
+.ultima-cat {
+  font-family: var(--f-mono);
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.ultima-titulo {
+  font-family: var(--f-display);
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.25;
+}
+
+.ultima-cargo {
+  font-size: 0.78rem;
+  color: var(--text2);
+  font-weight: 300;
+}
+
+.ultima-fecha {
+  font-family: var(--f-mono);
+  font-size: 0.6rem;
+  color: var(--text3);
+  margin-top: auto;
+}
+
+/* ─── FILTROS ─── */
+.filtros-bar {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  padding: 1rem 1.5rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.filtros-label {
+  font-family: var(--f-mono);
+  font-size: 0.62rem;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-right: 0.5rem;
+}
+
+.filtro-chip {
+  font-family: var(--f-mono);
+  font-size: 0.65rem;
+  padding: 0.3rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  background: transparent;
+  color: var(--text2);
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  transition: all 0.15s;
+}
+
+.filtro-chip:hover {
+  border-color: var(--border2);
+  color: var(--text);
+}
+
+.filtro-chip.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+/* filtros año */
+.filtros-anio {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  margin-left: auto;
+}
+
+.filtro-anio-btn {
+  font-family: var(--f-mono);
+  font-size: 0.62rem;
+  padding: 0.25rem 0.65rem;
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  background: transparent;
+  color: var(--text3);
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  transition: all 0.15s;
+}
+.filtro-anio-btn:hover { color: var(--text); border-color: var(--border2); }
+.filtro-anio-btn.active { background: var(--surface2); color: var(--text); border-color: var(--border2); }
+
+/* ─── GRILLA GENERAL ─── */
+.grid-general {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  overflow: hidden;
+}
+
+.g-card {
+  background: var(--surface);
+  padding: 1.4rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.g-card:hover { background: var(--surface2); }
+
+.g-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.15rem;
+}
+
+.g-cat {
+  font-family: var(--f-mono);
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.g-titulo {
+  font-family: var(--f-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.25;
+}
+
+.g-cargo {
+  font-size: 0.78rem;
+  color: var(--text2);
+  font-weight: 300;
+}
+
+.g-obs {
+  font-size: 0.8rem;
+  color: var(--text3);
+  line-height: 1.55;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex: 1;
+}
+
+.g-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.5rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
+}
+
+.g-meta {
+  font-family: var(--f-mono);
+  font-size: 0.58rem;
+  color: var(--text3);
+  letter-spacing: 0.04em;
+}
+
+/* ─── META ARCHIVÍSTICA (expandible) ─── */
+.meta-arch-row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.12rem 0.6rem;
+  font-family: var(--f-mono);
+  font-size: 0.58rem;
+  color: var(--text3);
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px dashed var(--border);
+}
+.meta-arch-row .mk { color: var(--text3); }
+.meta-arch-row .mv { color: var(--text2); word-break: break-all; }
+
+/* ─── FOOTER ─── */
+footer {
+  border-top: 1px solid var(--border);
+  margin-top: 4rem;
+  padding: 2rem;
+  text-align: center;
+  font-family: var(--f-mono);
+  font-size: 0.65rem;
+  color: var(--text3);
+  letter-spacing: 0.06em;
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 900px) {
+  nav { top: 0; }
+  .topbar { display: none; }
+  .editorial-band { grid-template-columns: 1fr; }
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-main { grid-column: 1; grid-row: auto; min-height: 300px; }
+  .ultimas-strip { grid-template-columns: 1fr 1fr; }
+  .nav-links { display: none; }
+}
+
+@media (max-width: 560px) {
+  main { padding: 0 1rem 3rem; }
+  .ultimas-strip { grid-template-columns: 1fr; }
+  .grid-general { grid-template-columns: 1fr; }
+}
+
+/* fade-in entrada */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.g-card { animation: fadeUp 0.3s ease both; }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <span><span class="topbar-dot"></span>ARCHIVO ACTIVO</span>
+    <span>Rufino, Santa Fe · Sur Pampeano</span>
+  </div>
+  <div class="topbar-right">
+    <a href="#">2007–2012</a>
+    <a href="#">Entrevistas</a>
+    <a href="#">Acerca del archivo</a>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Voces del <span>Interior</span></div>
+  <ul class="nav-links">
+    <li><a href="#editorial" class="active">Editorial</a></li>
+    <li><a href="#destacadas">Destacadas</a></li>
+    <li><a href="#ultimas">Últimas <span class="nav-badge">4</span></a></li>
+    <li><a href="#archivo">Archivo completo</a></li>
+  </ul>
+</nav>
+
+<!-- MAIN -->
+<main>
+
+  <!-- EDITORIAL -->
+  <section id="editorial" class="editorial-band">
+    <div>
+      <div class="editorial-kicker">Editorial</div>
+      <h1 class="editorial-titulo">Un archivo de voces que construyeron el presente</h1>
+      <p class="editorial-texto">
+        Entre 2007 y 2012, la radio local de Rufino registró algo que pocas veces se preserva:
+        la conversación pública de una comunidad. Intendentes, médicos, docentes, productores,
+        sindicalistas, referentes culturales. Voces que documentan cinco años de transformaciones
+        en el sur santafesino, en su propio idioma, en tiempo real.
+      </p>
+      <br>
+      <p class="editorial-texto">
+        Este portal organiza ese material como lo que es: un archivo documental serio.
+        Cada registro conserva su fecha original, su nombre de archivo real y su estado de revisión.
+        El objetivo no es contar una historia bonita, sino hacer accesible lo que ya existe.
+      </p>
+    </div>
+    <div class="editorial-stats">
+      <div class="stat-card">
+        <div class="stat-num">25<span>+</span></div>
+        <div class="stat-label">Entrevistas indexadas</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">5<span>años</span></div>
+        <div class="stat-label">Cobertura temporal</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">8</div>
+        <div class="stat-label">Categorías temáticas</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">—</div>
+        <div class="stat-label">Horas de audio (por verificar)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DESTACADAS -->
+  <section id="destacadas">
+    <div class="sec-header">
+      <div class="sec-titulo">Entrevistas destacadas</div>
+      <span class="sec-link" onclick="scrollToArchivo()">Ver archivo completo →</span>
+    </div>
+    <div class="hero-grid" id="hero-grid"></div>
+  </section>
+
+  <!-- ÚLTIMAS INCORPORACIONES -->
+  <section id="ultimas">
+    <div class="sec-header">
+      <div class="sec-titulo">Últimas incorporaciones</div>
+      <span class="sec-link">ordenado por fecha de ingreso</span>
+    </div>
+    <div class="ultimas-strip" id="ultimas-strip"></div>
+  </section>
+
+  <!-- ARCHIVO COMPLETO -->
+  <section id="archivo">
+    <div class="sec-header">
+      <div class="sec-titulo">Archivo completo</div>
+    </div>
+
+    <!-- Filtros -->
+    <div class="filtros-bar">
+      <span class="filtros-label">Categoría</span>
+      <button class="filtro-chip active" data-cat="todas">Todas</button>
+      <button class="filtro-chip" data-cat="Política">Política</button>
+      <button class="filtro-chip" data-cat="Salud">Salud</button>
+      <button class="filtro-chip" data-cat="Economía">Economía</button>
+      <button class="filtro-chip" data-cat="Educación">Educación</button>
+      <button class="filtro-chip" data-cat="Cultura">Cultura</button>
+      <button class="filtro-chip" data-cat="Sindical">Sindical</button>
+      <button class="filtro-chip" data-cat="Social">Social</button>
+      <button class="filtro-chip" data-cat="Agro">Agro</button>
+      <div class="filtros-anio">
+        <button class="filtro-anio-btn active" data-anio="todos">Todos</button>
+        <button class="filtro-anio-btn" data-anio="2007">2007</button>
+        <button class="filtro-anio-btn" data-anio="2008">2008</button>
+        <button class="filtro-anio-btn" data-anio="2009">2009</button>
+        <button class="filtro-anio-btn" data-anio="2010">2010</button>
+        <button class="filtro-anio-btn" data-anio="2011">2011</button>
+        <button class="filtro-anio-btn" data-anio="2012">2012</button>
+      </div>
+    </div>
+
+    <div class="grid-general" id="grid-general"></div>
+  </section>
+
+</main>
+
+<footer>
+  Voces del Interior · Archivo de Entrevistas 2007–2012 · Rufino, Santa Fe ·
+  Formato de archivo: <span style="color:var(--text2)">dd-mm-aaaa - Nombre Entrevistado.mp3 / .jpg</span>
+</footer>
+
+<script>
+/* ══════════════════════════════════════════════
+   CORPUS  — 25 registros ficticios verosímiles
+   Formato real: dd-mm-aaaa - Nombre Apellido
+   audio/foto = null hasta vinculación real
+   estado: revisado | pendiente | digitalizar
+══════════════════════════════════════════════ */
+const CORPUS = [
+  {
+    id:"ENT-20070312-001", fecha:"12-03-2007", anio:"2007",
+    entrevistado:"Jorge Almada", cargo:"Intendente Municipal",
+    cat:"Política", obs:"Plan de obras públicas 2007–2011 y desafíos de la gestión municipal en el interior provincial.",
+    mp3:"12-03-2007 - Jorge Almada.mp3", jpg:"12-03-2007 - Jorge Almada.jpg",
+    audio:null, foto:null, dur:"8:24", estado:"pendiente", destacado:true, reciente:false
+  },
+  {
+    id:"ENT-20070705-002", fecha:"05-07-2007", anio:"2007",
+    entrevistado:"María Fernández", cargo:"Directora Hospital Zonal",
+    cat:"Salud", obs:"Situación del sistema sanitario regional y necesidad de inversión en infraestructura y equipamiento.",
+    mp3:"05-07-2007 - María Fernández.mp3", jpg:"05-07-2007 - María Fernández.jpg",
+    audio:null, foto:null, dur:"11:07", estado:"revisado", destacado:true, reciente:false
+  },
+  {
+    id:"ENT-20071120-003", fecha:"20-11-2007", anio:"2007",
+    entrevistado:"Carlos Ibáñez", cargo:"Ing. Agrónomo INTA Rufino",
+    cat:"Agro", obs:"Primeras estimaciones de la campaña de soja 2007/08 y el impacto de la sequía en el sur santafesino.",
+    mp3:"20-11-2007 - Carlos Ibáñez.mp3", jpg:"20-11-2007 - Carlos Ibáñez.jpg",
+    audio:null, foto:null, dur:"13:40", estado:"revisado", destacado:false, reciente:false
+  },
+  {
+    id:"ENT-20080315-004", fecha:"15-03-2008", anio:"2008",
+    entrevistado:"Susana Garelli", cargo:"Directora Regional de Educación",
+    cat:"Educación", obs:"Implementación del Plan de Mejora Institucional en escuelas secundarias del sur de Santa Fe.",
+    mp3:"15-03-2008 - Susana Garelli.mp3", jpg:"15-03-2008 - Susana Garelli.jpg",
+    audio:null, foto:null, dur:"9:18", estado:"pendiente", destacado:false, reciente:false
+  },
+  {
+    id:"ENT-20080620-005", fecha:"20-06-2008", anio:"2008",
+    entrevistado:"Ramón Ledesma", cargo:"Presidente Cooperativa Agropecuaria",
+    cat:"Economía", obs:"Consecuencias del conflicto campo-gobierno por la resolución 125 en las cooperativas del sur pampeano.",
+    mp3:"20-06-2008 - Ramón Ledesma.mp3", jpg:"20-06-2008 - Ramón Ledesma.jpg",
+    audio:null, foto:null, dur:"17:52", estado:"revisado", destacado:true, reciente:false
+  },
+  {
+    id:"ENT-20081118-006", fecha:"18-11-2008", anio:"2008",
+    entrevistado:"Mesa de Enlace Regional", cargo:"Referentes del campo pampeano",
+    cat:"Economía", obs:"Análisis colectivo del impacto de la crisis por retenciones en los productores de la región pampeana.",
+    mp3:"18-11-2008 - Mesa de Enlace Regional.mp3", jpg:"18-11-2008 - Mesa de Enlace Regional.jpg",
+    audio:null, foto:null, dur:"14:33", estado:"digitalizar", destacado:false, reciente:false
+  },
+  {
+    id:"ENT-20090210-007", fecha:"10-02-2009", anio:"2009",
+    entrevistado:"Héctor Villarreal", cargo:"Secretario de Obras Públicas",
+    cat:"Política", obs:"Balance de gestión municipal y proyecciones para el período electoral 2009.",
+    mp3:"10-02-2009 - Héctor Villarreal.mp3", jpg:"10-02-2009 - Héctor Villarreal.jpg",
+    audio:null, foto:null, dur:"10:05", estado:"pendiente", destacado:false, reciente:false
+  },
+  {
+    id:"ENT-20090422-008", fecha:"22-04-2009", anio:"2009",
+    entrevistado:"Roberto Coria", cargo:"Director Regional de Educación",
+    cat:"Educación", obs:"Programas de inclusión educativa y estado de la infraestructura escolar en el sur santafesino.",
+    mp3:"22-04-2009 - Roberto Coria.mp3", jpg:"22-04-2009 - Roberto Coria.jpg",
+    audio:null, foto:null, dur:"9:51", estado:"pendiente", destacado:false, reciente:false
+  },
+  {
+    id:"ENT-20090815-009", fecha:"15-08-2009", anio:"2009",
+    entrevistado:"Dra. Norma Páez", cargo:"Jefa de Guardia Hospital Rufino",
+    cat:"Salud", obs:"Crisis por gripe A H1N1: protocolo de atención y situación de los centros de salud del interior provincial.",
+    mp3:"15-08-2009 - Norma Páez.mp3", jpg:"15-08-2009 - Norma Páez.jpg",
+    audio:null, foto:null, dur:"15:20", estado:"revisado", destacado:true, reciente:false
+  },
+  {
+    id:"ENT-20091103-010", fecha:"03-11-2009", anio:"2009",
+    entrevistado:"Osvaldo Benítez", cargo:"Presidente Centro Comercial e Industrial",
+    cat:"Economía", obs:"Impacto de la crisis financiera global 2008–09 en el comercio local de Rufino.",
+    mp3:"03-11-2009 - Osvaldo Benítez.mp3", jpg:"03-11-2009 - Osvaldo Benítez.jpg",
+    audio:null, foto:null, dur:"11:44", estado:"pendiente", destacado:false, reciente:false
+  },
+  {
+    id:"ENT-20100310-011", fecha:"10-03-2010", anio:"2010",
+    entrevistado:"Liliana Montes", cargo:"Trabajadora Social Municipal",
+    cat:"Social", obs:"Situación de vulnerabilidad en el conurbano de Rufino y cobertura de programas sociales provinciales.",
+    mp3:"10-03-2010 - Liliana Montes.mp3", jpg:"10-03-2010 - Liliana Montes.jpg",
+    audio:null, foto:null, dur:"12:08", estado:"pendiente", destacado:false, reciente:false
+  },
+  {
+    id:"ENT-20100803-012", fecha:"03-08-2010", anio:"2010",
+    entrevistado:"Elsa Quiroga", cargo:"Presidenta Sociedad Italiana de Rufino",
+    cat:"Cultura", obs:"Historia de la institución, inmigración italiana y proyectos de preservación del patrimonio comunitario.",
+    mp3:"03-08-2010 - Elsa Quiroga.mp3", jpg:"03-08-2010 - Elsa Quiroga.jpg",
+    audio:null, foto:null, dur:"17:20", estado:"revisado", destacado:true, reciente:false
+  },
+  {
+    id:"ENT-20101205-013", fecha:"05-12-2010", anio:"2010",
+    entrevistado:"Jorge Mansilla", cargo:"Delegado gremial UPCN seccional Rufino",
+    cat:"Sindical", obs:"Paritarias 2010 y condiciones laborales en los municipios del sur santafesino.",
+    mp3:"05-12-2010 - Jorge Mansilla.mp3", jpg:"05-12-2010 - Jorge Mansilla.jpg",
+    audio:null, foto:null, dur:"8:57", estado:"digitalizar", destacado:false, reciente:false
+  },
+  {
+    id:"ENT-20110129-014", fecha:"29-01-2011", anio:"2011",
+    entrevistado:"Defensa Civil Regional", cargo:"Coordinación de Emergencias",
+    cat:"Social", obs:"Operativo de asistencia en las inundaciones que afectaron el sur santafesino a comienzos de 2011.",
+    mp3:"29-01-2011 - Defensa Civil Regional.mp3", jpg:"29-01-2011 - Defensa Civil Regional.jpg",
+    audio:null, foto:null, dur:"12:48", estado:"pendiente", destacado:false, reciente:false
+  },
+  {
+    id:"ENT-20110414-015", fecha:"14-04-2011", anio:"2011",
+    entrevistado:"Patricia Molina", cargo:"Referente de género y derechos",
+    cat:"Social", obs:"Violencia de género en el interior provincial, acceso a la justicia y recursos disponibles.",
+    mp3:"14-04-2011 - Patricia Molina.mp3", jpg:"14-04-2011 - Patricia Molina.jpg",
+    audio:null, foto:null, dur:"13:42", estado:"revisado", destacado:false, reciente:false
+  },
+  {
+    id:"ENT-20110720-016", fecha:"20-07-2011", anio:"2011",
+    entrevistado:"Ing. Luis Fantini", cargo:"Director de Vialidad Provincial",
+    cat:"Política", obs:"Estado de la red vial del sur santafesino y plan de pavimentación de rutas provinciales.",
+    mp3:"20-07-2011 - Luis Fantini.mp3", jpg:"20-07-2011 - Luis Fantini.jpg",
+    audio:null, foto:null, dur:"14:10", estado:"pendiente", destacado:false, reciente:false
+  },
+  {
+    id:"ENT-20111108-017", fecha:"08-11-2011", anio:"2011",
+    entrevistado:"Ana Lucía Ferreyra", cargo:"Rectora Escuela Secundaria N°1",
+    cat:"Educación", obs:"Deserción escolar en el interior provincial y experiencias de retención en escuelas rurales.",
+    mp3:"08-11-2011 - Ana Lucía Ferreyra.mp3", jpg:"08-11-2011 - Ana Lucía Ferreyra.jpg",
+    audio:null, foto:null, dur:"10:33", estado:"pendiente", destacado:false, reciente:false
+  },
+  {
+    id:"ENT-20120118-018", fecha:"18-01-2012", anio:"2012",
+    entrevistado:"Marcelo Roldán", cargo:"Productor agropecuario",
+    cat:"Agro", obs:"Perspectivas de la campaña agrícola 2011/12 ante la sequía y el alza en los costos de producción.",
+    mp3:"18-01-2012 - Marcelo Roldán.mp3", jpg:"18-01-2012 - Marcelo Roldán.jpg",
+    audio:null, foto:null, dur:"9:22", estado:"pendiente", destacado:false, reciente:true
+  },
+  {
+    id:"ENT-20120307-019", fecha:"07-03-2012", anio:"2012",
+    entrevistado:"Dr. Pablo Quiroz", cargo:"Médico generalista zona rural",
+    cat:"Salud", obs:"Cobertura sanitaria en localidades menores de 2.000 habitantes en el sur de Santa Fe.",
+    mp3:"07-03-2012 - Pablo Quiroz.mp3", jpg:"07-03-2012 - Pablo Quiroz.jpg",
+    audio:null, foto:null, dur:"16:05", estado:"pendiente", destacado:false, reciente:true
+  },
+  {
+    id:"ENT-20120514-020", fecha:"14-05-2012", anio:"2012",
+    entrevistado:"Omar Sposaro", cargo:"Referente cooperativo y social",
+    cat:"Economía", obs:"Rol de las cooperativas en el desarrollo local y los desafíos del asociativismo en el interior.",
+    mp3:"14-05-2012 - Omar Sposaro.mp3", jpg:"14-05-2012 - Omar Sposaro.jpg",
+    audio:null, foto:null, dur:"19:55", estado:"revisado", destacado:true, reciente:true
+  },
+  {
+    id:"ENT-20120614-021", fecha:"14-06-2012", anio:"2012",
+    entrevistado:"Hugo Pereyra", cargo:"Secretario General UPCN",
+    cat:"Sindical", obs:"Negociaciones paritarias del sector público provincial y situación de los trabajadores del interior.",
+    mp3:"14-06-2012 - Hugo Pereyra.mp3", jpg:"14-06-2012 - Hugo Pereyra.jpg",
+    audio:null, foto:null, dur:"10:15", estado:"digitalizar", destacado:false, reciente:true
+  },
+  {
+    id:"ENT-20120725-022", fecha:"25-07-2012", anio:"2012",
+    entrevistado:"Beatriz Noriega", cargo:"Coordinadora Biblioteca Popular",
+    cat:"Cultura", obs:"Historia de la biblioteca popular de Rufino y el rol cultural de las instituciones en el interior.",
+    mp3:"25-07-2012 - Beatriz Noriega.mp3", jpg:"25-07-2012 - Beatriz Noriega.jpg",
+    audio:null, foto:null, dur:"11:30", estado:"pendiente", destacado:false, reciente:false
+  },
+  {
+    id:"ENT-20120830-023", fecha:"30-08-2012", anio:"2012",
+    entrevistado:"Lic. Fernanda Salas", cargo:"Psicóloga Centro de Salud",
+    cat:"Salud", obs:"Salud mental en comunidades del interior: recursos, estigma y acceso a la atención especializada.",
+    mp3:"30-08-2012 - Fernanda Salas.mp3", jpg:"30-08-2012 - Fernanda Salas.jpg",
+    audio:null, foto:null, dur:"14:48", estado:"pendiente", destacado:false, reciente:false
+  },
+  {
+    id:"ENT-20120918-024", fecha:"18-09-2012", anio:"2012",
+    entrevistado:"Rodolfo Aguirre", cargo:"Presidente Comisión de Fomento",
+    cat:"Política", obs:"Gestión de pequeñas localidades rurales: financiamiento, infraestructura y relación con el municipio.",
+    mp3:"18-09-2012 - Rodolfo Aguirre.mp3", jpg:"18-09-2012 - Rodolfo Aguirre.jpg",
+    audio:null, foto:null, dur:"8:40", estado:"digitalizar", destacado:false, reciente:false
+  },
+  {
+    id:"ENT-20121105-025", fecha:"05-11-2012", anio:"2012",
+    entrevistado:"Claudia Berón", cargo:"Maestra rural jubilada",
+    cat:"Educación", obs:"Cuarenta años de docencia rural en el sur santafesino: transformaciones, carencias y memoria.",
+    mp3:"05-11-2012 - Claudia Berón.mp3", jpg:"05-11-2012 - Claudia Berón.jpg",
+    audio:null, foto:null, dur:"22:10", estado:"revisado", destacado:false, reciente:false
+  }
+];
+
+/* ── colores por categoría ── */
+const CAT_COLOR = {
+  "Política":  "#e05a2b",
+  "Salud":     "#3a9fd8",
+  "Economía":  "#5ab83a",
+  "Educación": "#a855f7",
+  "Cultura":   "#f59e0b",
+  "Sindical":  "#14b8a6",
+  "Social":    "#ec4899",
+  "Agro":      "#84cc16"
+};
+
+const ESTADO_CFG = {
+  "revisado":    { label:"Revisado",    cls:"be-revisado"   },
+  "pendiente":   { label:"Pendiente",   cls:"be-pendiente"  },
+  "digitalizar": { label:"Digitalizar", cls:"be-digitalizar"}
+};
+
+/* ── estado global filtros ── */
+let filtrosCat  = "todas";
+let filtrosAnio = "todos";
+
+/* ── reproductor ── */
+let audActivo = null, btnActivo = null;
+
+function fmt(s) {
+  return `${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}`;
+}
+
+function stopAll() {
+  if (audActivo) {
+    audActivo.pause();
+    audActivo.currentTime = 0;
+  }
+  document.querySelectorAll('.play-btn.playing').forEach(b => {
+    b.classList.remove('playing');
+    const sv = b.querySelector('svg');
+    if (sv) sv.innerHTML = '<polygon points="0,0 10,6 0,12"/>';
+  });
+  document.querySelectorAll('.progreso-fill').forEach(f => f.style.width = '0%');
+  audActivo = null; btnActivo = null;
+}
+
+function playerHTML(ent, uid) {
+  if (!ent.audio) return `<div class="sin-audio">sin archivo vinculado · ${ent.mp3}</div>`;
+  return `
+    <div style="display:flex;align-items:center;gap:.6rem;margin-top:.5rem">
+      <button class="play-btn" id="btn-${uid}" onclick="togglePlay('${uid}','${ent.audio}','${ent.dur}')">
+        <svg id="ico-${uid}" viewBox="0 0 10 12"><polygon points="0,0 10,6 0,12"/></svg>
+      </button>
+      <div class="progreso-wrap">
+        <div class="progreso-bar" onclick="saltar(event,'${uid}')">
+          <div class="progreso-fill" id="fill-${uid}"></div>
+        </div>
+        <div class="progreso-times">
+          <span id="t-${uid}">0:00</span>
+          <span id="dur-${uid}">${ent.dur}</span>
+        </div>
+      </div>
+    </div>
+    <audio id="aud-${uid}" src="${ent.audio}" preload="none"></audio>`;
+}
+
+function bindAudio(uid) {
+  const aud  = document.getElementById(`aud-${uid}`);
+  const fill = document.getElementById(`fill-${uid}`);
+  const tEl  = document.getElementById(`t-${uid}`);
+  const dEl  = document.getElementById(`dur-${uid}`);
+  const btn  = document.getElementById(`btn-${uid}`);
+  const ico  = document.getElementById(`ico-${uid}`);
+  if (!aud) return;
+  aud.addEventListener('loadedmetadata', () => { if (dEl) dEl.textContent = fmt(aud.duration); });
+  aud.addEventListener('timeupdate', () => {
+    if (!aud.duration) return;
+    if (fill) fill.style.width = (aud.currentTime/aud.duration*100) + '%';
+    if (tEl)  tEl.textContent  = fmt(aud.currentTime);
+  });
+  aud.addEventListener('ended', () => {
+    if (fill) fill.style.width = '0%';
+    if (tEl)  tEl.textContent  = '0:00';
+    if (btn)  btn.classList.remove('playing');
+    if (ico)  ico.innerHTML    = '<polygon points="0,0 10,6 0,12"/>';
+    audActivo = null; btnActivo = null;
+  });
+}
+
+function togglePlay(uid) {
+  const aud = document.getElementById(`aud-${uid}`);
+  const btn = document.getElementById(`btn-${uid}`);
+  const ico = document.getElementById(`ico-${uid}`);
+  if (!aud) return;
+  if (audActivo && audActivo !== aud) stopAll();
+  if (aud.paused) {
+    aud.play().catch(()=>{});
+    btn.classList.add('playing');
+    ico.innerHTML = '<rect x="0" y="0" width="3.5" height="12"/><rect x="6.5" y="0" width="3.5" height="12"/>';
+    audActivo = aud; btnActivo = btn;
+  } else {
+    aud.pause();
+    btn.classList.remove('playing');
+    ico.innerHTML = '<polygon points="0,0 10,6 0,12"/>';
+    audActivo = null; btnActivo = null;
+  }
+}
+
+function saltar(ev, uid) {
+  const aud  = document.getElementById(`aud-${uid}`);
+  const bar  = ev.currentTarget;
+  const fill = document.getElementById(`fill-${uid}`);
+  if (!aud || !bar) return;
+  const r   = bar.getBoundingClientRect();
+  const pct = Math.max(0, Math.min(1, (ev.clientX - r.left) / r.width));
+  if (aud.duration) aud.currentTime = pct * aud.duration;
+  if (fill) fill.style.width = (pct*100) + '%';
+}
+
+/* ── monograma para placeholder ── */
+function monogram(name) {
+  return name.split(' ').slice(0,2).map(w => w[0]).join('').toUpperCase();
+}
+
+function catColor(c) { return CAT_COLOR[c] || '#e05a2b'; }
+
+/* ══════════════════════════════════════════════
+   RENDER HERO DESTACADAS
+══════════════════════════════════════════════ */
+function renderHero() {
+  const dest = CORPUS.filter(e => e.destacado);
+  const container = document.getElementById('hero-grid');
+  container.innerHTML = '';
+
+  dest.forEach((e, i) => {
+    const isMain = i === 0;
+    const uid    = `hero-${e.id}`;
+    const est    = ESTADO_CFG[e.estado] || ESTADO_CFG.pendiente;
+    const col    = catColor(e.cat);
+    const mono   = monogram(e.entrevistado);
+
+    const div = document.createElement('div');
+    div.className = `hero-card ${isMain ? 'hero-main' : 'hero-sub'}`;
+    div.innerHTML = `
+      <div class="hero-card-bg">
+        <div class="monogram">${mono}</div>
+      </div>
+      <div class="hero-card-content">
+        <div class="hero-cat">
+          <span class="cat-dot" style="background:${col}"></span>
+          <span style="color:${col}">${e.cat}</span>
+        </div>
+        <div class="hero-titulo">${e.entrevistado}</div>
+        <div class="hero-cargo">${e.cargo}</div>
+        <div class="hero-meta">
+          <span>${e.fecha}</span>
+          <span class="badge-estado ${est.cls}">${est.label}</span>
+          <span>◷ ${e.dur}</span>
+        </div>
+        ${playerHTML(e, uid)}
+      </div>`;
+    container.appendChild(div);
+    if (e.audio) bindAudio(uid);
+  });
+}
+
+/* ══════════════════════════════════════════════
+   RENDER ÚLTIMAS (4 más recientes)
+══════════════════════════════════════════════ */
+function renderUltimas() {
+  const recientes = CORPUS.filter(e => e.reciente).slice(0, 4);
+  const container = document.getElementById('ultimas-strip');
+  container.innerHTML = '';
+  recientes.forEach((e, i) => {
+    const col = catColor(e.cat);
+    const div = document.createElement('div');
+    div.className = 'ultima-card';
+    div.innerHTML = `
+      <div class="ultima-num">${String(i+1).padStart(2,'0')}</div>
+      <div class="ultima-cat" style="color:${col}">${e.cat}</div>
+      <div class="ultima-titulo">${e.entrevistado}</div>
+      <div class="ultima-cargo">${e.cargo}</div>
+      <div class="ultima-fecha">${e.fecha}</div>`;
+    container.appendChild(div);
+  });
+}
+
+/* ══════════════════════════════════════════════
+   RENDER GRILLA GENERAL (filtrable)
+══════════════════════════════════════════════ */
+function renderGrid() {
+  const lista = CORPUS.filter(e => {
+    const okCat  = filtrosCat  === 'todas' || e.cat  === filtrosCat;
+    const okAnio = filtrosAnio === 'todos' || e.anio === filtrosAnio;
+    return okCat && okAnio;
+  });
+
+  const container = document.getElementById('grid-general');
+  container.innerHTML = '';
+
+  if (lista.length === 0) {
+    container.innerHTML = `<div style="padding:3rem;text-align:center;color:var(--text3);font-family:var(--f-mono);font-size:.75rem">Sin resultados para este filtro</div>`;
+    return;
+  }
+
+  lista.forEach((e, i) => {
+    const uid  = `g-${e.id}`;
+    const col  = catColor(e.cat);
+    const est  = ESTADO_CFG[e.estado] || ESTADO_CFG.pendiente;
+
+    const div = document.createElement('div');
+    div.className = 'g-card';
+    div.style.animationDelay = `${i * 0.03}s`;
+
+    div.innerHTML = `
+      <div class="g-card-top">
+        <div class="g-cat">
+          <span class="cat-dot" style="background:${col}"></span>
+          <span style="color:${col}">${e.cat}</span>
+        </div>
+        <span class="badge-estado ${est.cls}">${est.label}</span>
+      </div>
+      <div class="g-titulo">${e.entrevistado}</div>
+      <div class="g-cargo">${e.cargo}</div>
+      <div class="g-obs">${e.obs}</div>
+      <div class="g-footer">
+        <span class="g-meta">${e.fecha} · ◷ ${e.dur}</span>
+        <span class="g-meta" style="color:var(--text3)">${e.id}</span>
+      </div>
+      <div class="meta-arch-row">
+        <span class="mk">Archivo</span><span class="mv">${e.mp3}</span>
+        <span class="mk">Imagen</span> <span class="mv">${e.jpg}</span>
+      </div>
+      ${playerHTML(e, uid)}`;
+
+    container.appendChild(div);
+    if (e.audio) bindAudio(uid);
+  });
+}
+
+/* ══════════════════════════════════════════════
+   FILTROS
+══════════════════════════════════════════════ */
+document.querySelectorAll('.filtro-chip').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filtro-chip').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    filtrosCat = btn.dataset.cat;
+    stopAll();
+    renderGrid();
+  });
+});
+
+document.querySelectorAll('.filtro-anio-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filtro-anio-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    filtrosAnio = btn.dataset.anio;
+    stopAll();
+    renderGrid();
+  });
+});
+
+function scrollToArchivo() {
+  document.getElementById('archivo').scrollIntoView({ behavior: 'smooth' });
+}
+
+/* ── INIT ── */
+renderHero();
+renderUltimas();
+renderGrid();
+</script>
+</body>
+</html>

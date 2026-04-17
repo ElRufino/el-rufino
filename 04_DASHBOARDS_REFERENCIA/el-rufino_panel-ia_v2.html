@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Rufino — Panel IA v2</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --r:#c0271b;--rd:#961e15;--n:#1a1a1a;--n2:#252525;--n3:#2e2e2e;--n4:#3a3a3a;
+  --cr:#f5f0e8;--w:#ffffff;--g:#7a7a7a;--g2:#555;
+  --v:#2d6a4f;--vb:rgba(45,106,79,.15);
+  --y:#c77800;--yb:rgba(199,120,0,.12);
+  --a:#3d4f8a;--ab:rgba(61,79,138,.15);
+  --vi:#5c4d8a;
+  --rb:rgba(192,39,27,.12);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;overflow:hidden;}
+body{font-family:'Inter',sans-serif;background:var(--n);color:var(--cr);font-size:14px;}
+
+/* LAYOUT */
+.app{display:flex;flex-direction:column;height:100vh;}
+.header{background:var(--r);padding:12px 20px;display:flex;align-items:center;gap:12px;flex-shrink:0;border-bottom:2px solid var(--rd);}
+.header-logo{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;color:#fff;letter-spacing:-.5px;}
+.header-sub{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.15em;opacity:.65;text-transform:uppercase;color:#fff;}
+.header-badge{margin-left:auto;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;font-family:'JetBrains Mono',monospace;font-size:8.5px;padding:3px 9px;border-radius:2px;letter-spacing:.06em;}
+
+/* TABS */
+.tabs{display:flex;background:var(--n2);border-bottom:1px solid var(--n4);flex-shrink:0;}
+.tab{padding:10px 20px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;cursor:pointer;color:var(--g);border-bottom:2px solid transparent;transition:all .15s;display:flex;align-items:center;gap:6px;}
+.tab:hover{color:var(--cr);background:var(--n3);}
+.tab.active{color:var(--r);border-bottom-color:var(--r);background:var(--n);}
+
+/* CONTENT */
+.content{flex:1;overflow:hidden;display:flex;}
+.pane{display:none;flex:1;overflow-y:auto;padding:0;}
+.pane.active{display:flex;flex-direction:column;}
+
+/* ═══ PANE 1: ANALIZADOR ═══ */
+.ana-wrap{padding:24px;max-width:900px;width:100%;margin:0 auto;}
+.ana-section{background:var(--n2);border:1px solid var(--n4);border-radius:6px;padding:20px;margin-bottom:16px;}
+.ana-section h3{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--g);margin-bottom:14px;}
+.filter-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;}
+.fg{display:flex;flex-direction:column;gap:5px;}
+.fg label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--g);}
+.fg select,.fg input{background:var(--n3);border:1px solid var(--n4);color:var(--cr);padding:7px 10px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:11px;}
+.upload-zone{border:2px dashed var(--r);border-radius:8px;padding:40px;text-align:center;cursor:pointer;transition:all .2s;background:var(--rb);}
+.upload-zone:hover,.upload-zone.drag{background:rgba(192,39,27,.2);border-color:#e03028;}
+.upload-zone h3{font-family:'Playfair Display',serif;font-size:18px;margin-bottom:8px;}
+.upload-zone p{opacity:.65;font-size:13px;}
+.btn{display:inline-flex;align-items:center;gap:6px;background:var(--r);color:#fff;border:none;padding:8px 16px;border-radius:4px;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.04em;transition:all .15s;}
+.btn:hover{background:var(--rd);}
+.btn.sec{background:var(--n4);color:var(--cr);}
+.btn.sec:hover{background:#444;}
+.btn.grn{background:var(--v);}
+.btn.grn:hover{background:#245c43;}
+.btn.blu{background:var(--a);}
+.btn.blu:hover{background:#334280;}
+.btn.small{padding:5px 10px;font-size:9px;}
+.progress-wrap{background:var(--n3);border-radius:6px;padding:16px;margin:12px 0;display:none;}
+.progress-wrap.show{display:block;}
+.prog-track{background:var(--n4);border-radius:3px;height:8px;overflow:hidden;margin-bottom:8px;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--r),#e03028);border-radius:3px;transition:width .3s;}
+.prog-txt{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--g);text-align:center;}
+.results-wrap{display:none;}
+.results-wrap.show{display:block;}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px;}
+.stat-c{background:var(--n3);border-left:3px solid var(--r);padding:14px;border-radius:4px;}
+.stat-v{font-family:'Playfair Display',serif;font-size:28px;font-weight:900;color:var(--r);}
+.stat-l{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--g);letter-spacing:.08em;text-transform:uppercase;margin-top:2px;}
+.file-item{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:10px 12px;background:var(--n3);border-left:3px solid #444;border-radius:4px;margin-bottom:6px;}
+.file-item.keep{border-left-color:var(--v);}
+.file-item.bkp{border-left-color:var(--y);}
+.fname{font-size:13px;font-weight:600;margin-bottom:2px;}
+.fmeta{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--g);display:flex;gap:10px;margin-top:3px;}
+.freason{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--g);text-align:right;}
+.script-box{background:var(--n);border:1px solid var(--n4);border-radius:4px;padding:14px;font-family:'JetBrains Mono',monospace;font-size:10px;color:#a0c0ff;overflow-x:auto;max-height:200px;overflow-y:auto;white-space:pre;}
+.script-actions{display:flex;gap:8px;margin-top:10px;}
+
+/* ═══ PANE 2: ASISTENTE ═══ */
+.chat-wrap{display:flex;flex-direction:column;height:100%;}
+.chat-header{padding:12px 20px;border-bottom:1px solid var(--n4);background:var(--n2);display:flex;gap:12px;align-items:center;flex-wrap:wrap;}
+.model-selector{display:flex;gap:6px;align-items:center;}
+.model-btn{background:var(--n3);border:1px solid var(--n4);color:var(--cr);font-family:'JetBrains Mono',monospace;font-size:9px;padding:5px 10px;border-radius:3px;cursor:pointer;transition:all .15s;}
+.model-btn:hover{background:var(--n4);}
+.model-btn.active{background:var(--r);border-color:var(--r);color:#fff;}
+.token-info{margin-left:auto;display:flex;gap:8px;align-items:center;font-family:'JetBrains Mono',monospace;font-size:9px;}
+.token-badge{background:var(--n3);border:1px solid var(--n4);padding:3px 8px;border-radius:2px;color:var(--g);}
+.token-badge.warn{background:var(--yb);border-color:rgba(199,120,0,.3);color:var(--y);}
+.cost-badge{background:var(--ab);border:1px solid rgba(61,79,138,.3);padding:3px 8px;border-radius:2px;color:var(--a);}
+.chat-msgs{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:14px;}
+.msg{display:flex;gap:10px;align-items:flex-start;max-width:820px;}
+.msg.user{flex-direction:row-reverse;align-self:flex-end;}
+.msg-avatar{width:32px;height:32px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.msg-avatar.bot{background:var(--r);}
+.msg-avatar.usr{background:var(--a);}
+.msg-bubble{background:var(--n2);border:1px solid var(--n4);border-radius:6px;padding:12px 14px;font-size:13.5px;line-height:1.6;}
+.msg.user .msg-bubble{background:var(--ab);border-color:rgba(61,79,138,.3);}
+.msg-bubble p{margin-bottom:8px;}
+.msg-bubble p:last-child{margin-bottom:0;}
+
+/* RESPONSE CARD */
+.resp-card{background:var(--n2);border:1px solid var(--n4);border-radius:8px;overflow:hidden;}
+.resp-header{background:var(--r);padding:10px 14px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#fff;display:flex;align-items:center;gap:8px;}
+.resp-body{padding:14px;}
+.resp-row{display:flex;gap:10px;margin-bottom:12px;align-items:flex-start;}
+.resp-icon{width:28px;height:28px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
+.resp-icon.agent{background:var(--rb);}
+.resp-icon.model{background:var(--ab);}
+.resp-icon.ctx{background:var(--yb);}
+.resp-icon.proc{background:var(--vb);}
+.resp-lbl{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--g);margin-bottom:3px;}
+.resp-val{font-size:13px;color:var(--cr);line-height:1.5;}
+.resp-val strong{color:var(--r);}
+.mb{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:8.5px;padding:2px 7px;border-radius:2px;font-weight:700;margin-right:4px;}
+.mb.opus{background:#1a1a1a;color:#fff;border:1px solid #444;}
+.mb.sonn{background:var(--r);color:#fff;}
+.mb.haik{background:var(--y);color:#fff;}
+.mb.gemi{background:var(--v);color:#fff;}
+.mb.gpt{background:var(--vi);color:#fff;}
+.mb.code{background:var(--a);color:#fff;}
+.proc-list{list-style:none;padding:0;}
+.proc-list li{display:flex;gap:8px;padding:4px 0;font-size:12.5px;color:#ccc;}
+.proc-num{width:18px;height:18px;background:var(--r);color:#fff;border-radius:2px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;flex-shrink:0;margin-top:1px;}
+.ctx-tags{display:flex;flex-wrap:wrap;gap:5px;}
+.ctx-tag{background:var(--n3);border:1px solid var(--n4);font-family:'JetBrains Mono',monospace;font-size:9px;padding:3px 8px;border-radius:2px;color:var(--cr);}
+.alts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--n4);}
+.alt-btn{background:var(--n3);border:1px solid var(--n4);border-radius:4px;padding:10px;cursor:pointer;transition:all .15s;text-align:left;}
+.alt-btn:hover{background:var(--n4);border-color:var(--r);}
+.alt-btn .alt-title{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--r);margin-bottom:3px;}
+.alt-btn .alt-desc{font-size:11px;color:var(--g);line-height:1.4;}
+.warn-box{background:var(--yb);border:1px solid rgba(199,120,0,.25);border-radius:4px;padding:8px 12px;font-size:12px;color:var(--y);margin-top:8px;display:flex;gap:8px;align-items:flex-start;}
+
+/* QUICK CHIPS */
+.chips-wrap{padding:12px 20px;border-top:1px solid var(--n4);background:var(--n2);display:flex;flex-wrap:wrap;gap:6px;}
+.chips-label{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--g);letter-spacing:.08em;text-transform:uppercase;width:100%;margin-bottom:2px;}
+.chip{background:var(--n3);border:1px solid var(--n4);color:var(--cr);font-family:'JetBrains Mono',monospace;font-size:9.5px;padding:5px 11px;border-radius:20px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.chip:hover{background:var(--rb);border-color:rgba(192,39,27,.4);color:var(--r);}
+
+/* CHAT INPUT */
+.chat-input-wrap{padding:12px 20px;border-top:1px solid var(--n4);background:var(--n2);display:flex;gap:8px;align-items:flex-end;flex-shrink:0;}
+.chat-input{flex:1;background:var(--n3);border:1px solid var(--n4);color:var(--cr);padding:10px 14px;border-radius:6px;font-family:'Inter',sans-serif;font-size:13.5px;resize:none;min-height:42px;max-height:120px;line-height:1.5;}
+.chat-input::placeholder{color:var(--g2);}
+.chat-input:focus{outline:none;border-color:var(--r);}
+.send-btn{background:var(--r);color:#fff;border:none;width:42px;height:42px;border-radius:6px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0;}
+.send-btn:hover{background:var(--rd);}
+.send-btn:disabled{background:var(--n4);cursor:not-allowed;}
+.typing{display:flex;gap:4px;align-items:center;padding:10px 14px;}
+.typing span{width:6px;height:6px;background:var(--r);border-radius:50%;animation:blink 1.2s infinite;}
+.typing span:nth-child(2){animation-delay:.2s;}
+.typing span:nth-child(3){animation-delay:.4s;}
+@keyframes blink{0%,60%,100%{opacity:.3;}30%{opacity:1;}}
+
+/* ═══ PANE 3: HITOS ═══ */
+.hitos-wrap{padding:24px;max-width:820px;width:100%;margin:0 auto;}
+.hitos-header{text-align:center;margin-bottom:32px;}
+.hitos-header h2{font-family:'Playfair Display',serif;font-size:32px;font-weight:900;color:var(--cr);}
+.hitos-header p{color:var(--g);margin-top:6px;font-size:14px;}
+.hitos-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:32px;}
+.hs{background:var(--n2);border:1px solid var(--n4);border-top:3px solid var(--r);padding:16px;text-align:center;border-radius:4px;}
+.hs-n{font-family:'Playfair Display',serif;font-size:32px;font-weight:900;color:var(--r);line-height:1;}
+.hs-l{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--g);margin-top:4px;}
+.hito-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.hito{background:var(--n2);border:1px solid var(--n4);border-radius:6px;padding:16px;display:flex;gap:12px;align-items:flex-start;transition:all .15s;}
+.hito:hover{border-color:rgba(192,39,27,.4);background:rgba(192,39,27,.04);}
+.hito-ico{font-size:22px;flex-shrink:0;margin-top:2px;}
+.hito-date{font-family:'JetBrains Mono',monospace;font-size:8.5px;color:var(--r);letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px;}
+.hito-title{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--cr);margin-bottom:4px;line-height:1.2;}
+.hito-desc{font-size:12.5px;color:var(--g);line-height:1.5;}
+.hito.big{grid-column:1/-1;background:rgba(192,39,27,.06);border-color:rgba(192,39,27,.3);}
+.hito.big .hito-title{font-size:18px;color:var(--r);}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:var(--n);}
+::-webkit-scrollbar-thumb{background:var(--n4);border-radius:3px;}
+::-webkit-scrollbar-thumb:hover{background:var(--g);}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div>
+      <div class="header-logo">EL RUFINO</div>
+      <div class="header-sub">Panel IA · v2.0.0</div>
+    </div>
+    <div class="header-badge">Fase 2 · 40%</div>
+    <div class="header-badge" style="margin-left:6px">elrufino.com.ar ✓</div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab(0)">📁 Analizador de descargas</div>
+    <div class="tab" onclick="switchTab(1)">🤖 Asistente IA</div>
+    <div class="tab" onclick="switchTab(2)">🏆 Hitos del proyecto</div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- ═══ PANE 0: ANALIZADOR ═══ -->
+    <div class="pane active" id="pane0">
+      <div class="ana-wrap">
+        <div class="ana-section">
+          <h3>⚙️ Configuración de análisis</h3>
+          <div class="filter-row">
+            <div class="fg">
+              <label>Criterio de antigüedad</label>
+              <select id="ageFilter">
+                <option value="30">Últimos 30 días</option>
+                <option value="60">Últimos 60 días</option>
+                <option value="90" selected>Últimos 90 días</option>
+                <option value="180">Últimos 6 meses</option>
+                <option value="all">Todos los archivos</option>
+              </select>
+            </div>
+            <div class="fg">
+              <label>Filtro por nombre</label>
+              <select id="nameFilter">
+                <option value="all">Todos los archivos</option>
+                <option value="el-rufino">Solo "el-rufino"</option>
+                <option value="plugin">Solo "plugin"</option>
+                <option value="theme">Solo "theme" / "tema"</option>
+                <option value="docs">Solo documentos (.md, .pdf, .docx)</option>
+              </select>
+            </div>
+            <div class="fg">
+              <label>Usar IA para clasificar</label>
+              <select id="useAI">
+                <option value="no">No (reglas locales)</option>
+                <option value="yes">Sí (Claude Haiku)</option>
+              </select>
+            </div>
+            <div class="fg" style="justify-content:flex-end;padding-top:18px;">
+              <button class="btn sec" onclick="applyFilters()">Aplicar filtros</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
+          <div style="font-size:32px;margin-bottom:8px;">📁</div>
+          <h3>Seleccionar carpeta Descargas</h3>
+          <p style="margin-top:6px;">Arrastrá archivos o hacé clic para seleccionar</p>
+          <p style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--g);margin-top:6px;">F:\Descargas · C:\Users\...\Downloads</p>
+          <input type="file" id="fileInput" webkitdirectory directory multiple style="display:none">
+          <button class="btn" onclick="event.stopPropagation();document.getElementById('fileInput').click()" style="margin-top:14px;">Examinar carpeta</button>
+        </div>
+
+        <div class="progress-wrap" id="progressWrap">
+          <div class="prog-track"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+          <div class="prog-txt" id="progTxt">Iniciando...</div>
+        </div>
+
+        <div class="results-wrap" id="resultsWrap">
+          <div class="stats-row" id="statsRow"></div>
+
+          <div class="ana-section">
+            <h3>✅ Archivos a MANTENER</h3>
+            <div id="keepList"></div>
+          </div>
+          <div class="ana-section">
+            <h3>📦 Archivos a mover a BACKUP</h3>
+            <div id="backupList"></div>
+          </div>
+          <div class="ana-section">
+            <h3>⚡ PowerShell Script generado</h3>
+            <div class="script-box" id="scriptBox"></div>
+            <div class="script-actions">
+              <button class="btn grn" onclick="copyScript()">📋 Copiar script</button>
+              <button class="btn blu" onclick="downloadScript()">💾 Descargar .ps1</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ PANE 1: ASISTENTE IA ═══ -->
+    <div class="pane" id="pane1">
+      <div class="chat-wrap">
+        <!-- MODEL SELECTOR -->
+        <div class="chat-header">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--g);letter-spacing:.08em;text-transform:uppercase;">Modelo:</div>
+          <div class="model-selector">
+            <button class="model-btn" onclick="selectModel('auto')">Auto</button>
+            <button class="model-btn" onclick="selectModel('opus')">Opus 4.6</button>
+            <button class="model-btn active" onclick="selectModel('sonnet')">Sonnet 4.6</button>
+            <button class="model-btn" onclick="selectModel('haiku')">Haiku 4.5</button>
+          </div>
+          <div class="token-info">
+            <div class="token-badge" id="tokenBadge">0 tokens</div>
+            <div class="cost-badge" id="costBadge">$0.00</div>
+          </div>
+          <button class="btn small sec" onclick="clearChat()" style="margin-left:auto;">🗑️ Limpiar chat</button>
+        </div>
+
+        <div class="chat-msgs" id="chatMsgs">
+          <!-- Welcome message -->
+          <div class="msg">
+            <div class="msg-avatar bot">🤖</div>
+            <div class="msg-bubble">
+              <p><strong style="color:var(--r)">Asistente IA de El Rufino v2</strong></p>
+              <p>Contame qué querés hacer. Te recomiendo el agente, modelo, contexto y procedimiento óptimo.</p>
+              <p style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--g)"><strong>Mejoras v2:</strong> Historial de conversación · Selector de modelo · Contador de tokens · Persistencia de sesión · Prompt optimizado (-60% tokens)</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- QUICK CHIPS -->
+        <div class="chips-wrap">
+          <div class="chips-label">Accesos rápidos</div>
+          <div class="chip" onclick="sendChipStructured('Hacer una landing page para El Rufino','P01',3)">🌐 Landing</div>
+          <div class="chip" onclick="sendChipStructured('Escribir nota con regla 2 capas','P01',5)">✍️ Nota</div>
+          <div class="chip" onclick="sendChipStructured('Guion TikTok/Reel','P04',6)">🎬 Video</div>
+          <div class="chip" onclick="sendChipStructured('Código WordPress','',8)">🔧 Código</div>
+          <div class="chip" onclick="sendChipStructured('Resumen WhatsApp','',12)">💬 WA</div>
+          <div class="chip" onclick="sendChipStructured('SEO + Schema','',1)">🔍 SEO</div>
+          <div class="chip" onclick="sendChipStructured('Seguir promesa','P05',7)">📋 Promesa</div>
+          <div class="chip" onclick="sendChipStructured('Script GitHub','',8)">⚙️ Script</div>
+          <div class="chip" onclick="sendChipStructured('Datos INDEC/municipal','P06',10)">📊 Datos</div>
+          <div class="chip" onclick="sendChipStructured('Generar imagen','',11)">🎨 Imagen</div>
+          <div class="chip" onclick="sendChipStructured('Calendario editorial','',4)">📅 Calendario</div>
+          <div class="chip" onclick="sendChipStructured('Estrategia editorial','',0)">🎯 Estrategia</div>
+          <div class="chip" onclick="sendChipStructured('Organizar repositorio local estructura V5.1','',8)">📂 Repo</div>
+          <div class="chip" onclick="sendChipStructured('Script PowerShell automatización','',8)">🖥️ PS1</div>
+        </div>
+
+        <!-- INPUT -->
+        <div class="chat-input-wrap">
+          <textarea class="chat-input" id="chatInput" placeholder="¿En qué querés trabajar hoy?" rows="1"
+            onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMessage();}"></textarea>
+          <button class="send-btn" id="sendBtn" onclick="sendMessage()">➤</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ PANE 2: HITOS ═══ -->
+    <div class="pane" id="pane2">
+      <div class="hitos-wrap">
+        <div class="hitos-header">
+          <h2>Hitos del Proyecto</h2>
+          <p>"Lo que hicimos — de la idea al medio en funcionamiento"</p>
+        </div>
+
+        <div class="hitos-stats">
+          <div class="hs"><div class="hs-n">8</div><div class="hs-l">Versiones del plugin</div></div>
+          <div class="hs"><div class="hs-n">20</div><div class="hs-l">Notas publicadas</div></div>
+          <div class="hs"><div class="hs-n">12</div><div class="hs-l">Agentes IA activos</div></div>
+          <div class="hs"><div class="hs-n">5</div><div class="hs-l">Scripts PS1 repo</div></div>
+        </div>
+
+        <div class="hito-grid">
+
+          <div class="hito big">
+            <div class="hito-ico">🚀</div>
+            <div>
+              <div class="hito-date">Fines 2025 — El comienzo</div>
+              <div class="hito-title">De la idea a la hipótesis editorial</div>
+              <div class="hito-desc">Rufino sin medio propio con identidad. El diagnóstico fue claro: todos cubren el hecho, nadie construye contexto. Nació el claim <em>"Lo que pasa y lo que significa"</em> y la regla madre: dos capas, siempre.</div>
+            </div>
+          </div>
+
+          <div class="hito">
+            <div class="hito-ico">🎨</div>
+            <div>
+              <div class="hito-date">Enero–Febrero 2026</div>
+              <div class="hito-title">Identidad cerrada — Fase 1 ✓</div>
+              <div class="hito-desc">Paleta B (#c0271b, #1a1a1a, #ffffff, #f5f0e8), Playfair Display, marco simbólico Variante B. Los 6 pilares P01–P06. Análisis de 6 competidores locales. Esta fase está sellada.</div>
+            </div>
+          </div>
+
+          <div class="hito">
+            <div class="hito-ico">🌐</div>
+            <div>
+              <div class="hito-date">Marzo 2026</div>
+              <div class="hito-title">elrufino.com.ar activo en Hostinger</div>
+              <div class="hito-desc">Registro NIC EX-2026-36480557. DNS delegado. WordPress instalado. El proyecto dejó de ser un test para ser producción real. El dominio de marca definitivo está vivo.</div>
+            </div>
+          </div>
+
+          <div class="hito">
+            <div class="hito-ico">🔌</div>
+            <div>
+              <div class="hito-date">Feb–Mar 2026</div>
+              <div class="hito-title">Plugin v1 → v5: del test a la realidad</div>
+              <div class="hito-desc">De la simulación de GitHub API (v1–v2) a la conexión real (v3). Base de datos wp_er_promesas. AJAX handlers. Las primeras versiones fueron el campo de pruebas donde se aprendió todo lo importante.</div>
+            </div>
+          </div>
+
+          <div class="hito">
+            <div class="hito-ico">🛡️</div>
+            <div>
+              <div class="hito-date">Mar 2026 — Lección aprendida</div>
+              <div class="hito-title">Token expuesto — revocado en minutos</div>
+              <div class="hito-desc">Un token de GitHub quedó expuesto en el chat. Se revocó y regeneró antes de que ocurriera daño. Resultado: protocolo de seguridad documentado. Los errores también son hitos.</div>
+            </div>
+          </div>
+
+          <div class="hito">
+            <div class="hito-ico">🗄️</div>
+            <div>
+              <div class="hito-date">Marzo 2026</div>
+              <div class="hito-title">GitHub org ElRufino creada</div>
+              <div class="hito-desc">Repositorio el-rufino-contexto con 6 carpetas estructuradas. 00_CONTEXTO_IA como fuente única de verdad. API con fine-grained tokens. El proyecto tiene memoria persistente entre sesiones.</div>
+            </div>
+          </div>
+
+          <div class="hito big">
+            <div class="hito-ico">⚡</div>
+            <div>
+              <div class="hito-date">Marzo–Abril 2026</div>
+              <div class="hito-title">Plugin v7.0.5 → v8.1.2: el salto arquitectónico</div>
+              <div class="hito-desc">De 14 módulos a 4 pantallas (BASE / Producción / Inteligencia / Seguimiento). 12 agentes. Kanban editorial. Importador de demo content. Y el hito más importante: <strong style="color:var(--r)">Claude API integrada directamente en el panel</strong>. El plugin ya piensa.</div>
+            </div>
+          </div>
+
+          <div class="hito">
+            <div class="hito-ico">📰</div>
+            <div>
+              <div class="hito-date">Abril 2026</div>
+              <div class="hito-title">20 notas publicadas</div>
+              <div class="hito-desc">Las primeras 20 notas con la regla de dos capas aplicada. El medio tiene contenido real. No es un mockup ni una promesa — hay texto, hay periodismo, hay El Rufino.</div>
+            </div>
+          </div>
+
+          <div class="hito">
+            <div class="hito-ico">🖼️</div>
+            <div>
+              <div class="hito-date">Abril 2026</div>
+              <div class="hito-title">Logo, favicon y OG image subidos</div>
+              <div class="hito-desc">La identidad visual aterrizó en producción. El medio se ve como un medio. Logo, favicon y Open Graph image completan la presencia visual en el navegador y en redes sociales.</div>
+            </div>
+          </div>
+
+          <div class="hito">
+            <div class="hito-ico">📋</div>
+            <div>
+              <div class="hito-date">A lo largo del proyecto</div>
+              <div class="hito-title">12 agentes IA documentados y activos</div>
+              <div class="hito-desc">SEO, Arquitectura, Tema Visual, Planificador, Redactor, TikTok/Reel, Accountability, Stack, Servidor, Agenda de Datos, Imágenes y Redes. Cada uno con su prompt, su contexto y su entrega esperada.</div>
+            </div>
+          </div>
+
+          <div class="hito">
+            <div class="hito-ico">📄</div>
+            <div>
+              <div class="hito-date">A lo largo del proyecto</div>
+              <div class="hito-title">4 versiones del Informe de Memoria</div>
+              <div class="hito-desc">De la v1 al v4.0 actual. Cada versión documentó el estado real, las decisiones tomadas y el conocimiento acumulado. Este panel fue sugerido en la v4. Así funciona el ciclo.</div>
+            </div>
+          </div>
+
+          <div class="hito big" style="border-color:rgba(45,106,79,.4);background:rgba(45,106,79,.05);">
+            <div class="hito-ico">🎯</div>
+            <div>
+              <div class="hito-date">Próximo hito</div>
+              <div class="hito-title" style="color:var(--v)">Lanzamiento real — Fase 2 completa</div>
+              <div class="hito-desc">6 categorías P01–P06 · Child theme configurado · Schema SEO · Canal WhatsApp broadcast · elrufino.ar registrado · Primera promesa pública registrada. Cuando todo eso esté listo, el medio sale al mundo con identidad, infraestructura y audiencia.</div>
+            </div>
+          </div>
+
+          <div class="hito big" style="border-color:rgba(61,79,138,.4);background:rgba(61,79,138,.05);">
+            <div class="hito-ico">✨</div>
+            <div>
+              <div class="hito-date">Abril 2026 — Nuevo</div>
+              <div class="hito-title" style="color:var(--a)">Panel IA v2: arquitectura optimizada</div>
+              <div class="hito-desc">Historial de conversación rolling (8 mensajes) · Selector de modelo · Token counter · Persistencia con sessionStorage · Prompt comprimido (-60% tokens) · Auto-selección de modelo · Clasificación IA en analizador de descargas. El panel ahora usa recursos de forma inteligente.</div>
+            </div>
+          </div>
+
+          <div class="hito big" style="border-color:rgba(92,77,138,.4);background:rgba(92,77,138,.05);">
+            <div class="hito-ico">🗄️</div>
+            <div>
+              <div class="hito-date">15 abril 2026 — Nuevo</div>
+              <div class="hito-title" style="color:var(--vi)">Repositorio local: arquitectura V5.1</div>
+              <div class="hito-desc">Análisis piloto de EL RUFINO en disco local: 340+ archivos clasificados en 5 scripts PS1 (inventario → plan → ajuste fino → vista previa → ejecución). Estructura V5.1 definida: núcleo operativo / contenido / identidad / desarrollo / histórico / binarios. GitHub org con 26 commits tomado como referencia estructural. Descubrimiento clave: el problema no era desorden sino <em>evolución sin consolidación</em>.</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /app -->
+
+<script>
+// ═══════════════════════════════════════
+// TABS
+// ═══════════════════════════════════════
+const tabs=document.querySelectorAll('.tab');
+const panes=document.querySelectorAll('.pane');
+function switchTab(i){
+  tabs.forEach((t,j)=>{t.classList.toggle('active',i===j);});
+  panes.forEach((p,j)=>{p.classList.toggle('active',i===j);});
+}
+
+// ═══════════════════════════════════════
+// ANALIZADOR DE DESCARGAS
+// ═══════════════════════════════════════
+const uploadZone=document.getElementById('uploadZone');
+const fileInput=document.getElementById('fileInput');
+let allFiles=[],currentScript='';
+let filters={days:90,namePattern:'all',useAI:false};
+
+uploadZone.addEventListener('dragover',e=>{e.preventDefault();uploadZone.classList.add('drag');});
+uploadZone.addEventListener('dragleave',()=>uploadZone.classList.remove('drag'));
+uploadZone.addEventListener('drop',e=>{e.preventDefault();uploadZone.classList.remove('drag');handleFiles(e.dataTransfer.files);});
+fileInput.addEventListener('change',e=>handleFiles(e.target.files));
+
+function applyFilters(){
+  const av=document.getElementById('ageFilter').value;
+  const nv=document.getElementById('nameFilter').value;
+  const ai=document.getElementById('useAI').value;
+  filters.days=av==='all'?null:parseInt(av);
+  filters.namePattern=nv;
+  filters.useAI=ai==='yes';
+  if(allFiles.length>0) analyzeFiles(allFiles);
+}
+
+async function handleFiles(files){
+  document.getElementById('progressWrap').classList.add('show');
+  document.getElementById('resultsWrap').classList.remove('show');
+  allFiles=[];
+  const total=files.length;
+  for(let i=0;i<files.length;i++){
+    const f=files[i];
+    setProgress(Math.floor(i/total*60),`Leyendo ${i+1}/${total}: ${f.name}`);
+    await tick(2);
+    allFiles.push({name:f.name,path:f.webkitRelativePath||f.name,size:f.size,date:new Date(f.lastModified)});
+  }
+  setProgress(65,'Analizando archivos...');
+  await tick(200);
+  analyzeFiles(allFiles);
+}
+
+async function analyzeFiles(files){
+  const keep=[],backup=[];
+  
+  if(filters.useAI){
+    // Clasificación con IA - batch de 10 archivos
+    setProgress(65,'Usando IA para clasificar (Haiku)...');
+    const batches=[];
+    for(let i=0;i<files.length;i+=10){
+      batches.push(files.slice(i,i+10));
+    }
+    for(let b=0;b<batches.length;b++){
+      setProgress(65+Math.floor(b/batches.length*30),`IA clasificando lote ${b+1}/${batches.length}...`);
+      const results=await classifyWithAI(batches[b]);
+      results.forEach((r,i)=>{
+        const f=batches[b][i];
+        (r.action==='keep'?keep:backup).push({...f,reason:r.reason});
+      });
+    }
+  }else{
+    // Clasificación local
+    for(let i=0;i<files.length;i++){
+      const f=files[i];
+      setProgress(65+Math.floor(i/files.length*30),`Clasificando ${i+1}/${files.length}...`);
+      await tick(2);
+      const r=classifyFile(f);
+      (r.action==='keep'?keep:backup).push({...f,reason:r.reason});
+    }
+  }
+  
+  setProgress(98,'Generando reporte...');
+  await tick(300);
+  renderResults(keep,backup);
+  setProgress(100,'✅ Análisis completado');
+  await tick(600);
+  document.getElementById('progressWrap').classList.remove('show');
+  document.getElementById('resultsWrap').classList.add('show');
+}
+
+async function classifyWithAI(batch){
+  const fileList=batch.map(f=>{
+    const age=Math.floor((new Date()-f.date)/(1000*60*60*24));
+    return `${f.name} (${fmtSize(f.size)}, ${age} días)`;
+  }).join('\n');
+  
+  const prompt=`Clasificá estos archivos de la carpeta Descargas en keep/backup.
+Criterios: mantener proyecto El Rufino reciente (<30d), plugins/themes (<60d), .md (<30d). Backup: temporales, duplicados, antiguos (>90d).
+Respondé SOLO JSON array: [{"action":"keep/backup","reason":"..."}]
+
+Archivos:
+${fileList}`;
+
+  try{
+    const resp=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-haiku-4-20250514',
+        max_tokens:500,
+        messages:[{role:'user',content:prompt}]
+      })
+    });
+    const data=await resp.json();
+    const text=data.content[0].text.replace(/```json|```/g,'').trim();
+    return JSON.parse(text);
+  }catch(e){
+    console.error('Error IA:',e);
+    return batch.map(f=>classifyFile(f));
+  }
+}
+
+function classifyFile(file){
+  const n=file.name.toLowerCase();
+  const today=new Date();
+  const age=Math.floor((today-file.date)/(1000*60*60*24));
+  if(filters.namePattern!=='all'){
+    let ok=false;
+    if(filters.namePattern==='el-rufino'&&n.includes('el-rufino'))ok=true;
+    if(filters.namePattern==='plugin'&&n.includes('plugin'))ok=true;
+    if(filters.namePattern==='theme'&&(n.includes('theme')||n.includes('tema')))ok=true;
+    if(filters.namePattern==='docs'&&(n.endsWith('.md')||n.endsWith('.pdf')||n.endsWith('.docx')))ok=true;
+    if(!ok)return{action:'backup',reason:'No coincide con filtro de nombre'};
+  }
+  if(filters.days!==null&&age>filters.days)return{action:'backup',reason:`Antigüedad: ${age} días (límite: ${filters.days})`};
+  if(n.includes('el-rufino')||n.includes('elrufino'))return age<=30?{action:'keep',reason:'Archivo del proyecto (reciente)'}:{action:'backup',reason:`Archivo del proyecto antiguo (${age} días)`};
+  if((n.includes('plugin')||n.includes('theme')||n.includes('tema'))&&age<=60)return{action:'keep',reason:'Plugin/tema reciente'};
+  if(n.endsWith('.md')&&age<=30)return{action:'keep',reason:'Documento markdown reciente'};
+  if(n.endsWith('.zip')&&age<=30&&n.includes('rufino'))return{action:'keep',reason:'Backup del proyecto reciente'};
+  if(n.includes('tmp')||n.includes('temp')||n.startsWith('~'))return{action:'backup',reason:'Archivo temporal'};
+  if(n.includes('(1)')||n.includes('(2)')||n.includes('copia'))return{action:'backup',reason:'Duplicado detectado'};
+  if(age>90)return{action:'backup',reason:`Antigüedad excesiva (${age} días)`};
+  return age<=30?{action:'keep',reason:'Archivo reciente'}:{action:'backup',reason:`Archivo antiguo (${age} días)`};
+}
+
+function renderResults(keep,backup){
+  const total=keep.length+backup.length;
+  const sizeB=backup.reduce((s,f)=>s+f.size,0);
+  const pct=total>0?((backup.length/total)*100).toFixed(0):0;
+  document.getElementById('statsRow').innerHTML=`
+    <div class="stat-c"><div class="stat-v">${keep.length}</div><div class="stat-l">Mantener</div></div>
+    <div class="stat-c"><div class="stat-v">${backup.length}</div><div class="stat-l">A backup</div></div>
+    <div class="stat-c"><div class="stat-v">${pct}%</div><div class="stat-l">Reducción</div></div>
+    <div class="stat-c"><div class="stat-v">${fmtSize(sizeB)}</div><div class="stat-l">Espacio liberado</div></div>`;
+  document.getElementById('keepList').innerHTML=keep.length?keep.map(f=>`
+    <div class="file-item keep">
+      <div><div class="fname">✅ ${f.name}</div><div class="fmeta"><span>📅 ${fmtDate(f.date)}</span><span>📦 ${fmtSize(f.size)}</span></div></div>
+      <div class="freason">${f.reason}</div>
+    </div>`).join(''):'<p style="color:var(--g);font-size:13px">No hay archivos para mantener</p>';
+  document.getElementById('backupList').innerHTML=backup.length?backup.map(f=>`
+    <div class="file-item bkp">
+      <div><div class="fname">📦 ${f.name}</div><div class="fmeta"><span>📅 ${fmtDate(f.date)}</span><span>📦 ${fmtSize(f.size)}</span></div></div>
+      <div class="freason">${f.reason}</div>
+    </div>`).join(''):'<p style="color:var(--g);font-size:13px">No hay archivos para backup</p>';
+  buildScript(backup);
+}
+
+function escapePSPath(name){
+  return name.replace(/`/g,'``').replace(/"/g,'`"').replace(/\$/g,'`$').replace(/@/g,'`@');
+}
+function buildScript(bkp){
+  const dl='$env:USERPROFILE\\Downloads';
+  let s=`# Script de limpieza — F:\\Descargas / Downloads\n# Proyecto El Rufino — Generado: ${new Date().toLocaleString('es-AR')}\n# Filtro: ${filters.days?filters.days+' dias':'Todos'} | Patron: ${filters.namePattern} | IA: ${filters.useAI?'Sí':'No'}\n# NOTA: caracteres especiales (@, $) escapados para compatibilidad PowerShell\n\n$backupPath = "$env:USERPROFILE\\Downloads\\_BACKUP_$(Get-Date -Format 'yyyyMMdd_HHmmss')"\nNew-Item -ItemType Directory -Path $backupPath -Force | Out-Null\nWrite-Host "Carpeta backup creada: $backupPath" -ForegroundColor Green\n`;
+  if(bkp.length>0){
+    bkp.forEach(f=>{
+      const safe=escapePSPath(f.name);
+      const safeReason=f.reason.replace(/"/g,"'");
+      s+=`\n# ${safeReason}\nMove-Item -Path "$env:USERPROFILE\\Downloads\\${safe}" -Destination "$backupPath\\${safe}" -Force -ErrorAction SilentlyContinue\nWrite-Host "Movido: ${safe}" -ForegroundColor Yellow\n`;
+    });
+  }else{s+='\nWrite-Host "No hay archivos para mover" -ForegroundColor Green\n';}
+  s+=`\nWrite-Host ""\nWrite-Host "Archivos movidos: ${bkp.length}" -ForegroundColor Cyan\nWrite-Host "Backup en: $backupPath" -ForegroundColor Cyan`;
+  currentScript=s;
+  document.getElementById('scriptBox').textContent=s;
+}
+
+function copyScript(){navigator.clipboard.writeText(currentScript).then(()=>alert('Script copiado al portapapeles'));}
+function downloadScript(){
+  const blob=new Blob([currentScript],{type:'text/plain;charset=utf-8'});
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');
+  a.href=url;a.download=`limpieza-descargas_${new Date().toISOString().replace(/[:.]/g,'-').slice(0,-5)}.ps1`;
+  document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
+}
+
+function setProgress(pct,txt){
+  document.getElementById('progFill').style.width=pct+'%';
+  document.getElementById('progTxt').textContent=txt;
+}
+function fmtSize(b){if(b<1024)return b+' B';if(b<1048576)return(b/1024).toFixed(1)+' KB';return(b/1048576).toFixed(1)+' MB';}
+function fmtDate(d){return d.toLocaleDateString('es-AR',{year:'numeric',month:'2-digit',day:'2-digit'});}
+function tick(ms){return new Promise(r=>setTimeout(r,ms));}
+
+// ═══════════════════════════════════════
+// ASISTENTE IA — Claude API v2
+// ═══════════════════════════════════════
+
+// PROMPT COMPRIMIDO (de ~2500 tokens a ~1000 tokens)
+const SYSTEM_PROMPT=`Asistente interno El Rufino (medio digital Rufino, Santa Fe, 19k hab). Recomendás agente IA, modelo, contexto y pasos.
+
+PROYECTO: Plugin v8.1.2 · elrufino.com.ar (Hostinger) · tester: prueba.infoconectados.com · GitHub org ElRufino (26 commits, rama main) · Fase 2 40% · 20 notas publicadas · 15 abril 2026
+
+REPOSITORIO LOCAL (estructura V5.1 — 15/04/2026):
+F:\HERRAMIENTAS DE IA\PROYECTOS\EL RUFINO\
+├── 00_CONTEXTO_IA (contexto, prompts vigentes)
+├── 01_NUCLEO_OPERATIVO\WEB_APP (dashboards HTML operativos)
+├── 01_NUCLEO_OPERATIVO\WORDPRESS (PHP, CSS, JSX activos)
+├── 01_NUCLEO_OPERATIVO\PANEL_IA (panel.jsx, repositorio-ia)
+├── 02_CONTENIDO\DOCUMENTOS (informes, memoria, plan)
+├── 02_CONTENIDO\DOSSIER (dossier institucional)
+├── 03_IDENTIDAD (logos, favicon, OG image, mockups)
+├── 04_DESARROLLO\DASHBOARDS + TESTING
+├── 05_HISTORICO\VERSIONES + OBSOLETO (41+13 archivos)
+├── 06_BINARIOS\DESPLIEGUE (ZIPs activos child-theme) + MEDIA
+├── 99_RAW (pendiente clasificar)
+REPORTES: F:\HERRAMIENTAS DE IA\01-panel inteligente\reportes\
+SCRIPTS PS1: F:\HERRAMIENTAS DE IA\PROYECTOS\EL RUFINO\06_BINARIOS o 04_DESARROLLO\TESTING
+
+AGENTES (12):
+1.SEO: Rank Math, Schema, keywords P01-06
+2.Arquitectura: Categorías, slugs, entradas base 2 capas
+3.Tema: PHP/CSS child Newsup paleta B
+4.Planificador: Calendario 7 días
+5.Redactor: Notas 600-1000p, 2 capas (hecho+contexto)
+6.TikTok: Guiones 60-90s hook+CTA
+7.Accountability: Promesas+nota+hilo+WA
+8.Stack: WP plugins código
+9.Servidor: Hosting velocidad
+10.Agenda Datos: P06 INDEC municipal
+11.Imágenes: Prompts Gemini/Midjourney
+12.Redes: WA broadcast FB IG
+
+MODELOS:
+Opus 4.6: estrategia identidad decisiones largo plazo
+Sonnet 4.6: código CSS redacción docs scripts (óptimo costo/calidad)
+Haiku 4.5: variantes titulares ajustes (velocidad mínimo costo)
+Gemini Imagen 3: generación imágenes
+GPT-4o: tablas numéricas INDEC presupuesto análisis archivos CSV
+Claude Code: scripts PS1 complejos depuración automatización
+
+PILAR→AGENTE:
+P01 Rufino real→5 | P02 Campo→5+7 | P03 Barrio→5+7 | P04 Gen Rufino→6 | P05 Poder→7 | P06 Datos→10
+
+CONTEXTO archivos 00_CONTEXTO_IA:
+Siempre: el-rufino_prompt-maestro_v1.2-VIGENTE.md
+Código: el-rufino_repositorio-ia_v1.2-VIGENTE.md §2
+Editorial: repositorio §5,6
+Agentes: el-rufino_agentes-ia_v1.md
+Estrategia: repositorio §3,4,7
+Repo local: estructura V5.1 (15/04/2026) — ver REPOSITORIO LOCAL arriba
+
+REGLA: 2 capas = hecho verificado + contexto/significado
+FUENTES: GitHub (estructura+código) · disco local (trabajo+histórico) · Drive (backups+media pesada)
+
+Respondé JSON exacto (sin markdown):
+{"tarea":"","pilar":"P0X o null","agente":{"numero":X,"nombre":"","descripcion":""},"agente_alt":{} o null,"modelo":{"nombre":"","badge":"sonn/opus/haik","razon":""},"modelo_alt":{} o null,"contexto":["archivo.md"],"procedimiento":["paso 1","paso 2"],"alternativas":[{"titulo":"","desc":"","accion":""}],"advertencia":"texto o null"}`;
+
+// CONFIG
+const MODELS={
+  auto:{id:'claude-sonnet-4-20250514',name:'Claude Sonnet 4.6',inputCost:3,outputCost:15},
+  opus:{id:'claude-opus-4-20250514',name:'Claude Opus 4.6',inputCost:15,outputCost:75},
+  sonnet:{id:'claude-sonnet-4-20250514',name:'Claude Sonnet 4.6',inputCost:3,outputCost:15},
+  haiku:{id:'claude-haiku-4-20250514',name:'Claude Haiku 4.5',inputCost:0.25,outputCost:1.25}
+};
+
+let currentModel='sonnet';
+let conversationHistory=[];
+let totalTokensUsed=0;
+let totalCost=0;
+
+// PERSISTENCIA
+function saveSession(){
+  sessionStorage.setItem('elrufino_chat_history',JSON.stringify(conversationHistory));
+  sessionStorage.setItem('elrufino_chat_tokens',totalTokensUsed);
+  sessionStorage.setItem('elrufino_chat_cost',totalCost);
+}
+
+function loadSession(){
+  const hist=sessionStorage.getItem('elrufino_chat_history');
+  const tok=sessionStorage.getItem('elrufino_chat_tokens');
+  const cost=sessionStorage.getItem('elrufino_chat_cost');
+  if(hist){
+    conversationHistory=JSON.parse(hist);
+    totalTokensUsed=parseInt(tok)||0;
+    totalCost=parseFloat(cost)||0;
+    updateTokenDisplay();
+    // Restaurar mensajes en UI
+    conversationHistory.forEach(msg=>{
+      if(msg.role==='user'){
+        appendUserMsg(msg.content,false);
+      }else{
+        try{
+          const parsed=JSON.parse(msg.content);
+          renderResponse(parsed,false);
+        }catch(e){
+          appendBotMsg(`<p>${escapeHtml(msg.content)}</p>`,false);
+        }
+      }
+    });
+  }
+}
+
+function clearChat(){
+  if(!confirm('¿Limpiar todo el historial de conversación?'))return;
+  conversationHistory=[];
+  totalTokensUsed=0;
+  totalCost=0;
+  sessionStorage.removeItem('elrufino_chat_history');
+  sessionStorage.removeItem('elrufino_chat_tokens');
+  sessionStorage.removeItem('elrufino_chat_cost');
+  document.getElementById('chatMsgs').innerHTML=`
+    <div class="msg">
+      <div class="msg-avatar bot">🤖</div>
+      <div class="msg-bubble">
+        <p><strong style="color:var(--r)">Asistente IA de El Rufino v2</strong></p>
+        <p>Contame qué querés hacer. Te recomiendo el agente, modelo, contexto y procedimiento óptimo.</p>
+        <p style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--g)"><strong>Mejoras v2:</strong> Historial de conversación · Selector de modelo · Contador de tokens · Persistencia de sesión · Prompt optimizado (-60% tokens)</p>
+      </div>
+    </div>`;
+  updateTokenDisplay();
+}
+
+// SELECTOR DE MODELO
+function selectModel(model){
+  currentModel=model;
+  document.querySelectorAll('.model-btn').forEach(btn=>btn.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+// AUTO-SELECCIÓN DE MODELO
+function autoSelectModel(userMsg){
+  const lc=userMsg.toLowerCase();
+  if(lc.includes('estrategia')||lc.includes('identidad')||lc.includes('decisión')||lc.includes('largo plazo'))return 'opus';
+  if(lc.includes('titular')||lc.includes('variante')||lc.includes('ajuste')||lc.includes('rápido'))return 'haiku';
+  return 'sonnet';
+}
+
+// ESTIMACIÓN DE TOKENS (aproximada)
+function estimateTokens(text){
+  return Math.ceil(text.length/4);
+}
+
+function updateTokenDisplay(){
+  document.getElementById('tokenBadge').textContent=`${totalTokensUsed.toLocaleString()} tokens`;
+  document.getElementById('costBadge').textContent=`$${totalCost.toFixed(4)}`;
+  if(totalTokensUsed>50000){
+    document.getElementById('tokenBadge').classList.add('warn');
+  }
+}
+
+// ENVÍO DE MENSAJE
+async function sendMessage(){
+  const input=document.getElementById('chatInput');
+  const text=input.value.trim();
+  if(!text)return;
+  input.value='';
+  
+  appendUserMsg(text);
+  conversationHistory.push({role:'user',content:text});
+  
+  // Rolling window: mantener últimos 8 mensajes
+  if(conversationHistory.length>16){
+    conversationHistory=conversationHistory.slice(-16);
+  }
+  
+  const typingId=appendTyping();
+  document.getElementById('sendBtn').disabled=true;
+  
+  try{
+    const resp=await callClaude(text);
+    removeTyping(typingId);
+    renderResponse(resp);
+    conversationHistory.push({role:'assistant',content:JSON.stringify(resp)});
+    saveSession();
+  }catch(e){
+    removeTyping(typingId);
+    appendBotMsg(`<p style="color:var(--y)">⚠️ No pude conectarme. Intentá de nuevo.</p><p style="font-size:11px;color:var(--g)">${e.message}</p>`);
+  }
+  
+  document.getElementById('sendBtn').disabled=false;
+  scrollChat();
+}
+
+function sendChipStructured(text,pilar,agente){
+  const meta=pilar?` [Pilar:${pilar}, Agente:${agente}]`:'';
+  document.getElementById('chatInput').value=text+meta;
+  sendMessage();
+}
+
+async function callClaude(userMsg){
+  const modelKey=currentModel==='auto'?autoSelectModel(userMsg):currentModel;
+  const model=MODELS[modelKey];
+  
+  // Construcción del historial para la API
+  const messages=conversationHistory.slice(-16).map(m=>({
+    role:m.role,
+    content:typeof m.content==='string'?m.content:JSON.stringify(m.content)
+  }));
+  
+  const resp=await fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      model:model.id,
+      max_tokens:2500,
+      system:SYSTEM_PROMPT,
+      messages:messages
+    })
+  });
+  
+  const data=await resp.json();
+  
+  // Actualizar contadores
+  const inputTokens=estimateTokens(SYSTEM_PROMPT)+messages.reduce((s,m)=>s+estimateTokens(m.content),0);
+  const outputTokens=estimateTokens(data.content[0].text);
+  totalTokensUsed+=inputTokens+outputTokens;
+  totalCost+=(inputTokens/1000000*model.inputCost)+(outputTokens/1000000*model.outputCost);
+  updateTokenDisplay();
+  
+  if(!data.content||!data.content[0])throw new Error('Respuesta vacía de la API');
+  const raw=data.content[0].text;
+  
+  try{
+    const clean=raw.replace(/```json|```/g,'').trim();
+    return JSON.parse(clean);
+  }catch(e){
+    return {tarea:'Consulta general',agente:{numero:0,nombre:'Manual',descripcion:'Respuesta no estructurada'},modelo:{nombre:model.name,badge:modelKey,razon:''},contexto:['el-rufino_prompt-maestro_v1.2-VIGENTE.md'],procedimiento:[raw],alternativas:[],advertencia:null};
+  }
+}
+
+function renderResponse(d,save=true){
+  const altBtns=(d.alternativas||[]).map(a=>`
+    <div class="alt-btn" onclick="sendMessage('${a.accion.replace(/'/g,"\\'")}')">
+      <div class="alt-title">${a.titulo}</div>
+      <div class="alt-desc">${a.desc}</div>
+    </div>`).join('');
+
+  const warn=d.advertencia?`<div class="warn-box">⚠️ <span>${d.advertencia}</span></div>`:'';
+  const alt2=d.agente_alt?`<span style="color:var(--g);margin-left:6px;font-size:11px">alt: Agente ${d.agente_alt.numero} ${d.agente_alt.nombre}</span>`:'';
+  const mAlt=d.modelo_alt?`<span class="mb ${d.modelo_alt.badge||'sonn'}" style="margin-left:4px">${d.modelo_alt.nombre}</span>`:'';
+  const procItems=(d.procedimiento||[]).map((p,i)=>`<li><div class="proc-num">${i+1}</div><span>${p}</span></li>`).join('');
+  const ctxTags=(d.contexto||[]).map(c=>`<span class="ctx-tag">📄 ${c}</span>`).join('');
+  const pilarBadge=d.pilar?`<span style="background:var(--ab);color:#aac;font-family:'JetBrains Mono',monospace;font-size:8px;padding:2px 6px;border-radius:2px;margin-left:6px">${d.pilar}</span>`:'';
+
+  const html=`
+    <div class="resp-card">
+      <div class="resp-header">🤖 Agente recomendado para: ${d.tarea}${pilarBadge}</div>
+      <div class="resp-body">
+        <div class="resp-row">
+          <div class="resp-icon agent">🧩</div>
+          <div>
+            <div class="resp-lbl">Agente a usar</div>
+            <div class="resp-val"><strong>Agente ${d.agente.numero} — ${d.agente.nombre}</strong>${alt2}<br><span style="color:var(--g);font-size:12px">${d.agente.descripcion}</span></div>
+          </div>
+        </div>
+        <div class="resp-row">
+          <div class="resp-icon model">🧠</div>
+          <div>
+            <div class="resp-lbl">Modelo</div>
+            <div class="resp-val"><span class="mb ${d.modelo.badge||'sonn'}">${d.modelo.nombre}</span>${mAlt} — ${d.modelo.razon}</div>
+          </div>
+        </div>
+        <div class="resp-row">
+          <div class="resp-icon ctx">📎</div>
+          <div>
+            <div class="resp-lbl">Contexto a adjuntar</div>
+            <div class="ctx-tags">${ctxTags}</div>
+          </div>
+        </div>
+        <div class="resp-row">
+          <div class="resp-icon proc">📋</div>
+          <div>
+            <div class="resp-lbl">Procedimiento</div>
+            <ul class="proc-list">${procItems}</ul>
+          </div>
+        </div>
+        ${warn}
+        ${altBtns?`<div style="margin-top:8px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--g);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px">También podés:</div><div class="alts-grid">${altBtns}</div>`:''}
+      </div>
+    </div>`;
+  
+  const div=document.createElement('div');
+  div.className='msg';
+  div.innerHTML=`<div class="msg-avatar bot">🤖</div><div style="flex:1">${html}</div>`;
+  document.getElementById('chatMsgs').appendChild(div);
+  scrollChat();
+}
+
+function appendUserMsg(text,scroll=true){
+  const div=document.createElement('div');
+  div.className='msg user';
+  div.innerHTML=`<div class="msg-avatar usr">👤</div><div class="msg-bubble">${escapeHtml(text)}</div>`;
+  document.getElementById('chatMsgs').appendChild(div);
+  if(scroll)scrollChat();
+}
+
+function appendBotMsg(html,scroll=true){
+  const div=document.createElement('div');
+  div.className='msg';
+  div.innerHTML=`<div class="msg-avatar bot">🤖</div><div class="msg-bubble">${html}</div>`;
+  document.getElementById('chatMsgs').appendChild(div);
+  if(scroll)scrollChat();
+}
+
+function appendTyping(){
+  const id='typing-'+Date.now();
+  const div=document.createElement('div');
+  div.className='msg';div.id=id;
+  div.innerHTML=`<div class="msg-avatar bot">🤖</div><div class="msg-bubble" style="padding:8px 14px"><div class="typing"><span></span><span></span><span></span></div></div>`;
+  document.getElementById('chatMsgs').appendChild(div);
+  scrollChat();return id;
+}
+function removeTyping(id){const el=document.getElementById(id);if(el)el.remove();}
+function scrollChat(){const c=document.getElementById('chatMsgs');c.scrollTop=c.scrollHeight;}
+function escapeHtml(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+// INIT
+loadSession();
+</script>
+</body>
+</html>

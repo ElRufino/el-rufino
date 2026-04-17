@@ -1,0 +1,1764 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voces del Interior · Rufino, Santa Fe</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ══ RESET & VARIABLES ══ */
+:root {
+  --rojo: #c8102e;
+  --rojo-dark: #9e0a22;
+  --rojo-light: #fdf0f2;
+  --negro: #111;
+  --gris-1: #1a1a1a;
+  --gris-2: #444;
+  --gris-3: #777;
+  --gris-4: #aaa;
+  --gris-5: #ddd;
+  --gris-6: #f4f4f4;
+  --blanco: #fff;
+  --linea: #e8e8e8;
+
+  --f-body: 'Barlow', sans-serif;
+  --f-cond: 'Barlow Condensed', sans-serif;
+  --f-serif: 'Libre Baskerville', serif;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { font-size: 16px; }
+body { font-family: var(--f-body); background: #f7f7f5; color: var(--negro); line-height: 1.5; }
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+button { cursor: pointer; border: none; background: none; font-family: inherit; }
+input, select, textarea { font-family: inherit; }
+
+/* ══ TABS DE VISTA ══ */
+.app-views { position: relative; }
+.view { display: none; }
+.view.active { display: block; }
+
+/* ══ TOPBAR ══ */
+.topbar {
+  background: var(--negro);
+  color: #ccc;
+  font-family: var(--f-cond);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.35rem 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.topbar-left { display: flex; gap: 1.25rem; align-items: center; }
+.topbar-right { display: flex; gap: 1rem; align-items: center; }
+.topbar-fecha { color: #999; }
+.topbar-tag { color: var(--blanco); }
+.topbar-clima { display: flex; align-items: center; gap: 0.35rem; color: #ccc; }
+.topbar-clima span { font-size: 0.85rem; }
+.topbar-admin-btn {
+  background: var(--rojo);
+  color: var(--blanco);
+  padding: 0.2rem 0.75rem;
+  border-radius: 3px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.topbar-admin-btn:hover { background: var(--rojo-dark); }
+
+/* TICKER */
+.ticker-wrap {
+  background: var(--rojo);
+  color: var(--blanco);
+  font-family: var(--f-cond);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  display: flex;
+  overflow: hidden;
+  height: 28px;
+}
+.ticker-label {
+  background: rgba(0,0,0,0.25);
+  padding: 0 0.75rem;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.65rem;
+}
+.ticker-track {
+  overflow: hidden;
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+.ticker-items {
+  display: flex;
+  gap: 2.5rem;
+  animation: ticker 28s linear infinite;
+  white-space: nowrap;
+  padding: 0 1rem;
+}
+.ticker-items span::before { content: '●'; margin-right: 0.5rem; opacity: 0.6; font-size: 0.5rem; vertical-align: middle; }
+@keyframes ticker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+/* ══ HEADER ══ */
+.header-main {
+  background: var(--blanco);
+  border-bottom: 3px solid var(--negro);
+  padding: 0.75rem 1.25rem;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+}
+.header-logo {
+  font-family: var(--f-serif);
+  font-size: 2.1rem;
+  color: var(--negro);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  justify-self: center;
+}
+.header-logo em { color: var(--rojo); font-style: normal; }
+.header-tagline {
+  font-family: var(--f-cond);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gris-3);
+  text-align: center;
+  margin-top: 0.15rem;
+}
+.header-slot-top {
+  height: 70px;
+  background: #f0f0f0;
+  border: 1px dashed #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--f-cond);
+  font-size: 0.62rem;
+  color: #aaa;
+  letter-spacing: 0.1em;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background 0.15s;
+  position: relative;
+  overflow: hidden;
+}
+.header-slot-top img { width:100%; height:100%; object-fit:cover; position:absolute; inset:0; }
+.header-slot-top .slot-label { position:relative; z-index:1; }
+.header-slot-right { justify-self: end; }
+.header-slot-left  { justify-self: start; }
+
+/* NAV */
+.navbar {
+  background: var(--negro);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.navbar-inner {
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.navbar-inner::-webkit-scrollbar { display: none; }
+.nav-item {
+  font-family: var(--f-cond);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  padding: 0.7rem 1rem;
+  white-space: nowrap;
+  transition: color 0.15s, background 0.15s;
+  border-bottom: 2px solid transparent;
+}
+.nav-item:hover { color: var(--blanco); background: rgba(255,255,255,0.06); }
+.nav-item.active { color: var(--blanco); border-bottom-color: var(--rojo); }
+
+/* ══ LAYOUT PRINCIPAL ══ */
+.site-body {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.25rem;
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 1.5rem;
+}
+
+/* ══ HERO ARTICLE ══ */
+.hero {
+  background: var(--blanco);
+  margin-bottom: 1.25rem;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.hero-img {
+  height: 300px;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+}
+.hero-img-bg {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%);
+  z-index: 1;
+}
+.hero-img-svg { position: absolute; inset: 0; }
+.hero-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-left: 4px solid var(--rojo);
+}
+.hero-cat {
+  font-family: var(--f-cond);
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--rojo);
+  margin-bottom: 0.5rem;
+}
+.hero-title {
+  font-family: var(--f-serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--negro);
+  margin-bottom: 0.75rem;
+}
+.hero-bajada {
+  font-size: 0.88rem;
+  color: var(--gris-2);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+.hero-meta {
+  font-family: var(--f-cond);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--gris-3);
+  text-transform: uppercase;
+}
+
+/* ══ GRILLA SECUNDARIA ══ */
+.grid-section-label {
+  font-family: var(--f-cond);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gris-3);
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid var(--linea);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.grid-section-label::before {
+  content: '';
+  display: inline-block;
+  width: 14px;
+  height: 3px;
+  background: var(--rojo);
+  border-radius: 2px;
+}
+
+.news-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+.news-card {
+  background: var(--blanco);
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  transition: box-shadow 0.2s;
+}
+.news-card:hover { box-shadow: 0 3px 10px rgba(0,0,0,0.1); }
+.news-card-img {
+  height: 130px;
+  background: #e8e8e8;
+  position: relative;
+  overflow: hidden;
+}
+.news-card-body { padding: 0.75rem; }
+.news-card-cat {
+  font-family: var(--f-cond);
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--rojo);
+  margin-bottom: 0.25rem;
+}
+.news-card-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--negro);
+  margin-bottom: 0.4rem;
+}
+.news-card-meta {
+  font-family: var(--f-cond);
+  font-size: 0.6rem;
+  color: var(--gris-3);
+  letter-spacing: 0.05em;
+}
+
+/* BANNER IN-CONTENT */
+.ad-banner-inline {
+  margin-bottom: 1.25rem;
+  height: 90px;
+  background: #f0f0f0;
+  border: 1px dashed #ccc;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--f-cond);
+  font-size: 0.62rem;
+  color: #aaa;
+  letter-spacing: 0.1em;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+.ad-banner-inline img { width:100%; height:100%; object-fit:cover; position:absolute; inset:0; }
+.ad-banner-inline .slot-label { position:relative; z-index:1; }
+
+.news-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+/* LIST NEWS */
+.news-list { background: var(--blanco); border-radius: 4px; overflow:hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05); margin-bottom:1.25rem; }
+.news-list-item {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--linea);
+  transition: background 0.1s;
+}
+.news-list-item:last-child { border-bottom: none; }
+.news-list-item:hover { background: var(--gris-6); }
+.news-list-img { height: 60px; background: #e0e0e0; border-radius: 3px; overflow: hidden; }
+.news-list-title { font-size: 0.83rem; font-weight: 600; line-height: 1.35; color: var(--negro); }
+.news-list-cat { font-family: var(--f-cond); font-size: 0.58rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--rojo); margin-bottom: 0.2rem; }
+
+/* ══ SIDEBAR ══ */
+.sidebar {}
+
+.sidebar-widget {
+  background: var(--blanco);
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  margin-bottom: 1.25rem;
+}
+.sidebar-widget-head {
+  background: var(--negro);
+  color: var(--blanco);
+  font-family: var(--f-cond);
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 0.5rem 0.85rem;
+}
+.sidebar-ad {
+  height: 250px;
+  background: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--f-cond);
+  font-size: 0.62rem;
+  color: #aaa;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.sidebar-ad img { width:100%; height:100%; object-fit:cover; position:absolute; inset:0; }
+.sidebar-ad .slot-label { position:relative; z-index:1; }
+.sidebar-ad-sm {
+  height: 150px;
+}
+
+.sidebar-news-item {
+  padding: 0.65rem 0.85rem;
+  border-bottom: 1px solid var(--linea);
+  transition: background 0.1s;
+}
+.sidebar-news-item:last-child { border-bottom: none; }
+.sidebar-news-item:hover { background: var(--gris-6); }
+.sidebar-news-item .cat { font-family: var(--f-cond); font-size: 0.58rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--rojo); }
+.sidebar-news-item .title { font-size: 0.8rem; font-weight: 500; line-height: 1.35; margin-top: 0.15rem; color: var(--negro); }
+
+/* CLIMA WIDGET */
+.clima-widget { padding: 0.85rem; }
+.clima-ciudad { font-family: var(--f-cond); font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: var(--gris-3); }
+.clima-temp { font-family: var(--f-serif); font-size: 2.5rem; color: var(--negro); line-height: 1; margin: 0.25rem 0; }
+.clima-desc { font-size: 0.8rem; color: var(--gris-2); margin-bottom: 0.5rem; }
+.clima-dias { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; }
+.clima-dia { text-align: center; }
+.clima-dia-nom { font-family: var(--f-cond); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; color: var(--gris-3); }
+.clima-dia-max { font-size: 0.85rem; font-weight: 600; color: var(--negro); }
+.clima-dia-min { font-size: 0.75rem; color: var(--gris-3); }
+
+/* ══ FOOTER ══ */
+.footer {
+  background: var(--negro);
+  color: #aaa;
+  padding: 2rem 1.25rem;
+  margin-top: 2rem;
+}
+.footer-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2rem; }
+.footer-logo { font-family: var(--f-serif); font-size: 1.2rem; color: var(--blanco); margin-bottom: 0.5rem; }
+.footer-logo em { color: var(--rojo); font-style: normal; }
+.footer-desc { font-size: 0.78rem; line-height: 1.6; }
+.footer-head { font-family: var(--f-cond); font-size: 0.65rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; color: var(--blanco); margin-bottom: 0.75rem; }
+.footer-links { list-style: none; }
+.footer-links li { margin-bottom: 0.35rem; }
+.footer-links a { font-size: 0.8rem; color: #aaa; transition: color 0.15s; }
+.footer-links a:hover { color: var(--blanco); }
+.footer-copy { max-width: 1200px; margin: 1.5rem auto 0; padding-top: 1rem; border-top: 1px solid #333; font-size: 0.72rem; color: #666; display: flex; justify-content: space-between; }
+
+/* LEADERBOARD PIE */
+.ad-leaderboard-footer {
+  max-width: 1200px; margin: 0 auto 1rem;
+  height: 90px;
+  background: #f0f0f0;
+  border: 1px dashed #ccc;
+  border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--f-cond); font-size: 0.62rem; color: #aaa; letter-spacing: 0.1em;
+  position: relative; overflow: hidden;
+}
+.ad-leaderboard-footer img { width:100%; height:100%; object-fit:cover; position:absolute; inset:0; }
+.ad-leaderboard-footer .slot-label { position:relative; z-index:1; }
+
+/* ════════════════════════════════════════════
+   PANEL ADMIN DE PUBLICIDADES
+════════════════════════════════════════════ */
+#view-admin {
+  background: #f5f6f8;
+  min-height: 100vh;
+}
+.admin-header {
+  background: var(--blanco);
+  border-bottom: 2px solid var(--linea);
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+.admin-logo {
+  font-family: var(--f-serif);
+  font-size: 1rem;
+  color: var(--negro);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.admin-logo em { color: var(--rojo); font-style: normal; }
+.admin-logo-tag {
+  font-family: var(--f-cond);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gris-3);
+  background: var(--gris-6);
+  padding: 0.15rem 0.5rem;
+  border-radius: 3px;
+}
+.admin-back {
+  font-family: var(--f-cond);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gris-3);
+  padding: 0.4rem 0.85rem;
+  border: 1px solid var(--linea);
+  border-radius: 4px;
+  transition: all 0.15s;
+}
+.admin-back:hover { color: var(--negro); border-color: var(--gris-4); background: var(--gris-6); }
+
+.admin-tabs {
+  background: var(--blanco);
+  border-bottom: 1px solid var(--linea);
+  display: flex;
+  gap: 0;
+  padding: 0 1.5rem;
+}
+.admin-tab {
+  font-family: var(--f-cond);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gris-3);
+  padding: 0.75rem 1.25rem;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s;
+  cursor: pointer;
+}
+.admin-tab:hover { color: var(--negro); }
+.admin-tab.active { color: var(--negro); border-bottom-color: var(--rojo); }
+
+.admin-body { padding: 1.5rem; max-width: 1200px; margin: 0 auto; }
+
+/* STATS ROW */
+.admin-stats {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.stat-card {
+  background: var(--blanco);
+  border-radius: 6px;
+  border: 1px solid var(--linea);
+  padding: 1rem 1.1rem;
+}
+.stat-num {
+  font-family: var(--f-serif);
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--negro);
+  margin-bottom: 0.3rem;
+}
+.stat-num.verde { color: #16a34a; }
+.stat-num.rojo { color: #dc2626; }
+.stat-num.naranja { color: #ea580c; }
+.stat-num.azul { color: #2563eb; }
+.stat-label {
+  font-family: var(--f-cond);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gris-3);
+}
+
+/* ADMIN LAYOUT */
+.admin-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 1.25rem;
+}
+
+/* LISTA AVISOS */
+.avisos-panel {
+  background: var(--blanco);
+  border-radius: 6px;
+  border: 1px solid var(--linea);
+  overflow: hidden;
+}
+.avisos-panel-head {
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--linea);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.avisos-panel-head h3 {
+  font-family: var(--f-cond);
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gris-3);
+}
+.btn-nuevo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  background: var(--rojo);
+  color: var(--blanco);
+  padding: 0.55rem;
+  border-radius: 5px;
+  font-family: var(--f-cond);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: background 0.15s;
+}
+.btn-nuevo:hover { background: var(--rojo-dark); }
+
+.avisos-list { overflow-y: auto; max-height: calc(100vh - 300px); }
+.aviso-item {
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid var(--linea);
+  cursor: pointer;
+  transition: background 0.12s;
+}
+.aviso-item:last-child { border-bottom: none; }
+.aviso-item:hover { background: var(--gris-6); }
+.aviso-item.selected { background: var(--rojo-light); border-left: 3px solid var(--rojo); }
+.aviso-item.selected { padding-left: calc(1rem - 3px); }
+
+.aviso-item-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.3rem; }
+.aviso-item-nombre { font-size: 0.82rem; font-weight: 600; color: var(--negro); }
+.badge-estado {
+  font-family: var(--f-cond);
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.12rem 0.4rem;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.badge-activo  { background: #dcfce7; color: #166534; }
+.badge-vencido { background: #fee2e2; color: #991b1b; }
+.badge-futuro  { background: #dbeafe; color: #1e40af; }
+.badge-sinf    { background: #f3f4f6; color: #6b7280; }
+
+.aviso-item-meta { font-family: var(--f-cond); font-size: 0.6rem; color: var(--gris-3); line-height: 1.8; }
+.aviso-clics { font-family: var(--f-cond); font-size: 0.6rem; color: var(--gris-4); margin-top: 0.2rem; }
+.aviso-clics strong { color: #ca8a04; }
+
+/* EDITOR PANEL */
+.editor-panel {
+  background: var(--blanco);
+  border-radius: 6px;
+  border: 1px solid var(--linea);
+  overflow: hidden;
+}
+.editor-panel-head {
+  background: var(--gris-6);
+  border-bottom: 1px solid var(--linea);
+  padding: 0.75rem 1.25rem;
+  font-family: var(--f-cond);
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gris-3);
+}
+.editor-body { padding: 1.5rem; }
+
+.empty-state {
+  padding: 3rem;
+  text-align: center;
+  color: var(--gris-4);
+}
+.empty-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+.empty-text { font-family: var(--f-cond); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; }
+
+/* FORM */
+.form-section-title {
+  font-family: var(--f-cond);
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gris-3);
+  margin-bottom: 0.85rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--linea);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.form-section-title::after { content:''; flex:1; height:1px; background: var(--linea); }
+.form-section-title::before { display:none; }
+
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem; }
+.form-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+.form-grid.cols-1 { grid-template-columns: 1fr; }
+
+.field { display: flex; flex-direction: column; gap: 0.3rem; }
+.field label {
+  font-family: var(--f-cond);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gris-2);
+}
+.field input,
+.field select,
+.field textarea {
+  border: 1px solid var(--linea);
+  border-radius: 5px;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.85rem;
+  color: var(--negro);
+  background: var(--blanco);
+  transition: border-color 0.15s;
+  outline: none;
+}
+.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--rojo); box-shadow: 0 0 0 3px rgba(200,16,46,0.08); }
+.field input[type="date"] { color-scheme: light; }
+.field textarea { resize: vertical; min-height: 70px; }
+
+/* UPLOAD */
+.upload-area {
+  border: 1.5px dashed var(--gris-5);
+  border-radius: 6px;
+  padding: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.15s;
+  background: var(--gris-6);
+  position: relative;
+  min-height: 100px;
+}
+.upload-area:hover { border-color: var(--rojo); background: var(--rojo-light); }
+.upload-area input { position:absolute; inset:0; opacity:0; cursor:pointer; display:none; }
+.upload-icon { font-size: 1.5rem; margin-bottom: 0.35rem; color: var(--gris-4); }
+.upload-text { font-size: 0.75rem; color: var(--gris-3); }
+.upload-text strong { color: var(--negro); }
+.preview-img { width:100%; max-height:120px; object-fit:contain; border-radius:4px; margin-top:0.5rem; display:none; border:1px solid var(--linea); }
+
+.default-img-box {
+  border: 1px solid var(--linea);
+  border-radius: 6px;
+  padding: 0.85rem;
+  background: var(--gris-6);
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+.default-img-thumb { width: 64px; height: 48px; background: #e0e0e0; border-radius: 4px; overflow:hidden; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:1.2rem; color:var(--gris-4); }
+.default-img-thumb img { width:100%; height:100%; object-fit:cover; display:none; }
+.default-img-info p { font-size: 0.75rem; color: var(--gris-2); line-height: 1.5; }
+.default-img-info small { font-size: 0.65rem; color: var(--gris-3); }
+
+/* VENCIDO NOTICE */
+.vencido-notice {
+  background: #fff7ed;
+  border: 1px solid #fcd34d;
+  border-left: 3px solid #f59e0b;
+  border-radius: 5px;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.78rem;
+  color: #92400e;
+  margin-bottom: 1.25rem;
+  display: none;
+}
+.vencido-notice.visible { display: block; }
+
+/* FORM ACTIONS */
+.form-actions {
+  display: flex;
+  gap: 0.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--linea);
+  margin-top: 1.25rem;
+}
+.btn-guardar {
+  background: var(--rojo);
+  color: var(--blanco);
+  border: none;
+  padding: 0.65rem 1.5rem;
+  border-radius: 5px;
+  font-family: var(--f-cond);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: background 0.15s;
+}
+.btn-guardar:hover { background: var(--rojo-dark); }
+.btn-cancelar {
+  background: var(--blanco);
+  color: var(--gris-2);
+  border: 1px solid var(--linea);
+  padding: 0.65rem 1.1rem;
+  border-radius: 5px;
+  font-family: var(--f-cond);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: all 0.15s;
+}
+.btn-cancelar:hover { border-color: var(--gris-4); color: var(--negro); background: var(--gris-6); }
+.btn-borrar {
+  margin-left: auto;
+  background: var(--blanco);
+  color: #dc2626;
+  border: 1px solid #fecaca;
+  padding: 0.65rem 1.1rem;
+  border-radius: 5px;
+  font-family: var(--f-cond);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: all 0.15s;
+}
+.btn-borrar:hover { background: #fee2e2; border-color: #dc2626; }
+
+/* REFRESCO BAR */
+.refresco-bar {
+  background: var(--blanco);
+  border-bottom: 1px solid var(--linea);
+  padding: 0.4rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--f-cond);
+  font-size: 0.62rem;
+  color: var(--gris-3);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+.ref-dot { width: 7px; height: 7px; border-radius: 50%; background: #16a34a; animation: pulse 2s ease infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.ref-track { flex:1; height: 2px; background: var(--linea); border-radius: 1px; max-width: 180px; overflow:hidden; }
+.ref-fill { height:100%; background: var(--rojo); border-radius:1px; transition: width 1s linear; }
+
+/* STATS TABLE */
+.stats-table-wrap {
+  background: var(--blanco);
+  border-radius: 6px;
+  border: 1px solid var(--linea);
+  overflow: hidden;
+  margin-top: 1.25rem;
+}
+.stats-thead {
+  background: var(--gris-6);
+  border-bottom: 1px solid var(--linea);
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 80px 100px 90px;
+  padding: 0.6rem 1rem;
+}
+.stats-thead span {
+  font-family: var(--f-cond);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gris-3);
+}
+.stats-row {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 80px 100px 90px;
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid var(--linea);
+  align-items: center;
+  transition: background 0.1s;
+}
+.stats-row:last-child { border-bottom: none; }
+.stats-row:hover { background: var(--gris-6); }
+.stats-row span { font-size: 0.75rem; color: var(--gris-2); }
+.stats-row .nombre { color: var(--negro); font-weight: 500; }
+.clics-wrap { display:flex; align-items:center; gap:0.4rem; }
+.clics-track { flex:1; height:4px; background:var(--linea); border-radius:2px; overflow:hidden; }
+.clics-fill { height:100%; background:#ca8a04; border-radius:2px; transition: width 0.4s; }
+.clics-n { font-weight: 600; color: #ca8a04; font-size: 0.72rem; }
+.countdown { font-family: var(--f-cond); font-size: 0.6rem; font-weight: 600; color: var(--gris-3); }
+.countdown.urgente { color: #dc2626; }
+
+/* TOAST */
+.toast {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(16px);
+  background: var(--negro);
+  color: var(--blanco);
+  border-left: 3px solid var(--rojo);
+  padding: 0.7rem 1.5rem;
+  border-radius: 6px;
+  font-family: var(--f-cond);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  z-index: 9999;
+  opacity: 0;
+  transition: all 0.3s;
+  pointer-events: none;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.toast.ok { border-left-color: #16a34a; }
+
+/* MINI UPLOAD BTN */
+.btn-mini {
+  font-family: var(--f-cond);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid var(--linea);
+  border-radius: 4px;
+  padding: 0.25rem 0.6rem;
+  color: var(--gris-2);
+  margin-top: 0.4rem;
+  display: inline-block;
+  transition: all 0.15s;
+}
+.btn-mini:hover { border-color: var(--gris-4); color: var(--negro); background: var(--gris-6); }
+
+/* SVG PLACEHOLDERS EN PORTAL */
+.svg-placeholder { width:100%; height:100%; display:block; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════ VISTA PORTAL ══════════════ -->
+<div id="view-portal" class="view active">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <span class="topbar-fecha" id="fecha-hoy">Sábado 21 de marzo de 2026</span>
+      <span class="topbar-tag">Rufino, Santa Fe</span>
+    </div>
+    <div class="topbar-right">
+      <div class="topbar-clima">
+        <span>☀</span>
+        <span>22°</span>
+      </div>
+      <button class="topbar-admin-btn" onclick="irAdmin()">⚙ Admin Avisos</button>
+    </div>
+  </div>
+
+  <!-- TICKER -->
+  <div class="ticker-wrap">
+    <div class="ticker-label">Ahora</div>
+    <div class="ticker-track">
+      <div class="ticker-items" id="tickerItems">
+        <span>Senado dio media sanción a prohibición de cuidacoches en la vía pública</span>
+        <span>Santa Fe sigue bajo alerta naranja por tormentas y lluvias intensas</span>
+        <span>Pullaro inauguró centro comunitario para mujeres y familias en Rosario</span>
+        <span>Rosgan: la carne vacuna mantiene precios altos por escasez en Argentina</span>
+        <span>Senado dio media sanción a prohibición de cuidacoches en la vía pública</span>
+        <span>Santa Fe sigue bajo alerta naranja por tormentas y lluvias intensas</span>
+        <span>Pullaro inauguró centro comunitario para mujeres y familias en Rosario</span>
+        <span>Rosgan: la carne vacuna mantiene precios altos por escasez en Argentina</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <div class="header-main">
+    <div class="header-slot-top header-slot-left" id="hslot-left" onclick="registrarClic(null,2)">
+      <div class="slot-label">SLOT 2 · 300×80</div>
+    </div>
+
+    <div style="text-align:center;">
+      <div class="header-logo">Voces del <em>Interior</em></div>
+      <div class="header-tagline">Archivo periodístico · Rufino, Santa Fe · 2007–2012</div>
+    </div>
+
+    <div class="header-slot-top header-slot-right" style="width:300px;" id="hslot-right" onclick="registrarClic(null,2)">
+      <div class="slot-label">SLOT 2 · 300×80</div>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="#" class="nav-item active">Todas</a>
+      <a href="#" class="nav-item">Política</a>
+      <a href="#" class="nav-item">Economía</a>
+      <a href="#" class="nav-item">Salud</a>
+      <a href="#" class="nav-item">Cultura</a>
+      <a href="#" class="nav-item">Deportes</a>
+      <a href="#" class="nav-item">Sociedad</a>
+      <a href="#" class="nav-item">Regionales</a>
+      <a href="#" class="nav-item">Gremiales</a>
+      <a href="#" class="nav-item">Judiciales</a>
+    </div>
+  </nav>
+
+  <!-- LEADERBOARD SUPERIOR (slot 1) -->
+  <div style="max-width:1200px;margin:0 auto;padding:0.75rem 1.25rem 0;">
+    <div class="ad-banner-inline" style="height:70px;" id="pslot-1" onclick="registrarClic(null,1)">
+      <div class="slot-label">SLOT 1 · Leaderboard Superior 970×90</div>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="site-body">
+    <main>
+
+      <!-- HERO -->
+      <div class="hero">
+        <div class="hero-img">
+          <div class="hero-img-bg"></div>
+          <svg class="hero-img-svg" viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
+            <rect width="500" height="300" fill="#1a1a2e"/>
+            <circle cx="250" cy="130" r="60" fill="none" stroke="#c8102e" stroke-width="1.5" opacity="0.4"/>
+            <circle cx="250" cy="130" r="40" fill="none" stroke="#c8102e" stroke-width="0.5" opacity="0.3"/>
+            <line x1="250" y1="70" x2="250" y2="190" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+            <line x1="190" y1="130" x2="310" y2="130" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+            <text x="250" y="220" text-anchor="middle" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,0.3)" letter-spacing="4">ENTREVISTA DESTACADA</text>
+          </svg>
+        </div>
+        <div class="hero-body">
+          <div class="hero-cat">Política · 15-06-2009</div>
+          <h2 class="hero-title">Jorge Almada: el desafío de gobernar Rufino en tiempos de crisis económica</h2>
+          <p class="hero-bajada">El intendente municipal repasó los principales desafíos de la gestión, el plan de obras públicas y la relación del municipio con la Provincia durante un año de turbulencias.</p>
+          <div class="hero-meta">ENT-20090615-001 · 42 min · Revisado ✓</div>
+        </div>
+      </div>
+
+      <!-- SLOT 5 (leaderboard intermedio) -->
+      <div class="ad-banner-inline" id="pslot-5" onclick="registrarClic(null,5)">
+        <div class="slot-label">SLOT 5 · Leaderboard Intermedio 970×90</div>
+      </div>
+
+      <!-- GRILLA 3 COL -->
+      <div class="grid-section-label">Últimas incorporaciones</div>
+      <div class="news-grid-3">
+
+        <div class="news-card">
+          <div class="news-card-img">
+            <svg viewBox="0 0 400 130" xmlns="http://www.w3.org/2000/svg" class="svg-placeholder">
+              <rect width="400" height="130" fill="#f8e8ea"/><text x="200" y="70" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#c8102e" opacity="0.6">SALUD · 2010</text></svg>
+          </div>
+          <div class="news-card-body">
+            <div class="news-card-cat">Salud</div>
+            <div class="news-card-title">Dra. Norma Páez analiza el sistema de salud rural en el sur de Santa Fe</div>
+            <div class="news-card-meta">22-04-2010 · ENT-20100422-002</div>
+          </div>
+        </div>
+
+        <div class="news-card">
+          <div class="news-card-img">
+            <svg viewBox="0 0 400 130" xmlns="http://www.w3.org/2000/svg" class="svg-placeholder">
+              <rect width="400" height="130" fill="#e8f4e8"/><text x="200" y="70" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#2d6a26" opacity="0.6">ECONOMÍA · 2008</text></svg>
+          </div>
+          <div class="news-card-body">
+            <div class="news-card-cat">Economía</div>
+            <div class="news-card-title">Ramón Ledesma: "El campo es el motor que nunca se apaga en el sur provincial"</div>
+            <div class="news-card-meta">08-08-2008 · ENT-20080808-001</div>
+          </div>
+        </div>
+
+        <div class="news-card">
+          <div class="news-card-img">
+            <svg viewBox="0 0 400 130" xmlns="http://www.w3.org/2000/svg" class="svg-placeholder">
+              <rect width="400" height="130" fill="#e8eaf8"/><text x="200" y="70" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#3949ab" opacity="0.6">CULTURA · 2011</text></svg>
+          </div>
+          <div class="news-card-body">
+            <div class="news-card-cat">Cultura</div>
+            <div class="news-card-title">Elsa Quiroga y el rol de la Sociedad Italiana en la vida cultural de Rufino</div>
+            <div class="news-card-meta">14-11-2011 · ENT-20111114-003</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- SLOT 6 (banner intertemático) -->
+      <div class="ad-banner-inline" style="height:60px;" id="pslot-6" onclick="registrarClic(null,6)">
+        <div class="slot-label">SLOT 6 · Banner Intertemático 728×90</div>
+      </div>
+
+      <!-- GRILLA 2 COL -->
+      <div class="grid-section-label">Política y Sociedad</div>
+      <div class="news-grid-2">
+
+        <div class="news-card">
+          <div class="news-card-img" style="height:160px;">
+            <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg" class="svg-placeholder">
+              <rect width="400" height="160" fill="#fdf0f2"/><text x="200" y="85" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#c8102e" opacity="0.6">POLÍTICA · 2009</text></svg>
+          </div>
+          <div class="news-card-body">
+            <div class="news-card-cat">Política</div>
+            <div class="news-card-title">María Fernández habla de la participación ciudadana y los desafíos del concejo deliberante rufinense</div>
+            <div class="news-card-meta">03-09-2009 · ENT-20090903-004</div>
+          </div>
+        </div>
+
+        <div class="news-card">
+          <div class="news-card-img" style="height:160px;">
+            <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg" class="svg-placeholder">
+              <rect width="400" height="160" fill="#fff8e8"/><text x="200" y="85" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#ca8a04" opacity="0.6">GREMIALES · 2007</text></svg>
+          </div>
+          <div class="news-card-body">
+            <div class="news-card-cat">Gremiales</div>
+            <div class="news-card-title">Hugo Pereyra y el movimiento sindical local: organización desde las bases en tiempos de cambio</div>
+            <div class="news-card-meta">12-03-2007 · ENT-20070312-001</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- SLOT 9 (leaderboard bloque final) -->
+      <div class="ad-banner-inline" id="pslot-9" onclick="registrarClic(null,9)">
+        <div class="slot-label">SLOT 9 · Leaderboard Bloque Final 970×120</div>
+      </div>
+
+      <!-- LIST VIEW -->
+      <div class="grid-section-label">Archivo completo</div>
+      <div class="news-list">
+        <div class="news-list-item">
+          <div class="news-list-img">
+            <svg viewBox="0 0 80 60" class="svg-placeholder"><rect width="80" height="60" fill="#f0f0f0"/></svg>
+          </div>
+          <div>
+            <div class="news-list-cat">Economía</div>
+            <div class="news-list-title">Omar Sposaro y la Cooperativa Rural: financiamiento y producción en el sur santafesino</div>
+            <div style="font-family:var(--f-cond);font-size:0.6rem;color:var(--gris-4);margin-top:0.2rem">18-07-2010 · ENT-20100718-005</div>
+          </div>
+        </div>
+        <div class="news-list-item">
+          <div class="news-list-img">
+            <svg viewBox="0 0 80 60" class="svg-placeholder"><rect width="80" height="60" fill="#f0f0f0"/></svg>
+          </div>
+          <div>
+            <div class="news-list-cat">Salud</div>
+            <div class="news-list-title">Dr. Pablo Quiroz: prevención y atención primaria en el hospital de Rufino</div>
+            <div style="font-family:var(--f-cond);font-size:0.6rem;color:var(--gris-4);margin-top:0.2rem">05-02-2011 · ENT-20110205-006</div>
+          </div>
+        </div>
+        <div class="news-list-item">
+          <div class="news-list-img">
+            <svg viewBox="0 0 80 60" class="svg-placeholder"><rect width="80" height="60" fill="#f0f0f0"/></svg>
+          </div>
+          <div>
+            <div class="news-list-cat">Cultura</div>
+            <div class="news-list-title">Marcelo Roldán y el movimiento teatral en Rufino: 20 años de escena independiente</div>
+            <div style="font-family:var(--f-cond);font-size:0.6rem;color:var(--gris-4);margin-top:0.2rem">27-06-2012 · ENT-20120627-008</div>
+          </div>
+        </div>
+        <div class="news-list-item">
+          <div class="news-list-img">
+            <svg viewBox="0 0 80 60" class="svg-placeholder"><rect width="80" height="60" fill="#f0f0f0"/></svg>
+          </div>
+          <div>
+            <div class="news-list-cat">Jurídico</div>
+            <div class="news-list-title">Dra. Laura Bianchi: acceso a la justicia y defensa pública en localidades del sur provincial</div>
+            <div style="font-family:var(--f-cond);font-size:0.6rem;color:var(--gris-4);margin-top:0.2rem">19-10-2008 · ENT-20081019-003</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLOT 11 leaderboard pie -->
+      <div class="ad-leaderboard-footer" id="pslot-11" onclick="registrarClic(null,11)">
+        <span class="slot-label">SLOT 11 · Leaderboard Pie 970×90</span>
+      </div>
+
+    </main>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+      <!-- SLOT 3 box lateral 1 -->
+      <div class="sidebar-widget">
+        <div class="sidebar-widget-head">Publicidad</div>
+        <div class="sidebar-ad" id="pslot-3" onclick="registrarClic(null,3)">
+          <span class="slot-label">SLOT 3 · Box Lateral 300×250</span>
+        </div>
+      </div>
+
+      <!-- CLIMA -->
+      <div class="sidebar-widget">
+        <div class="sidebar-widget-head">Clima · Rufino</div>
+        <div class="clima-widget">
+          <div class="clima-ciudad">Santa Fe · 21 Mar 2026</div>
+          <div class="clima-temp">22°</div>
+          <div class="clima-desc">Lluvias intermitentes</div>
+          <div class="clima-dias">
+            <div class="clima-dia"><div class="clima-dia-nom">Dom</div><div class="clima-dia-max">26°</div><div class="clima-dia-min">13°</div></div>
+            <div class="clima-dia"><div class="clima-dia-nom">Lun</div><div class="clima-dia-max">24°</div><div class="clima-dia-min">16°</div></div>
+            <div class="clima-dia"><div class="clima-dia-nom">Mar</div><div class="clima-dia-max">25°</div><div class="clima-dia-min">13°</div></div>
+            <div class="clima-dia"><div class="clima-dia-nom">Mié</div><div class="clima-dia-max">23°</div><div class="clima-dia-min">15°</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLOT 7 sidebar sticky -->
+      <div class="sidebar-widget">
+        <div class="sidebar-widget-head">Publicidad</div>
+        <div class="sidebar-ad" id="pslot-7" onclick="registrarClic(null,7)">
+          <span class="slot-label">SLOT 7 · Sidebar Sticky 300×250</span>
+        </div>
+      </div>
+
+      <!-- DESTACADAS sidebar -->
+      <div class="sidebar-widget">
+        <div class="sidebar-widget-head">Destacadas</div>
+        <div class="sidebar-news-item"><div class="cat">Política</div><div class="title">Almada repasó el plan de obras para el segundo semestre del año</div></div>
+        <div class="sidebar-news-item"><div class="cat">Economía</div><div class="title">El precio de la soja marcó un nuevo récord en la Bolsa de Rosario</div></div>
+        <div class="sidebar-news-item"><div class="cat">Salud</div><div class="title">Quiroz informó sobre el avance del programa de vacunación rural</div></div>
+        <div class="sidebar-news-item"><div class="cat">Cultura</div><div class="title">La Sociedad Italiana presentó su programación para el segundo semestre</div></div>
+      </div>
+
+      <!-- SLOT 8 sidebar inferior -->
+      <div class="sidebar-widget">
+        <div class="sidebar-widget-head">Publicidad</div>
+        <div class="sidebar-ad sidebar-ad-sm" id="pslot-8" onclick="registrarClic(null,8)">
+          <span class="slot-label">SLOT 8 · Sidebar Inferior 300×250</span>
+        </div>
+      </div>
+
+      <!-- SLOT 10 -->
+      <div class="sidebar-widget">
+        <div class="sidebar-widget-head">Publicidad</div>
+        <div class="sidebar-ad sidebar-ad-sm" id="pslot-10" onclick="registrarClic(null,10)">
+          <span class="slot-label">SLOT 10 · Box Final 360×250</span>
+        </div>
+      </div>
+
+    </aside>
+  </div>
+
+  <!-- FOOTER -->
+  <div style="max-width:1200px;margin:0 auto 0;padding:0 1.25rem 1rem;">
+    <div class="ad-leaderboard-footer" id="pslot-11b" onclick="registrarClic(null,11)">
+      <span class="slot-label">SLOT 11 · Leaderboard Pie de Página 970×90</span>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-logo">Voces del <em>Interior</em></div>
+        <p class="footer-desc">Archivo periodístico de entrevistas radiales grabadas en Rufino, Santa Fe, entre 2007 y 2012. Material original en DVD.</p>
+      </div>
+      <div>
+        <div class="footer-head">Secciones</div>
+        <ul class="footer-links">
+          <li><a href="#">Política</a></li>
+          <li><a href="#">Economía</a></li>
+          <li><a href="#">Salud</a></li>
+          <li><a href="#">Cultura</a></li>
+          <li><a href="#">Gremiales</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-head">Institucional</div>
+        <ul class="footer-links">
+          <li><a href="#">Sobre el archivo</a></li>
+          <li><a href="#">Metodología</a></li>
+          <li><a href="#">Contacto</a></li>
+          <li><a href="#" onclick="irAdmin();return false;">Panel de avisos</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-copy">
+      <span>© 2026 Voces del Interior · Rufino, Santa Fe</span>
+      <span>Corpus 2007–2012</span>
+    </div>
+  </footer>
+
+</div><!-- /view-portal -->
+
+
+<!-- ══════════════ VISTA ADMIN ══════════════ -->
+<div id="view-admin" class="view">
+
+  <div class="admin-header">
+    <div class="admin-logo">
+      Voces del <em>Interior</em>
+      <span class="admin-logo-tag">Panel de Avisos</span>
+    </div>
+    <button class="admin-back" onclick="irPortal()">← Volver al portal</button>
+  </div>
+
+  <div class="admin-tabs">
+    <div class="admin-tab active" id="atab-editor" onclick="setAdminTab('editor')">✏ Editor</div>
+    <div class="admin-tab" id="atab-stats"  onclick="setAdminTab('stats')">📊 Estadísticas</div>
+  </div>
+
+  <div class="refresco-bar">
+    <div class="ref-dot"></div>
+    <span>Refresco automático</span>
+    <div class="ref-track"><div class="ref-fill" id="refFill" style="width:100%"></div></div>
+    <span id="refCuenta" style="min-width:32px;text-align:right"></span>
+  </div>
+
+  <div class="admin-body">
+
+    <!-- STATS CARDS -->
+    <div class="admin-stats" id="statsCards"></div>
+
+    <!-- TAB EDITOR -->
+    <div id="admin-editor">
+      <div class="admin-layout">
+
+        <!-- LISTA -->
+        <div class="avisos-panel">
+          <div class="avisos-panel-head">
+            <h3>Avisos cargados</h3>
+            <button class="btn-nuevo" onclick="nuevoAviso()">+ Nuevo aviso</button>
+          </div>
+          <div class="avisos-list" id="avisosList"></div>
+        </div>
+
+        <!-- EDITOR -->
+        <div class="editor-panel">
+          <div class="editor-panel-head" id="editorHead">Editor de aviso</div>
+          <div class="editor-body">
+
+            <div class="empty-state" id="emptyState">
+              <div class="empty-icon">📋</div>
+              <div class="empty-text">Seleccioná un aviso o creá uno nuevo</div>
+            </div>
+
+            <div id="formAviso" style="display:none">
+              <div class="vencido-notice" id="vencidoNotice">
+                ⚠ Este aviso está <strong>vencido</strong>. El portal muestra la imagen predeterminada en su lugar.
+              </div>
+
+              <!-- CLIENTE -->
+              <div class="form-section-title">Cliente</div>
+              <div class="form-grid">
+                <div class="field">
+                  <label>Empresa / Cliente *</label>
+                  <input type="text" id="f-cliente" placeholder="Ej: Cooperativa La Rural">
+                </div>
+                <div class="field">
+                  <label>Contacto</label>
+                  <input type="text" id="f-contacto" placeholder="Nombre del responsable">
+                </div>
+              </div>
+              <div class="form-grid cols-1">
+                <div class="field">
+                  <label>Descripción / Texto alternativo</label>
+                  <textarea id="f-descripcion" placeholder="Descripción interna del aviso..."></textarea>
+                </div>
+              </div>
+
+              <!-- POSICIÓN -->
+              <div class="form-section-title">Posición y destino</div>
+              <div class="form-grid">
+                <div class="field">
+                  <label>Espacio publicitario *</label>
+                  <select id="f-posicion">
+                    <option value="">— Seleccionar posición —</option>
+                    <option value="1">1 · Leaderboard Superior (970×90)</option>
+                    <option value="2">2 · Header Derecha (300×80)</option>
+                    <option value="3">3 · Box Lateral 1 (300×250)</option>
+                    <option value="4">4 · Box In-Grilla (240×200)</option>
+                    <option value="5">5 · Leaderboard Intermedio (970×90)</option>
+                    <option value="6">6 · Banner Intertemático (728×90)</option>
+                    <option value="7">7 · Box Sidebar Sticky (300×250)</option>
+                    <option value="8">8 · Box Sidebar Inferior (300×250)</option>
+                    <option value="9">9 · Leaderboard Bloque Final (970×120)</option>
+                    <option value="10">10 · Box Grilla Final (360×250)</option>
+                    <option value="11">11 · Leaderboard Pie de Página (970×90)</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label>URL de destino (clic)</label>
+                  <input type="url" id="f-url" placeholder="https://...">
+                </div>
+              </div>
+
+              <!-- VIGENCIA -->
+              <div class="form-section-title">Vigencia y refresco</div>
+              <div class="form-grid cols-3">
+                <div class="field">
+                  <label>Fecha inicio</label>
+                  <input type="date" id="f-inicio">
+                </div>
+                <div class="field">
+                  <label>Fecha fin</label>
+                  <input type="date" id="f-fin">
+                </div>
+                <div class="field">
+                  <label>Refresco (segundos)</label>
+                  <input type="number" id="f-refresco" value="30" min="5" max="3600">
+                </div>
+              </div>
+
+              <!-- IMÁGENES -->
+              <div class="form-section-title">Imágenes</div>
+              <div class="form-grid">
+                <div class="field">
+                  <label>Imagen del aviso</label>
+                  <div class="upload-area" onclick="document.getElementById('f-imagen').click()">
+                    <input type="file" id="f-imagen" accept="image/*" onchange="previewImg(event,'prevAvis')">
+                    <div class="upload-icon">🖼</div>
+                    <div class="upload-text"><strong>Clic para subir imagen</strong><br>JPG, PNG, WebP, GIF</div>
+                    <img id="prevAvis" class="preview-img">
+                  </div>
+                </div>
+                <div class="field">
+                  <label>Imagen predeterminada (al vencer)</label>
+                  <div class="default-img-box">
+                    <div class="default-img-thumb" id="defThumb">
+                      🏠
+                      <img id="prevDef">
+                    </div>
+                    <div class="default-img-info">
+                      <p>Se muestra automáticamente cuando el aviso vence o no hay aviso activo en esa posición.</p>
+                      <small>Recomendado: imagen institucional o "Tu aviso acá".</small>
+                      <br>
+                      <button class="btn-mini" onclick="document.getElementById('f-default').click()">Subir imagen default</button>
+                      <input type="file" id="f-default" accept="image/*" onchange="previewImg(event,'prevDef')">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ACTIONS -->
+              <div class="form-actions">
+                <button class="btn-guardar" onclick="guardarAviso()">💾 Guardar aviso</button>
+                <button class="btn-cancelar" onclick="cancelarEdicion()">Cancelar</button>
+                <button class="btn-borrar" id="btnBorrar" onclick="borrarAviso()" style="display:none">🗑 Borrar</button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB STATS -->
+    <div id="admin-stats" style="display:none">
+      <div class="stats-table-wrap">
+        <div class="stats-thead">
+          <span>Aviso / Cliente</span>
+          <span>Posición</span>
+          <span>Vigencia</span>
+          <span>Refresco</span>
+          <span>Clics</span>
+          <span>Estado</span>
+        </div>
+        <div id="statsRows"></div>
+      </div>
+    </div>
+
+  </div>
+</div><!-- /view-admin -->
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+
+<script>
+/* ══ ESTADO ══ */
+let AVISOS = [
+  { id:'av-001', cliente:'Cooperativa La Rural', contacto:'Luis Fernández', descripcion:'Aviso institucional agropecuario.', posicion:'3', url:'https://example.com', inicio:'2026-03-01', fin:'2026-04-30', refresco:30, imagen:null, imagenDefault:null, clics:47 },
+  { id:'av-002', cliente:'Farmacia Central Rufino', contacto:'Ana Gómez', descripcion:'Campaña de temporada.', posicion:'7', url:'https://example.com', inicio:'2026-03-15', fin:'2026-03-20', refresco:60, imagen:null, imagenDefault:null, clics:12 },
+  { id:'av-003', cliente:'Municipalidad de Rufino', contacto:'Área de Comunicación', descripcion:'Servicios municipales.', posicion:'1', url:'https://example.com', inicio:'2026-04-01', fin:'2026-06-30', refresco:45, imagen:null, imagenDefault:null, clics:0 }
+];
+
+let selId = null;
+let adminTabActual = 'editor';
+let refGlobal = 30, refTick = 30;
+
+const POS = {
+  '1':'Leaderboard Superior','2':'Header Derecha','3':'Box Lateral 1',
+  '4':'Box In-Grilla','5':'Leaderboard Intermedio','6':'Banner Intertemático',
+  '7':'Box Sidebar Sticky','8':'Box Sidebar Inferior','9':'Leaderboard Bloque Final',
+  '10':'Box Grilla Final','11':'Leaderboard Pie'
+};
+
+/* ══ UTILS ══ */
+function hoy() { return new Date().toISOString().split('T')[0]; }
+function makeId() { return 'av-' + Date.now(); }
+function estado(av) {
+  if (!av.inicio||!av.fin) return 'sinf';
+  const h=hoy();
+  if (h<av.inicio) return 'futuro';
+  if (h>av.fin)    return 'vencido';
+  return 'activo';
+}
+function diasR(fin) { return Math.ceil((new Date(fin)-new Date())/86400000); }
+
+function toast(msg, tipo='') {
+  const el=document.getElementById('toast');
+  el.textContent=msg; el.className='toast show '+(tipo==='ok'?'ok':'');
+  setTimeout(()=>el.className='toast',2800);
+}
+
+/* ══ NAVEGACIÓN ══ */
+function irAdmin() {
+  document.getElementById('view-portal').classList.remove('active');
+  document.getElementById('view-admin').classList.add('active');
+  renderLista(); renderStats(); renderPortalSlots(); iniciarRefresco();
+  setAdminTab('editor');
+}
+function irPortal() {
+  document.getElementById('view-admin').classList.remove('active');
+  document.getElementById('view-portal').classList.add('active');
+  renderPortalSlots();
+}
+
+function setAdminTab(tab) {
+  adminTabActual = tab;
+  document.getElementById('admin-editor').style.display = tab==='editor'?'block':'none';
+  document.getElementById('admin-stats').style.display  = tab==='stats'?'block':'none';
+  document.getElementById('atab-editor').className = 'admin-tab'+(tab==='editor'?' active':'');
+  document.getElementById('atab-stats').className  = 'admin-tab'+(tab==='stats'?' active':'');
+  if (tab==='stats') renderStats();
+}
+
+/* ══ LISTA ══ */
+function renderLista() {
+  const el = document.getElementById('avisosList');
+  if (!AVISOS.length) { el.innerHTML='<div style="padding:1.5rem;text-align:center;font-family:var(--f-cond);font-size:0.72rem;color:var(--gris-4)">Sin avisos cargados</div>'; return; }
+  el.innerHTML = AVISOS.map(av => {
+    const est=estado(av);
+    const lbl={activo:'Activo',vencido:'Vencido',futuro:'Próximo',sinf:'Sin fecha'}[est];
+    const cls={activo:'badge-activo',vencido:'badge-vencido',futuro:'badge-futuro',sinf:'badge-sinf'}[est];
+    const sel=av.id===selId?'selected':'';
+    return `<div class="aviso-item ${sel}" onclick="selAviso('${av.id}')">
+      <div class="aviso-item-top">
+        <div class="aviso-item-nombre">${av.cliente||'Sin nombre'}</div>
+        <span class="badge-estado ${cls}">${lbl}</span>
+      </div>
+      <div class="aviso-item-meta">📍 ${POS[av.posicion]||'—'}<br>📅 ${av.inicio||'—'} → ${av.fin||'—'}<br>🔄 ${av.refresco}s</div>
+      <div class="aviso-clics">👆 Clics: <strong>${av.clics}</strong></div>
+    </div>`;
+  }).join('');
+}
+
+/* ══ SELECCIONAR ══ */
+function selAviso(id) {
+  selId=id;
+  const av=AVISOS.find(a=>a.id===id); if(!av) return;
+  document.getElementById('emptyState').style.display='none';
+  document.getElementById('formAviso').style.display='block';
+  document.getElementById('btnBorrar').style.display='inline-flex';
+  document.getElementById('editorHead').textContent='Editar aviso';
+  document.getElementById('f-cliente').value=av.cliente||'';
+  document.getElementById('f-contacto').value=av.contacto||'';
+  document.getElementById('f-descripcion').value=av.descripcion||'';
+  document.getElementById('f-posicion').value=av.posicion||'';
+  document.getElementById('f-url').value=av.url||'';
+  document.getElementById('f-inicio').value=av.inicio||'';
+  document.getElementById('f-fin').value=av.fin||'';
+  document.getElementById('f-refresco').value=av.refresco||30;
+  const pA=document.getElementById('prevAvis');
+  if(av.imagen){pA.src=av.imagen;pA.style.display='block';}else pA.style.display='none';
+  const pD=document.getElementById('prevDef');
+  if(av.imagenDefault){pD.src=av.imagenDefault;pD.style.display='block';}else pD.style.display='none';
+  document.getElementById('vencidoNotice').classList.toggle('visible',estado(av)==='vencido');
+  renderLista();
+}
+
+/* ══ NUEVO ══ */
+function nuevoAviso() {
+  selId=null;
+  document.getElementById('emptyState').style.display='none';
+  document.getElementById('formAviso').style.display='block';
+  document.getElementById('btnBorrar').style.display='none';
+  document.getElementById('editorHead').textContent='Nuevo aviso';
+  document.getElementById('vencidoNotice').classList.remove('visible');
+  ['f-cliente','f-contacto','f-descripcion','f-url'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('f-posicion').value='';
+  document.getElementById('f-inicio').value=hoy();
+  document.getElementById('f-fin').value='';
+  document.getElementById('f-refresco').value=30;
+  document.getElementById('prevAvis').style.display='none';
+  document.getElementById('prevDef').style.display='none';
+  renderLista();
+}
+
+/* ══ GUARDAR ══ */
+function guardarAviso() {
+  const cliente=document.getElementById('f-cliente').value.trim();
+  if(!cliente){toast('⚠ Ingresá el nombre del cliente');return;}
+  const pos=document.getElementById('f-posicion').value;
+  if(!pos){toast('⚠ Seleccioná la posición');return;}
+  const ini=document.getElementById('f-inicio').value;
+  const fin=document.getElementById('f-fin').value;
+  if(ini&&fin&&fin<ini){toast('⚠ La fecha fin no puede ser anterior al inicio');return;}
+
+  const data = {
+    cliente, contacto:document.getElementById('f-contacto').value.trim(),
+    descripcion:document.getElementById('f-descripcion').value.trim(),
+    posicion:pos, url:document.getElementById('f-url').value.trim(),
+    inicio:ini, fin, refresco:parseInt(document.getElementById('f-refresco').value)||30,
+    imagen: document.getElementById('prevAvis').style.display!=='none'?document.getElementById('prevAvis').src:null,
+    imagenDefault: document.getElementById('prevDef').style.display!=='none'?document.getElementById('prevDef').src:null
+  };
+
+  if(selId){
+    const av=AVISOS.find(a=>a.id===selId);
+    Object.assign(av,data);
+    toast('✅ Aviso actualizado','ok');
+  } else {
+    const nuevo={id:makeId(),clics:0,...data};
+    AVISOS.push(nuevo);
+    selId=nuevo.id;
+    toast('✅ Aviso creado','ok');
+  }
+  renderLista(); renderStats(); renderPortalSlots(); iniciarRefresco();
+}
+
+/* ══ BORRAR ══ */
+function borrarAviso(){
+  if(!selId||!confirm('¿Borrar este aviso?'))return;
+  AVISOS=AVISOS.filter(a=>a.id!==selId);
+  selId=null;
+  document.getElementById('emptyState').style.display='block';
+  document.getElementById('formAviso').style.display='none';
+  renderLista(); renderStats(); renderPortalSlots();
+  toast('🗑 Aviso eliminado');
+}
+
+function cancelarEdicion(){
+  selId=null;
+  document.getElementById('emptyState').style.display='block';
+  document.getElementById('formAviso').style.display='none';
+  renderLista();
+}
+
+/* ══ PREVIEW IMAGEN ══ */
+function previewImg(event,previewId){
+  const file=event.target.files[0]; if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const img=document.getElementById(previewId);
+    img.src=e.target.result; img.style.display='block';
+    if(selId){
+      const av=AVISOS.find(a=>a.id===selId);
+      if(av){ if(previewId==='prevAvis') av.imagen=e.target.result; else av.imagenDefault=e.target.result; }
+    }
+    renderPortalSlots();
+  };
+  reader.readAsDataURL(file);
+}
+
+/* ══ PORTAL SLOTS ══ */
+function getActivo(pos){
+  const h=hoy();
+  return AVISOS.find(av=>av.posicion===String(pos)&&av.inicio<=h&&av.fin>=h)||null;
+}
+function getDefault(pos){
+  const av=AVISOS.find(a=>a.posicion===String(pos)&&a.imagenDefault);
+  return av?av.imagenDefault:null;
+}
+
+function renderSlot(slotId,pos){
+  const el=document.getElementById(slotId); if(!el)return;
+  const av=getActivo(pos);
+  if(av&&av.imagen){
+    el.innerHTML=`<img src="${av.imagen}" alt="${av.descripcion||av.cliente}" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"><div style="position:absolute;top:4px;right:4px;background:rgba(0,0,0,0.5);color:#fbbf24;font-family:var(--f-cond);font-size:0.55rem;font-weight:700;padding:2px 6px;border-radius:3px;z-index:2">👆 ${av.clics}</div>`;
+  } else if(av){
+    el.innerHTML=`<div style="width:100%;height:100%;background:#c8102e;display:flex;align-items:center;justify-content:center;font-family:var(--f-cond);font-size:0.65rem;font-weight:700;color:white;letter-spacing:0.1em;position:absolute;inset:0">${av.cliente}<br><span style="font-size:0.55rem;opacity:0.8">👆 ${av.clics}</span></div>`;
+  } else {
+    const def=getDefault(pos);
+    if(def){
+      el.innerHTML=`<img src="${def}" alt="Default" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:0.7">`;
+    } else {
+      const txt=el.getAttribute('data-slot-label')||`SLOT ${pos}`;
+      el.innerHTML=`<span class="slot-label">${txt}</span>`;
+    }
+  }
+}
+
+const SLOT_MAP = {
+  'pslot-1':1,'pslot-3':3,'pslot-5':5,'pslot-6':6,
+  'pslot-7':7,'pslot-8':8,'pslot-9':9,'pslot-10':10,
+  'pslot-11':11,'pslot-11b':11,'hslot-left':2,'hslot-right':2
+};
+
+function renderPortalSlots(){
+  Object.entries(SLOT_MAP).forEach(([id,pos])=>renderSlot(id,pos));
+}
+
+/* ══ REGISTRAR CLIC ══ */
+function registrarClic(avId,pos){
+  const av = avId ? AVISOS.find(a=>a.id===avId) : getActivo(pos);
+  if(!av)return;
+  av.clics++;
+  if(av.url) window.open(av.url,'_blank');
+  toast(`👆 Clic en "${av.cliente}" — Total: ${av.clics}`,'ok');
+  renderPortalSlots(); renderLista(); renderStats();
+}
+
+/* ══ STATS ══ */
+function renderStats(){
+  const h=hoy();
+  const activos  = AVISOS.filter(av=>estado(av)==='activo').length;
+  const vencidos = AVISOS.filter(av=>estado(av)==='vencido').length;
+  const futuros  = AVISOS.filter(av=>estado(av)==='futuro').length;
+  const total    = AVISOS.reduce((s,av)=>s+(av.clics||0),0);
+  document.getElementById('statsCards').innerHTML = `
+    <div class="stat-card"><div class="stat-num verde">${activos}</div><div class="stat-label">Activos</div></div>
+    <div class="stat-card"><div class="stat-num rojo">${vencidos}</div><div class="stat-label">Vencidos</div></div>
+    <div class="stat-card"><div class="stat-num azul">${futuros}</div><div class="stat-label">Próximos</div></div>
+    <div class="stat-card"><div class="stat-num naranja">${total}</div><div class="stat-label">Total clics</div></div>
+    <div class="stat-card"><div class="stat-num">${refGlobal}s</div><div class="stat-label">Refresco</div></div>`;
+
+  const maxC=Math.max(...AVISOS.map(a=>a.clics||0),1);
+  const el=document.getElementById('statsRows');
+  if(!el)return;
+  if(!AVISOS.length){el.innerHTML='<div style="padding:1.5rem;text-align:center;font-family:var(--f-cond);font-size:0.72rem;color:var(--gris-4)">Sin datos</div>';return;}
+  el.innerHTML=AVISOS.map(av=>{
+    const est=estado(av);
+    const lbl={activo:'Activo',vencido:'Vencido',futuro:'Próximo',sinf:'Sin fecha'}[est];
+    const cls={activo:'badge-activo',vencido:'badge-vencido',futuro:'badge-futuro',sinf:'badge-sinf'}[est];
+    const dias=av.fin?diasR(av.fin):null;
+    const cd=dias!==null?(dias<0?`Venció hace ${Math.abs(dias)}d`:dias===0?'Vence hoy':`${dias}d restantes`):'—';
+    const urg=dias!==null&&dias<=3&&dias>=0;
+    const pct=Math.round((av.clics/maxC)*100);
+    return `<div class="stats-row">
+      <span class="nombre">${av.cliente}<br><small style="color:var(--gris-3);font-size:0.65rem">${POS[av.posicion]||'—'}</small></span>
+      <span>Pos. ${av.posicion}</span>
+      <span style="font-size:0.72rem">${av.inicio||'—'}<br><small style="color:var(--gris-3)">${av.fin||''}</small></span>
+      <span>${av.refresco}s</span>
+      <span><div class="clics-wrap"><div class="clics-track"><div class="clics-fill" style="width:${pct}%"></div></div><span class="clics-n">${av.clics}</span></div></span>
+      <span><span class="badge-estado ${cls}" style="display:inline-block;margin-bottom:3px">${lbl}</span><br><span class="countdown ${urg?'urgente':''}">${cd}</span></span>
+    </div>`;
+  }).join('');
+}
+
+/* ══ REFRESCO ══ */
+function iniciarRefresco(){
+  const activos=AVISOS.filter(av=>estado(av)==='activo');
+  refGlobal=activos.length?Math.min(...activos.map(av=>av.refresco||30)):60;
+  refTick=refGlobal;
+}
+
+setInterval(()=>{
+  refTick--;
+  if(refTick<=0){ refTick=refGlobal; renderPortalSlots(); renderStats(); renderLista(); }
+  const pct=(refTick/refGlobal)*100;
+  const f=document.getElementById('refFill');
+  const c=document.getElementById('refCuenta');
+  if(f) f.style.width=pct+'%';
+  if(c) c.textContent=refTick+'s';
+},1000);
+
+/* ══ INIT ══ */
+renderLista();
+renderStats();
+iniciarRefresco();
+renderPortalSlots();
+</script>
+</body>
+</html>

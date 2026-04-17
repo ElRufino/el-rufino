@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voces del Interior · Archivo Periodístico Rufino 2007–2012</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════
+   DESIGN SYSTEM — elDiarioAR-inspired
+   Tema: Blanco editorial + rojo institución
+══════════════════════════════════════════ */
+:root {
+  --rojo:      #c8102e;
+  --rojo-dark: #9e0a22;
+  --negro:     #111111;
+  --gris-1:    #333333;
+  --gris-2:    #555555;
+  --gris-3:    #888888;
+  --gris-4:    #bbbbbb;
+  --gris-5:    #e5e5e5;
+  --gris-6:    #f4f4f4;
+  --blanco:    #ffffff;
+  --linea:     #e0e0e0;
+
+  --f-serif:     'Libre Baskerville', Georgia, serif;
+  --f-sans:      'Barlow', 'Helvetica Neue', sans-serif;
+  --f-condensed: 'Barlow Condensed', 'Helvetica Neue', sans-serif;
+
+  --max-w: 1240px;
+  --col-main: 1fr;
+  --col-side: 300px;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--f-sans);
+  font-size: 15px;
+  color: var(--negro);
+  background: var(--blanco);
+  line-height: 1.6;
+}
+
+a { color: inherit; text-decoration: none; }
+a:hover { color: var(--rojo); }
+img { display: block; max-width: 100%; }
+button { cursor: pointer; font-family: var(--f-sans); }
+
+/* ── UTILIDADES ── */
+.tag {
+  display: inline-block;
+  font-family: var(--f-condensed);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--rojo);
+  padding: 0 0 0.05rem;
+  border-bottom: 2px solid var(--rojo);
+  margin-bottom: 0.4rem;
+}
+
+.kicker {
+  font-family: var(--f-condensed);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gris-3);
+}
+
+.titulo-serif {
+  font-family: var(--f-serif);
+  line-height: 1.2;
+  color: var(--negro);
+}
+
+.sep { border: none; border-top: 1px solid var(--linea); margin: 1.25rem 0; }
+
+/* ══════════════════════════════════════════
+   TOPBAR
+══════════════════════════════════════════ */
+.topbar {
+  background: var(--negro);
+  color: var(--gris-4);
+  font-family: var(--f-condensed);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  padding: 0.45rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.topbar-derecha { display: flex; gap: 1.5rem; }
+.topbar-estado {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--gris-3);
+}
+.topbar-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #4caf50;
+  animation: blink 2.5s ease infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.35} }
+
+/* ══════════════════════════════════════════
+   HEADER LOGO + FECHA
+══════════════════════════════════════════ */
+.header-marca {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 1.25rem 1.5rem 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-bottom: 3px solid var(--negro);
+}
+
+.logo-wrap { display: flex; flex-direction: column; gap: 0.1rem; }
+
+.logo-eyebrow {
+  font-family: var(--f-condensed);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gris-3);
+}
+
+.logo-titulo {
+  font-family: var(--f-serif);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 700;
+  color: var(--negro);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.logo-titulo span { color: var(--rojo); }
+
+.logo-subtitulo {
+  font-family: var(--f-condensed);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--gris-3);
+  letter-spacing: 0.05em;
+  margin-top: 0.3rem;
+}
+
+.header-derecha {
+  text-align: right;
+  font-family: var(--f-condensed);
+  font-size: 0.72rem;
+  color: var(--gris-3);
+  letter-spacing: 0.04em;
+  line-height: 1.6;
+}
+
+/* ══════════════════════════════════════════
+   NAVBAR SECCIONES
+══════════════════════════════════════════ */
+.navbar {
+  background: var(--negro);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  gap: 0;
+  align-items: center;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.navbar-inner::-webkit-scrollbar { display: none; }
+
+.nav-item {
+  font-family: var(--f-condensed);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  padding: 0.85rem 1rem;
+  white-space: nowrap;
+  transition: color 0.15s, background 0.15s;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+}
+.nav-item:hover { color: #fff; background: rgba(255,255,255,0.07); }
+.nav-item.active { color: #fff; border-bottom: 3px solid var(--rojo); }
+
+/* ══════════════════════════════════════════
+   TICKER "HOY HABLAMOS DE"
+══════════════════════════════════════════ */
+.ticker-bar {
+  background: var(--gris-6);
+  border-bottom: 1px solid var(--linea);
+  padding: 0.5rem 1.5rem;
+}
+.ticker-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.ticker-label {
+  font-family: var(--f-condensed);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--rojo);
+  white-space: nowrap;
+}
+.ticker-item {
+  font-family: var(--f-condensed);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--gris-2);
+  padding: 0.15rem 0.6rem;
+  border: 1px solid var(--gris-5);
+  border-radius: 2px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.ticker-item:hover { background: var(--negro); color: #fff; border-color: var(--negro); }
+
+/* ══════════════════════════════════════════
+   LAYOUT PRINCIPAL
+══════════════════════════════════════════ */
+.contenedor {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.layout-main {
+  display: grid;
+  grid-template-columns: 1fr var(--col-side);
+  gap: 2rem;
+  padding-top: 1.75rem;
+  padding-bottom: 3rem;
+  align-items: start;
+}
+
+/* ══════════════════════════════════════════
+   SECCIÓN CABECERA — artículo principal
+══════════════════════════════════════════ */
+.sec-titulo-barra {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--negro);
+  margin-bottom: 1.25rem;
+}
+.sec-titulo-barra h2 {
+  font-family: var(--f-condensed);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--negro);
+}
+.sec-titulo-barra h2 span {
+  display: inline-block;
+  width: 4px; height: 14px;
+  background: var(--rojo);
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+.sec-ver-mas {
+  font-family: var(--f-condensed);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gris-3);
+  cursor: pointer;
+  transition: color 0.15s;
+}
+.sec-ver-mas:hover { color: var(--rojo); }
+
+/* Artículo principal destacado */
+.art-principal {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.75rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--linea);
+}
+
+.art-principal-imagen {
+  aspect-ratio: 16/10;
+  background: var(--gris-6);
+  border: 1px solid var(--linea);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.art-img-placeholder {
+  width: 100%; height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  background: var(--gris-6);
+  padding: 1rem;
+}
+
+.art-img-placeholder .monograma {
+  font-family: var(--f-serif);
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--gris-4);
+  line-height: 1;
+}
+
+.art-img-placeholder .id-doc {
+  font-family: var(--f-condensed);
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  color: var(--gris-4);
+  text-align: center;
+}
+
+.badge-sin-audio {
+  position: absolute;
+  bottom: 0.6rem; right: 0.6rem;
+  background: rgba(0,0,0,0.55);
+  color: rgba(255,255,255,0.7);
+  font-family: var(--f-condensed);
+  font-size: 0.6rem;
+  padding: 0.15rem 0.45rem;
+  letter-spacing: 0.05em;
+}
+
+.badge-estado {
+  position: absolute;
+  top: 0.6rem; left: 0.6rem;
+  font-family: var(--f-condensed);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.5rem;
+}
+.est-revisado   { background: #1b5e20; color: #fff; }
+.est-pendiente  { background: #555; color: #fff; }
+.est-digitalizar{ background: #e65100; color: #fff; }
+
+.art-principal-texto { display: flex; flex-direction: column; justify-content: flex-start; gap: 0.5rem; }
+
+.art-principal-titulo {
+  font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+  font-weight: 700;
+  line-height: 1.18;
+}
+
+.art-cargo {
+  font-family: var(--f-condensed);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--gris-3);
+  letter-spacing: 0.02em;
+}
+
+.art-obs {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--gris-2);
+}
+
+.art-meta {
+  display: flex;
+  gap: 1rem;
+  font-family: var(--f-condensed);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  color: var(--gris-3);
+  align-items: center;
+  flex-wrap: wrap;
+}
+.art-fecha { font-weight: 600; color: var(--gris-2); }
+.art-id { font-style: italic; }
+
+.art-arch {
+  border-top: 1px dashed var(--linea);
+  padding-top: 0.5rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.15rem 0.5rem;
+  font-family: var(--f-condensed);
+  font-size: 0.65rem;
+  color: var(--gris-3);
+}
+.art-arch .k { color: var(--gris-3); }
+.art-arch .v { color: var(--negro); word-break: break-all; }
+
+/* ══════════════════════════════════════════
+   REPRODUCTOR REAL
+══════════════════════════════════════════ */
+.reproductor {
+  background: var(--negro);
+  padding: 0.65rem 0.85rem 0.55rem;
+  margin-top: 0.15rem;
+}
+
+.rep-fila {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 0.35rem;
+}
+
+.play-btn {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.35);
+  background: transparent;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+  flex-shrink: 0;
+  color: #fff;
+}
+.play-btn:hover { border-color: var(--rojo); background: var(--rojo); }
+.play-btn.playing { border-color: var(--rojo); background: var(--rojo); }
+.play-btn svg { width: 11px; height: 11px; fill: #fff; pointer-events: none; }
+
+.progreso-wrap { flex: 1; }
+.progreso-bar {
+  width: 100%; height: 3px;
+  background: rgba(255,255,255,0.12);
+  border-radius: 3px;
+  cursor: pointer;
+  margin-bottom: 0.25rem;
+}
+.progreso-fill {
+  height: 100%; background: var(--rojo);
+  border-radius: 3px; width: 0%;
+  pointer-events: none;
+  transition: width 0.1s linear;
+}
+.progreso-times {
+  display: flex; justify-content: space-between;
+  font-family: var(--f-condensed);
+  font-size: 0.58rem;
+  color: rgba(255,255,255,0.35);
+}
+
+.rep-archivo {
+  font-family: var(--f-condensed);
+  font-size: 0.6rem;
+  color: rgba(255,255,255,0.22);
+  letter-spacing: 0.02em;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 0.3rem;
+  word-break: break-all;
+}
+
+.sin-audio-tag {
+  background: var(--negro);
+  padding: 0.45rem 0.85rem;
+  font-family: var(--f-condensed);
+  font-size: 0.62rem;
+  color: rgba(255,255,255,0.25);
+  font-style: italic;
+  letter-spacing: 0.03em;
+}
+
+/* ══════════════════════════════════════════
+   GRILLA 3 ARTÍCULOS SECUNDARIOS
+══════════════════════════════════════════ */
+.grilla-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 1.75rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--linea);
+}
+
+.card-s {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  cursor: pointer;
+}
+
+.card-s-img {
+  aspect-ratio: 16/9;
+  background: var(--gris-6);
+  border: 1px solid var(--linea);
+  overflow: hidden;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.card-s-ph {
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 0.3rem;
+}
+
+.card-s-ph .mono { font-family: var(--f-serif); font-size: 1.8rem; color: var(--gris-5); font-weight: 700; line-height:1; }
+.card-s-ph .mini { font-family: var(--f-condensed); font-size: 0.55rem; color: var(--gris-4); letter-spacing: 0.05em; }
+
+.card-s-titulo {
+  font-family: var(--f-serif);
+  font-size: 0.92rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--negro);
+  transition: color 0.15s;
+}
+.card-s:hover .card-s-titulo { color: var(--rojo); }
+
+.card-s-cargo {
+  font-family: var(--f-condensed);
+  font-size: 0.72rem;
+  color: var(--gris-3);
+}
+
+.card-s-meta {
+  font-family: var(--f-condensed);
+  font-size: 0.65rem;
+  color: var(--gris-3);
+  margin-top: auto;
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+/* ══════════════════════════════════════════
+   EDITORIAL
+══════════════════════════════════════════ */
+.editorial-bloque {
+  background: var(--negro);
+  color: #fff;
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 1.75rem;
+}
+
+.editorial-eyebrow {
+  font-family: var(--f-condensed);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--rojo);
+  margin-bottom: 0.75rem;
+}
+
+.editorial-titulo {
+  font-family: var(--f-serif);
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 0.75rem;
+  color: #fff;
+}
+
+.editorial-texto {
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.7);
+  font-weight: 300;
+}
+
+/* ══════════════════════════════════════════
+   GRILLA 2 COLUMNAS
+══════════════════════════════════════════ */
+.grilla-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-bottom: 1.75rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--linea);
+}
+
+.card-m {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  cursor: pointer;
+  border-top: 2px solid var(--linea);
+  padding-top: 0.75rem;
+  transition: border-color 0.15s;
+}
+.card-m:hover { border-color: var(--rojo); }
+
+.card-m-titulo {
+  font-family: var(--f-serif);
+  font-size: 1.02rem;
+  font-weight: 700;
+  line-height: 1.28;
+  color: var(--negro);
+  transition: color 0.15s;
+}
+.card-m:hover .card-m-titulo { color: var(--rojo); }
+
+.card-m-obs {
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--gris-2);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-m-meta {
+  font-family: var(--f-condensed);
+  font-size: 0.65rem;
+  color: var(--gris-3);
+  display: flex; gap: 0.5rem;
+  margin-top: auto;
+}
+
+/* ══════════════════════════════════════════
+   FILTROS GRILLA COMPLETA
+══════════════════════════════════════════ */
+.filtros-bloque {
+  background: var(--gris-6);
+  border: 1px solid var(--linea);
+  padding: 0.85rem 1rem;
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.filtro-chip {
+  font-family: var(--f-condensed);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.75rem;
+  border: 1px solid var(--linea);
+  background: var(--blanco);
+  color: var(--gris-2);
+  transition: all 0.15s;
+  border-radius: 2px;
+}
+.filtro-chip:hover { border-color: var(--negro); color: var(--negro); }
+.filtro-chip.active { background: var(--negro); color: #fff; border-color: var(--negro); }
+
+.filtro-sep {
+  width: 1px; height: 18px;
+  background: var(--linea);
+  margin: 0 0.25rem;
+}
+
+.filtro-anio {
+  font-family: var(--f-condensed);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 0.25rem 0.6rem;
+  border: 1px solid var(--linea);
+  background: transparent;
+  color: var(--gris-3);
+  transition: all 0.15s;
+}
+.filtro-anio:hover { color: var(--negro); border-color: var(--gris-3); }
+.filtro-anio.active { background: var(--rojo); color: #fff; border-color: var(--rojo); }
+
+/* Grilla archivo completo */
+.grilla-archivo {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+  border: 1px solid var(--linea);
+}
+
+.card-archivo {
+  padding: 1rem 1.1rem;
+  border-right: 1px solid var(--linea);
+  border-bottom: 1px solid var(--linea);
+  cursor: pointer;
+  transition: background 0.15s;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.card-archivo:nth-child(2n) { border-right: none; }
+.card-archivo:hover { background: var(--gris-6); }
+
+.card-archivo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.1rem;
+}
+
+.card-archivo-titulo {
+  font-family: var(--f-sans);
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--negro);
+  transition: color 0.15s;
+}
+.card-archivo:hover .card-archivo-titulo { color: var(--rojo); }
+
+.card-archivo-cargo {
+  font-size: 0.75rem;
+  color: var(--gris-3);
+}
+
+.card-archivo-obs {
+  font-size: 0.77rem;
+  line-height: 1.5;
+  color: var(--gris-2);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-archivo-foot {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--f-condensed);
+  font-size: 0.62rem;
+  color: var(--gris-3);
+  margin-top: 0.2rem;
+  padding-top: 0.4rem;
+  border-top: 1px dashed var(--linea);
+  gap: 0.5rem;
+}
+.card-archivo-arch { word-break: break-all; font-style: italic; }
+
+/* ══════════════════════════════════════════
+   SIDEBAR
+══════════════════════════════════════════ */
+.sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+
+.sidebar-widget {
+  border: 1px solid var(--linea);
+}
+
+.widget-cabecera {
+  background: var(--negro);
+  color: #fff;
+  padding: 0.6rem 1rem;
+  font-family: var(--f-condensed);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.widget-item {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--linea);
+  display: flex;
+  gap: 0.75rem;
+  cursor: pointer;
+  transition: background 0.15s;
+  align-items: flex-start;
+}
+.widget-item:last-child { border-bottom: none; }
+.widget-item:hover { background: var(--gris-6); }
+
+.widget-num {
+  font-family: var(--f-serif);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--gris-5);
+  line-height: 1;
+  flex-shrink: 0;
+  width: 22px;
+  text-align: center;
+}
+
+.widget-item-titulo {
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--negro);
+  transition: color 0.15s;
+}
+.widget-item:hover .widget-item-titulo { color: var(--rojo); }
+
+.widget-item-meta {
+  font-family: var(--f-condensed);
+  font-size: 0.62rem;
+  color: var(--gris-3);
+  margin-top: 0.2rem;
+}
+
+/* Widget estadísticas archivo */
+.widget-stats { padding: 1rem; display: flex; flex-direction: column; gap: 0.65rem; }
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-bottom: 1px dashed var(--linea);
+  padding-bottom: 0.5rem;
+}
+.stat-row:last-child { border-bottom: none; padding-bottom: 0; }
+.stat-label { font-family: var(--f-condensed); font-size: 0.7rem; color: var(--gris-3); letter-spacing: 0.05em; text-transform: uppercase; }
+.stat-val { font-family: var(--f-serif); font-size: 1.2rem; font-weight: 700; color: var(--negro); }
+.stat-val.rojo { color: var(--rojo); }
+.stat-nota { font-family: var(--f-condensed); font-size: 0.6rem; color: var(--gris-4); font-style: italic; }
+
+/* Widget opinión */
+.opinion-item {
+  padding: 0.9rem 1rem;
+  border-bottom: 1px solid var(--linea);
+}
+.opinion-item:last-child { border-bottom: none; }
+.opinion-kicker { font-family: var(--f-condensed); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rojo); margin-bottom: 0.25rem; }
+.opinion-titulo { font-family: var(--f-serif); font-size: 0.88rem; font-weight: 700; line-height: 1.25; color: var(--negro); }
+.opinion-autor { font-family: var(--f-condensed); font-size: 0.68rem; color: var(--gris-3); margin-top: 0.3rem; }
+
+/* ══════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════ */
+footer {
+  background: var(--negro);
+  color: rgba(255,255,255,0.5);
+  padding: 1.75rem 1.5rem;
+  border-top: 3px solid var(--rojo);
+}
+
+.footer-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-logo { font-family: var(--f-serif); font-size: 1.1rem; font-weight: 700; color: #fff; }
+.footer-logo span { color: var(--rojo); }
+.footer-meta { font-family: var(--f-condensed); font-size: 0.7rem; letter-spacing: 0.06em; text-align: right; line-height: 1.7; }
+
+/* ══════════════════════════════════════════
+   ANIMACIONES
+══════════════════════════════════════════ */
+@keyframes fadeUp {
+  from { opacity:0; transform: translateY(8px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+.card-archivo { animation: fadeUp 0.3s ease both; }
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .layout-main { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .art-principal { grid-template-columns: 1fr; }
+  .grilla-3 { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) {
+  .grilla-3 { grid-template-columns: 1fr; }
+  .grilla-2 { grid-template-columns: 1fr; }
+  .grilla-archivo { grid-template-columns: 1fr; }
+  .grilla-archivo .card-archivo { border-right: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-estado"><span class="topbar-dot"></span> ARCHIVO ACTIVO · Rufino, Santa Fe</div>
+  <div class="topbar-derecha">
+    <span>2007–2012</span>
+    <span>25 registros indexados</span>
+    <span>Formato: dd-mm-aaaa - Nombre.mp3</span>
+  </div>
+</div>
+
+<!-- HEADER -->
+<div class="header-marca">
+  <div class="logo-wrap">
+    <span class="logo-eyebrow">Archivo Periodístico · Sur Santafesino</span>
+    <div class="logo-titulo">Voces del <span>Interior</span></div>
+    <div class="logo-subtitulo">Rufino · Santa Fe · Pampa Húmeda · 2007–2012</div>
+  </div>
+  <div class="header-derecha">
+    <div>Archivo documental de entrevistas</div>
+    <div>Radio local · Corpus original en DVD</div>
+    <div style="color:var(--rojo);font-weight:600">Formato real conservado</div>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="navbar-inner">
+    <button class="nav-item active" onclick="filtrarCat('todas')">Todas</button>
+    <button class="nav-item" onclick="filtrarCat('Política')">Política</button>
+    <button class="nav-item" onclick="filtrarCat('Salud')">Salud</button>
+    <button class="nav-item" onclick="filtrarCat('Economía')">Economía</button>
+    <button class="nav-item" onclick="filtrarCat('Educación')">Educación</button>
+    <button class="nav-item" onclick="filtrarCat('Cultura')">Cultura</button>
+    <button class="nav-item" onclick="filtrarCat('Sindical')">Sindical</button>
+    <button class="nav-item" onclick="filtrarCat('Social')">Social</button>
+    <button class="nav-item" onclick="filtrarCat('Agro')">Agro</button>
+  </div>
+</nav>
+
+<!-- TICKER -->
+<div class="ticker-bar">
+  <div class="ticker-inner">
+    <span class="ticker-label">Hoy destacamos ·</span>
+    <span class="ticker-item">Sociedad Italiana de Rufino</span>
+    <span class="ticker-item">Crisis campo 2008</span>
+    <span class="ticker-item">Inundaciones 2011</span>
+    <span class="ticker-item">Omar Sposaro · cooperativas</span>
+    <span class="ticker-item">Salud rural zona sur</span>
+    <span class="ticker-item">Dictadura sindical UPCN</span>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="contenedor">
+  <div class="layout-main">
+
+    <!-- COLUMNA PRINCIPAL -->
+    <main id="main-content">
+
+      <!-- DESTACADAS -->
+      <div class="sec-titulo-barra">
+        <h2><span></span>Entrevistas destacadas</h2>
+        <span class="sec-ver-mas" onclick="document.getElementById('archivo-completo').scrollIntoView({behavior:'smooth'})">Ver archivo completo →</span>
+      </div>
+      <div id="destacadas-container"></div>
+
+      <!-- EDITORIAL -->
+      <div class="editorial-bloque">
+        <div class="editorial-eyebrow">Editorial del archivo</div>
+        <div class="editorial-titulo">Un registro que documenta cinco años de transformaciones en el sur santafesino</div>
+        <div class="editorial-texto">
+          Entre 2007 y 2012 la radio local de Rufino mantuvo una práctica periodística poco habitual en el interior: registrar en audio cada entrevista de interés público. Intendentes, médicos, docentes, productores, sindicalistas y referentes culturales. El resultado es un corpus oral único que documenta un período de profundos cambios en la región pampeana. Este portal organiza ese material con rigor archivístico: cada registro conserva su fecha original, su nombre de archivo real y su estado de revisión. Los archivos MP3 y JPG siguen el formato <code style="background:rgba(255,255,255,0.1);padding:0.1rem 0.3rem;border-radius:2px;font-size:0.82em">dd-mm-aaaa - Nombre del Entrevistado</code>. Las cifras totales del corpus quedan pendientes de verificación una vez completada la digitalización de los DVD.
+        </div>
+      </div>
+
+      <!-- ÚLTIMAS INCORPORACIONES -->
+      <div class="sec-titulo-barra">
+        <h2><span></span>Últimas incorporaciones</h2>
+      </div>
+      <div class="grilla-2" id="ultimas-container"></div>
+
+      <!-- ARCHIVO COMPLETO -->
+      <div id="archivo-completo">
+        <div class="sec-titulo-barra" style="margin-top:0.5rem">
+          <h2><span></span>Archivo completo</h2>
+        </div>
+        <div class="filtros-bloque">
+          <span style="font-family:var(--f-condensed);font-size:0.7rem;color:var(--gris-3);font-weight:600;letter-spacing:0.08em;text-transform:uppercase;margin-right:.25rem">Categoría</span>
+          <button class="filtro-chip active" data-cat="todas">Todas</button>
+          <button class="filtro-chip" data-cat="Política">Política</button>
+          <button class="filtro-chip" data-cat="Salud">Salud</button>
+          <button class="filtro-chip" data-cat="Economía">Economía</button>
+          <button class="filtro-chip" data-cat="Educación">Educación</button>
+          <button class="filtro-chip" data-cat="Cultura">Cultura</button>
+          <button class="filtro-chip" data-cat="Sindical">Sindical</button>
+          <button class="filtro-chip" data-cat="Social">Social</button>
+          <button class="filtro-chip" data-cat="Agro">Agro</button>
+          <div class="filtro-sep"></div>
+          <button class="filtro-anio active" data-anio="todos">Todos</button>
+          <button class="filtro-anio" data-anio="2007">2007</button>
+          <button class="filtro-anio" data-anio="2008">2008</button>
+          <button class="filtro-anio" data-anio="2009">2009</button>
+          <button class="filtro-anio" data-anio="2010">2010</button>
+          <button class="filtro-anio" data-anio="2011">2011</button>
+          <button class="filtro-anio" data-anio="2012">2012</button>
+        </div>
+        <div class="grilla-archivo" id="grilla-archivo"></div>
+      </div>
+
+    </main><!-- /main -->
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+      <!-- Estadísticas del archivo -->
+      <div class="sidebar-widget">
+        <div class="widget-cabecera">Estado del archivo</div>
+        <div class="widget-stats">
+          <div class="stat-row">
+            <div>
+              <div class="stat-label">Registros indexados</div>
+              <div class="stat-val rojo">25</div>
+            </div>
+            <div class="stat-nota">corpus demo</div>
+          </div>
+          <div class="stat-row">
+            <div>
+              <div class="stat-label">Rango temporal</div>
+              <div class="stat-val" style="font-size:1rem">2007–2012</div>
+            </div>
+          </div>
+          <div class="stat-row">
+            <div>
+              <div class="stat-label">Horas de audio</div>
+              <div class="stat-val" style="font-size:1rem;color:var(--gris-4)">—</div>
+            </div>
+            <div class="stat-nota">por verificar</div>
+          </div>
+          <div class="stat-row">
+            <div>
+              <div class="stat-label">Estado revisados</div>
+              <div class="stat-val" style="font-size:1rem;color:#1b5e20">7</div>
+            </div>
+            <div class="stat-nota">de 25</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lo más leído (simulado) -->
+      <div class="sidebar-widget">
+        <div class="widget-cabecera">Lo más consultado</div>
+        <div id="mas-leido"></div>
+      </div>
+
+      <!-- Opinión / Editorial -->
+      <div class="sidebar-widget">
+        <div class="widget-cabecera">Columna editorial</div>
+        <div class="opinion-item">
+          <div class="opinion-kicker">Archivo vivo</div>
+          <div class="opinion-titulo">La memoria oral como documento: por qué conservar cada entrevista en su formato original</div>
+          <div class="opinion-autor">Nota del archivo · 2024</div>
+        </div>
+        <div class="opinion-item">
+          <div class="opinion-kicker">Metodología</div>
+          <div class="opinion-titulo">El esquema de nombres dd-mm-aaaa no es una preferencia estética, es una decisión archivística</div>
+          <div class="opinion-autor">Criterios de digitalización</div>
+        </div>
+        <div class="opinion-item">
+          <div class="opinion-kicker">Contexto</div>
+          <div class="opinion-titulo">Rufino y el sur santafesino en el período 2007–2012: cinco años de transformaciones</div>
+          <div class="opinion-autor">Notas de campo</div>
+        </div>
+      </div>
+
+    </aside>
+  </div><!-- /layout-main -->
+</div><!-- /contenedor -->
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Voces del <span>Interior</span></div>
+    <div class="footer-meta">
+      Archivo Periodístico · Rufino, Santa Fe, Argentina<br>
+      Formato: <code style="font-size:0.65rem">dd-mm-aaaa - Nombre del Entrevistado.mp3 / .jpg</code><br>
+      ID documental: <code style="font-size:0.65rem">ENT-AAAAMMDD-NNN</code> · Cifras pendientes de verificación
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ══════════════════════════════════════════
+   CORPUS — 25 registros
+══════════════════════════════════════════ */
+const CORPUS = [
+  { id:"ENT-20070312-001", fecha:"12-03-2007", anio:"2007", entrevistado:"Jorge Almada", cargo:"Intendente Municipal", cat:"Política",
+    obs:"Plan de obras públicas 2007–2011 y desafíos de la gestión municipal en el interior provincial.",
+    mp3:"12-03-2007 - Jorge Almada.mp3", jpg:"12-03-2007 - Jorge Almada.jpg",
+    audio:null, foto:null, dur:"8:24", estado:"pendiente", destacado:true, reciente:false },
+  { id:"ENT-20070705-002", fecha:"05-07-2007", anio:"2007", entrevistado:"María Fernández", cargo:"Directora Hospital Zonal", cat:"Salud",
+    obs:"Situación del sistema sanitario regional y necesidad de inversión en infraestructura.",
+    mp3:"05-07-2007 - María Fernández.mp3", jpg:"05-07-2007 - María Fernández.jpg",
+    audio:null, foto:null, dur:"11:07", estado:"revisado", destacado:true, reciente:false },
+  { id:"ENT-20071120-003", fecha:"20-11-2007", anio:"2007", entrevistado:"Carlos Ibáñez", cargo:"Ing. Agrónomo INTA Rufino", cat:"Agro",
+    obs:"Estimaciones campaña soja 2007/08 e impacto de la sequía en el sur santafesino.",
+    mp3:"20-11-2007 - Carlos Ibáñez.mp3", jpg:"20-11-2007 - Carlos Ibáñez.jpg",
+    audio:null, foto:null, dur:"13:40", estado:"revisado", destacado:false, reciente:false },
+  { id:"ENT-20080315-004", fecha:"15-03-2008", anio:"2008", entrevistado:"Susana Garelli", cargo:"Directora Regional de Educación", cat:"Educación",
+    obs:"Plan de Mejora Institucional en escuelas secundarias del sur de Santa Fe.",
+    mp3:"15-03-2008 - Susana Garelli.mp3", jpg:"15-03-2008 - Susana Garelli.jpg",
+    audio:null, foto:null, dur:"9:18", estado:"pendiente", destacado:false, reciente:false },
+  { id:"ENT-20080620-005", fecha:"20-06-2008", anio:"2008", entrevistado:"Ramón Ledesma", cargo:"Pte. Cooperativa Agropecuaria", cat:"Economía",
+    obs:"Consecuencias del conflicto campo-gobierno por resolución 125 en cooperativas del sur pampeano.",
+    mp3:"20-06-2008 - Ramón Ledesma.mp3", jpg:"20-06-2008 - Ramón Ledesma.jpg",
+    audio:null, foto:null, dur:"17:52", estado:"revisado", destacado:true, reciente:false },
+  { id:"ENT-20081118-006", fecha:"18-11-2008", anio:"2008", entrevistado:"Mesa de Enlace Regional", cargo:"Referentes del campo pampeano", cat:"Economía",
+    obs:"Análisis colectivo del impacto de la crisis por retenciones en productores de la región.",
+    mp3:"18-11-2008 - Mesa de Enlace Regional.mp3", jpg:"18-11-2008 - Mesa de Enlace Regional.jpg",
+    audio:null, foto:null, dur:"14:33", estado:"digitalizar", destacado:false, reciente:false },
+  { id:"ENT-20090210-007", fecha:"10-02-2009", anio:"2009", entrevistado:"Héctor Villarreal", cargo:"Secretario de Obras Públicas", cat:"Política",
+    obs:"Balance de gestión municipal y proyecciones para el período electoral 2009.",
+    mp3:"10-02-2009 - Héctor Villarreal.mp3", jpg:"10-02-2009 - Héctor Villarreal.jpg",
+    audio:null, foto:null, dur:"10:05", estado:"pendiente", destacado:false, reciente:false },
+  { id:"ENT-20090422-008", fecha:"22-04-2009", anio:"2009", entrevistado:"Roberto Coria", cargo:"Director Regional de Educación", cat:"Educación",
+    obs:"Programas de inclusión educativa y estado de infraestructura escolar en el sur santafesino.",
+    mp3:"22-04-2009 - Roberto Coria.mp3", jpg:"22-04-2009 - Roberto Coria.jpg",
+    audio:null, foto:null, dur:"9:51", estado:"pendiente", destacado:false, reciente:false },
+  { id:"ENT-20090815-009", fecha:"15-08-2009", anio:"2009", entrevistado:"Dra. Norma Páez", cargo:"Jefa de Guardia Hospital Rufino", cat:"Salud",
+    obs:"Crisis gripe A H1N1: protocolo de atención y situación de centros de salud en el interior provincial.",
+    mp3:"15-08-2009 - Norma Páez.mp3", jpg:"15-08-2009 - Norma Páez.jpg",
+    audio:null, foto:null, dur:"15:20", estado:"revisado", destacado:true, reciente:false },
+  { id:"ENT-20091103-010", fecha:"03-11-2009", anio:"2009", entrevistado:"Osvaldo Benítez", cargo:"Pte. Centro Comercial e Industrial", cat:"Economía",
+    obs:"Impacto de la crisis financiera global 2008–09 en el comercio local de Rufino.",
+    mp3:"03-11-2009 - Osvaldo Benítez.mp3", jpg:"03-11-2009 - Osvaldo Benítez.jpg",
+    audio:null, foto:null, dur:"11:44", estado:"pendiente", destacado:false, reciente:false },
+  { id:"ENT-20100310-011", fecha:"10-03-2010", anio:"2010", entrevistado:"Liliana Montes", cargo:"Trabajadora Social Municipal", cat:"Social",
+    obs:"Vulnerabilidad en el conurbano de Rufino y cobertura de programas sociales provinciales.",
+    mp3:"10-03-2010 - Liliana Montes.mp3", jpg:"10-03-2010 - Liliana Montes.jpg",
+    audio:null, foto:null, dur:"12:08", estado:"pendiente", destacado:false, reciente:false },
+  { id:"ENT-20100803-012", fecha:"03-08-2010", anio:"2010", entrevistado:"Elsa Quiroga", cargo:"Presidenta Sociedad Italiana de Rufino", cat:"Cultura",
+    obs:"Historia de la institución, inmigración italiana y proyectos de preservación del patrimonio comunitario.",
+    mp3:"03-08-2010 - Elsa Quiroga.mp3", jpg:"03-08-2010 - Elsa Quiroga.jpg",
+    audio:null, foto:null, dur:"17:20", estado:"revisado", destacado:true, reciente:false },
+  { id:"ENT-20101205-013", fecha:"05-12-2010", anio:"2010", entrevistado:"Jorge Mansilla", cargo:"Delegado gremial UPCN Rufino", cat:"Sindical",
+    obs:"Paritarias 2010 y condiciones laborales en municipios del sur santafesino.",
+    mp3:"05-12-2010 - Jorge Mansilla.mp3", jpg:"05-12-2010 - Jorge Mansilla.jpg",
+    audio:null, foto:null, dur:"8:57", estado:"digitalizar", destacado:false, reciente:false },
+  { id:"ENT-20110129-014", fecha:"29-01-2011", anio:"2011", entrevistado:"Defensa Civil Regional", cargo:"Coordinación de Emergencias", cat:"Social",
+    obs:"Operativo de asistencia en las inundaciones que afectaron el sur santafesino en 2011.",
+    mp3:"29-01-2011 - Defensa Civil Regional.mp3", jpg:"29-01-2011 - Defensa Civil Regional.jpg",
+    audio:null, foto:null, dur:"12:48", estado:"pendiente", destacado:false, reciente:false },
+  { id:"ENT-20110414-015", fecha:"14-04-2011", anio:"2011", entrevistado:"Patricia Molina", cargo:"Referente de género y derechos", cat:"Social",
+    obs:"Violencia de género en el interior provincial, acceso a la justicia y recursos disponibles.",
+    mp3:"14-04-2011 - Patricia Molina.mp3", jpg:"14-04-2011 - Patricia Molina.jpg",
+    audio:null, foto:null, dur:"13:42", estado:"revisado", destacado:false, reciente:false },
+  { id:"ENT-20110720-016", fecha:"20-07-2011", anio:"2011", entrevistado:"Ing. Luis Fantini", cargo:"Director de Vialidad Provincial", cat:"Política",
+    obs:"Estado de la red vial del sur santafesino y plan de pavimentación de rutas provinciales.",
+    mp3:"20-07-2011 - Luis Fantini.mp3", jpg:"20-07-2011 - Luis Fantini.jpg",
+    audio:null, foto:null, dur:"14:10", estado:"pendiente", destacado:false, reciente:false },
+  { id:"ENT-20111108-017", fecha:"08-11-2011", anio:"2011", entrevistado:"Ana Lucía Ferreyra", cargo:"Rectora Escuela Secundaria N°1", cat:"Educación",
+    obs:"Deserción escolar en el interior provincial y experiencias de retención en escuelas rurales.",
+    mp3:"08-11-2011 - Ana Lucía Ferreyra.mp3", jpg:"08-11-2011 - Ana Lucía Ferreyra.jpg",
+    audio:null, foto:null, dur:"10:33", estado:"pendiente", destacado:false, reciente:false },
+  { id:"ENT-20120118-018", fecha:"18-01-2012", anio:"2012", entrevistado:"Marcelo Roldán", cargo:"Productor agropecuario", cat:"Agro",
+    obs:"Perspectivas campaña agrícola 2011/12 ante la sequía y el alza en los costos de producción.",
+    mp3:"18-01-2012 - Marcelo Roldán.mp3", jpg:"18-01-2012 - Marcelo Roldán.jpg",
+    audio:null, foto:null, dur:"9:22", estado:"pendiente", destacado:false, reciente:true },
+  { id:"ENT-20120307-019", fecha:"07-03-2012", anio:"2012", entrevistado:"Dr. Pablo Quiroz", cargo:"Médico generalista zona rural", cat:"Salud",
+    obs:"Cobertura sanitaria en localidades menores de 2.000 habitantes en el sur de Santa Fe.",
+    mp3:"07-03-2012 - Pablo Quiroz.mp3", jpg:"07-03-2012 - Pablo Quiroz.jpg",
+    audio:null, foto:null, dur:"16:05", estado:"pendiente", destacado:false, reciente:true },
+  { id:"ENT-20120514-020", fecha:"14-05-2012", anio:"2012", entrevistado:"Omar Sposaro", cargo:"Referente cooperativo y social", cat:"Economía",
+    obs:"Rol de las cooperativas en el desarrollo local y desafíos del asociativismo en el interior.",
+    mp3:"14-05-2012 - Omar Sposaro.mp3", jpg:"14-05-2012 - Omar Sposaro.jpg",
+    audio:null, foto:null, dur:"19:55", estado:"revisado", destacado:true, reciente:true },
+  { id:"ENT-20120614-021", fecha:"14-06-2012", anio:"2012", entrevistado:"Hugo Pereyra", cargo:"Secretario General UPCN", cat:"Sindical",
+    obs:"Negociaciones paritarias del sector público provincial y situación de trabajadores del interior.",
+    mp3:"14-06-2012 - Hugo Pereyra.mp3", jpg:"14-06-2012 - Hugo Pereyra.jpg",
+    audio:null, foto:null, dur:"10:15", estado:"digitalizar", destacado:false, reciente:true },
+  { id:"ENT-20120725-022", fecha:"25-07-2012", anio:"2012", entrevistado:"Beatriz Noriega", cargo:"Coordinadora Biblioteca Popular", cat:"Cultura",
+    obs:"Historia de la biblioteca popular de Rufino y el rol cultural de las instituciones en el interior.",
+    mp3:"25-07-2012 - Beatriz Noriega.mp3", jpg:"25-07-2012 - Beatriz Noriega.jpg",
+    audio:null, foto:null, dur:"11:30", estado:"pendiente", destacado:false, reciente:false },
+  { id:"ENT-20120830-023", fecha:"30-08-2012", anio:"2012", entrevistado:"Lic. Fernanda Salas", cargo:"Psicóloga Centro de Salud", cat:"Salud",
+    obs:"Salud mental en comunidades del interior: recursos, estigma y acceso a atención especializada.",
+    mp3:"30-08-2012 - Fernanda Salas.mp3", jpg:"30-08-2012 - Fernanda Salas.jpg",
+    audio:null, foto:null, dur:"14:48", estado:"pendiente", destacado:false, reciente:false },
+  { id:"ENT-20120918-024", fecha:"18-09-2012", anio:"2012", entrevistado:"Rodolfo Aguirre", cargo:"Presidente Comisión de Fomento", cat:"Política",
+    obs:"Gestión de pequeñas localidades rurales: financiamiento, infraestructura y relación con el municipio.",
+    mp3:"18-09-2012 - Rodolfo Aguirre.mp3", jpg:"18-09-2012 - Rodolfo Aguirre.jpg",
+    audio:null, foto:null, dur:"8:40", estado:"digitalizar", destacado:false, reciente:false },
+  { id:"ENT-20121105-025", fecha:"05-11-2012", anio:"2012", entrevistado:"Claudia Berón", cargo:"Maestra rural jubilada", cat:"Educación",
+    obs:"Cuarenta años de docencia rural en el sur santafesino: transformaciones, carencias y memoria.",
+    mp3:"05-11-2012 - Claudia Berón.mp3", jpg:"05-11-2012 - Claudia Berón.jpg",
+    audio:null, foto:null, dur:"22:10", estado:"revisado", destacado:false, reciente:false }
+];
+
+const CAT_COLOR = {
+  "Política":"#c8102e","Salud":"#1565c0","Economía":"#2e7d32","Educación":"#6a1b9a",
+  "Cultura":"#e65100","Sindical":"#00695c","Social":"#880e4f","Agro":"#558b2f"
+};
+
+const ESTADO_CFG = {
+  "revisado":   {label:"Revisado",   cls:"est-revisado"},
+  "pendiente":  {label:"Pendiente",  cls:"est-pendiente"},
+  "digitalizar":{label:"Digitalizar",cls:"est-digitalizar"}
+};
+
+let filtCat  = "todas";
+let filtAnio = "todos";
+let audActivo = null, btnActivo = null;
+
+function fmt(s){return`${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}`}
+
+function mono(n){ return n.split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase(); }
+
+function stopAll(){
+  if(audActivo){audActivo.pause();audActivo.currentTime=0;}
+  document.querySelectorAll('.play-btn.playing').forEach(b=>{
+    b.classList.remove('playing');
+    const sv=b.querySelector('svg');
+    if(sv)sv.innerHTML='<polygon points="0,0 10,6 0,12"/>';
+  });
+  document.querySelectorAll('.progreso-fill').forEach(f=>f.style.width='0%');
+  audActivo=null;btnActivo=null;
+}
+
+function togglePlay(uid){
+  const aud=document.getElementById(`aud-${uid}`);
+  const btn=document.getElementById(`btn-${uid}`);
+  const ico=document.getElementById(`ico-${uid}`);
+  if(!aud)return;
+  if(audActivo&&audActivo!==aud)stopAll();
+  if(aud.paused){
+    aud.play().catch(()=>{});
+    btn.classList.add('playing');
+    ico.innerHTML='<rect x="0" y="0" width="3.5" height="12"/><rect x="6.5" y="0" width="3.5" height="12"/>';
+    audActivo=aud;btnActivo=btn;
+  }else{
+    aud.pause();
+    btn.classList.remove('playing');
+    ico.innerHTML='<polygon points="0,0 10,6 0,12"/>';
+    audActivo=null;btnActivo=null;
+  }
+}
+
+function saltar(ev,uid){
+  const aud=document.getElementById(`aud-${uid}`);
+  const bar=ev.currentTarget;
+  const fill=document.getElementById(`fill-${uid}`);
+  if(!aud||!bar)return;
+  const r=bar.getBoundingClientRect();
+  const pct=Math.max(0,Math.min(1,(ev.clientX-r.left)/r.width));
+  if(aud.duration)aud.currentTime=pct*aud.duration;
+  if(fill)fill.style.width=(pct*100)+'%';
+}
+
+function bindAudio(uid){
+  const aud=document.getElementById(`aud-${uid}`);
+  const fill=document.getElementById(`fill-${uid}`);
+  const tEl=document.getElementById(`t-${uid}`);
+  const dEl=document.getElementById(`dur-${uid}`);
+  const btn=document.getElementById(`btn-${uid}`);
+  const ico=document.getElementById(`ico-${uid}`);
+  if(!aud)return;
+  aud.addEventListener('loadedmetadata',()=>{if(dEl)dEl.textContent=fmt(aud.duration);});
+  aud.addEventListener('timeupdate',()=>{
+    if(!aud.duration)return;
+    if(fill)fill.style.width=(aud.currentTime/aud.duration*100)+'%';
+    if(tEl)tEl.textContent=fmt(aud.currentTime);
+  });
+  aud.addEventListener('ended',()=>{
+    if(fill)fill.style.width='0%';
+    if(tEl)tEl.textContent='0:00';
+    if(btn)btn.classList.remove('playing');
+    if(ico)ico.innerHTML='<polygon points="0,0 10,6 0,12"/>';
+    audActivo=null;btnActivo=null;
+  });
+}
+
+function playerHTML(e,uid){
+  if(!e.audio) return `<div class="sin-audio-tag">[ sin archivo vinculado · ${e.mp3} ]</div>`;
+  return `
+    <div class="reproductor" id="rep-${uid}">
+      <div class="rep-fila">
+        <button class="play-btn" id="btn-${uid}" onclick="togglePlay('${uid}')">
+          <svg id="ico-${uid}" viewBox="0 0 10 12"><polygon points="0,0 10,6 0,12"/></svg>
+        </button>
+        <div class="progreso-wrap">
+          <div class="progreso-bar" onclick="saltar(event,'${uid}')">
+            <div class="progreso-fill" id="fill-${uid}"></div>
+          </div>
+          <div class="progreso-times">
+            <span id="t-${uid}">0:00</span>
+            <span id="dur-${uid}">${e.dur}</span>
+          </div>
+        </div>
+      </div>
+      <div class="rep-archivo">${e.mp3}</div>
+      <audio id="aud-${uid}" src="${e.audio}" preload="none"></audio>
+    </div>`;
+}
+
+function estBadge(e,abs=false){
+  const est=ESTADO_CFG[e.estado]||ESTADO_CFG.pendiente;
+  const s=abs?'position:absolute;top:.6rem;left:.6rem':'';
+  return `<span class="badge-estado ${est.cls}" style="${s}">${est.label}</span>`;
+}
+
+/* ══ RENDER DESTACADAS ══ */
+function renderDestacadas(){
+  const dest=CORPUS.filter(e=>e.destacado);
+  const c=document.getElementById('destacadas-container');
+  if(!c)return;
+  c.innerHTML='';
+
+  // Artículo principal
+  const p=dest[0];
+  if(!p)return;
+  const uid=`dest-${p.id}`;
+  const col=CAT_COLOR[p.cat]||'#c8102e';
+
+  const artDiv=document.createElement('div');
+  artDiv.className='art-principal';
+  artDiv.innerHTML=`
+    <div class="art-principal-imagen">
+      <div class="art-img-placeholder">
+        <div class="monograma">${mono(p.entrevistado)}</div>
+        <div class="id-doc">${p.id}</div>
+      </div>
+      ${estBadge(p,true)}
+      <div class="badge-sin-audio">◷ ${p.dur}</div>
+    </div>
+    <div class="art-principal-texto">
+      <span class="tag" style="color:${col};border-color:${col}">${p.cat}</span>
+      <div class="titulo-serif art-principal-titulo">${p.entrevistado}</div>
+      <div class="art-cargo">${p.cargo}</div>
+      <div class="art-obs">${p.obs}</div>
+      <div class="art-meta">
+        <span class="art-fecha">${p.fecha}</span>
+        <span class="art-id">${p.id}</span>
+        <span>◷ ${p.dur}</span>
+      </div>
+      <div class="art-arch">
+        <span class="k">Archivo</span><span class="v">${p.mp3}</span>
+        <span class="k">Imagen</span> <span class="v">${p.jpg}</span>
+      </div>
+      ${playerHTML(p,uid)}
+    </div>`;
+  c.appendChild(artDiv);
+  if(p.audio)bindAudio(uid);
+
+  // Tres secundarias
+  if(dest.length<2)return;
+  const g3=document.createElement('div');
+  g3.className='grilla-3';
+  dest.slice(1,4).forEach(e=>{
+    const uid2=`dest2-${e.id}`;
+    const col2=CAT_COLOR[e.cat]||'#c8102e';
+    const div=document.createElement('div');
+    div.className='card-s';
+    div.innerHTML=`
+      <div class="card-s-img">
+        <div class="card-s-ph">
+          <div class="mono">${mono(e.entrevistado)}</div>
+          <div class="mini">${e.id}</div>
+        </div>
+        ${estBadge(e,true)}
+      </div>
+      <span class="tag" style="color:${col2};border-color:${col2}">${e.cat}</span>
+      <div class="card-s-titulo">${e.entrevistado}</div>
+      <div class="card-s-cargo">${e.cargo}</div>
+      <div class="card-s-meta">
+        <span>${e.fecha}</span>
+        <span>◷ ${e.dur}</span>
+      </div>
+      ${playerHTML(e,uid2)}`;
+    g3.appendChild(div);
+    if(e.audio)bindAudio(uid2);
+  });
+  c.appendChild(g3);
+}
+
+/* ══ RENDER ÚLTIMAS ══ */
+function renderUltimas(){
+  const lista=CORPUS.filter(e=>e.reciente).slice(0,4);
+  const c=document.getElementById('ultimas-container');
+  if(!c)return;
+  c.innerHTML='';
+  lista.forEach(e=>{
+    const col=CAT_COLOR[e.cat]||'#c8102e';
+    const div=document.createElement('div');
+    div.className='card-m';
+    div.innerHTML=`
+      <span class="tag" style="color:${col};border-color:${col}">${e.cat}</span>
+      <div class="card-m-titulo">${e.entrevistado}</div>
+      <div class="art-cargo">${e.cargo}</div>
+      <div class="card-m-obs">${e.obs}</div>
+      <div class="card-m-meta">
+        <span>${e.fecha}</span>
+        <span>${e.id}</span>
+        <span>◷ ${e.dur}</span>
+      </div>`;
+    c.appendChild(div);
+  });
+}
+
+/* ══ RENDER GRILLA ARCHIVO ══ */
+function renderArchivo(){
+  const lista=CORPUS.filter(e=>{
+    const okC=filtCat==='todas'||e.cat===filtCat;
+    const okA=filtAnio==='todos'||e.anio===filtAnio;
+    return okC&&okA;
+  });
+  const c=document.getElementById('grilla-archivo');
+  if(!c)return;
+  c.innerHTML='';
+  if(!lista.length){
+    c.innerHTML='<div style="padding:2rem;text-align:center;font-family:var(--f-condensed);color:var(--gris-3);grid-column:1/-1">Sin resultados para este filtro</div>';
+    return;
+  }
+  lista.forEach((e,i)=>{
+    const est=ESTADO_CFG[e.estado]||ESTADO_CFG.pendiente;
+    const col=CAT_COLOR[e.cat]||'#c8102e';
+    const div=document.createElement('div');
+    div.className='card-archivo';
+    div.style.animationDelay=`${i*0.025}s`;
+    div.innerHTML=`
+      <div class="card-archivo-header">
+        <span class="tag" style="color:${col};border-color:${col};margin-bottom:0">${e.cat}</span>
+        <span class="badge-estado ${est.cls}" style="position:relative;top:0;left:0;font-size:.58rem">${est.label}</span>
+      </div>
+      <div class="card-archivo-titulo">${e.entrevistado}</div>
+      <div class="card-archivo-cargo">${e.cargo}</div>
+      <div class="card-archivo-obs">${e.obs}</div>
+      <div class="card-archivo-foot">
+        <span>${e.fecha} · ${e.id} · ◷ ${e.dur}</span>
+        <span class="card-archivo-arch">${e.mp3}</span>
+      </div>`;
+    c.appendChild(div);
+  });
+}
+
+/* ══ RENDER MÁS LEÍDO ══ */
+function renderMasLeido(){
+  const top=CORPUS.filter(e=>e.estado==='revisado').slice(0,5);
+  const c=document.getElementById('mas-leido');
+  if(!c)return;
+  top.forEach((e,i)=>{
+    const div=document.createElement('div');
+    div.className='widget-item';
+    div.innerHTML=`
+      <div class="widget-num">${i+1}</div>
+      <div>
+        <div class="widget-item-titulo">${e.entrevistado}</div>
+        <div class="widget-item-meta">${e.cat} · ${e.fecha} · ◷ ${e.dur}</div>
+      </div>`;
+    c.appendChild(div);
+  });
+}
+
+/* ══ FILTROS ══ */
+document.querySelectorAll('.filtro-chip').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.filtro-chip').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    filtCat=btn.dataset.cat;
+    stopAll();renderArchivo();
+  });
+});
+
+document.querySelectorAll('.filtro-anio').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.filtro-anio').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    filtAnio=btn.dataset.anio;
+    stopAll();renderArchivo();
+  });
+});
+
+document.querySelectorAll('.nav-item').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+
+function filtrarCat(cat){
+  filtCat=cat;
+  // actualizar filtros de navbar y chips
+  document.querySelectorAll('.filtro-chip').forEach(b=>{
+    b.classList.toggle('active', b.dataset.cat===cat);
+  });
+  stopAll();renderArchivo();
+  document.getElementById('archivo-completo').scrollIntoView({behavior:'smooth'});
+}
+
+/* ══ INIT ══ */
+renderDestacadas();
+renderUltimas();
+renderArchivo();
+renderMasLeido();
+</script>
+</body>
+</html>

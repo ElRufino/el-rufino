@@ -1,0 +1,1694 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>H. Concejo Deliberante — Municipalidad de Rufino</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Oswald:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --celeste: #4a9fd4;
+  --celeste-oscuro: #2176ae;
+  --celeste-claro: #a8d8f0;
+  --blanco: #f4f0e8;
+  --blanco-puro: #ffffff;
+  --azul-noche: #0d1f35;
+  --azul-medio: #1a3a5c;
+  --tierra: #8b6914;
+  --sol: #f4c430;
+  --sol-oscuro: #d4a418;
+  --rojo: #c0392b;
+  --gris-papel: #e8e0d0;
+  --gris-texto: #3a3028;
+  --gris-suave: #f0ebe0;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Lora', Georgia, serif;
+  background: var(--blanco);
+  color: var(--gris-texto);
+  overflow-x: hidden;
+}
+
+/* TEXTURE OVERLAY */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.5;
+}
+
+/* ====== HEADER ====== */
+.franja-top {
+  background: var(--celeste);
+  height: 8px;
+  background: repeating-linear-gradient(90deg, var(--celeste) 0px, var(--celeste) 33.33%, var(--blanco-puro) 33.33%, var(--blanco-puro) 66.66%, var(--celeste) 66.66%);
+}
+
+.header-institucional {
+  background: var(--azul-noche);
+  padding: 8px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--celeste);
+}
+
+.header-institucional span {
+  font-family: 'Oswald', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+}
+
+.header-institucional .fecha {
+  color: var(--celeste-claro);
+  font-size: 11px;
+  font-family: 'Oswald', sans-serif;
+  letter-spacing: 1.5px;
+}
+
+/* MAIN NAV */
+nav.principal {
+  background: var(--blanco-puro);
+  border-bottom: 3px solid var(--azul-noche);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(13,31,53,0.12);
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 12px 0;
+  text-decoration: none;
+}
+
+.escudo-nav {
+  width: 52px;
+  height: 52px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.escudo-nav svg {
+  width: 100%;
+  height: 100%;
+}
+
+.marca-texto h1 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--azul-noche);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+
+.marca-texto p {
+  font-family: 'Oswald', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--celeste-oscuro);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.nav-links {
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+}
+
+.nav-links a {
+  font-family: 'Oswald', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--azul-noche);
+  text-decoration: none;
+  padding: 0 18px;
+  display: flex;
+  align-items: center;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -3px;
+  transition: all 0.2s;
+}
+
+.nav-links a:hover {
+  color: var(--celeste-oscuro);
+  border-bottom-color: var(--celeste);
+}
+
+.nav-links a.destacado {
+  background: var(--celeste-oscuro);
+  color: var(--blanco-puro);
+  padding: 0 22px;
+  margin: 10px 0 10px 8px;
+  border-bottom: none;
+  border-radius: 2px;
+}
+
+.nav-links a.destacado:hover {
+  background: var(--azul-noche);
+  color: var(--blanco-puro);
+  border-bottom-color: transparent;
+}
+
+/* ====== HERO ====== */
+.hero {
+  background: var(--azul-noche);
+  position: relative;
+  overflow: hidden;
+  min-height: 520px;
+  display: flex;
+  align-items: stretch;
+}
+
+/* Bandera argentina en el fondo */
+.hero-bandera {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  opacity: 0.07;
+}
+.hero-bandera .franja { flex: 1; }
+.hero-bandera .franja:nth-child(1),
+.hero-bandera .franja:nth-child(3) { background: var(--celeste); }
+.hero-bandera .franja:nth-child(2) { background: var(--blanco-puro); flex: 1.2; }
+
+.hero-rayos {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 45%;
+  opacity: 0.06;
+  background: repeating-linear-gradient(
+    -30deg,
+    transparent,
+    transparent 20px,
+    rgba(244,196,48,1) 20px,
+    rgba(244,196,48,1) 22px
+  );
+}
+
+.hero-contenido {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  width: 100%;
+}
+
+.hero-texto {
+  padding: 72px 60px 72px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.kicker-linea {
+  width: 32px;
+  height: 2px;
+  background: var(--celeste);
+}
+
+.kicker-texto {
+  font-family: 'Oswald', sans-serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--celeste-claro);
+}
+
+.hero-titulo {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 62px;
+  font-weight: 700;
+  color: var(--blanco-puro);
+  line-height: 1.0;
+  margin-bottom: 20px;
+}
+
+.hero-titulo em {
+  font-style: italic;
+  color: var(--sol);
+}
+
+.hero-subtitulo {
+  font-size: 17px;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.75;
+  font-weight: 400;
+  max-width: 500px;
+  margin-bottom: 40px;
+}
+
+.hero-botones {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn-celeste {
+  background: var(--celeste-oscuro);
+  color: var(--blanco-puro);
+  padding: 14px 28px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 2px;
+  transition: all 0.25s;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-celeste:hover {
+  background: var(--celeste);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(33,118,174,0.5);
+}
+
+.btn-borde {
+  border: 2px solid rgba(255,255,255,0.25);
+  color: rgba(255,255,255,0.8);
+  padding: 14px 28px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 2px;
+  transition: all 0.25s;
+}
+
+.btn-borde:hover {
+  border-color: var(--celeste);
+  color: var(--celeste-claro);
+  transform: translateY(-2px);
+}
+
+/* PANEL LATERAL HERO */
+.hero-panel {
+  background: rgba(255,255,255,0.04);
+  border-left: 1px solid rgba(255,255,255,0.08);
+  padding: 48px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.panel-titulo {
+  font-family: 'Oswald', sans-serif;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--celeste);
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.stat-panel {
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.stat-panel:last-of-type { border-bottom: none; }
+
+.stat-panel .num {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 38px;
+  font-weight: 700;
+  color: var(--sol);
+  line-height: 1;
+}
+
+.stat-panel .lbl {
+  font-family: 'Oswald', sans-serif;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  text-align: right;
+  max-width: 140px;
+  line-height: 1.4;
+}
+
+.sol-decorativo {
+  margin: 28px auto 0;
+  display: block;
+  width: 64px;
+  height: 64px;
+  opacity: 0.15;
+}
+
+/* ====== FRANJA CELESTE ====== */
+.franja-celeste {
+  background: var(--celeste-oscuro);
+  padding: 18px 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.franja-dato {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: rgba(255,255,255,0.85);
+  font-family: 'Oswald', sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+}
+
+.franja-dato strong {
+  color: var(--blanco-puro);
+  font-weight: 600;
+}
+
+.franja-dato .dot {
+  width: 6px;
+  height: 6px;
+  background: var(--sol);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ====== SECCIONES ====== */
+.seccion-titulo-wrap {
+  margin-bottom: 44px;
+}
+
+.seccion-eyebrow {
+  font-family: 'Oswald', sans-serif;
+  font-size: 10px;
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  color: var(--celeste-oscuro);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.seccion-eyebrow::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--celeste-oscuro);
+}
+
+.seccion-titulo {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--azul-noche);
+  line-height: 1.15;
+}
+
+/* ====== ORDENANZAS ====== */
+.seccion-ordenanzas {
+  background: var(--azul-noche);
+  padding: 72px 60px;
+}
+
+.seccion-ordenanzas .seccion-eyebrow { color: var(--celeste-claro); }
+.seccion-ordenanzas .seccion-eyebrow::before { background: var(--celeste-claro); }
+.seccion-ordenanzas .seccion-titulo { color: var(--blanco-puro); }
+
+.buscador {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 20px;
+  margin-bottom: 20px;
+  transition: border-color 0.2s;
+}
+.buscador:focus-within { border-color: var(--celeste); }
+.buscador svg { opacity: 0.35; flex-shrink: 0; }
+.buscador input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--blanco-puro);
+  font-family: 'Lora', serif;
+  font-size: 15px;
+  padding: 15px 0;
+}
+.buscador input::placeholder { color: rgba(255,255,255,0.28); }
+.buscador button {
+  background: var(--celeste-oscuro);
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: background 0.2s;
+}
+.buscador button:hover { background: var(--celeste); }
+
+.filtros {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+.filtro {
+  padding: 5px 16px;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 2px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  cursor: pointer;
+  background: none;
+  transition: all 0.18s;
+}
+.filtro:hover, .filtro.activo {
+  border-color: var(--celeste);
+  color: var(--celeste-claro);
+  background: rgba(74,159,212,0.1);
+}
+
+/* TABLA */
+.tabla-header {
+  display: grid;
+  grid-template-columns: 100px 1fr 120px 90px;
+  gap: 16px;
+  padding: 10px 20px;
+  border-bottom: 2px solid var(--celeste-oscuro);
+}
+
+.tabla-header span {
+  font-family: 'Oswald', sans-serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--celeste);
+}
+
+.ordenanza-fila {
+  display: grid;
+  grid-template-columns: 100px 1fr 120px 90px;
+  gap: 16px;
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  cursor: pointer;
+  transition: all 0.18s;
+  position: relative;
+}
+
+.ordenanza-fila::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  background: var(--celeste-oscuro);
+  transition: width 0.2s;
+}
+
+.ordenanza-fila:hover::before { width: 3px; }
+.ordenanza-fila:hover { background: rgba(255,255,255,0.04); padding-left: 23px; }
+
+.fila-num {
+  font-family: 'Oswald', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--celeste);
+}
+.fila-num small {
+  display: block;
+  font-size: 10px;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 1px;
+  font-weight: 400;
+}
+
+.fila-titulo {
+  font-size: 14px;
+  color: rgba(255,255,255,0.88);
+  line-height: 1.4;
+  align-self: center;
+}
+.fila-titulo small {
+  display: block;
+  font-size: 11px;
+  color: rgba(255,255,255,0.35);
+  margin-top: 3px;
+  font-family: 'Oswald', sans-serif;
+  letter-spacing: 0.5px;
+}
+
+.fila-cat {
+  align-self: center;
+}
+
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 2px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.badge-obras { background: rgba(33,118,174,0.2); color: #7fc8f8; border: 1px solid rgba(33,118,174,0.3); }
+.badge-servicios { background: rgba(74,159,212,0.15); color: var(--celeste-claro); border: 1px solid rgba(74,159,212,0.25); }
+.badge-presupuesto { background: rgba(244,196,48,0.12); color: #f4c430; border: 1px solid rgba(244,196,48,0.2); }
+.badge-social { background: rgba(192,57,43,0.12); color: #e87c74; border: 1px solid rgba(192,57,43,0.2); }
+.badge-urbanismo { background: rgba(139,105,20,0.2); color: #d4a84b; border: 1px solid rgba(139,105,20,0.3); }
+
+.fila-btn {
+  align-self: center;
+  background: none;
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.5);
+  padding: 5px 12px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.18s;
+  white-space: nowrap;
+}
+.fila-btn:hover {
+  border-color: var(--celeste);
+  color: var(--celeste-claro);
+}
+
+/* ====== INSTITUCIONAL ====== */
+.seccion-institucional {
+  padding: 80px 60px;
+  background: var(--gris-suave);
+}
+
+.grid-institucional {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 64px;
+  align-items: start;
+}
+
+.institucional-texto p {
+  font-size: 15px;
+  line-height: 1.85;
+  color: #4a4038;
+  margin-bottom: 18px;
+}
+
+.cita {
+  border-left: 4px solid var(--celeste-oscuro);
+  padding: 16px 24px;
+  margin: 28px 0;
+  background: rgba(33,118,174,0.06);
+}
+
+.cita p {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 16px;
+  font-style: italic;
+  color: var(--azul-noche);
+  line-height: 1.7;
+  margin-bottom: 8px !important;
+}
+
+.cita cite {
+  font-family: 'Oswald', sans-serif;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--celeste-oscuro);
+  font-style: normal;
+}
+
+.cronologia {
+  background: var(--azul-noche);
+  padding: 36px;
+}
+
+.crono-titulo {
+  font-family: 'Oswald', sans-serif;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--celeste);
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.crono-item {
+  display: flex;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.crono-item:last-child { border-bottom: none; }
+
+.crono-fecha {
+  font-family: 'Oswald', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  color: var(--sol);
+  white-space: nowrap;
+  min-width: 72px;
+  padding-top: 2px;
+}
+
+.crono-desc strong {
+  display: block;
+  font-family: 'Oswald', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--blanco-puro);
+  margin-bottom: 3px;
+}
+
+.crono-desc span {
+  font-size: 12px;
+  color: rgba(255,255,255,0.45);
+  font-family: 'Lora', serif;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+/* DATOS PRESUPUESTO */
+.grilla-datos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  margin-top: 32px;
+}
+
+.dato-box {
+  background: var(--blanco-puro);
+  padding: 20px;
+  border-top: 3px solid var(--celeste-oscuro);
+}
+.dato-box .valor {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--azul-noche);
+  line-height: 1;
+}
+.dato-box .etiq {
+  font-family: 'Oswald', sans-serif;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #7a7060;
+  margin-top: 5px;
+}
+
+/* ====== CONTACTO ====== */
+.seccion-contacto {
+  background: var(--azul-noche);
+  padding: 72px 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+.seccion-contacto::before {
+  content: '';
+  position: absolute;
+  bottom: -60px;
+  right: -60px;
+  width: 340px;
+  height: 340px;
+  border: 1px solid rgba(74,159,212,0.08);
+  border-radius: 50%;
+}
+
+.seccion-contacto::after {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  width: 200px;
+  height: 200px;
+  border: 1px solid rgba(74,159,212,0.06);
+  border-radius: 50%;
+}
+
+.grid-contacto {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 72px;
+  position: relative;
+  z-index: 1;
+}
+
+.contacto-info .seccion-eyebrow { color: var(--celeste-claro); }
+.contacto-info .seccion-eyebrow::before { background: var(--celeste-claro); }
+.contacto-info .seccion-titulo { color: var(--blanco-puro); margin-bottom: 20px; }
+
+.contacto-info p {
+  color: rgba(255,255,255,0.55);
+  font-size: 15px;
+  line-height: 1.75;
+  margin-bottom: 36px;
+}
+
+.datos-contacto {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.dato-contacto {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.dato-contacto-icono {
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(74,159,212,0.3);
+  background: rgba(74,159,212,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+  border-radius: 2px;
+}
+
+.dato-contacto-cuerpo strong {
+  display: block;
+  font-family: 'Oswald', sans-serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--celeste);
+  margin-bottom: 3px;
+}
+
+.dato-contacto-cuerpo span {
+  font-size: 13px;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.5;
+}
+
+/* FORMULARIO */
+.formulario {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-top: 3px solid var(--celeste);
+  padding: 36px;
+}
+
+.formulario h3 {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 20px;
+  color: var(--blanco-puro);
+  margin-bottom: 24px;
+  font-weight: 700;
+}
+
+.campo {
+  margin-bottom: 14px;
+}
+
+.campo label {
+  display: block;
+  font-family: 'Oswald', sans-serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 6px;
+}
+
+.campo input,
+.campo textarea,
+.campo select {
+  width: 100%;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 11px 14px;
+  color: var(--blanco-puro);
+  font-family: 'Lora', serif;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+  border-radius: 2px;
+}
+.campo input:focus,
+.campo textarea:focus,
+.campo select:focus { border-color: var(--celeste); }
+.campo textarea { height: 90px; resize: vertical; }
+.campo select option { background: var(--azul-noche); }
+.campo-fila { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+.btn-enviar {
+  width: 100%;
+  background: var(--celeste-oscuro);
+  color: var(--blanco-puro);
+  border: none;
+  padding: 13px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 2px;
+  margin-top: 8px;
+  transition: all 0.2s;
+}
+
+.btn-enviar:hover {
+  background: var(--celeste);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(33,118,174,0.4);
+}
+
+/* ====== FOOTER ====== */
+footer {
+  background: #07111f;
+  border-top: 4px solid var(--celeste-oscuro);
+}
+
+.footer-cuerpo {
+  padding: 52px 60px 32px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 48px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  margin-bottom: 24px;
+}
+
+.footer-marca p {
+  font-size: 13px;
+  color: rgba(255,255,255,0.3);
+  line-height: 1.7;
+  margin-top: 14px;
+  max-width: 260px;
+}
+
+.footer-col h4 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--celeste);
+  margin-bottom: 18px;
+}
+
+.footer-col a {
+  display: block;
+  font-size: 13px;
+  color: rgba(255,255,255,0.38);
+  text-decoration: none;
+  margin-bottom: 9px;
+  transition: color 0.18s;
+}
+.footer-col a:hover { color: rgba(255,255,255,0.75); }
+
+.footer-base {
+  padding: 0 60px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.footer-base p {
+  font-family: 'Oswald', sans-serif;
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,0.2);
+  text-transform: uppercase;
+}
+
+.footer-base a {
+  color: var(--celeste);
+  text-decoration: none;
+}
+
+/* FRANJA FINAL */
+.franja-final {
+  height: 8px;
+  background: repeating-linear-gradient(90deg, var(--celeste) 0px, var(--celeste) 33.33%, white 33.33%, white 66.66%, var(--celeste) 66.66%);
+}
+
+/* ====== MODAL ====== */
+.modal-capa {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(7,17,31,0.9);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  backdrop-filter: blur(4px);
+}
+.modal-capa.abierto { display: flex; }
+
+.modal-caja {
+  background: var(--azul-noche);
+  border: 1px solid rgba(74,159,212,0.2);
+  border-top: 4px solid var(--celeste-oscuro);
+  max-width: 660px;
+  width: 100%;
+  padding: 40px;
+  position: relative;
+  max-height: 88vh;
+  overflow-y: auto;
+}
+
+.modal-cerrar {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.35);
+  font-size: 20px;
+  cursor: pointer;
+  transition: color 0.18s;
+  font-family: 'Oswald', sans-serif;
+  letter-spacing: 1px;
+}
+.modal-cerrar:hover { color: var(--celeste); }
+
+.modal-etiqueta {
+  font-family: 'Oswald', sans-serif;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--celeste);
+  margin-bottom: 10px;
+}
+
+.modal-nombre {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--blanco-puro);
+  line-height: 1.3;
+  margin-bottom: 6px;
+}
+
+.modal-fecha {
+  font-family: 'Oswald', sans-serif;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  color: rgba(255,255,255,0.35);
+  text-transform: uppercase;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  margin-bottom: 20px;
+}
+
+.modal-seccion {
+  font-family: 'Oswald', sans-serif;
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--celeste);
+  margin-top: 22px;
+  margin-bottom: 10px;
+}
+
+.modal-resumen {
+  font-size: 14px;
+  color: rgba(255,255,255,0.68);
+  line-height: 1.8;
+}
+
+.modal-arts {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.modal-art {
+  background: rgba(255,255,255,0.04);
+  border-left: 3px solid var(--celeste-oscuro);
+  padding: 12px 16px;
+}
+
+.modal-art strong {
+  display: block;
+  font-family: 'Oswald', sans-serif;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--celeste);
+  margin-bottom: 5px;
+}
+
+.modal-art p {
+  font-size: 13px;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.65;
+}
+
+.modal-pie {
+  display: flex;
+  gap: 12px;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+/* ANIMACIONES */
+@keyframes subir {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero-kicker  { animation: subir 0.55s ease 0.1s both; }
+.hero-titulo  { animation: subir 0.55s ease 0.22s both; }
+.hero-subtitulo { animation: subir 0.55s ease 0.35s both; }
+.hero-botones { animation: subir 0.55s ease 0.48s both; }
+.hero-panel   { animation: subir 0.6s ease 0.3s both; }
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--azul-noche); }
+::-webkit-scrollbar-thumb { background: var(--celeste-oscuro); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- FRANJA BANDERA -->
+<div class="franja-top"></div>
+
+<!-- BARRA INSTITUCIONAL -->
+<div class="header-institucional">
+  <span>República Argentina — Provincia de Santa Fe — Municipalidad de Rufino</span>
+  <span class="fecha">CP 6100 · Rufino, Santa Fe</span>
+</div>
+
+<!-- NAV -->
+<nav class="principal">
+  <div class="nav-inner">
+    <a href="#" class="marca">
+      <!-- Sol de Mayo SVG -->
+      <div class="escudo-nav">
+        <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="26" cy="26" r="25" fill="#2176ae" stroke="#4a9fd4" stroke-width="1"/>
+          <!-- Franjas celeste/blanco/celeste -->
+          <rect x="1" y="1" width="50" height="17" rx="0" fill="#4a9fd4"/>
+          <rect x="1" y="18" width="50" height="16" fill="white"/>
+          <rect x="1" y="34" width="50" height="17" rx="0" fill="#4a9fd4"/>
+          <!-- Sol de Mayo -->
+          <circle cx="26" cy="26" r="7" fill="#f4c430"/>
+          <circle cx="26" cy="26" r="5" fill="#d4a418"/>
+          <!-- Rayos -->
+          <g fill="#f4c430">
+            <rect x="25" y="10" width="2" height="5" rx="1"/>
+            <rect x="25" y="37" width="2" height="5" rx="1"/>
+            <rect x="10" y="25" width="5" height="2" rx="1"/>
+            <rect x="37" y="25" width="5" height="2" rx="1"/>
+            <rect x="14.5" y="14.5" width="5" height="2" rx="1" transform="rotate(45 14.5 14.5)"/>
+            <rect x="33" y="33" width="5" height="2" rx="1" transform="rotate(45 33 33)"/>
+            <rect x="14.5" y="35.5" width="5" height="2" rx="1" transform="rotate(-45 14.5 35.5)"/>
+            <rect x="33" y="17" width="5" height="2" rx="1" transform="rotate(-45 33 17)"/>
+          </g>
+          <!-- Círculo borde -->
+          <circle cx="26" cy="26" r="25" fill="none" stroke="#1a3a5c" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <div class="marca-texto">
+        <h1>H. Concejo Deliberante</h1>
+        <p>Municipalidad de Rufino</p>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="#institucion">Institución</a>
+      <a href="#ordenanzas">Ordenanzas</a>
+      <a href="#contacto">Contacto</a>
+      <a href="#contacto" class="destacado">Escribinos</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bandera">
+    <div class="franja"></div>
+    <div class="franja"></div>
+    <div class="franja"></div>
+  </div>
+  <div class="hero-rayos"></div>
+
+  <div class="hero-contenido">
+    <div class="hero-texto">
+      <div class="hero-kicker">
+        <div class="kicker-linea"></div>
+        <span class="kicker-texto">Período Legislativo 1997 — Ciudad de Rufino</span>
+      </div>
+      <h2 class="hero-titulo">
+        El pueblo<br>
+        <em>delibera</em><br>
+        y legisla
+      </h2>
+      <p class="hero-subtitulo">
+        El Honorable Concejo Deliberante de Rufino es la voz del vecino en la democracia local. Representamos a nuestra comunidad sancionando las ordenanzas que mejoran la calidad de vida de todos los rufinenses.
+      </p>
+      <div class="hero-botones">
+        <a href="#ordenanzas" class="btn-celeste">Ver ordenanzas</a>
+        <a href="#institucion" class="btn-borde">Conocer el HCD</a>
+      </div>
+    </div>
+
+    <div class="hero-panel">
+      <div class="panel-titulo">Actividad Legislativa 1997</div>
+      <div class="stat-panel">
+        <div class="num">17</div>
+        <div class="lbl">Ordenanzas sancionadas</div>
+      </div>
+      <div class="stat-panel">
+        <div class="num">7</div>
+        <div class="lbl">Sesiones realizadas</div>
+      </div>
+      <div class="stat-panel">
+        <div class="num">$8,1M</div>
+        <div class="lbl">Presupuesto municipal</div>
+      </div>
+      <div class="stat-panel">
+        <div class="num">247</div>
+        <div class="lbl">Cargos municipales</div>
+      </div>
+      <!-- Sol de Mayo decorativo -->
+      <svg class="sol-decorativo" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="32" cy="32" r="14" fill="#f4c430"/>
+        <g fill="#f4c430">
+          <rect x="31" y="4" width="2" height="10" rx="1"/>
+          <rect x="31" y="50" width="2" height="10" rx="1"/>
+          <rect x="4" y="31" width="10" height="2" rx="1"/>
+          <rect x="50" y="31" width="10" height="2" rx="1"/>
+          <rect x="10" y="10" width="10" height="2" rx="1" transform="rotate(45 10 10)"/>
+          <rect x="44" y="44" width="10" height="2" rx="1" transform="rotate(45 44 44)"/>
+          <rect x="10" y="52" width="10" height="2" rx="1" transform="rotate(-45 10 52)"/>
+          <rect x="44" y="18" width="10" height="2" rx="1" transform="rotate(-45 44 18)"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- FRANJA CELESTE INFO -->
+<div class="franja-celeste">
+  <div class="franja-dato">
+    <div class="dot"></div>
+    <span>Presidente: <strong>C.P.N. Gerónimo E. Solimano</strong></span>
+  </div>
+  <div class="franja-dato">
+    <div class="dot"></div>
+    <span>Secretario: <strong>C.P.N. Raúl F. Vigliocco</strong></span>
+  </div>
+  <div class="franja-dato">
+    <div class="dot"></div>
+    <span>Ley aplicable: <strong>Ley Orgánica de Municipalidades Nro. 2756</strong></span>
+  </div>
+  <div class="franja-dato">
+    <div class="dot"></div>
+    <span>Última ordenanza: <strong>Nro. 2257 — Dic. 1997</strong></span>
+  </div>
+</div>
+
+<!-- ORDENANZAS -->
+<section class="seccion-ordenanzas" id="ordenanzas">
+  <div class="seccion-titulo-wrap" style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:36px;">
+    <div>
+      <div class="seccion-eyebrow">Digesto Municipal</div>
+      <div class="seccion-titulo" style="color:var(--blanco-puro);">Ordenanzas Sancionadas — 1997</div>
+    </div>
+  </div>
+
+  <div class="buscador">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" id="campoBusqueda" placeholder="Buscar por número, tema, artículo..." oninput="filtrar()">
+    <button onclick="filtrar()">Buscar</button>
+  </div>
+
+  <div class="filtros">
+    <button class="filtro activo" onclick="cambiarFiltro('all', this)">Todas</button>
+    <button class="filtro" onclick="cambiarFiltro('Obras Públicas', this)">Obras Públicas</button>
+    <button class="filtro" onclick="cambiarFiltro('Servicios', this)">Servicios</button>
+    <button class="filtro" onclick="cambiarFiltro('Presupuesto', this)">Presupuesto</button>
+    <button class="filtro" onclick="cambiarFiltro('Social', this)">Social</button>
+    <button class="filtro" onclick="cambiarFiltro('Urbanismo', this)">Urbanismo</button>
+  </div>
+
+  <div class="tabla-header">
+    <span>Número</span>
+    <span>Asunto</span>
+    <span>Categoría</span>
+    <span>Texto</span>
+  </div>
+
+  <div id="listaOrdenanzas"></div>
+</section>
+
+<!-- INSTITUCIONAL -->
+<section class="seccion-institucional" id="institucion">
+  <div class="grid-institucional">
+    <div class="institucional-texto">
+      <div class="seccion-titulo-wrap">
+        <div class="seccion-eyebrow">Órgano Legislativo Municipal</div>
+        <div class="seccion-titulo">El Concejo Deliberante<br>de Rufino</div>
+      </div>
+      <p>
+        El Honorable Concejo Deliberante de la ciudad de Rufino es el cuerpo legislativo del Municipio, con asiento en 6100 Rufino, Provincia de Santa Fe. Ejerce sus atribuciones conforme a la Ley Orgánica de Municipalidades Nro. 2756 de la Provincia de Santa Fe.
+      </p>
+      <div class="cita">
+        <p>"El pueblo delibera y gobierna por medio de sus representantes."</p>
+        <cite>— Constitución Nacional Argentina, Art. 22</cite>
+      </div>
+      <p>
+        Sus funciones principales incluyen sancionar ordenanzas que regulan la vida municipal, controlar la gestión del Departamento Ejecutivo, aprobar el Presupuesto General de Gastos y representar los intereses de los vecinos de Rufino ante las políticas de gobierno local.
+      </p>
+      <p>
+        Durante el año 1997, el Concejo sancionó 17 ordenanzas que abarcaron desde obras públicas de infraestructura urbana, ampliación del alumbrado público, el presupuesto municipal de $8.155.500 y medidas de protección del trabajo local, hasta el reconocimiento de vecinos ilustres de nuestra ciudad.
+      </p>
+      <div class="grilla-datos">
+        <div class="dato-box">
+          <div class="valor">$8,1M</div>
+          <div class="etiq">Presupuesto 1997</div>
+        </div>
+        <div class="dato-box">
+          <div class="valor">247</div>
+          <div class="etiq">Cargos Municipales</div>
+        </div>
+        <div class="dato-box">
+          <div class="valor">80%</div>
+          <div class="etiq">Mano de obra local exigida</div>
+        </div>
+        <div class="dato-box">
+          <div class="valor">17</div>
+          <div class="etiq">Ordenanzas sancionadas</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cronologia">
+      <div class="crono-titulo">Actividad legislativa 1997 — Cronología</div>
+      <div class="crono-item">
+        <div class="crono-fecha">7 ABR</div>
+        <div class="crono-desc">
+          <strong>Sesión Ordinaria</strong>
+          <span>Ord. 2241–2243: Entubamiento Barrio El Sol, iluminación escolar y pavimentación Bvd. Belgrano</span>
+        </div>
+      </div>
+      <div class="crono-item">
+        <div class="crono-fecha">21 ABR</div>
+        <div class="crono-desc">
+          <strong>Sesión Ordinaria</strong>
+          <span>Ord. 2244–2245: Ampliación alumbrado en 30+ intersecciones y riego acceso norte Ruta 33</span>
+        </div>
+      </div>
+      <div class="crono-item">
+        <div class="crono-fecha">5 MAY</div>
+        <div class="crono-desc">
+          <strong>Sesión Ordinaria</strong>
+          <span>Ord. 2246: Aprobación donación para el Hogar de Día de la Tercera Edad</span>
+        </div>
+      </div>
+      <div class="crono-item">
+        <div class="crono-fecha">12 MAY</div>
+        <div class="crono-desc">
+          <strong>Sesión Ordinaria</strong>
+          <span>Ord. 2247: Compra-venta inmueble Rivadavia 635 para el Hogar de Día</span>
+        </div>
+      </div>
+      <div class="crono-item">
+        <div class="crono-fecha">30 JUN</div>
+        <div class="crono-desc">
+          <strong>Sesión Ordinaria</strong>
+          <span>Ord. 2248: Rebaja tarifaria Cooperativa Eléctrica Ltda. de Rufino</span>
+        </div>
+      </div>
+      <div class="crono-item">
+        <div class="crono-fecha">21 JUL</div>
+        <div class="crono-desc">
+          <strong>Sesión Ordinaria</strong>
+          <span>Ord. 2250–2251: Presupuesto Municipal 1997 ($8.155.500) y calle Dr. Arturo H. Illia</span>
+        </div>
+      </div>
+      <div class="crono-item">
+        <div class="crono-fecha">24 NOV</div>
+        <div class="crono-desc">
+          <strong>Sesión Ordinaria</strong>
+          <span>Ord. 2254–2255: Reforma Fondo de Obras y obligatoriedad mano de obra local (80%)</span>
+        </div>
+      </div>
+      <div class="crono-item">
+        <div class="crono-fecha">29 DIC</div>
+        <div class="crono-desc">
+          <strong>Sesión Extraordinaria</strong>
+          <span>Ord. 2257: Nueva rebaja tarifaria eléctrica por reducción de costos operativos</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section class="seccion-contacto" id="contacto">
+  <div class="grid-contacto">
+    <div class="contacto-info">
+      <div class="seccion-eyebrow">Atención Ciudadana</div>
+      <div class="seccion-titulo">Contáctenos</div>
+      <p>
+        El Concejo Deliberante es su institución. Acerque sus inquietudes, reclamos y proyectos vecinales. Sus representantes están para escucharle.
+      </p>
+      <div class="datos-contacto">
+        <div class="dato-contacto">
+          <div class="dato-contacto-icono">📍</div>
+          <div class="dato-contacto-cuerpo">
+            <strong>Sede</strong>
+            <span>Santa Fe 159, Rufino<br>CP 6100 — Santa Fe, Argentina</span>
+          </div>
+        </div>
+        <div class="dato-contacto">
+          <div class="dato-contacto-icono">📞</div>
+          <div class="dato-contacto-cuerpo">
+            <strong>Teléfono</strong>
+            <span>03382 — 420841</span>
+          </div>
+        </div>
+        <div class="dato-contacto">
+          <div class="dato-contacto-icono">🌐</div>
+          <div class="dato-contacto-cuerpo">
+            <strong>Sitio web oficial</strong>
+            <span><a href="https://rufino.gob.ar" target="_blank" style="color:var(--celeste-claro);">rufino.gob.ar</a></span>
+          </div>
+        </div>
+        <div class="dato-contacto">
+          <div class="dato-contacto-icono">📰</div>
+          <div class="dato-contacto-cuerpo">
+            <strong>Boletín Oficial</strong>
+            <span><a href="https://rufino.gob.ar/boletines.php" target="_blank" style="color:var(--celeste-claro);">rufino.gob.ar/boletines.php</a></span>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:8px;">
+          <a href="https://www.instagram.com/mcrufino_prensa/" target="_blank" style="width:36px;height:36px;border:1px solid rgba(74,159,212,0.3);background:rgba(74,159,212,0.08);display:flex;align-items:center;justify-content:center;font-size:16px;text-decoration:none;border-radius:2px;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--celeste)'" onmouseout="this.style.borderColor='rgba(74,159,212,0.3)'">📸</a>
+          <a href="https://www.facebook.com/municipalidadderufino.rufino" target="_blank" style="width:36px;height:36px;border:1px solid rgba(74,159,212,0.3);background:rgba(74,159,212,0.08);display:flex;align-items:center;justify-content:center;font-size:16px;text-decoration:none;border-radius:2px;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--celeste)'" onmouseout="this.style.borderColor='rgba(74,159,212,0.3)'">👤</a>
+          <a href="https://twitter.com/mcrufino_prensa" target="_blank" style="width:36px;height:36px;border:1px solid rgba(74,159,212,0.3);background:rgba(74,159,212,0.08);display:flex;align-items:center;justify-content:center;font-size:16px;text-decoration:none;border-radius:2px;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--celeste)'" onmouseout="this.style.borderColor='rgba(74,159,212,0.3)'">🐦</a>
+          <a href="https://www.youtube.com/user/municipalidadrufino" target="_blank" style="width:36px;height:36px;border:1px solid rgba(74,159,212,0.3);background:rgba(74,159,212,0.08);display:flex;align-items:center;justify-content:center;font-size:16px;text-decoration:none;border-radius:2px;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--celeste)'" onmouseout="this.style.borderColor='rgba(74,159,212,0.3)'">▶️</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="formulario">
+      <h3>Envíe su consulta o petición</h3>
+      <div class="campo-fila">
+        <div class="campo">
+          <label>Nombre y apellido</label>
+          <input type="text" placeholder="Su nombre completo">
+        </div>
+        <div class="campo">
+          <label>D.N.I.</label>
+          <input type="text" placeholder="N° de documento">
+        </div>
+      </div>
+      <div class="campo">
+        <label>Correo electrónico</label>
+        <input type="email" placeholder="correo@ejemplo.com">
+      </div>
+      <div class="campo">
+        <label>Tipo de consulta</label>
+        <select>
+          <option>Consulta sobre ordenanza</option>
+          <option>Petición ciudadana</option>
+          <option>Solicitud de información pública</option>
+          <option>Propuesta legislativa vecinal</option>
+          <option>Reclamo</option>
+          <option>Otro</option>
+        </select>
+      </div>
+      <div class="campo">
+        <label>Mensaje</label>
+        <textarea placeholder="Describa su consulta, reclamo o petición vecinal..."></textarea>
+      </div>
+      <button class="btn-enviar">Enviar al Concejo →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-cuerpo">
+    <div class="footer-marca">
+      <div style="display:flex;align-items:center;gap:14px;">
+        <svg width="42" height="42" viewBox="0 0 52 52" fill="none">
+          <circle cx="26" cy="26" r="25" fill="#1a3a5c"/>
+          <rect x="1" y="1" width="50" height="17" fill="#4a9fd4"/>
+          <rect x="1" y="18" width="50" height="16" fill="white"/>
+          <rect x="1" y="34" width="50" height="17" fill="#4a9fd4"/>
+          <circle cx="26" cy="26" r="7" fill="#f4c430"/>
+          <circle cx="26" cy="26" r="5" fill="#d4a418"/>
+          <circle cx="26" cy="26" r="25" fill="none" stroke="#2176ae" stroke-width="1.5"/>
+        </svg>
+        <div>
+          <div style="font-family:'Oswald',sans-serif;font-size:15px;font-weight:700;color:white;text-transform:uppercase;letter-spacing:0.5px;">H. Concejo Deliberante</div>
+          <div style="font-family:'Oswald',sans-serif;font-size:10px;color:var(--celeste);letter-spacing:2px;text-transform:uppercase;margin-top:2px;">Municipalidad de Rufino</div>
+        </div>
+      </div>
+      <p>Santa Fe 159 · Rufino · CP 6100<br>Provincia de Santa Fe · República Argentina<br>Tel: 03382-420841</p>
+      <div style="display:flex;gap:8px;margin-top:16px;">
+        <a href="https://www.instagram.com/mcrufino_prensa/" target="_blank" style="width:30px;height:30px;border:1px solid rgba(74,159,212,0.2);display:flex;align-items:center;justify-content:center;font-size:13px;text-decoration:none;border-radius:2px;">📸</a>
+        <a href="https://www.facebook.com/municipalidadderufino.rufino" target="_blank" style="width:30px;height:30px;border:1px solid rgba(74,159,212,0.2);display:flex;align-items:center;justify-content:center;font-size:13px;text-decoration:none;border-radius:2px;">👤</a>
+        <a href="https://twitter.com/mcrufino_prensa" target="_blank" style="width:30px;height:30px;border:1px solid rgba(74,159,212,0.2);display:flex;align-items:center;justify-content:center;font-size:13px;text-decoration:none;border-radius:2px;">🐦</a>
+        <a href="https://www.youtube.com/user/municipalidadrufino" target="_blank" style="width:30px;height:30px;border:1px solid rgba(74,159,212,0.2);display:flex;align-items:center;justify-content:center;font-size:13px;text-decoration:none;border-radius:2px;">▶️</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Institución</h4>
+      <a href="https://rufino.gob.ar/boletines.php" target="_blank">Boletín Oficial</a>
+      <a href="https://rufino.gob.ar/seccion.php?s=401" target="_blank">Acceso Inf. Pública</a>
+      <a href="https://rufino.gob.ar/licitaciones.php" target="_blank">Licitaciones</a>
+      <a href="https://rufino.gob.ar/gestion.php" target="_blank">Gestión Municipal</a>
+    </div>
+    <div class="footer-col">
+      <h4>Legislación</h4>
+      <a href="#">Ordenanzas</a>
+      <a href="#">Resoluciones</a>
+      <a href="#">Presupuesto</a>
+      <a href="https://rufino.gob.ar/boletines.php" target="_blank">Digesto / Boletín</a>
+    </div>
+    <div class="footer-col">
+      <h4>Emergencias</h4>
+      <a href="tel:100">🚒 Bomberos: <strong style="color:white;">100</strong></a>
+      <a href="tel:101">👮 Policía: <strong style="color:white;">101</strong></a>
+      <a href="tel:103">🚨 Urgencias: <strong style="color:white;">103</strong></a>
+      <a href="tel:107">🏥 Emergencias: <strong style="color:white;">107</strong></a>
+    </div>
+  </div>
+  <div class="footer-base">
+    <p>© H. Concejo Deliberante · Municipalidad de Rufino · Santa Fe · República Argentina · CP 6100</p>
+    <p><a href="#">Información pública</a></p>
+  </div>
+</footer>
+
+<div class="franja-final"></div>
+
+<!-- MODAL -->
+<div class="modal-capa" id="modalCapa" onclick="cerrarSiClick(event)">
+  <div class="modal-caja">
+    <button class="modal-cerrar" onclick="document.getElementById('modalCapa').classList.remove('abierto')">✕ Cerrar</button>
+    <div id="modalContenido"></div>
+  </div>
+</div>
+
+<script>
+const ordenanzas = [
+  { num:"2241/97", tipo:"Ord.", titulo:"Entubamiento de arterias en Barrio El Sol", fecha:"7 de Abril de 1997", cat:"Obras Públicas", catCls:"badge-obras",
+    resumen:"Procédase al entubamiento de arterias en calle Lisandro de La Torre (entre España y Centenario, vereda Sur – 1 cuadra) y calle Centenario (entre Güemes y Entre Ríos, vereda Oeste – 3 cuadras). Mejora condiciones del Barrio El Sol. Financia Fondo de Obras Públicas. Deroga Ord. 2213/95.",
+    arts:[{n:"Art. 1°",t:"Entubamiento en Lisandro de La Torre (vereda Sur, 1 cuadra) y Centenario (vereda Oeste, 3 cuadras)."},{n:"Art. 2°",t:"Gastos imputados al Fondo de Obras Públicas y Equipamiento del Presupuesto General."},{n:"Art. 3°",t:"Deróguese la Ordenanza Nro. 2213/95 sancionada el 11 de Septiembre de 1995."}]},
+  { num:"2242/97", tipo:"Ord.", titulo:"Iluminación en fachadas de todas las escuelas de la ciudad", fecha:"7 de Abril de 1997", cat:"Servicios", catCls:"badge-servicios",
+    resumen:"Instálese en todas las escuelas un artefacto lumínico (reflector) en la puerta de entrada principal, conectado al Sistema de Alumbrado Público Municipal. Mejora estética y seguridad nocturna de los establecimientos educativos.",
+    arts:[{n:"Art. 1°",t:"Instalación de reflector en puerta principal de todas las escuelas de la ciudad, conectado al Alumbrado Público Municipal."},{n:"Art. 2°",t:"Especificaciones técnicas a cargo del Departamento Ejecutivo Municipal."},{n:"Art. 3°",t:"Gastos imputados a la Partida del Presupuesto de Gastos y Cálculo de Recursos en vigencia."}]},
+  { num:"2243/97", tipo:"Ord.", titulo:"Pavimentación de Bvd. Belgrano entre Independencia y Alixse Pero", fecha:"7 de Abril de 1997", cat:"Obras Públicas", catCls:"badge-obras",
+    resumen:"Pavimentación y/o mejorado con hormigón simple y cordones integrales. Régimen de contribución de mejoras con pago contado o financiado en hasta 24 cuotas mensuales a la Tasa Activa del Banco Nación.",
+    arts:[{n:"Art. 1°",t:"Pavimentación y/o mejorado de Bvd. Belgrano entre Independencia y Alixse Pero."},{n:"Art. 4°",t:"Registro de Oposición por 30 días. Si 60% de frentistas aprueban, la obra es obligatoria."},{n:"Art. 8°",t:"Frentistas pueden optar por pago contado o en hasta 24 cuotas mensuales iguales."}]},
+  { num:"2244/97", tipo:"Ord.", titulo:"Ampliación del Alumbrado Público en más de 30 intersecciones", fecha:"21 de Abril de 1997", cat:"Servicios", catCls:"badge-servicios",
+    resumen:"Ampliación del Sistema de Alumbrado Público en más de 30 intersecciones: Hipólito Irigoyen, Juan B. Justo, Bernabé Ferreyra, Pasaje Libertad, Lavalleja, San Juan, Victorero, Galán, Pueyrredón, Amaghino, Dorrego, Las Heras, Neuquén, Mitre, Alem, Remedios de Escalada, Semprini, y otras. Deroga 7 ordenanzas anteriores.",
+    arts:[{n:"Art. 1°",t:"Ampliación en intersecciones de Hipólito Irigoyen, Juan B. Justo, Bernabé Ferreyra y Río Negro, Pasaje Libertad, Lavalleja, San Juan, Victorero, Galán, Pueyrredón, Amaghino, Dorrego, Las Heras, Neuquén, Mitre, Alem, Remedios de Escalada, Semprini y otras."},{n:"Art. 3°",t:"Deróguense Ord. 2147/94; 2163/94; 2188/95; 2194/95; 2201/95; 2208/95 y 2210/95."}]},
+  { num:"2245/97", tipo:"Ord.", titulo:"Riego periódico en Acceso de Tránsito Pesado — Sector Norte", fecha:"21 de Abril de 1997", cat:"Obras Públicas", catCls:"badge-obras",
+    resumen:"Implementación de riego regular en el Acceso de Tránsito Pesado desde calle Arenales hasta la Ruta Nacional Nro. 33. El costo es compartido entre las empresas cerealeras (por metros de frente) y el municipio.",
+    arts:[{n:"Art. 1°",t:"Riego en el Acceso de Tránsito Pesado desde calle Arenales hasta la Ruta Nacional Nro. 33, con secuencia regular."},{n:"Art. 2°",t:"Costos: empresas cerealeras (metros de frente) y municipio con cargo a partida presupuestaria Nro. A.0.2.05.2.03."}]},
+  { num:"2246/97", tipo:"Ord.", titulo:"Aprobación de donación para el Hogar de Día — Tercera Edad", fecha:"5 de Mayo de 1997", cat:"Social", catCls:"badge-social",
+    resumen:"Aprobación del acto de aceptación y destino de la donación de la Comisión de Apoyo del Hogar de Día para la Tercera Edad para la adquisición del inmueble del centro asistencial. Cumplimiento del Art. 37 inc. 8vo. de la Ley Orgánica de Municipalidades.",
+    arts:[{n:"Art. 1°",t:"Apruébase el acto de aceptación de la donación realizada mediante el Decreto 016/97."},{n:"Art. 2°",t:"Envíese nota de agradecimiento a la Comisión de Apoyo del Hogar de Día para la Tercera Edad."}]},
+  { num:"2247/97", tipo:"Ord.", titulo:"Adquisición del inmueble en Rivadavia 635 para el Hogar de Día", fecha:"12 de Mayo de 1997", cat:"Social", catCls:"badge-social",
+    resumen:"Aprobación del contrato de compra-venta del inmueble en Calle Rivadavia 635 para el Hogar de Día para la Tercera Edad. La donación de la Comisión de Apoyo cubre el 56% del valor. El Municipio aporta la diferencia vía ahorro en alquiler.",
+    arts:[{n:"Art. 1°",t:"Apruébase el contrato de Compra-Venta del inmueble de Calle Rivadavia 635, conforme al Decreto Nro. 017/97, para el Hogar de Día."},{n:"Art. 2°",t:"Gastos de escrituración imputados a la suma retenida de la donación aceptada."}]},
+  { num:"2248/97", tipo:"Ord.", titulo:"Rebaja tarifaria a la Cooperativa Eléctrica — Junio 1997", fecha:"30 de Junio de 1997", cat:"Servicios", catCls:"badge-servicios",
+    resumen:"Autorización de rebajas tarifarias solicitadas por la Cooperativa Eléctrica Limitada de Rufino: $2.250 mensuales para sector comercial, instituciones sin fines de lucro y usuarios de Lazzarino; y $2.435,64 para categoría comercial y medianas demandas.",
+    arts:[{n:"Art. 1°",t:"Autorizase a la Cooperativa Eléctrica Limitada de Rufino a aplicar las rebajas tarifarias de notas 020/97 y 045/97."},{n:"Art. 2°",t:"Se anexa el Cuadro Tarifario con las rebajas autorizadas."}]},
+  { num:"2249/97", tipo:"Ord.", titulo:"Renombrar calle Neuquén como 'Benito Almengor Bianco'", fecha:"7 de Julio de 1997", cat:"Urbanismo", catCls:"badge-urbanismo",
+    resumen:"En homenaje a Don Benito Almengor Bianco (1920–1997), militante justicialista, trabajador comunitario, presidente del Círculo Católico de Obreros y colaborador de múltiples instituciones de Rufino. La calle tomará su nombre a partir del 16 de septiembre, aniversario de su fallecimiento.",
+    arts:[{n:"Art. 1°",t:"La calle Neuquén pasará a llamarse BENITO ALMENGOR BIANCO a partir del 16 de Septiembre de 1997."},{n:"Art. 2°",t:"Dispónese la adquisición y colocación de una placa de bronce denominativa."}]},
+  { num:"2250/97", tipo:"Ord.", titulo:"Presupuesto General de Gastos — Ejercicio 1997", fecha:"21 de Julio de 1997", cat:"Presupuesto", catCls:"badge-presupuesto",
+    resumen:"Fíjase en $8.155.500 el total de erogaciones del Presupuesto Municipal 1997 (corrientes $4.610.500 + capital $3.545.000). Recursos calculados en $6.655.500. Financiamiento previsto de $1.500.000 mediante Crédito PROMUDI. Planta permanente: 152 cargos; temporaria: 95 cargos.",
+    arts:[{n:"Art. 1°",t:"Total erogaciones: $8.155.500. Corrientes: $4.610.500 | Capital: $3.545.000."},{n:"Art. 2°",t:"Cálculo de Recursos: $6.655.500. Corrientes: $5.116.300 | Capital: $855.200 | Rentas especiales: $684.000."},{n:"Art. 4°",t:"Financiamiento de $1.500.000 mediante Crédito PROMUDI."},{n:"Art. 5°",t:"Planta permanente: 152 cargos. Planta temporaria: 95 cargos."}]},
+  { num:"2251/97", tipo:"Ord.", titulo:"Denominación de calle pública como 'Dr. Arturo H. Illia'", fecha:"21 de Julio de 1997", cat:"Urbanismo", catCls:"badge-urbanismo",
+    resumen:"Se impone el nombre del ex presidente Dr. Arturo Humberto Illia a una calle pública sin nombre en la Sección 1ra. del Plano Oficial de Rufino, de sentido Norte-Sur, desde Boulevard 9 de Julio hacia el Norte.",
+    arts:[{n:"Art. 1°",t:"Impónese el nombre de Dr. ARTURO H. ILLIA a la calle de la Sección 1ra., sentido Norte-Sur, desde Bvd. 9 de Julio, entre D.F. Sarmiento y Vieytes."}]},
+  { num:"2252/97", tipo:"Ord.", titulo:"Adquisición de equipamiento informático para el Municipio", fecha:"25 de Agosto de 1997", cat:"Presupuesto", catCls:"badge-presupuesto",
+    resumen:"Modernización informática municipal: 4 PCs Intel Pentium en red, impresora láser IBM Lexmar 4312, placa X-25 Eicon, 2 módems, línea entrante, UPS y CD-ROM. Costo total: $13.860 del Fondo Municipal de Obras y Equipamientos Públicos.",
+    arts:[{n:"Art. 1°",t:"Aféctese el Fondo Municipal de Obras y Equipamientos Públicos por hasta $13.860 para adquisición de equipos."},{n:"Art. 2°",t:"Equipamiento: 4 PCs Intel Pentium, 1 impresora láser IBM Lexmar 4312, placa X-25, UPS 800V-A, 2 módems, 1 CD-ROM 16X y línea entrante."}]},
+  { num:"2253/97", tipo:"Ord.", titulo:"Prórroga del sistema provisorio de cobro de Alumbrado Público", fecha:"20 de Octubre de 1997", cat:"Servicios", catCls:"badge-servicios",
+    resumen:"Prórroga por 1 año del sistema provisorio de cobro del Alumbrado Público (Ord. 2165/94) mientras el HCD elabora el régimen definitivo de cobro.",
+    arts:[{n:"Art. 1°",t:"Prorrógase por 1 año el sistema provisorio del Cobro del Alumbrado Público, a partir del vencimiento de la Ord. Nro. 2240/96."}]},
+  { num:"2254/97", tipo:"Ord.", titulo:"Reforma del Fondo Municipal de Obras y Equipamiento Públicos", fecha:"24 de Noviembre de 1997", cat:"Presupuesto", catCls:"badge-presupuesto",
+    resumen:"Actualización de la Ordenanza 1854/88. Amplía la finalidad del Fondo para incluir: obras públicas de interés común, inversión en equipamiento y financiamiento a frentistas en condición económica difícil que no puedan abonar contribución de mejoras.",
+    arts:[{n:"Art. 1°",t:"El Fondo contribuirá a: a) Obras Públicas; b) Equipamiento municipal; c) Financiar frentistas sin capacidad de pago de contado para obras de pavimentación."},{n:"Art. 2°",t:"Incorpórase: 'd) Las sumas recuperadas como consecuencia de financiamientos otorgados.'"}]},
+  { num:"2255/97", tipo:"Ord.", titulo:"Mínimo del 80% de mano de obra local en obras públicas", fecha:"24 de Noviembre de 1997", cat:"Social", catCls:"badge-social",
+    resumen:"Toda empresa que realice obras públicas en Rufino debe emplear como mínimo el 80% de mano de obra local (personas con más de 2 años de residencia con domicilio en el DNI). Obligación incorporada a todos los pliegos licitatorios del municipio.",
+    arts:[{n:"Art. 1°",t:"El 80% mínimo de mano de obra en obras públicas en Rufino debe ser local. No aplica al personal técnico/profesional."},{n:"Art. 2°",t:"Esta obligación se incluirá en todos los pliegos de licitación o concurso de precios del municipio."},{n:"Art. 3°",t:"Mano de obra local: toda persona con más de 2 años de residencia en Rufino según su DNI."},{n:"Art. 4°",t:"El personal contratado debe contar con Libreta Sanitaria del Hospital SAMCO de Rufino."}]},
+  { num:"2256/97", tipo:"Ord.", titulo:"Alcantarillado para futura planta industrial — Presidente Perón 1500", fecha:"1 de Diciembre de 1997", cat:"Obras Públicas", catCls:"badge-obras",
+    resumen:"Se faculta al Departamento Ejecutivo a construir 20 metros de alcantarillado de 0,60m para acceso a una futura planta industrial en Presidente Perón 1500. Costo estimado: $4.000 del Fondo de Obras Públicas. El propietario debe destinar el inmueble a uso industrial.",
+    arts:[{n:"Art. 1°",t:"Facúltase al Departamento Ejecutivo a construir el alcantarillado para la futura planta industrial en Presidente Perón 1500."},{n:"Art. 2°",t:"Costo: $4.000 del Fondo Municipal. Condiciones: destinar el inmueble a industria y regularizar el título de propiedad."},{n:"Art. 3°",t:"Incumplimiento o transferencia antes de 2 años implica cancelación del beneficio y reintegro del costo."}]},
+  { num:"2257/97", tipo:"Ord.", titulo:"Nueva rebaja tarifaria a la Cooperativa Eléctrica — Diciembre 1997", fecha:"29 de Diciembre de 1997", cat:"Servicios", catCls:"badge-servicios",
+    resumen:"Sesión Extraordinaria. Autorización de la rebaja de tarifas eléctricas solicitada por la Cooperativa Eléctrica Limitada de Rufino por disminución de costos operativos. Proyecto detallado anexado a la ordenanza.",
+    arts:[{n:"Art. 1°",t:"Autorizase a la Cooperativa Eléctrica Limitada de Rufino a aplicar la rebaja de tarifas por reducción de costos operativos, conforme al proyecto anexo."},{n:"Art. 2°",t:"Comuníquese, publíquese y dése al Registro Oficial Municipal."}]}
+];
+
+let catActiva = 'all';
+
+function renderizar(lista) {
+  const c = document.getElementById('listaOrdenanzas');
+  if (!lista.length) {
+    c.innerHTML = '<div style="padding:40px;text-align:center;color:rgba(255,255,255,0.3);font-family:Oswald,sans-serif;letter-spacing:1px;">SIN RESULTADOS PARA ESA BÚSQUEDA</div>';
+    return;
+  }
+  c.innerHTML = lista.map((o, i) => `
+    <div class="ordenanza-fila" onclick="abrirModal(${ordenanzas.indexOf(o)})">
+      <div class="fila-num"><small>${o.tipo}</small>${o.num}</div>
+      <div class="fila-titulo">${o.titulo}<small>${o.fecha}</small></div>
+      <div class="fila-cat"><span class="badge ${o.catCls}">${o.cat}</span></div>
+      <button class="fila-btn" onclick="event.stopPropagation()">⬇ PDF</button>
+    </div>
+  `).join('');
+  // reveal
+  document.querySelectorAll('.ordenanza-fila').forEach((el, i) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(12px)';
+    el.style.transition = `opacity 0.3s ease ${i * 0.04}s, transform 0.3s ease ${i * 0.04}s`;
+    setTimeout(() => { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; }, 60);
+  });
+}
+
+function filtrar() {
+  const q = document.getElementById('campoBusqueda').value.toLowerCase();
+  renderizar(ordenanzas.filter(o => {
+    const cat = catActiva === 'all' || o.cat === catActiva;
+    const txt = !q || o.num.toLowerCase().includes(q) || o.titulo.toLowerCase().includes(q) || o.resumen.toLowerCase().includes(q);
+    return cat && txt;
+  }));
+}
+
+function cambiarFiltro(cat, btn) {
+  catActiva = cat;
+  document.querySelectorAll('.filtro').forEach(b => b.classList.remove('activo'));
+  btn.classList.add('activo');
+  filtrar();
+}
+
+function abrirModal(i) {
+  const o = ordenanzas[i];
+  document.getElementById('modalContenido').innerHTML = `
+    <div class="modal-etiqueta">Municipalidad de Rufino — ${o.tipo} Nro.</div>
+    <div class="modal-nombre">${o.num} — ${o.titulo}</div>
+    <div class="modal-fecha">📅 Sala de Sesiones: ${o.fecha}</div>
+    <div class="modal-seccion">Resumen</div>
+    <div class="modal-resumen">${o.resumen}</div>
+    <div class="modal-seccion">Artículos principales</div>
+    <div class="modal-arts">${o.arts.map(a=>`<div class="modal-art"><strong>${a.n}</strong><p>${a.t}</p></div>`).join('')}</div>
+    <div class="modal-pie">
+      <button class="btn-celeste" onclick="document.getElementById('modalCapa').classList.remove('abierto')">Cerrar</button>
+      <button class="btn-borde" style="font-family:Oswald,sans-serif;font-size:13px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;border-radius:2px;padding:14px 28px;transition:all 0.25s;border:2px solid rgba(255,255,255,0.25);color:rgba(255,255,255,0.8);background:none;cursor:pointer;">⬇ Descargar PDF</button>
+    </div>
+  `;
+  document.getElementById('modalCapa').classList.add('abierto');
+}
+
+function cerrarSiClick(e) {
+  if (e.target === document.getElementById('modalCapa'))
+    document.getElementById('modalCapa').classList.remove('abierto');
+}
+
+// Init
+renderizar(ordenanzas);
+
+// Scroll reveal para otras secciones
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; }
+  });
+}, { threshold: 0.08 });
+
+document.querySelectorAll('.dato-box, .crono-item, .dato-contacto').forEach(el => {
+  el.style.opacity = '0'; el.style.transform = 'translateY(16px)';
+  el.style.transition = 'opacity 0.45s ease, transform 0.45s ease';
+  obs.observe(el);
+});
+</script>
+</body>
+</html>

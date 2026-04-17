@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>InfoConectados · Portal de la comunidad organizada</title>
+<style>
+:root{
+  --paper:#f5f1e8;
+  --paper-2:#fbf8f2;
+  --paper-3:#efe8dc;
+  --ink:#1f2a30;
+  --muted:#61707a;
+  --line:#ded5c6;
+  --brand:#b55233;
+  --brand-2:#8f3d23;
+  --route:#2f6484;
+  --field:#617a45;
+  --signal:#c58a2b;
+  --danger:#b23a35;
+  --white:#ffffff;
+  --shadow:0 10px 30px rgba(31,42,48,.08);
+  --radius:18px;
+  --max:1280px;
+  --font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --font-sans: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-sans);background:linear-gradient(180deg,var(--paper-2),var(--paper));color:var(--ink);line-height:1.55}
+a{text-decoration:none;color:inherit}
+button{font:inherit}
+img{max-width:100%;display:block}
+.shell{min-height:100vh}
+.topbar{background:var(--ink);color:#d8d2c7;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;padding:.55rem 1.1rem;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.topbar .left,.topbar .right{display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
+.topbar strong{color:#fff;font-weight:650}
+.live-dot{width:8px;height:8px;border-radius:999px;background:#48b36a;display:inline-block;box-shadow:0 0 0 6px rgba(72,179,106,.18)}
+.header{position:sticky;top:0;z-index:50;background:rgba(251,248,242,.94);backdrop-filter:blur(14px);border-bottom:1px solid rgba(31,42,48,.08)}
+.header-inner{max-width:var(--max);margin:0 auto;padding:1rem 1.2rem;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:1rem}
+.header-side{display:flex;align-items:center;gap:.75rem}
+.header-side.right{justify-content:flex-end}
+.microchip{border:1px solid var(--line);background:var(--white);padding:.55rem .8rem;border-radius:999px;font-size:.78rem;color:var(--muted);white-space:nowrap}
+.brand{text-align:center}
+.brand .eyebrow{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:.25rem}
+.brand .title{font-family:var(--font-serif);font-weight:700;font-size:clamp(1.8rem,4vw,3rem);letter-spacing:-.04em;line-height:1}
+.brand .title em{color:var(--brand);font-style:normal}
+.brand .sub{font-size:.83rem;color:var(--muted);margin-top:.35rem}
+.mainnav{border-top:1px solid rgba(31,42,48,.07)}
+.mainnav-inner{max-width:var(--max);margin:0 auto;padding:0 1rem;display:flex;gap:.25rem;overflow:auto}
+.mainnav-inner::-webkit-scrollbar{display:none}
+.navbtn{background:transparent;border:none;padding:.95rem .95rem .82rem;white-space:nowrap;color:var(--muted);font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-bottom:3px solid transparent;cursor:pointer;transition:.18s}
+.navbtn:hover{color:var(--ink)}
+.navbtn.active{color:var(--ink);border-bottom-color:var(--brand)}
+.hero-wrap{max-width:var(--max);margin:0 auto;padding:1.35rem 1.1rem 0}
+.hero{display:grid;grid-template-columns:1.28fr .72fr;gap:1rem;align-items:stretch}
+.hero-main,.hero-side{background:var(--white);border:1px solid rgba(31,42,48,.08);border-radius:24px;box-shadow:var(--shadow)}
+.hero-main{overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;min-height:420px}
+.hero-art{background:radial-gradient(circle at 20% 20%, rgba(47,100,132,.16), transparent 35%), radial-gradient(circle at 80% 0%, rgba(181,82,51,.2), transparent 40%), linear-gradient(160deg, #20313b 0%, #122027 55%, #18232a 100%);position:relative;padding:1.5rem;display:flex;align-items:flex-end}
+.hero-art svg{position:absolute;inset:0;width:100%;height:100%}
+.hero-copy{background:linear-gradient(180deg,#fff,#fbf7ef);padding:1.7rem 1.7rem 1.5rem;display:flex;flex-direction:column;justify-content:center;border-left:1px solid rgba(31,42,48,.07)}
+.kicker{display:inline-flex;gap:.45rem;align-items:center;font-size:.72rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--brand);margin-bottom:.7rem}
+.kicker::before{content:"";width:14px;height:3px;border-radius:999px;background:var(--brand)}
+.hero-title{font-family:var(--font-serif);font-size:clamp(1.6rem,3vw,2.5rem);line-height:1.08;letter-spacing:-.04em;margin-bottom:.8rem}
+.hero-lead{font-size:1rem;color:var(--muted);max-width:42ch;margin-bottom:1rem}
+.meta{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:auto}
+.meta span{font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);padding:.38rem .6rem;border-radius:999px;background:var(--paper-2);border:1px solid var(--line)}
+.hero-side{padding:1.2rem;display:flex;flex-direction:column;gap:.95rem}
+.side-card{padding:1rem;border:1px solid var(--line);border-radius:18px;background:linear-gradient(180deg,#fff,#faf6ee)}
+.side-card h3{font-family:var(--font-serif);font-size:1.1rem;letter-spacing:-.02em;margin-bottom:.35rem}
+.side-card p{font-size:.9rem;color:var(--muted)}
+.side-badges{display:flex;gap:.45rem;flex-wrap:wrap;margin-top:.7rem}
+.badge{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;padding:.34rem .54rem;border-radius:999px}
+.badge.route{background:rgba(47,100,132,.12);color:var(--route)}
+.badge.field{background:rgba(97,122,69,.12);color:var(--field)}
+.badge.brand{background:rgba(181,82,51,.12);color:var(--brand)}
+.quickstats{max-width:var(--max);margin:1rem auto 0;padding:0 1.1rem 0;display:grid;grid-template-columns:repeat(5,1fr);gap:.8rem}
+.stat{background:var(--white);border:1px solid rgba(31,42,48,.08);border-radius:18px;padding:1rem 1rem .9rem;box-shadow:var(--shadow)}
+.stat .n{font-family:var(--font-serif);font-size:1.7rem;line-height:1;color:var(--ink);margin-bottom:.3rem}
+.stat .l{font-size:.78rem;color:var(--muted)}
+.panel-wrap{max-width:var(--max);margin:1rem auto 0;padding:0 1.1rem 2rem}
+.panel{display:none}
+.panel.active{display:block;animation:fade .28s ease}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.section{margin-top:1rem}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:1rem;margin-bottom:.9rem}
+.section-head h2{font-family:var(--font-serif);font-size:clamp(1.35rem,2.3vw,2rem);letter-spacing:-.035em}
+.section-head p{color:var(--muted);font-size:.92rem;max-width:68ch}
+.grid-main{display:grid;grid-template-columns:1fr 320px;gap:1rem}
+.cards-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.cards-2{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+.card{background:var(--white);border:1px solid rgba(31,42,48,.08);border-radius:20px;box-shadow:var(--shadow);overflow:hidden}
+.card.pad{padding:1.1rem}
+.thumb{height:170px;background:linear-gradient(135deg,#e8eef2,#d9e4ec);position:relative}
+.thumb svg{width:100%;height:100%;display:block}
+.card-body{padding:1rem 1rem 1.05rem}
+.eyebrow{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.14em;color:var(--brand);margin-bottom:.3rem}
+.card-title{font-family:var(--font-serif);font-size:1.02rem;line-height:1.22;letter-spacing:-.025em;margin-bottom:.4rem}
+.card-text{font-size:.89rem;color:var(--muted)}
+.card-meta{display:flex;gap:.55rem;flex-wrap:wrap;margin-top:.7rem}
+.card-meta span{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+.sidebar{display:flex;flex-direction:column;gap:1rem}
+.widget{background:var(--white);border:1px solid rgba(31,42,48,.08);border-radius:20px;box-shadow:var(--shadow);overflow:hidden}
+.widget-head{padding:.8rem 1rem;background:var(--ink);color:#fff;font-size:.72rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase}
+.widget-body{padding:1rem}
+.list{display:flex;flex-direction:column;gap:.9rem}
+.list-item{display:grid;grid-template-columns:auto 1fr;gap:.75rem;align-items:start}
+.list-item .num{width:28px;height:28px;border-radius:999px;background:var(--paper);color:var(--brand);display:flex;align-items:center;justify-content:center;font-family:var(--font-serif);font-weight:700}
+.list-item h4{font-size:.92rem;line-height:1.32;margin-bottom:.15rem}
+.list-item p{font-size:.82rem;color:var(--muted)}
+.pill-row{display:flex;flex-wrap:wrap;gap:.5rem}
+.pill{padding:.5rem .75rem;border-radius:999px;background:var(--paper-2);border:1px solid var(--line);font-size:.76rem;color:var(--ink)}
+.agenda-item{padding:.82rem 0;border-bottom:1px dashed var(--line)}
+.agenda-item:last-child{border-bottom:none}
+.agenda-item .day{font-size:.68rem;font-weight:800;letter-spacing:.13em;color:var(--brand);text-transform:uppercase;margin-bottom:.18rem}
+.agenda-item h4{font-size:.92rem;line-height:1.32;margin-bottom:.14rem}
+.agenda-item p{font-size:.82rem;color:var(--muted)}
+.callout{padding:1rem 1.1rem;border-radius:20px;background:linear-gradient(135deg, rgba(181,82,51,.08), rgba(47,100,132,.08));border:1px solid rgba(181,82,51,.15)}
+.callout h3{font-family:var(--font-serif);font-size:1.14rem;letter-spacing:-.02em;margin-bottom:.35rem}
+.callout p{font-size:.9rem;color:var(--muted)}
+.callout .actions{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.8rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.45rem;padding:.72rem 1rem;border-radius:999px;font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;border:1px solid transparent;cursor:pointer}
+.btn.primary{background:var(--brand);color:#fff}
+.btn.secondary{background:#fff;color:var(--ink);border-color:var(--line)}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-top:.85rem}
+.metric{background:#fff;border:1px solid var(--line);border-radius:16px;padding:.9rem}
+.metric .n{font-family:var(--font-serif);font-size:1.35rem;line-height:1;margin-bottom:.2rem}
+.metric .l{font-size:.76rem;color:var(--muted)}
+.job-list,.commerce-grid,.voices-grid{display:grid;gap:.9rem}
+.job-row,.voice-row,.commerce-row{background:var(--white);border:1px solid rgba(31,42,48,.08);border-radius:18px;padding:1rem;box-shadow:var(--shadow)}
+.job-row{display:grid;grid-template-columns:1.1fr .7fr .45fr;gap:1rem;align-items:center}
+.job-row h3,.commerce-row h3,.voice-row h3{font-size:1rem;line-height:1.26;margin-bottom:.15rem}
+.job-row p,.commerce-row p,.voice-row p{font-size:.85rem;color:var(--muted)}
+.tagline{display:flex;gap:.45rem;flex-wrap:wrap;margin-top:.5rem}
+.tagline span{font-size:.68rem;padding:.32rem .5rem;background:var(--paper-2);border:1px solid var(--line);border-radius:999px;color:var(--muted)}
+.job-cta,.commerce-cta{display:flex;justify-content:flex-end}
+.mini-btn{padding:.62rem .82rem;border-radius:999px;border:1px solid var(--line);background:#fff;font-size:.74rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
+.voice-row{display:grid;grid-template-columns:74px 1fr auto;gap:1rem;align-items:center}
+.avatar{width:74px;height:74px;border-radius:18px;background:linear-gradient(135deg, rgba(47,100,132,.15), rgba(181,82,51,.12));display:grid;place-items:center;font-family:var(--font-serif);font-size:1.25rem;color:var(--brand)}
+.community-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.community-card{background:var(--white);border:1px solid rgba(31,42,48,.08);border-radius:18px;padding:1rem;box-shadow:var(--shadow)}
+.community-card h3{font-size:1rem;line-height:1.28;margin:.35rem 0}
+.community-card p{font-size:.86rem;color:var(--muted)}
+.iconbox{width:44px;height:44px;border-radius:14px;background:var(--paper);display:grid;place-items:center;color:var(--brand)}
+.route-panel{display:grid;grid-template-columns:1.1fr .9fr;gap:1rem}
+.story-block{background:var(--white);border:1px solid rgba(31,42,48,.08);border-radius:20px;padding:1rem;box-shadow:var(--shadow)}
+.story-block h3{font-family:var(--font-serif);font-size:1.15rem;letter-spacing:-.02em;margin-bottom:.4rem}
+.story-block p{font-size:.9rem;color:var(--muted)}
+.story-block ul{margin-top:.75rem;padding-left:1.05rem;color:var(--muted);font-size:.9rem}
+.eco-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:1rem;align-items:start}
+.map-card{background:var(--white);border:1px solid rgba(31,42,48,.08);border-radius:22px;box-shadow:var(--shadow);padding:1rem}
+.map-stage{cursor:pointer;transition:opacity .15s}
+.map-stage:hover{opacity:.82}
+.map-stage.active rect{stroke-width:2.1!important}
+#detail-panel{margin-top:.8rem;padding:1rem;border:1px solid var(--line);background:var(--paper-2);border-radius:16px;min-height:92px}
+#detail-panel strong{display:block;margin-bottom:.3rem;font-size:.96rem}
+#detail-panel span{color:var(--muted);font-size:.9rem}
+.commercial-wire{background:var(--white);border:1px solid rgba(31,42,48,.08);border-radius:22px;box-shadow:var(--shadow);padding:1rem}
+.wire-head{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:.8rem}
+.wire-head h3{font-family:var(--font-serif);font-size:1.16rem}
+.wire-tabs{display:flex;gap:.4rem;flex-wrap:wrap}
+.wire-tabs button{padding:.45rem .65rem;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--muted);font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;cursor:pointer}
+.wire-tabs button.active{background:var(--brand);border-color:var(--brand);color:#fff}
+.portal-wire{border:1px solid var(--line);border-radius:18px;background:linear-gradient(180deg,#fff,#faf6ee);overflow:hidden}
+.pw-bar{padding:.55rem .9rem;background:var(--ink);color:#fff;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.16em}
+.pw-inner{padding:.9rem}
+.slot{border:2px dashed #d8c9ae;background:#fff9f0;border-radius:12px;color:#9f7b3d;padding:.55rem;text-align:center;font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;min-height:70px;display:grid;place-items:center;position:relative}
+.slot small{display:block;font-size:.62rem;font-weight:700;opacity:.75;letter-spacing:.06em;margin-top:.16rem}
+.pw-grid{display:grid;grid-template-columns:1fr 280px;gap:.8rem;margin-top:.8rem}
+.pw-hero{display:grid;grid-template-columns:1.05fr .95fr;gap:.8rem}
+.pw-card{border:1px solid var(--line);border-radius:14px;background:#fff;padding:.8rem}
+.pw-micro{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-top:.8rem}
+.package-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-top:.9rem}
+.package{background:#fff;border:1px solid var(--line);border-radius:16px;padding:1rem}
+.package h4{font-size:1rem;margin-bottom:.35rem}
+.package .price{font-family:var(--font-serif);font-size:1.55rem;line-height:1;color:var(--brand);margin-bottom:.35rem}
+.package p{font-size:.84rem;color:var(--muted)}
+.package ul{margin:.7rem 0 0 1rem;font-size:.82rem;color:var(--muted)}
+.footer{margin-top:2rem;background:var(--ink);color:#d8d2c7}
+.footer-inner{max-width:var(--max);margin:0 auto;padding:1.7rem 1.1rem;display:grid;grid-template-columns:1.1fr .9fr .9fr;gap:1.2rem}
+.footer h3{font-family:var(--font-serif);font-size:1.2rem;color:#fff;margin-bottom:.45rem}
+.footer h4{font-size:.76rem;letter-spacing:.18em;text-transform:uppercase;margin-bottom:.45rem;color:#fff}
+.footer p,.footer li{font-size:.84rem;color:#cfc6b7}
+.footer ul{list-style:none;display:grid;gap:.4rem}
+.footer .copy{grid-column:1/-1;padding-top:1rem;border-top:1px solid rgba(255,255,255,.1);font-size:.76rem;color:#bcb3a4}
+@media (max-width:1100px){
+  .quickstats{grid-template-columns:repeat(3,1fr)}
+  .hero,.grid-main,.route-panel,.eco-grid,.pw-grid{grid-template-columns:1fr}
+  .hero-grid{grid-template-columns:1fr}
+  .cards-3,.community-grid,.package-grid{grid-template-columns:repeat(2,1fr)}
+  .job-row{grid-template-columns:1fr}
+  .voice-row{grid-template-columns:64px 1fr}
+  .voice-row > :last-child{grid-column:2}
+  .footer-inner{grid-template-columns:1fr 1fr}
+}
+@media (max-width:760px){
+  .header-inner{grid-template-columns:1fr;justify-items:center}
+  .header-side,.header-side.right{justify-content:center}
+  .quickstats,.cards-3,.cards-2,.community-grid,.package-grid,.metrics,.pw-micro,.footer-inner{grid-template-columns:1fr}
+  .hero-wrap,.panel-wrap{padding-left:.8rem;padding-right:.8rem}
+  .topbar{padding:.5rem .8rem}
+  .mainnav-inner{padding:0 .5rem}
+  .community-grid{gap:.8rem}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="topbar">
+    <div class="left"><span class="live-dot"></span><strong>Portal activo</strong><span>Rufino · Santa Fe</span><span>Comunidad organizada digital</span></div>
+    <div class="right"><span>Marco: InfoConectados</span><span>Medio: El Rufino</span><span>Sello: La 33</span></div>
+  </div>
+
+  <header class="header">
+    <div class="header-inner">
+      <div class="header-side"><span class="microchip">Resumen WA 7:30</span><span class="microchip">Bolsa de trabajo</span></div>
+      <div class="brand">
+        <div class="eyebrow">Portal de la comunidad organizada</div>
+        <div class="title">Info<em>Conectados</em></div>
+        <div class="sub">Medio, trabajo, comercios, memoria y servicios dentro de un mismo ecosistema</div>
+      </div>
+      <div class="header-side right"><span class="microchip">Directorio local</span><span class="microchip">Voces y archivo</span></div>
+    </div>
+    <nav class="mainnav">
+      <div class="mainnav-inner" id="navTabs">
+        <button class="navbtn active" data-panel="portada">Portada</button>
+        <button class="navbtn" data-panel="comunidad">Comunidad</button>
+        <button class="navbtn" data-panel="trabajo">Trabajo</button>
+        <button class="navbtn" data-panel="comercios">Comercios</button>
+        <button class="navbtn" data-panel="voces">Voces</button>
+        <button class="navbtn" data-panel="ecosistema">Ecosistema</button>
+        <button class="navbtn" data-panel="comercial">Comercial</button>
+      </div>
+    </nav>
+  </header>
+
+  <div class="hero-wrap">
+    <section class="hero">
+      <article class="hero-main">
+        <div class="hero-grid">
+          <div class="hero-art">
+            <svg viewBox="0 0 640 420" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <defs>
+                <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="rgba(47,100,132,.35)"/>
+                  <stop offset="100%" stop-color="rgba(181,82,51,.18)"/>
+                </linearGradient>
+              </defs>
+              <rect width="640" height="420" fill="url(#g1)"/>
+              <circle cx="150" cy="110" r="78" fill="none" stroke="rgba(255,255,255,.16)" stroke-width="1.4"/>
+              <circle cx="150" cy="110" r="46" fill="none" stroke="rgba(181,82,51,.58)" stroke-width="2"/>
+              <path d="M415 76c-46 0-84 38-84 84s38 84 84 84 84-38 84-84-38-84-84-84Zm0 28c31 0 56 25 56 56s-25 56-56 56-56-25-56-56 25-56 56-56Z" fill="rgba(97,122,69,.22)"/>
+              <rect x="80" y="262" width="490" height="72" rx="14" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.08)"/>
+              <text x="106" y="292" fill="rgba(255,255,255,.9)" font-family="Inter, sans-serif" font-size="14" letter-spacing="3">EL RUFINO</text>
+              <text x="106" y="314" fill="rgba(255,255,255,.58)" font-family="Inter, sans-serif" font-size="12">hecho + contexto + seguimiento</text>
+              <text x="378" y="292" fill="rgba(255,255,255,.9)" font-family="Inter, sans-serif" font-size="14" letter-spacing="3">LA 33</text>
+              <text x="378" y="314" fill="rgba(255,255,255,.58)" font-family="Inter, sans-serif" font-size="12">territorio + rutas + corredor</text>
+              <text x="320" y="374" text-anchor="middle" fill="rgba(255,255,255,.58)" font-family="Inter, sans-serif" font-size="11" letter-spacing="6">COMUNIDAD ORGANIZADA DIGITAL</text>
+            </svg>
+          </div>
+          <div class="hero-copy">
+            <div class="kicker">Mockup base del portal</div>
+            <h1 class="hero-title">Un portal que no se limita a noticias: organiza comunidad, circulación económica y memoria local.</h1>
+            <p class="hero-lead">La maqueta toma la lógica editorial de un medio claro y legible, incorpora módulo de voces/archivo, ordena la bolsa de trabajo y el directorio comercial, y deja visible que todo vive dentro de un ecosistema mayor.</p>
+            <div class="meta">
+              <span>InfoConectados</span>
+              <span>El Rufino</span>
+              <span>La 33</span>
+              <span>Rufino</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <aside class="hero-side">
+        <div class="side-card">
+          <h3>Idea central</h3>
+          <p>No es un portal de noticias suelto. Es la puerta de entrada a un sistema donde el periodismo, el trabajo local, los comercios, la agenda y la participación se refuerzan entre sí.</p>
+          <div class="side-badges">
+            <span class="badge brand">Contexto</span>
+            <span class="badge route">Seguimiento</span>
+            <span class="badge field">Campo</span>
+          </div>
+        </div>
+        <div class="side-card">
+          <h3>Voces y caras</h3>
+          <p>La portada deja lugar a una voz productora inicial, pero también a una convocatoria abierta para nuevas voces locales, sin que el proyecto dependa de una sola cara fija.</p>
+        </div>
+        <div class="side-card">
+          <h3>Comunidad organizada</h3>
+          <p>La navegación está pensada para que el usuario salte de un contenido editorial a un servicio útil: agenda, empleo, directorio, archivo y seguimiento público.</p>
+        </div>
+      </aside>
+    </section>
+  </div>
+
+  <div class="quickstats">
+    <div class="stat"><div class="n">6</div><div class="l">pilares editoriales base</div></div>
+    <div class="stat"><div class="n">12</div><div class="l">etapas del ecosistema</div></div>
+    <div class="stat"><div class="n">3</div><div class="l">capas de marca: InfoConectados / El Rufino / La 33</div></div>
+    <div class="stat"><div class="n">1</div><div class="l">portal común para medio, trabajo y comercio</div></div>
+    <div class="stat"><div class="n">WA</div><div class="l">distribución diaria como hábito</div></div>
+  </div>
+
+  <main class="panel-wrap">
+
+    <section class="panel active" id="panel-portada">
+      <div class="section-head">
+        <div>
+          <h2>Portada general del portal</h2>
+          <p>La home combina noticia contextual, agenda comunitaria, módulos útiles y señales comerciales sin verse como un diario clásico ni como un portal institucional frío.</p>
+        </div>
+      </div>
+      <div class="grid-main">
+        <div>
+          <div class="cards-3">
+            <article class="card">
+              <div class="thumb">
+                <svg viewBox="0 0 400 170" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="400" height="170" fill="#dfe8ee"/>
+                  <path d="M0 116h400" stroke="#2f6484" stroke-width="2" stroke-dasharray="8 10"/>
+                  <circle cx="93" cy="82" r="34" fill="rgba(47,100,132,.2)"/>
+                  <rect x="176" y="54" width="120" height="62" rx="10" fill="rgba(181,82,51,.15)"/>
+                  <text x="200" y="146" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" fill="#61707a" letter-spacing="4">PODER Y GESTIÓN</text>
+                </svg>
+              </div>
+              <div class="card-body">
+                <div class="eyebrow">El Rufino</div>
+                <div class="card-title">La obra anunciada para zona norte vuelve al radar: qué se prometió, qué falta y quién debe responder.</div>
+                <div class="card-text">Ejemplo de pieza principal: hecho + contexto + memoria pública del anuncio.</div>
+                <div class="card-meta"><span>Seguimiento</span><span>Infraestructura</span><span>Facebook + web</span></div>
+              </div>
+            </article>
+            <article class="card">
+              <div class="thumb">
+                <svg viewBox="0 0 400 170" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="400" height="170" fill="#eef0e2"/>
+                  <path d="M80 118 160 72 234 106 312 60" fill="none" stroke="#617a45" stroke-width="3"/>
+                  <circle cx="80" cy="118" r="5" fill="#617a45"/>
+                  <circle cx="160" cy="72" r="5" fill="#617a45"/>
+                  <circle cx="234" cy="106" r="5" fill="#617a45"/>
+                  <circle cx="312" cy="60" r="5" fill="#617a45"/>
+                  <text x="200" y="146" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" fill="#61707a" letter-spacing="4">LA 33</text>
+                </svg>
+              </div>
+              <div class="card-body">
+                <div class="eyebrow">La 33</div>
+                <div class="card-title">Cosecha, costos y estado de rutas: el bloque territorial y productivo entra a portada sin quedar encerrado en nicho.</div>
+                <div class="card-text">Acá vive la impronta del corredor y la conversación que otros medios locales casi no cubren.</div>
+                <div class="card-meta"><span>Campo</span><span>RN 33</span><span>WhatsApp + web</span></div>
+              </div>
+            </article>
+            <article class="card">
+              <div class="thumb">
+                <svg viewBox="0 0 400 170" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="400" height="170" fill="#f3e7e0"/>
+                  <circle cx="135" cy="80" r="30" fill="rgba(181,82,51,.18)"/>
+                  <circle cx="200" cy="65" r="24" fill="rgba(47,100,132,.18)"/>
+                  <circle cx="260" cy="90" r="30" fill="rgba(97,122,69,.18)"/>
+                  <text x="200" y="145" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" fill="#61707a" letter-spacing="4">VOCES LOCALES</text>
+                </svg>
+              </div>
+              <div class="card-body">
+                <div class="eyebrow">Generación Rufino</div>
+                <div class="card-title">Historias, perfiles y nuevas voces: una ventana para lo joven, lo cultural y lo comunitario.</div>
+                <div class="card-text">Sirve para equilibrar la agenda dura con comunidad, identidad y circulación de referentes locales.</div>
+                <div class="card-meta"><span>Voces</span><span>Reels</span><span>Identidad</span></div>
+              </div>
+            </article>
+          </div>
+
+          <div class="section">
+            <div class="callout">
+              <h3>Portada útil, no solo llamativa</h3>
+              <p>La home muestra contenido editorial y, sin salir del tono periodístico, deja a mano tres accesos de alto valor comunitario: agenda, empleo y directorio de comercios. Esa mezcla es la marca del portal.</p>
+              <div class="actions">
+                <span class="btn primary">Agenda de la semana</span>
+                <span class="btn secondary">Buscar trabajo</span>
+                <span class="btn secondary">Ver comercios</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="section-head">
+              <div>
+                <h2>Módulos de primera pantalla</h2>
+                <p>Cuatro cajas rápidas para que el usuario entienda de inmediato que el portal tiene más de una función.</p>
+              </div>
+            </div>
+            <div class="community-grid">
+              <div class="community-card"><div class="iconbox">🗓</div><h3>Agenda comunitaria</h3><p>Actos, charlas, clubes, cultura, capacitaciones y encuentros barriales.</p></div>
+              <div class="community-card"><div class="iconbox">💼</div><h3>Trabajo local</h3><p>Bolsa visible, clara y con acceso directo a postulaciones o contactos.</p></div>
+              <div class="community-card"><div class="iconbox">🏪</div><h3>Comercios y servicios</h3><p>Directorio miembro, promociones y presencia local útil.</p></div>
+              <div class="community-card"><div class="iconbox">🎙</div><h3>Archivo y voces</h3><p>Entrevistas, memoria oral y convocatoria a nuevas participaciones.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="sidebar">
+          <section class="widget">
+            <div class="widget-head">Agenda hoy</div>
+            <div class="widget-body">
+              <div class="agenda-item"><div class="day">Lunes · 18:30</div><h4>Taller de orientación laboral</h4><p>Salón comunitario · inscripción abierta</p></div>
+              <div class="agenda-item"><div class="day">Martes · 20:00</div><h4>Reunión abierta de vecinos</h4><p>Zona norte · infraestructura y agua</p></div>
+              <div class="agenda-item"><div class="day">Jueves · 19:00</div><h4>Conversatorio “La 33 y el corredor”</h4><p>Centro cultural · entrada libre</p></div>
+            </div>
+          </section>
+          <section class="widget">
+            <div class="widget-head">Canales clave</div>
+            <div class="widget-body pill-row">
+              <span class="pill">Resumen WA</span>
+              <span class="pill">Facebook base</span>
+              <span class="pill">Instagram marca</span>
+              <span class="pill">TikTok joven</span>
+              <span class="pill">Web principal</span>
+            </div>
+          </section>
+          <section class="widget">
+            <div class="widget-head">Sponsor modelo</div>
+            <div class="widget-body">
+              <p style="font-size:.9rem;color:var(--muted)">Este bloque muestra dónde podría vivir un patrocinio sobrio: visible, integrado y sin arruinar el tono editorial.</p>
+              <div class="metrics">
+                <div class="metric"><div class="n">1</div><div class="l">resumen auspiciado</div></div>
+                <div class="metric"><div class="n">3</div><div class="l">paquetes base</div></div>
+                <div class="metric"><div class="n">WA</div><div class="l">activo premium</div></div>
+              </div>
+            </div>
+          </section>
+        </aside>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-comunidad">
+      <div class="section-head">
+        <div>
+          <h2>Bloque comunidad organizada</h2>
+          <p>La comunidad no aparece como slogan suelto. Acá se traduce en navegación, servicios, agenda y nodos organizativos que pueden convivir con el medio sin verse “pegados a la fuerza”.</p>
+        </div>
+      </div>
+      <div class="cards-2">
+        <div class="story-block">
+          <h3>Qué debe poder hacer una persona al entrar</h3>
+          <ul>
+            <li>Enterarse de qué está pasando en Rufino sin caer en ruido.</li>
+            <li>Encontrar una actividad, un curso o una reunión útil.</li>
+            <li>Buscar trabajo o dejar una oferta.</li>
+            <li>Ubicar un comercio o servicio local.</li>
+            <li>Entrar al archivo de voces y memoria.</li>
+          </ul>
+        </div>
+        <div class="story-block">
+          <h3>Qué no debe pasar</h3>
+          <ul>
+            <li>Que el portal parezca solo un diario.</li>
+            <li>Que parezca una web institucional sin vida.</li>
+            <li>Que el comercio quede desconectado del medio.</li>
+            <li>Que la agenda y el trabajo sean “páginas perdidas”.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="community-grid">
+        <div class="community-card"><div class="iconbox">🏛</div><h3>Organizaciones</h3><p>Ficha breve de clubes, bibliotecas, mutuales, centros culturales, sindicatos y asociaciones.</p></div>
+        <div class="community-card"><div class="iconbox">📍</div><h3>Barrios</h3><p>Mapa simple por sectores con reclamos, servicios, agenda y seguimiento barrial.</p></div>
+        <div class="community-card"><div class="iconbox">📚</div><h3>Capacitaciones</h3><p>Cursos, talleres y oportunidades de formación cruzadas con trabajo y comunidad.</p></div>
+        <div class="community-card"><div class="iconbox">📣</div><h3>Participación</h3><p>Canal para sumarse con historias, voces, propuestas o actividades públicas.</p></div>
+      </div>
+      <div class="section">
+        <div class="route-panel">
+          <div class="story-block">
+            <h3>Agenda amplia, no agenda elitista</h3>
+            <p>La maqueta prevé una agenda donde conviven clubes, parroquias, bibliotecas, juventudes, centros culturales, emprendedores y reuniones barriales. La comunidad organizada se ve en la mezcla, no en una sola etiqueta.</p>
+          </div>
+          <div class="story-block">
+            <h3>Bloque de servicios públicos</h3>
+            <p>Otro módulo posible: teléfonos útiles, guardias, SAMCO, farmacias, cortes, clima, transporte y trámites. Es información de rutina, pero construye hábito.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-trabajo">
+      <div class="section-head">
+        <div>
+          <h2>Bolsa de trabajo integrada</h2>
+          <p>Inspirada en el recorrido previo del proyecto: la bolsa no queda escondida ni depende de soluciones externas. Vive como un módulo natural del portal y puede alimentar tráfico real.</p>
+        </div>
+      </div>
+      <div class="callout">
+        <h3>Principio visual</h3>
+        <p>El empleo necesita una interfaz limpia, rápida y sin vueltas. La comunidad organizada se vuelve concreta cuando una oferta laboral o una búsqueda de empleo se encuentra fácil.</p>
+      </div>
+      <div class="section job-list">
+        <article class="job-row"><div><h3>Administrativo/a comercial · Cooperativa local</h3><p>Jornada completa · experiencia en atención, facturación y uso de sistemas.</p><div class="tagline"><span>Administración</span><span>Rufino</span><span>Full time</span></div></div><div><p><strong>Publicó:</strong> Cooperativa del sur</p><p><strong>Hace:</strong> 2 días</p></div><div class="job-cta"><button class="mini-btn">Postular</button></div></article>
+        <article class="job-row"><div><h3>Operario/a de depósito · Rubro ferretería</h3><p>Recepción de mercadería, control de stock y reparto urbano.</p><div class="tagline"><span>Logística</span><span>Part time</span><span>Barrio centro</span></div></div><div><p><strong>Publicó:</strong> Comercio miembro</p><p><strong>Hace:</strong> Hoy</p></div><div class="job-cta"><button class="mini-btn">Ver contacto</button></div></article>
+        <article class="job-row"><div><h3>Busco trabajo · Atención al público / caja</h3><p>Perfil cargado por persona local con experiencia en comercio minorista.</p><div class="tagline"><span>Busco trabajo</span><span>Disponibilidad inmediata</span></div></div><div><p><strong>Perfil:</strong> Activo</p><p><strong>Última actualización:</strong> ayer</p></div><div class="job-cta"><button class="mini-btn">Ver perfil</button></div></article>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-comercios">
+      <div class="section-head">
+        <div>
+          <h2>Directorio y economía local</h2>
+          <p>La sección comercios toma lo mejor del mapa de avisos y del gestor comercial, pero lo baja a una experiencia amable para el visitante común. No parece un panel; parece parte del ecosistema.</p>
+        </div>
+      </div>
+      <div class="cards-3 commerce-grid">
+        <article class="commerce-row"><h3>Corralón del sur</h3><p>Materiales, envíos y promociones vigentes. Ficha con ubicación, horario y contacto.</p><div class="tagline"><span>Construcción</span><span>Miembro</span><span>Centro</span></div></article>
+        <article class="commerce-row"><h3>Agroservicios La 33</h3><p>Insumos, asesoramiento y vínculo directo con la cobertura del corredor productivo.</p><div class="tagline"><span>Campo</span><span>Ruta 33</span><span>Miembro</span></div></article>
+        <article class="commerce-row"><h3>Farmacia comunitaria</h3><p>Guardias, turnos y servicio útil integrado al portal.</p><div class="tagline"><span>Salud</span><span>Servicios</span><span>Rufino</span></div></article>
+      </div>
+      <div class="section cards-2">
+        <div class="story-block">
+          <h3>Directorio como servicio</h3>
+          <p>Para el usuario, el directorio sirve para resolver. Para el comercio, sirve para ser encontrado. Para el portal, sirve como producto comercial orgánico y no invasivo.</p>
+        </div>
+        <div class="story-block">
+          <h3>No todo debe ser “aviso”</h3>
+          <p>Parte del inventario puede ser presencia editorial útil: ficha, rubro, mapas, promociones puntuales, agenda comercial y vínculos con empleo o comunidad.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-voces">
+      <div class="section-head">
+        <div>
+          <h2>Voces, archivo y convocatoria</h2>
+          <p>Acá se siente la influencia del archivo de entrevistas y del portal de voces: memoria oral, registro histórico y una convocatoria abierta para seguir sumando relatos y presencias locales.</p>
+        </div>
+      </div>
+      <div class="voices-grid">
+        <article class="voice-row"><div class="avatar">JA</div><div><h3>Jorge Almada · Archivo 2009</h3><p>Ejemplo de ficha recuperada del archivo oral, con fecha, categoría y acceso a escucha o resumen contextual.</p><div class="tagline"><span>Política</span><span>Archivo</span><span>Contexto</span></div></div><button class="mini-btn">Escuchar</button></article>
+        <article class="voice-row"><div class="avatar">MF</div><div><h3>Dra. María Fernández · Salud regional</h3><p>Una entrevista histórica puede convivir con una agenda presente y volver a circular en formato breve.</p><div class="tagline"><span>Salud</span><span>Memoria</span><span>Reels</span></div></div><button class="mini-btn">Resumen</button></article>
+        <article class="voice-row"><div class="avatar">NV</div><div><h3>Convocatoria abierta a nuevas voces locales</h3><p>Espacio para productores, estudiantes, referentes comunitarios, trabajadores, comerciantes, artistas y vecinos que puedan aportar miradas propias.</p><div class="tagline"><span>Convocatoria</span><span>Video</span><span>Audio</span></div></div><button class="mini-btn">Sumarme</button></article>
+      </div>
+      <div class="section callout">
+        <h3>Regla narrativa</h3>
+        <p>La voz inicial puede ser la del productor del proyecto, pero la identidad visual ya prepara el terreno para que entren otras voces sin romper la marca. Eso evita personalizar demasiado el medio en una sola figura.</p>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-ecosistema">
+      <div class="section-head">
+        <div>
+          <h2>Mapa de ecosistema</h2>
+          <p>Esta capa baja la lógica de las 12 etapas a una visualización entendible desde el navegador. Ayuda a mostrar que el portal no nace aislado, sino dentro de una arquitectura más amplia.</p>
+        </div>
+      </div>
+      <div class="eco-grid">
+        <div class="map-card">
+          <svg width="100%" viewBox="0 0 680 520" id="map-svg">
+            <defs>
+              <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </marker>
+            </defs>
+            <g fill="#f0e2d0" stroke="#d0bea7" stroke-width="1">
+              <rect x="255" y="218" width="170" height="52" rx="10"/>
+            </g>
+            <text x="340" y="240" text-anchor="middle" dominant-baseline="central" style="font:700 15px Inter, sans-serif;fill:#1f2a30">InfoConectados</text>
+            <text x="340" y="257" text-anchor="middle" dominant-baseline="central" style="font:12px Inter, sans-serif;fill:#61707a">comunidad organizada digital</text>
+
+            <g class="map-stage active" id="s1" data-id="1"><rect x="30" y="30" width="148" height="46" rx="8" fill="#d8eee8" stroke="#6eb09e"/><text x="104" y="49" text-anchor="middle" dominant-baseline="central" style="font:700 14px Inter, sans-serif;fill:#1f2a30">E1 · WordPress</text><text x="104" y="64" text-anchor="middle" dominant-baseline="central" style="font:12px Inter, sans-serif;fill:#61707a">infraestructura base</text></g>
+            <line x1="178" y1="53" x2="255" y2="230" stroke="#b8aa94" stroke-width="0.8" marker-end="url(#arrow)"/>
+            <g class="map-stage" id="s2" data-id="2"><rect x="30" y="100" width="148" height="46" rx="8" fill="#d8eee8" stroke="#6eb09e"/><text x="104" y="119" text-anchor="middle" dominant-baseline="central" style="font:700 14px Inter, sans-serif;fill:#1f2a30">E2 · Identidad</text><text x="104" y="134" text-anchor="middle" dominant-baseline="central" style="font:12px Inter, sans-serif;fill:#61707a">El Rufino · visual y voz</text></g>
+            <line x1="178" y1="123" x2="255" y2="235" stroke="#b8aa94" stroke-width="0.8" marker-end="url(#arrow)"/>
+            <g class="map-stage" id="s3" data-id="3"><rect x="30" y="170" width="148" height="46" rx="8" fill="#d8eee8" stroke="#6eb09e"/><text x="104" y="189" text-anchor="middle" dominant-baseline="central" style="font:700 14px Inter, sans-serif;fill:#1f2a30">E3 · Bolsa trabajo</text><text x="104" y="204" text-anchor="middle" dominant-baseline="central" style="font:12px Inter, sans-serif;fill:#61707a">oferta y demanda local</text></g>
+            <line x1="178" y1="193" x2="255" y2="240" stroke="#b8aa94" stroke-width="0.8" marker-end="url(#arrow)"/>
+
+            <g class="map-stage" id="s4" data-id="4"><rect x="30" y="260" width="148" height="46" rx="8" fill="#e7def5" stroke="#8e78c5"/><text x="104" y="279" text-anchor="middle" dominant-baseline="central" style="font:700 14px Inter, sans-serif;fill:#1f2a30">E4 · Editorial</text><text x="104" y="294" text-anchor="middle" dominant-baseline="central" style="font:12px Inter, sans-serif;fill:#61707a">pilares y calendario</text></g>
+            <line x1="178" y1="283" x2="255" y2="248" stroke="#b8aa94" stroke-width="0.8" marker-end="url(#arrow)"/>
+            <g class="map-stage" id="s5" data-id="5"><rect x="30" y="330" width="148" height="46" rx="8" fill="#e7def5" stroke="#8e78c5"/><text x="104" y="349" text-anchor="middle" dominant-baseline="central" style="font:700 14px Inter, sans-serif;fill:#1f2a30">E5 · Redes</text><text x="104" y="364" text-anchor="middle" dominant-baseline="central" style="font:12px Inter, sans-serif;fill:#61707a">FB · IG · WA · TikTok</text></g>
+            <line x1="178" y1="353" x2="255" y2="255" stroke="#b8aa94" stroke-width="0.8" marker-end="url(#arrow)"/>
+            <g class="map-stage" id="s6" data-id="6"><rect x="30" y="400" width="148" height="46" rx="8" fill="#e7def5" stroke="#8e78c5"/><text x="104" y="419" text-anchor="middle" dominant-baseline="central" style="font:700 14px Inter, sans-serif;fill:#1f2a30">E6 · Seguimiento</text><text x="104" y="434" text-anchor="middle" dominant-baseline="central" style="font:12px Inter, sans-serif;fill:#61707a">registro de promesas</text></g>
+            <line x1="178" y1="423" x2="255" y2="263" stroke="#b8aa94" stroke-width="0.8" marker-end="url(#arrow)"/>
+
+            <g class="map-stage" id="s7" data-id="7"><rect x="502" y="30" width="148" height="46" rx="8" fill="#f5ead6" stroke="#d1aa5d"/><text x="576" y="49" text-anchor="middle" dominant-baseline="central" style="font:700 14px Inter, sans-serif;fill:#1f2a30">E7 · Software</text><text x="576" y="64" text-anchor="middle" dominant-baseline="central" style="font:12px Inter, sans-serif;fill:#61707a">gestión comercial</text></g>
+            <line x1="502" y1="53" x2="425" y2="230" stroke="#b8aa94" stroke-width="0.8" marker-end="url(#arrow)"/>
+            <g class="map-stage" id="s8" data-id="8"><rect x="502" y="100" width="148" height="46" rx="8" fill="#f5ead6" stroke="#d1aa5d"/><text x="576" y="119" text-anchor="middle" dominant-baseline="central" style="font:700 14px Inter, sans-serif;fill:#1f2a30">E8 · Directorio</text><text x="576" y="134" text-anchor="middle" dominant-baseline="central" style="font:12px Inter, sans-serif;fill:#61707a">comercios miembros</text></g>
+            <line x1="502" y1="123" x2="425" y2="235" stroke="#b8aa94" stroke-width="0.8" marker-end="url(#arrow)"/>
+            <g class="map-stage" id="s9" data-id="9"><rect x="502" y="170" width="148" height="46" rx="8" fill="#f5ead6" stroke="#d1aa5d"/><text x="576" y="189" text-anchor="middle" dominant-baseline="central" style="font:700 14px Inter, sans-serif;fill:#1f2a30">E9 · Monetización</text><text x="576" y="204" text-anchor="middle" dominant-baseline="central" style="font:12px Inter, sans-serif;fill:#61707a">membresías · publicidad</text></g>
+            <line x1="502" y1="193" x2="425" y2="240" stroke="#b8aa94" stroke-width="0.8" marker-end="url(#arrow)"/>
+
+            <g class="map-stage" id="s10" data-id="10"><rect x="502" y="260" width="148" height="46" rx="8" fill="#dfeeda" stroke="#88ab72"/><text x="576" y="279" text-anchor="middle" dominant-baseline="central" style="font:700 14px Inter, sans-serif;fill:#1f2a30">E10 · Integración</text><text x="576" y="294" text-anchor="middle" dominant-baseline="central" style="font:12px Inter, sans-serif;fill:#61707a">todas las piezas unidas</text></g>
+            <line x1="502" y1="283" x2="425" y2="248" stroke="#b8aa94" stroke-width="0.8" marker-end="url(#arrow)"/>
+            <g class="map-stage" id="s11" data-id="11"><rect x="502" y="330" width="148" height="46" rx="8" fill="#dfeeda" stroke="#88ab72"/><text x="576" y="349" text-anchor="middle" dominant-baseline="central" style="font:700 14px Inter, sans-serif;fill:#1f2a30">E11 · Expansión</text><text x="576" y="364" text-anchor="middle" dominant-baseline="central" style="font:12px Inter, sans-serif;fill:#61707a">corredor RN 33</text></g>
+            <line x1="502" y1="353" x2="425" y2="255" stroke="#b8aa94" stroke-width="0.8" marker-end="url(#arrow)"/>
+            <g class="map-stage" id="s12" data-id="12"><rect x="502" y="400" width="148" height="46" rx="8" fill="#dfeeda" stroke="#88ab72"/><text x="576" y="419" text-anchor="middle" dominant-baseline="central" style="font:700 14px Inter, sans-serif;fill:#1f2a30">E12 · Sostenibilidad</text><text x="576" y="434" text-anchor="middle" dominant-baseline="central" style="font:12px Inter, sans-serif;fill:#61707a">modelo de largo plazo</text></g>
+            <line x1="502" y1="423" x2="425" y2="263" stroke="#b8aa94" stroke-width="0.8" marker-end="url(#arrow)"/>
+          </svg>
+          <div id="detail-panel"><strong>E1 · WordPress base · infraestructura</strong><span>Instalación y configuración del entorno base. Todo el resto del ecosistema se monta sobre esta capa inicial.</span></div>
+        </div>
+        <div class="story-block">
+          <h3>Lectura operativa</h3>
+          <p>Para el arranque del portal, el foco real está en E1 a E6: infraestructura, identidad, bolsa, sistema editorial, redes y seguimiento de promesas. Lo demás existe en el horizonte, pero no debe invadir la primera ejecución.</p>
+          <div class="metrics">
+            <div class="metric"><div class="n">6</div><div class="l">etapas prioritarias</div></div>
+            <div class="metric"><div class="n">WA</div><div class="l">canal de hábito</div></div>
+            <div class="metric"><div class="n">33</div><div class="l">sello territorial</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-comercial">
+      <div class="section-head">
+        <div>
+          <h2>Vista comercial y mapa de espacios</h2>
+          <p>Este panel traduce lo que traían el gestor de avisos y el mapa publicitario a una versión clara para discutir productos comerciales dentro del portal.</p>
+        </div>
+      </div>
+      <div class="commercial-wire">
+        <div class="wire-head">
+          <h3>Mapa rápido de inventario</h3>
+          <div class="wire-tabs" id="wireTabs">
+            <button class="active" data-wire="portada">Portada</button>
+            <button data-wire="lista">Lista</button>
+            <button data-wire="footer">Cierre</button>
+          </div>
+        </div>
+        <div class="portal-wire" id="wire-portada">
+          <div class="pw-bar">Portada · inventario visible</div>
+          <div class="pw-inner">
+            <div class="slot">Leaderboard superior<small>970 × 90</small></div>
+            <div class="pw-grid">
+              <div>
+                <div class="pw-hero">
+                  <div class="pw-card"><div class="eyebrow">Nota principal</div><div class="card-title" style="font-size:1.15rem">El Rufino + bloque de contexto</div><div class="card-text">La pieza de mayor peso editorial no se mezcla con la pauta.</div></div>
+                  <div class="slot">Header derecha<small>300 × 80</small></div>
+                </div>
+                <div class="pw-micro">
+                  <div class="pw-card"><div class="eyebrow">Agenda</div><div class="card-text">Módulo de servicio</div></div>
+                  <div class="pw-card"><div class="eyebrow">Trabajo</div><div class="card-text">Módulo útil</div></div>
+                  <div class="slot">Box in-grid<small>240 × 200</small></div>
+                </div>
+              </div>
+              <div>
+                <div class="slot" style="min-height:240px">Sidebar principal<small>300 × 250</small></div>
+                <div class="slot" style="margin-top:.8rem;min-height:240px">Sidebar inferior<small>300 × 250</small></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="portal-wire" id="wire-lista" style="display:none">
+          <div class="pw-bar">Sección interna · inventario contenido</div>
+          <div class="pw-inner">
+            <div class="pw-grid">
+              <div>
+                <div class="pw-card"><div class="eyebrow">Listado editorial</div><div class="card-text">Notas, voces, entrevistas, directorio o empleo.</div></div>
+                <div class="slot" style="margin-top:.8rem">Banner intertemático<small>728 × 90</small></div>
+                <div class="pw-card" style="margin-top:.8rem"><div class="eyebrow">Bloque servicio</div><div class="card-text">Otro módulo útil que convive con pauta contextual.</div></div>
+              </div>
+              <div>
+                <div class="slot" style="min-height:240px">Sticky lateral<small>300 × 250</small></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="portal-wire" id="wire-footer" style="display:none">
+          <div class="pw-bar">Cierre del recorrido</div>
+          <div class="pw-inner">
+            <div class="slot">Leaderboard final<small>970 × 120</small></div>
+            <div class="pw-micro" style="margin-top:.8rem">
+              <div class="slot">Box final A<small>360 × 250</small></div>
+              <div class="slot">Box final B<small>360 × 250</small></div>
+              <div class="slot">Box final C<small>360 × 250</small></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="package-grid">
+        <div class="package"><h4>Paquete Base</h4><div class="price">1 slot</div><p>Presencia simple para comercio local o servicio puntual.</p><ul><li>slot lateral o intertemático</li><li>rotación mensual</li><li>reporte básico</li></ul></div>
+        <div class="package"><h4>Paquete Comunidad</h4><div class="price">2 módulos</div><p>Ideal para actores locales que quieran presencia sin invadir el tono del portal.</p><ul><li>directorio + pauta</li><li>visibilidad en agenda o trabajo</li><li>integración orgánica</li></ul></div>
+        <div class="package"><h4>Paquete Premium</h4><div class="price">WA + web</div><p>Producto más valioso del ecosistema: resumen matutino + inventario visible.</p><ul><li>sponsor de resumen WA</li><li>slot de portada</li><li>mejor ticket comercial</li></ul></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <h3>InfoConectados</h3>
+        <p>Mockup de portal de la comunidad organizada: medio, trabajo, comercio, voces y servicios en una sola experiencia de navegación.</p>
+      </div>
+      <div>
+        <h4>Capas de marca</h4>
+        <ul>
+          <li>InfoConectados · ecosistema</li>
+          <li>El Rufino · medio local</li>
+          <li>La 33 · sello territorial</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Módulos visibles</h4>
+        <ul>
+          <li>Portada editorial</li>
+          <li>Agenda y comunidad</li>
+          <li>Bolsa de trabajo</li>
+          <li>Directorio y voces</li>
+        </ul>
+      </div>
+      <div class="copy">Versión visual v1.0 · HTML standalone · pensada para revisión en navegador y como base de futura portada WordPress.</div>
+    </div>
+  </footer>
+</div>
+<script>
+const panels = document.querySelectorAll('.panel');
+const navBtns = document.querySelectorAll('.navbtn');
+navBtns.forEach(btn => btn.addEventListener('click', () => {
+  const id = btn.dataset.panel;
+  navBtns.forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  panels.forEach(p => p.classList.toggle('active', p.id === 'panel-' + id));
+  window.scrollTo({top: document.querySelector('.panel-wrap').offsetTop - 60, behavior:'smooth'});
+}));
+
+const mapData = {
+  1: {t:'E1 · WordPress base · infraestructura', d:'Instalación del entorno base del portal. Todo el ecosistema se apoya sobre esta capa inicial.'},
+  2: {t:'E2 · Identidad · El Rufino', d:'Aplicación del sistema visual y editorial: marca, tono, paleta, componentes y jerarquía de navegación.'},
+  3: {t:'E3 · Bolsa de trabajo', d:'Módulo de empleo local integrado al portal general, no como página perdida o externa.'},
+  4: {t:'E4 · Editorial', d:'Pilares, calendario y criterio del medio: hecho + contexto + seguimiento.'},
+  5: {t:'E5 · Redes sociales', d:'Distribución segmentada: Facebook base, Instagram marca, WhatsApp hábito, TikTok crecimiento.'},
+  6: {t:'E6 · Seguimiento', d:'Registro de promesas y obras como diferencial editorial y herramienta pública.'},
+  7: {t:'E7 · Software', d:'Capa comercial/operativa pensada para comercios miembros y futura integración de servicios.'},
+  8: {t:'E8 · Directorio', d:'Directorio de comercios como servicio al usuario y producto útil para la economía local.'},
+  9: {t:'E9 · Monetización', d:'Membresías, pauta contextual y sponsor del resumen WA como base comercial inicial.'},
+  10:{t:'E10 · Integración', d:'Cuando medio, trabajo, comercio y comunidad empiezan a alimentarse entre sí dentro del mismo portal.'},
+  11:{t:'E11 · Expansión', d:'La 33 como sello para escalar hacia el corredor sin perder la identidad de origen.'},
+  12:{t:'E12 · Sostenibilidad', d:'Modelo de largo plazo con lectores, suscriptores, anunciantes y comercios activos.'}
+};
+document.querySelectorAll('.map-stage').forEach(el => {
+  el.addEventListener('click', () => {
+    document.querySelectorAll('.map-stage').forEach(x => x.classList.remove('active'));
+    el.classList.add('active');
+    const id = el.dataset.id;
+    document.getElementById('detail-panel').innerHTML = '<strong>' + mapData[id].t + '</strong><span>' + mapData[id].d + '</span>';
+  });
+});
+
+const wireTabs = document.querySelectorAll('#wireTabs button');
+wireTabs.forEach(btn => btn.addEventListener('click', () => {
+  wireTabs.forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('[id^="wire-"]').forEach(w => {
+    if (w.id !== 'wireTabs') w.style.display = 'none';
+  });
+  document.getElementById('wire-' + btn.dataset.wire).style.display = 'block';
+}));
+</script>
+</body>
+</html>

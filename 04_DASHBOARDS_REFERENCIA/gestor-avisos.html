@@ -1,0 +1,1540 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gestor de Avisos Publicitarios · Voces del Interior</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@500;600;700;800&family=Libre+Baskerville:wght@700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --rojo: #c8102e;
+  --rojo-dark: #9e0a22;
+  --negro: #111;
+  --gris-1: #222;
+  --gris-2: #444;
+  --gris-3: #888;
+  --gris-4: #bbb;
+  --gris-5: #e5e5e5;
+  --gris-6: #f4f4f4;
+  --blanco: #fff;
+  --linea: #e0e0e0;
+  --verde: #16a34a;
+  --verde-bg: #dcfce7;
+  --naranja: #ea580c;
+  --naranja-bg: #fff7ed;
+  --amarillo: #ca8a04;
+  --amarillo-bg: #fef9c3;
+  --azul: #2563eb;
+  --azul-bg: #eff6ff;
+
+  --f-sans: 'Barlow', sans-serif;
+  --f-cond: 'Barlow Condensed', sans-serif;
+  --f-serif: 'Libre Baskerville', serif;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--f-sans); background: #0f1117; color: var(--blanco); min-height: 100vh; }
+
+/* ══ LAYOUT PRINCIPAL ══ */
+.app-shell {
+  display: grid;
+  grid-template-columns: 72px 320px 1fr;
+  grid-template-rows: 100vh;
+  overflow: hidden;
+}
+
+/* ══ SIDEBAR ICONOS ══ */
+.icon-rail {
+  background: #080a0e;
+  border-right: 1px solid #1e2130;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.25rem 0;
+  gap: 0.5rem;
+}
+
+.rail-logo {
+  font-family: var(--f-serif);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--rojo);
+  margin-bottom: 1rem;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  letter-spacing: 0.08em;
+}
+
+.rail-btn {
+  width: 44px; height: 44px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s;
+  border: none;
+  background: transparent;
+  color: #555;
+  font-size: 1.1rem;
+}
+.rail-btn:hover { background: #1e2130; color: #aaa; }
+.rail-btn.active { background: var(--rojo); color: var(--blanco); }
+
+/* ══ PANEL IZQUIERDO ══ */
+.left-panel {
+  background: #13151f;
+  border-right: 1px solid #1e2130;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.panel-header {
+  padding: 1.25rem 1.25rem 0.75rem;
+  border-bottom: 1px solid #1e2130;
+  flex-shrink: 0;
+}
+
+.panel-header h2 {
+  font-family: var(--f-cond);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #aaa;
+  margin-bottom: 0.75rem;
+}
+
+.btn-nuevo {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  width: 100%;
+  background: var(--rojo);
+  color: var(--blanco);
+  border: none;
+  padding: 0.65rem 1rem;
+  font-family: var(--f-cond);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+.btn-nuevo:hover { background: var(--rojo-dark); }
+.btn-nuevo .icon { font-size: 1rem; }
+
+/* LISTA DE AVISOS */
+.avisos-lista {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.75rem;
+}
+.avisos-lista::-webkit-scrollbar { width: 4px; }
+.avisos-lista::-webkit-scrollbar-thumb { background: #2a2d3e; border-radius: 2px; }
+
+.aviso-item {
+  background: #1a1d2e;
+  border: 1px solid #252840;
+  border-radius: 8px;
+  padding: 0.85rem;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  position: relative;
+}
+.aviso-item:hover { border-color: #3a3d5e; background: #1e2135; }
+.aviso-item.selected { border-color: var(--rojo); background: rgba(200,16,46,0.08); }
+
+.aviso-item-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.4rem;
+}
+
+.aviso-item-nombre {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--blanco);
+  line-height: 1.2;
+  flex: 1;
+  padding-right: 0.5rem;
+}
+
+.status-badge {
+  font-family: var(--f-cond);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.4rem;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.status-activo   { background: #166534; color: #86efac; }
+.status-vencido  { background: #7c2d12; color: #fdba74; }
+.status-futuro   { background: #1e3a5f; color: #93c5fd; }
+.status-sin-aviso{ background: #374151; color: #9ca3af; }
+
+.aviso-item-meta {
+  font-family: var(--f-cond);
+  font-size: 0.62rem;
+  color: #666;
+  letter-spacing: 0.03em;
+  line-height: 1.6;
+}
+
+.aviso-item-clics {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 0.3rem;
+  font-family: var(--f-cond);
+  font-size: 0.62rem;
+  color: #555;
+}
+
+.clics-num {
+  font-weight: 700;
+  color: #f59e0b;
+}
+
+/* ══ PANEL CENTRAL (EDITOR + PORTAL) ══ */
+.main-area {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  overflow: hidden;
+}
+
+.main-tabs {
+  background: #0c0e16;
+  border-bottom: 1px solid #1e2130;
+  display: flex;
+  gap: 0;
+  padding: 0 1.5rem;
+  flex-shrink: 0;
+}
+
+.main-tab {
+  font-family: var(--f-cond);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #555;
+  padding: 0.85rem 1.25rem;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.main-tab:hover { color: #aaa; }
+.main-tab.active { color: var(--blanco); border-bottom-color: var(--rojo); }
+
+.main-content {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.main-content::-webkit-scrollbar { width: 6px; }
+.main-content::-webkit-scrollbar-thumb { background: #2a2d3e; border-radius: 3px; }
+
+/* ══ PANEL EDITOR ══ */
+.editor-panel {
+  padding: 1.5rem;
+  max-width: 680px;
+}
+
+.editor-panel h3 {
+  font-family: var(--f-cond);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #555;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.editor-panel h3::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #1e2130;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.form-grid.full { grid-template-columns: 1fr; }
+.form-grid.tres { grid-template-columns: 1fr 1fr 1fr; }
+
+.field { display: flex; flex-direction: column; gap: 0.35rem; }
+
+.field label {
+  font-family: var(--f-cond);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #666;
+}
+
+.field input,
+.field textarea,
+.field select {
+  background: #1a1d2e;
+  border: 1px solid #252840;
+  color: var(--blanco);
+  padding: 0.55rem 0.75rem;
+  font-family: var(--f-sans);
+  font-size: 0.82rem;
+  border-radius: 6px;
+  transition: border-color 0.15s;
+  outline: none;
+}
+
+.field input:focus,
+.field textarea:focus,
+.field select:focus {
+  border-color: var(--rojo);
+  background: #1e2135;
+}
+
+.field input[type="date"] { color-scheme: dark; }
+
+.field textarea {
+  resize: vertical;
+  min-height: 70px;
+}
+
+.field select option { background: #1a1d2e; }
+
+/* UPLOAD AREA */
+.upload-area {
+  border: 2px dashed #252840;
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: #1a1d2e;
+  position: relative;
+}
+.upload-area:hover { border-color: var(--rojo); background: rgba(200,16,46,0.06); }
+.upload-area input[type="file"] { position:absolute; inset:0; opacity:0; cursor:pointer; }
+
+.upload-icon { font-size: 2rem; margin-bottom: 0.5rem; opacity: 0.5; }
+.upload-text { font-size: 0.78rem; color: #666; }
+.upload-text strong { color: #aaa; }
+
+.preview-img {
+  width: 100%;
+  max-height: 160px;
+  object-fit: contain;
+  border-radius: 6px;
+  margin-top: 0.75rem;
+  border: 1px solid #252840;
+  display: none;
+}
+
+/* IMAGEN PREDETERMINADA */
+.default-img-wrap {
+  background: #1a1d2e;
+  border: 1px solid #252840;
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.default-img-preview {
+  width: 80px; height: 60px;
+  background: #252840;
+  border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.default-img-preview img { width:100%; height:100%; object-fit:cover; display:none; }
+
+.default-img-info { flex: 1; }
+.default-img-info p { font-size: 0.78rem; color: #aaa; line-height: 1.5; }
+.default-img-info small { font-size: 0.65rem; color: #555; }
+
+/* BOTONES FORM */
+.form-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid #1e2130;
+}
+
+.btn-guardar {
+  background: var(--rojo);
+  color: var(--blanco);
+  border: none;
+  padding: 0.65rem 1.5rem;
+  font-family: var(--f-cond);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+.btn-guardar:hover { background: var(--rojo-dark); }
+
+.btn-cancelar {
+  background: #252840;
+  color: #aaa;
+  border: none;
+  padding: 0.65rem 1.25rem;
+  font-family: var(--f-cond);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.15s;
+}
+.btn-cancelar:hover { background: #2e324a; color: var(--blanco); }
+
+.btn-borrar {
+  background: transparent;
+  color: #7c2d12;
+  border: 1px solid #7c2d12;
+  padding: 0.65rem 1.25rem;
+  font-family: var(--f-cond);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.15s;
+  margin-left: auto;
+}
+.btn-borrar:hover { background: #7c2d12; color: var(--blanco); }
+
+/* ══ PANEL PORTAL (vista previa) ══ */
+.portal-preview {
+  padding: 1.5rem;
+}
+
+.preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.preview-header h3 {
+  font-family: var(--f-cond);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #555;
+}
+
+.preview-scale-note {
+  font-family: var(--f-cond);
+  font-size: 0.62rem;
+  color: #444;
+  letter-spacing: 0.06em;
+}
+
+/* PORTAL MINI */
+.portal-mini {
+  background: #f4f4f4;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #1e2130;
+}
+
+.pm-topbar {
+  background: #111;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  gap: 0.5rem;
+}
+.pm-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+.pm-logo-bar {
+  background: #fff;
+  padding: 0.5rem 1rem;
+  border-bottom: 2px solid #111;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pm-logo {
+  font-family: var(--f-serif);
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111;
+}
+.pm-logo span { color: var(--rojo); }
+
+.pm-nav {
+  background: #111;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  gap: 0.75rem;
+}
+.pm-nav-item {
+  font-family: var(--f-cond);
+  font-size: 0.62rem;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.08em;
+}
+.pm-nav-item.active { color: var(--blanco); }
+
+.pm-leaderboard {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.pm-grid {
+  display: grid;
+  grid-template-columns: 1fr 140px;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: #f4f4f4;
+}
+
+.pm-main-article {
+  background: #fff;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.pm-art-img {
+  height: 80px;
+  background: #1a1a2e;
+  position: relative;
+}
+
+.pm-art-body { padding: 0.5rem; }
+.pm-art-cat { font-family: var(--f-cond); font-size: 0.52rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--rojo); }
+.pm-art-titulo { font-size: 0.62rem; font-weight: 600; color: #111; line-height: 1.3; margin-top: 0.1rem; }
+
+.pm-sidebar-ads {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.pm-ad-slot {
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+}
+
+/* AD SLOTS EN EL PORTAL MINI */
+.ad-slot-display {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.ad-slot-display img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ad-slot-display .fallback-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.ad-click-overlay {
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  cursor: pointer;
+  z-index: 5;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 3px;
+}
+
+.ad-clic-badge {
+  background: rgba(0,0,0,0.6);
+  color: #f59e0b;
+  font-family: var(--f-cond);
+  font-size: 0.52rem;
+  font-weight: 700;
+  padding: 1px 4px;
+  border-radius: 2px;
+}
+
+/* ══ STATS PANEL ══ */
+.stats-panel { padding: 1.5rem; }
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.stat-card {
+  background: #1a1d2e;
+  border: 1px solid #252840;
+  border-radius: 8px;
+  padding: 1.1rem;
+}
+
+.stat-card-num {
+  font-family: var(--f-serif);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--blanco);
+  line-height: 1;
+  margin-bottom: 0.3rem;
+}
+.stat-card-num.verde { color: #86efac; }
+.stat-card-num.rojo { color: #fca5a5; }
+.stat-card-num.amarillo { color: #fde047; }
+
+.stat-card-label {
+  font-family: var(--f-cond);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #555;
+}
+
+/* TABLA ESTADÍSTICAS */
+.stats-tabla {
+  background: #1a1d2e;
+  border: 1px solid #252840;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.stats-tabla-head {
+  background: #13151f;
+  display: grid;
+  grid-template-columns: 1fr 100px 100px 80px 90px 90px;
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid #252840;
+}
+
+.stats-tabla-head span {
+  font-family: var(--f-cond);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #555;
+}
+
+.stats-row {
+  display: grid;
+  grid-template-columns: 1fr 100px 100px 80px 90px 90px;
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid #1a1d2e;
+  align-items: center;
+  transition: background 0.1s;
+}
+.stats-row:hover { background: rgba(255,255,255,0.02); }
+.stats-row:last-child { border-bottom: none; }
+
+.stats-row span {
+  font-size: 0.75rem;
+  color: #aaa;
+}
+
+.stats-row .nombre-col { color: var(--blanco); font-weight: 500; }
+
+/* Barra de clics */
+.clics-bar-wrap { display: flex; align-items: center; gap: 0.5rem; }
+.clics-bar {
+  flex: 1;
+  height: 4px;
+  background: #252840;
+  border-radius: 2px;
+  overflow: hidden;
+}
+.clics-bar-fill {
+  height: 100%;
+  background: #f59e0b;
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+.clics-num { font-weight: 700; color: #f59e0b; font-size: 0.72rem; }
+
+/* Countdown */
+.countdown {
+  font-family: var(--f-cond);
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: #666;
+}
+.countdown.urgente { color: #fca5a5; }
+
+/* ══ TOAST ══ */
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: #1a1d2e;
+  border: 1px solid #252840;
+  border-left: 3px solid var(--rojo);
+  color: var(--blanco);
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-family: var(--f-cond);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  z-index: 1000;
+  opacity: 0;
+  transition: all 0.3s;
+  pointer-events: none;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.toast.success { border-left-color: #16a34a; }
+
+/* ══ EMPTY STATE ══ */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  color: #333;
+  gap: 0.75rem;
+}
+.empty-state .icon { font-size: 3rem; opacity: 0.3; }
+.empty-state p { font-family: var(--f-cond); font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; }
+
+/* REFRESCO INDICATOR */
+.refresco-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--f-cond);
+  font-size: 0.65rem;
+  color: #555;
+  padding: 0.4rem 1rem;
+  background: #13151f;
+  border-bottom: 1px solid #1e2130;
+}
+.refresco-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #16a34a;
+  animation: pulse 2s ease infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+.refresco-bar {
+  flex: 1;
+  height: 2px;
+  background: #1e2130;
+  border-radius: 2px;
+  overflow: hidden;
+  max-width: 200px;
+}
+.refresco-fill {
+  height: 100%;
+  background: var(--rojo);
+  border-radius: 2px;
+  transition: width 1s linear;
+}
+
+/* VENCIDO NOTICE */
+.vencido-notice {
+  background: rgba(124,45,18,0.2);
+  border: 1px solid rgba(124,45,18,0.4);
+  border-radius: 6px;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.75rem;
+  color: #fdba74;
+  margin-bottom: 1rem;
+  display: none;
+}
+.vencido-notice.visible { display: block; }
+</style>
+</head>
+<body>
+
+<div class="app-shell">
+
+  <!-- RAIL ICONOS -->
+  <div class="icon-rail">
+    <div class="rail-logo">ADM</div>
+    <button class="rail-btn active" onclick="setView('lista')" title="Avisos" id="rail-lista">📋</button>
+    <button class="rail-btn" onclick="setView('stats')" title="Estadísticas" id="rail-stats">📊</button>
+    <button class="rail-btn" onclick="setView('portal')" title="Vista previa portal" id="rail-portal">🖥️</button>
+    <button class="rail-btn" onclick="setView('config')" title="Configuración" id="rail-config">⚙️</button>
+  </div>
+
+  <!-- PANEL IZQUIERDO: LISTA DE AVISOS -->
+  <div class="left-panel">
+    <div class="panel-header">
+      <h2>Avisos cargados</h2>
+      <button class="btn-nuevo" onclick="nuevoAviso()">
+        <span class="icon">＋</span> Nuevo aviso
+      </button>
+    </div>
+    <div class="avisos-lista" id="avisosList"></div>
+  </div>
+
+  <!-- ÁREA PRINCIPAL -->
+  <div class="main-area">
+    <div class="main-tabs">
+      <div class="main-tab active" id="tab-editor" onclick="setTab('editor')">✏️ Editor</div>
+      <div class="main-tab" id="tab-portal" onclick="setTab('portal')">🖥️ Vista portal</div>
+      <div class="main-tab" id="tab-stats" onclick="setTab('stats')">📊 Estadísticas</div>
+    </div>
+
+    <!-- REFRESCO INDICATOR -->
+    <div class="refresco-indicator" id="refrescoBar">
+      <span class="refresco-dot"></span>
+      <span id="refrescoTxt">Sistema activo</span>
+      <div class="refresco-bar"><div class="refresco-fill" id="refrescoFill" style="width:100%"></div></div>
+      <span id="refrescoCuenta"></span>
+    </div>
+
+    <div class="main-content" id="mainContent">
+
+      <!-- ══ EDITOR ══ -->
+      <div id="view-editor" class="editor-panel">
+
+        <div class="empty-state" id="emptyEditor">
+          <div class="icon">📋</div>
+          <p>Seleccioná un aviso o creá uno nuevo</p>
+        </div>
+
+        <div id="formAviso" style="display:none">
+
+          <div class="vencido-notice" id="vencidoNotice">
+            ⚠️ Este aviso está <strong>vencido</strong>. El portal muestra la imagen predeterminada en su lugar.
+          </div>
+
+          <h3>Datos del cliente</h3>
+          <div class="form-grid">
+            <div class="field">
+              <label>Empresa / Cliente</label>
+              <input type="text" id="f-cliente" placeholder="Ej: Cooperativa La Rural">
+            </div>
+            <div class="field">
+              <label>Contacto</label>
+              <input type="text" id="f-contacto" placeholder="Nombre del responsable">
+            </div>
+          </div>
+
+          <div class="form-grid full">
+            <div class="field">
+              <label>Descripción / Texto alternativo</label>
+              <textarea id="f-descripcion" placeholder="Texto alternativo del aviso, descripción interna..."></textarea>
+            </div>
+          </div>
+
+          <h3>Posición y tamaño</h3>
+          <div class="form-grid">
+            <div class="field">
+              <label>Espacio publicitario</label>
+              <select id="f-posicion">
+                <option value="">— Seleccionar posición —</option>
+                <option value="1">1 · Leaderboard Superior (970×90)</option>
+                <option value="2">2 · Header Derecha (300×80)</option>
+                <option value="3">3 · Box Lateral 1 (300×250)</option>
+                <option value="4">4 · Box In-Grilla (240×200)</option>
+                <option value="5">5 · Leaderboard Intermedio (970×90)</option>
+                <option value="6">6 · Banner Intertemático (728×90)</option>
+                <option value="7">7 · Box Sidebar Sticky (300×250)</option>
+                <option value="8">8 · Box Sidebar Inferior (300×250)</option>
+                <option value="9">9 · Leaderboard Bloque Final (970×120)</option>
+                <option value="10">10 · Box Grilla Final (360×250)</option>
+                <option value="11">11 · Leaderboard Pie de Página (970×90)</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>URL destino (al hacer clic)</label>
+              <input type="url" id="f-url" placeholder="https://...">
+            </div>
+          </div>
+
+          <h3>Vigencia y refresco</h3>
+          <div class="form-grid tres">
+            <div class="field">
+              <label>Fecha inicio</label>
+              <input type="date" id="f-inicio">
+            </div>
+            <div class="field">
+              <label>Fecha fin</label>
+              <input type="date" id="f-fin">
+            </div>
+            <div class="field">
+              <label>Refresco (segundos)</label>
+              <input type="number" id="f-refresco" value="30" min="5" max="3600" placeholder="30">
+            </div>
+          </div>
+
+          <h3>Imagen del aviso</h3>
+          <div class="form-grid">
+            <div class="field">
+              <label>Imagen del aviso</label>
+              <div class="upload-area" id="uploadArea" onclick="document.getElementById('f-imagen').click()">
+                <input type="file" id="f-imagen" accept="image/*" onchange="previewImagen(event,'previewAvisImg','uploadArea')" style="display:none">
+                <div class="upload-icon">🖼️</div>
+                <div class="upload-text"><strong>Clic para subir imagen</strong><br>JPG, PNG, GIF, WebP</div>
+                <img id="previewAvisImg" class="preview-img" alt="Vista previa">
+              </div>
+            </div>
+            <div class="field">
+              <label>Imagen predeterminada (si venció)</label>
+              <div class="default-img-wrap">
+                <div class="default-img-preview" id="defaultImgPreview">
+                  🏠
+                  <img id="previewDefaultImg" alt="Default">
+                </div>
+                <div class="default-img-info">
+                  <p>Se muestra automáticamente cuando el aviso vence o no hay aviso activo.</p>
+                  <small>Podés subir una imagen de "casa propia" o aviso institucional.</small>
+                  <br><br>
+                  <button class="btn-cancelar" style="font-size:0.6rem;padding:0.3rem 0.6rem" onclick="document.getElementById('f-default').click()">
+                    Subir imagen default
+                  </button>
+                  <input type="file" id="f-default" accept="image/*" onchange="previewImagen(event,'previewDefaultImg','defaultImgPreview')" style="display:none">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button class="btn-guardar" onclick="guardarAviso()">💾 Guardar aviso</button>
+            <button class="btn-cancelar" onclick="cancelarEdicion()">Cancelar</button>
+            <button class="btn-borrar" id="btnBorrar" onclick="borrarAviso()" style="display:none">🗑 Borrar</button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ══ PORTAL VIEW ══ -->
+      <div id="view-portal" style="display:none;padding:1.5rem">
+        <div class="preview-header">
+          <h3>Vista previa del portal</h3>
+          <span class="preview-scale-note">Vista simplificada · Los avisos activos se muestran en tiempo real</span>
+        </div>
+
+        <div class="portal-mini">
+          <div class="pm-topbar">
+            <div class="pm-dot" style="background:#ff5f57"></div>
+            <div class="pm-dot" style="background:#ffbd2e"></div>
+            <div class="pm-dot" style="background:#28ca41"></div>
+          </div>
+
+          <!-- LEADERBOARD TOP -->
+          <div class="pm-leaderboard">
+            <div class="pm-ad-slot" style="width:100%;height:40px" id="slot-1">
+              <div class="ad-slot-display" id="display-1"></div>
+            </div>
+          </div>
+
+          <div class="pm-logo-bar">
+            <div>
+              <div class="pm-logo">Voces del <span>Interior</span></div>
+            </div>
+            <!-- HEADER DERECHA -->
+            <div class="pm-ad-slot" style="width:120px;height:36px" id="slot-2">
+              <div class="ad-slot-display" id="display-2"></div>
+            </div>
+          </div>
+
+          <div class="pm-nav">
+            <div class="pm-nav-item active">Todas</div>
+            <div class="pm-nav-item">Política</div>
+            <div class="pm-nav-item">Salud</div>
+            <div class="pm-nav-item">Economía</div>
+          </div>
+
+          <div class="pm-grid">
+            <div>
+              <div class="pm-main-article">
+                <div class="pm-art-img" style="position:relative">
+                  <svg viewBox="0 0 400 80" xmlns="http://www.w3.org/2000/svg" width="100%" height="80">
+                    <rect width="400" height="80" fill="#1a1a2e"/>
+                    <circle cx="200" cy="40" r="15" fill="none" stroke="#c8102e" stroke-width="1.5" opacity="0.6"/>
+                    <text x="200" y="65" text-anchor="middle" font-family="sans-serif" font-size="7" fill="rgba(255,255,255,0.3)" letter-spacing="2">ENTREVISTA</text>
+                  </svg>
+                  <!-- BOX IN-GRILLA (posición 4) -->
+                  <div style="position:absolute;top:4px;right:4px;width:60px;height:50px" id="slot-4">
+                    <div class="ad-slot-display" id="display-4"></div>
+                  </div>
+                </div>
+                <div class="pm-art-body">
+                  <div class="pm-art-cat">Política</div>
+                  <div class="pm-art-titulo">Jorge Almada: plan de obras públicas y desafíos de la gestión municipal</div>
+                </div>
+              </div>
+
+              <!-- LEADERBOARD INTERMEDIO -->
+              <div class="pm-ad-slot" style="width:100%;height:30px;margin-top:0.5rem" id="slot-5">
+                <div class="ad-slot-display" id="display-5"></div>
+              </div>
+
+              <!-- BANNER INTERTEMÁTICO -->
+              <div class="pm-ad-slot" style="width:100%;height:25px;margin-top:0.5rem" id="slot-6">
+                <div class="ad-slot-display" id="display-6"></div>
+              </div>
+            </div>
+
+            <div class="pm-sidebar-ads">
+              <!-- BOX LATERAL 1 -->
+              <div class="pm-ad-slot" style="height:80px" id="slot-3">
+                <div class="ad-slot-display" id="display-3"></div>
+              </div>
+              <!-- BOX SIDEBAR STICKY -->
+              <div class="pm-ad-slot" style="height:80px" id="slot-7">
+                <div class="ad-slot-display" id="display-7"></div>
+              </div>
+              <!-- BOX SIDEBAR INFERIOR -->
+              <div class="pm-ad-slot" style="height:60px" id="slot-8">
+                <div class="ad-slot-display" id="display-8"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- LEADERBOARD BLOQUE FINAL -->
+          <div class="pm-ad-slot" style="width:100%;height:35px;margin:0.5rem" id="slot-9">
+            <div class="ad-slot-display" id="display-9"></div>
+          </div>
+
+          <!-- GRILLA FINAL CON BOX -->
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.5rem;padding:0.5rem">
+            <div style="background:#fff;border-radius:4px;height:60px"></div>
+            <div class="pm-ad-slot" style="height:60px" id="slot-10">
+              <div class="ad-slot-display" id="display-10"></div>
+            </div>
+            <div style="background:#fff;border-radius:4px;height:60px"></div>
+          </div>
+
+          <!-- LEADERBOARD PIE -->
+          <div class="pm-ad-slot" style="width:100%;height:28px" id="slot-11">
+            <div class="ad-slot-display" id="display-11"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ STATS ══ -->
+      <div id="view-stats" style="display:none" class="stats-panel">
+
+        <div class="stats-grid" id="statsCards"></div>
+
+        <div class="stats-tabla">
+          <div class="stats-tabla-head">
+            <span>Aviso / Cliente</span>
+            <span>Posición</span>
+            <span>Vigencia</span>
+            <span>Refresco</span>
+            <span>Clics</span>
+            <span>Estado</span>
+          </div>
+          <div id="statsRows"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ══════════════════════════════════════════
+   ESTADO DE LA APP (demo en memoria)
+══════════════════════════════════════════ */
+let AVISOS = [
+  {
+    id: 'av-001',
+    cliente: 'Cooperativa La Rural',
+    contacto: 'Luis Fernández',
+    descripcion: 'Aviso institucional de la cooperativa agropecuaria regional.',
+    posicion: '3',
+    url: 'https://example.com',
+    inicio: '2026-03-01',
+    fin: '2026-04-30',
+    refresco: 30,
+    imagen: null,
+    imagenDefault: null,
+    clics: 47
+  },
+  {
+    id: 'av-002',
+    cliente: 'Farmacia Central Rufino',
+    contacto: 'Ana Gómez',
+    descripcion: 'Promoción de temporada.',
+    posicion: '7',
+    url: 'https://example.com',
+    inicio: '2026-03-15',
+    fin: '2026-03-20',
+    refresco: 60,
+    imagen: null,
+    imagenDefault: null,
+    clics: 12
+  },
+  {
+    id: 'av-003',
+    cliente: 'Municipalidad de Rufino',
+    contacto: 'Área de Comunicación',
+    descripcion: 'Aviso de servicios municipales.',
+    posicion: '1',
+    url: 'https://example.com',
+    inicio: '2026-04-01',
+    fin: '2026-06-30',
+    refresco: 45,
+    imagen: null,
+    imagenDefault: null,
+    clics: 0
+  }
+];
+
+let selectedId = null;
+let activeTab  = 'editor';
+let refrescoTimers = {};
+let refrescoCountdown = {};
+
+const POSICIONES = {
+  '1':  'Leaderboard Superior',
+  '2':  'Header Derecha',
+  '3':  'Box Lateral 1',
+  '4':  'Box In-Grilla',
+  '5':  'Leaderboard Intermedio',
+  '6':  'Banner Intertemático',
+  '7':  'Box Sidebar Sticky',
+  '8':  'Box Sidebar Inferior',
+  '9':  'Leaderboard Bloque Final',
+  '10': 'Box Grilla Final',
+  '11': 'Leaderboard Pie de Página'
+};
+
+/* ══ UTILIDADES ══ */
+function today() { return new Date().toISOString().split('T')[0]; }
+
+function estadoAviso(av) {
+  if (!av.inicio || !av.fin) return 'sin-aviso';
+  const hoy = today();
+  if (hoy < av.inicio) return 'futuro';
+  if (hoy > av.fin)    return 'vencido';
+  return 'activo';
+}
+
+function diasRestantes(fin) {
+  const d = Math.ceil((new Date(fin) - new Date()) / 86400000);
+  return d;
+}
+
+function makeId() { return 'av-' + Date.now(); }
+
+function showToast(msg, type='') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show ' + type;
+  setTimeout(() => t.className = 'toast', 2800);
+}
+
+/* ══ PREVIEW IMAGEN ══ */
+function previewImagen(event, previewId, wrapperId) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = document.getElementById(previewId);
+    img.src = e.target.result;
+    img.style.display = 'block';
+
+    // Guardar en el aviso seleccionado
+    if (selectedId) {
+      const av = AVISOS.find(a => a.id === selectedId);
+      if (av) {
+        if (previewId === 'previewAvisImg') av.imagen = e.target.result;
+        else av.imagenDefault = e.target.result;
+      }
+    }
+    renderPortalSlots();
+  };
+  reader.readAsDataURL(file);
+}
+
+/* ══ RENDER LISTA ══ */
+function renderLista() {
+  const el = document.getElementById('avisosList');
+  if (!AVISOS.length) {
+    el.innerHTML = `<div class="empty-state"><div class="icon">📭</div><p>Sin avisos cargados</p></div>`;
+    return;
+  }
+  el.innerHTML = AVISOS.map(av => {
+    const est = estadoAviso(av);
+    const sel = av.id === selectedId ? 'selected' : '';
+    const pos = POSICIONES[av.posicion] || '—';
+    const label = { activo:'Activo', vencido:'Vencido', futuro:'Próximo', 'sin-aviso':'Sin fecha' }[est];
+    return `
+    <div class="aviso-item ${sel}" onclick="seleccionarAviso('${av.id}')">
+      <div class="aviso-item-top">
+        <div class="aviso-item-nombre">${av.cliente || 'Sin nombre'}</div>
+        <span class="status-badge status-${est}">${label}</span>
+      </div>
+      <div class="aviso-item-meta">
+        📍 ${pos}<br>
+        📅 ${av.inicio || '—'} → ${av.fin || '—'}<br>
+        🔄 Refresco: ${av.refresco}s
+      </div>
+      <div class="aviso-item-clics">
+        👆 Clics: <span class="clics-num">${av.clics}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ══ SELECCIONAR AVISO ══ */
+function seleccionarAviso(id) {
+  selectedId = id;
+  const av = AVISOS.find(a => a.id === id);
+  if (!av) return;
+
+  document.getElementById('emptyEditor').style.display  = 'none';
+  document.getElementById('formAviso').style.display    = 'block';
+  document.getElementById('btnBorrar').style.display    = 'inline-flex';
+
+  document.getElementById('f-cliente').value     = av.cliente    || '';
+  document.getElementById('f-contacto').value    = av.contacto   || '';
+  document.getElementById('f-descripcion').value = av.descripcion|| '';
+  document.getElementById('f-posicion').value    = av.posicion   || '';
+  document.getElementById('f-url').value         = av.url        || '';
+  document.getElementById('f-inicio').value      = av.inicio     || '';
+  document.getElementById('f-fin').value         = av.fin        || '';
+  document.getElementById('f-refresco').value    = av.refresco   || 30;
+
+  // Preview imagen
+  const prvImg = document.getElementById('previewAvisImg');
+  if (av.imagen) { prvImg.src = av.imagen; prvImg.style.display = 'block'; }
+  else           { prvImg.style.display = 'none'; }
+
+  const prvDef = document.getElementById('previewDefaultImg');
+  if (av.imagenDefault) { prvDef.src = av.imagenDefault; prvDef.style.display = 'block'; }
+  else                  { prvDef.style.display = 'none'; }
+
+  // Vencido notice
+  const est = estadoAviso(av);
+  const notice = document.getElementById('vencidoNotice');
+  notice.classList.toggle('visible', est === 'vencido');
+
+  renderLista();
+  setTab('editor');
+}
+
+/* ══ NUEVO AVISO ══ */
+function nuevoAviso() {
+  selectedId = null;
+  document.getElementById('emptyEditor').style.display  = 'none';
+  document.getElementById('formAviso').style.display    = 'block';
+  document.getElementById('btnBorrar').style.display    = 'none';
+  document.getElementById('vencidoNotice').classList.remove('visible');
+
+  // Limpiar form
+  ['f-cliente','f-contacto','f-descripcion','f-url'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('f-posicion').value = '';
+  document.getElementById('f-inicio').value   = today();
+  document.getElementById('f-fin').value      = '';
+  document.getElementById('f-refresco').value = 30;
+  document.getElementById('previewAvisImg').style.display    = 'none';
+  document.getElementById('previewDefaultImg').style.display = 'none';
+
+  setTab('editor');
+  renderLista();
+}
+
+/* ══ GUARDAR ══ */
+function guardarAviso() {
+  const cliente = document.getElementById('f-cliente').value.trim();
+  if (!cliente) { showToast('⚠️ Ingresá el nombre del cliente'); return; }
+
+  const posicion = document.getElementById('f-posicion').value;
+  if (!posicion) { showToast('⚠️ Seleccioná la posición publicitaria'); return; }
+
+  const inicio = document.getElementById('f-inicio').value;
+  const fin    = document.getElementById('f-fin').value;
+  if (inicio && fin && fin < inicio) { showToast('⚠️ La fecha fin no puede ser anterior al inicio'); return; }
+
+  if (selectedId) {
+    const av = AVISOS.find(a => a.id === selectedId);
+    Object.assign(av, leerForm());
+    showToast('✅ Aviso actualizado', 'success');
+  } else {
+    const nuevo = { id: makeId(), clics: 0, imagen: null, imagenDefault: null, ...leerForm() };
+    AVISOS.push(nuevo);
+    selectedId = nuevo.id;
+    showToast('✅ Aviso creado', 'success');
+  }
+
+  renderLista();
+  renderStats();
+  renderPortalSlots();
+  iniciarRefrescos();
+}
+
+function leerForm() {
+  const img    = document.getElementById('previewAvisImg');
+  const imgDef = document.getElementById('previewDefaultImg');
+  return {
+    cliente:     document.getElementById('f-cliente').value.trim(),
+    contacto:    document.getElementById('f-contacto').value.trim(),
+    descripcion: document.getElementById('f-descripcion').value.trim(),
+    posicion:    document.getElementById('f-posicion').value,
+    url:         document.getElementById('f-url').value.trim(),
+    inicio:      document.getElementById('f-inicio').value,
+    fin:         document.getElementById('f-fin').value,
+    refresco:    parseInt(document.getElementById('f-refresco').value) || 30,
+    imagen:      img.style.display !== 'none' ? img.src : null,
+    imagenDefault: imgDef.style.display !== 'none' ? imgDef.src : null
+  };
+}
+
+/* ══ BORRAR ══ */
+function borrarAviso() {
+  if (!selectedId) return;
+  if (!confirm('¿Borrar este aviso?')) return;
+  AVISOS = AVISOS.filter(a => a.id !== selectedId);
+  selectedId = null;
+  document.getElementById('emptyEditor').style.display = 'block';
+  document.getElementById('formAviso').style.display   = 'none';
+  renderLista();
+  renderStats();
+  renderPortalSlots();
+  showToast('🗑 Aviso eliminado');
+}
+
+/* ══ CANCELAR ══ */
+function cancelarEdicion() {
+  selectedId = null;
+  document.getElementById('emptyEditor').style.display = 'block';
+  document.getElementById('formAviso').style.display   = 'none';
+  renderLista();
+}
+
+/* ══ RENDER SLOTS PORTAL ══ */
+function getAvisoActivo(pos) {
+  const hoy = today();
+  return AVISOS.find(av => av.posicion === String(pos) && av.inicio <= hoy && av.fin >= hoy) || null;
+}
+
+function getImagenDefault(pos) {
+  // Buscar imagen default de cualquier aviso de esa posición
+  const av = AVISOS.find(a => a.posicion === String(pos) && a.imagenDefault);
+  return av ? av.imagenDefault : null;
+}
+
+function renderPortalSlots() {
+  for (let p = 1; p <= 11; p++) {
+    const display = document.getElementById(`display-${p}`);
+    if (!display) continue;
+
+    const av = getAvisoActivo(p);
+
+    if (av && av.imagen) {
+      // Aviso activo con imagen real
+      display.innerHTML = `
+        <img src="${av.imagen}" alt="${av.descripcion || av.cliente}" style="width:100%;height:100%;object-fit:cover">
+        <div class="ad-click-overlay" onclick="registrarClic('${av.id}',${p})">
+          <span class="ad-clic-badge">👆 ${av.clics}</span>
+        </div>`;
+    } else if (av && !av.imagen) {
+      // Aviso activo sin imagen → placeholder de color
+      display.innerHTML = `
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+          <rect width="100%" height="100%" fill="#c8102e" opacity="0.8"/>
+          <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-family="sans-serif" font-size="10" fill="white" opacity="0.9">AVISO: ${av.cliente}</text>
+        </svg>
+        <div class="ad-click-overlay" onclick="registrarClic('${av.id}',${p})">
+          <span class="ad-clic-badge">👆 ${av.clics}</span>
+        </div>`;
+    } else {
+      // Sin aviso activo → imagen predeterminada o SVG casa
+      const defImg = getImagenDefault(p);
+      if (defImg) {
+        display.innerHTML = `
+          <img src="${defImg}" alt="Imagen predeterminada" style="width:100%;height:100%;object-fit:cover;opacity:0.7">`;
+      } else {
+        display.innerHTML = `
+          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <rect width="100%" height="100%" fill="#1e2135"/>
+            <text x="50%" y="45%" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="#333">🏠</text>
+            <text x="50%" y="70%" text-anchor="middle" dominant-baseline="middle" font-family="sans-serif" font-size="7" fill="#333" letter-spacing="1">TU AVISO ACÁ</text>
+          </svg>`;
+      }
+    }
+  }
+}
+
+/* ══ REGISTRAR CLIC ══ */
+function registrarClic(id, pos) {
+  const av = AVISOS.find(a => a.id === id);
+  if (!av) return;
+  av.clics++;
+
+  // Abrir URL si existe
+  if (av.url) window.open(av.url, '_blank');
+
+  showToast(`👆 Clic registrado en "${av.cliente}" — Total: ${av.clics}`);
+  renderPortalSlots();
+  renderLista();
+  renderStats();
+}
+
+/* ══ REFRESCO AUTOMÁTICO ══ */
+let refrescoGlobal = 30;
+let refrescoTick   = 0;
+
+function iniciarRefrescos() {
+  // Determinar el menor intervalo de refresco entre avisos activos
+  const activos = AVISOS.filter(av => estadoAviso(av) === 'activo');
+  if (activos.length) {
+    refrescoGlobal = Math.min(...activos.map(av => av.refresco || 30));
+  } else {
+    refrescoGlobal = 60;
+  }
+  refrescoTick = refrescoGlobal;
+}
+
+// Timer global cada 1 segundo
+setInterval(() => {
+  refrescoTick--;
+  if (refrescoTick <= 0) {
+    refrescoTick = refrescoGlobal;
+    renderPortalSlots();
+    renderStats();
+    renderLista();
+  }
+
+  // Actualizar barra
+  const pct = (refrescoTick / refrescoGlobal) * 100;
+  const fill = document.getElementById('refrescoFill');
+  const txt  = document.getElementById('refrescoTxt');
+  const cnt  = document.getElementById('refrescoCuenta');
+  if (fill) fill.style.width = pct + '%';
+  if (txt)  txt.textContent  = `Refresco automático`;
+  if (cnt)  cnt.textContent  = `${refrescoTick}s`;
+}, 1000);
+
+/* ══ STATS ══ */
+function renderStats() {
+  const hoy = today();
+  const activos  = AVISOS.filter(av => estadoAviso(av) === 'activo').length;
+  const vencidos = AVISOS.filter(av => estadoAviso(av) === 'vencido').length;
+  const futuros  = AVISOS.filter(av => estadoAviso(av) === 'futuro').length;
+  const totalClics = AVISOS.reduce((sum, av) => sum + (av.clics||0), 0);
+
+  const cards = document.getElementById('statsCards');
+  if (cards) cards.innerHTML = `
+    <div class="stat-card"><div class="stat-card-num verde">${activos}</div><div class="stat-card-label">Avisos activos</div></div>
+    <div class="stat-card"><div class="stat-card-num rojo">${vencidos}</div><div class="stat-card-label">Vencidos</div></div>
+    <div class="stat-card"><div class="stat-card-num" style="color:#93c5fd">${futuros}</div><div class="stat-card-label">Próximos</div></div>
+    <div class="stat-card"><div class="stat-card-num amarillo">${totalClics}</div><div class="stat-card-label">Total de clics</div></div>
+    <div class="stat-card"><div class="stat-card-num">${AVISOS.length}</div><div class="stat-card-label">Avisos cargados</div></div>
+    <div class="stat-card"><div class="stat-card-num" style="color:#c084fc">${refrescoGlobal}s</div><div class="stat-card-label">Ciclo de refresco</div></div>`;
+
+  const maxClics = Math.max(...AVISOS.map(av => av.clics || 0), 1);
+  const rows = document.getElementById('statsRows');
+  if (!rows) return;
+  if (!AVISOS.length) {
+    rows.innerHTML = `<div class="empty-state" style="height:150px"><div class="icon">📊</div><p>Sin datos</p></div>`;
+    return;
+  }
+
+  rows.innerHTML = AVISOS.map(av => {
+    const est  = estadoAviso(av);
+    const dias = av.fin ? diasRestantes(av.fin) : null;
+    const countdown = dias !== null
+      ? (dias < 0 ? `Venció hace ${Math.abs(dias)}d` : dias === 0 ? 'Vence hoy' : `${dias}d restantes`)
+      : '—';
+    const urgente = dias !== null && dias <= 3 && dias >= 0;
+    const pct = Math.round((av.clics / maxClics) * 100);
+    const label = { activo:'Activo', vencido:'Vencido', futuro:'Próximo', 'sin-aviso':'Sin fecha' }[est];
+
+    return `<div class="stats-row">
+      <span class="nombre-col">${av.cliente}<br><small style="color:#555;font-size:0.65rem">${POSICIONES[av.posicion]||'—'}</small></span>
+      <span style="font-size:0.68rem;color:#555">Pos. ${av.posicion}</span>
+      <span style="font-size:0.68rem">${av.inicio||'—'}<br><small style="color:#555">${av.fin||''}</small></span>
+      <span style="font-size:0.68rem;color:#aaa">${av.refresco}s</span>
+      <span>
+        <div class="clics-bar-wrap">
+          <div class="clics-bar"><div class="clics-bar-fill" style="width:${pct}%"></div></div>
+          <span class="clics-num">${av.clics}</span>
+        </div>
+      </span>
+      <span>
+        <span class="status-badge status-${est}" style="display:inline-block;margin-bottom:3px">${label}</span><br>
+        <span class="countdown ${urgente?'urgente':''}" style="font-size:0.6rem">${countdown}</span>
+      </span>
+    </div>`;
+  }).join('');
+}
+
+/* ══ TABS ══ */
+function setTab(tab) {
+  activeTab = tab;
+  ['editor','portal','stats'].forEach(t => {
+    document.getElementById(`tab-${t}`).classList.toggle('active', t === tab);
+    const v = document.getElementById(`view-${t}`);
+    if (v) v.style.display = t === tab ? 'block' : 'none';
+  });
+  if (tab === 'portal') renderPortalSlots();
+  if (tab === 'stats')  renderStats();
+}
+
+/* ══ VIEWS (rail) ══ */
+function setView(v) {
+  ['lista','stats','portal','config'].forEach(id => {
+    const btn = document.getElementById(`rail-${id}`);
+    if (btn) btn.classList.toggle('active', id === v);
+  });
+  setTab({ lista:'editor', stats:'stats', portal:'portal', config:'editor' }[v] || 'editor');
+}
+
+/* ══ INIT ══ */
+renderLista();
+renderStats();
+iniciarRefrescos();
+renderPortalSlots();
+setTab('editor');
+</script>
+</body>
+</html>
