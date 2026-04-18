@@ -1,0 +1,202 @@
+# ─────────────────────────────────────────────────────────────────────────────
+#  .gitignore — EL RUFINO / USINA DE IDEAS
+#  PROYECTO: EL_RUFINO · medio digital local · Rufino, Santa Fe
+#  FECHA: 2026-04-18
+#  GUARDAR EN: F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO\
+#  NOTA: colocar en la raíz del repo (misma carpeta que .git)
+# ─────────────────────────────────────────────────────────────────────────────
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+#  LO QUE SÍ TRACKEA ESTE REPO
+#  (explícito para documentar la intención)
+# ══════════════════════════════════════════════════════════════════════════════
+#  ✓  *.md        → archivos maestros, README, CHANGELOG
+#  ✓  *.html      → dashboards, dossiers, panel IA
+#  ✓  *.ps1       → scripts PowerShell
+#  ✓  *.php       → auditoria-rufino.php, child theme
+#  ✓  *.json      → .elrufino_scan_latest.json y configs
+#  ✓  *.txt       → la comunidad organizada.txt, inventarios
+#  ✓  *.jsx       → panel_operativo_ia_repositorio.jsx
+#  ✓  *.css       → estilos del child theme
+# ══════════════════════════════════════════════════════════════════════════════
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+#  BINARIOS — plugins, instaladores, comprimidos
+# ─────────────────────────────────────────────────────────────────────────────
+*.zip
+*.gz
+*.tar
+*.rar
+*.7z
+*.exe
+*.dll
+*.msi
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+#  IMÁGENES Y ARCHIVOS PESADOS
+#  Excluir: fotografías, assets de alta resolución, videos
+#  La identidad de marca (logo, favicon, OG) se documenta en 03_IDENTIDAD_MARCA
+#  pero los binarios de imagen no van al repo — usar enlace Drive o CDN
+# ─────────────────────────────────────────────────────────────────────────────
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.webp
+*.bmp
+*.tiff
+*.tif
+*.psd
+*.ai
+*.eps
+*.svg
+*.ico
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.mp3
+*.wav
+
+# Excepción: si querés incluir el favicon o el OG image como referencia,
+# descomentá las líneas de abajo:
+# !03_IDENTIDAD_MARCA/favicon.ico
+# !03_IDENTIDAD_MARCA/og-image.png
+# !03_IDENTIDAD_MARCA/logo-el-rufino.svg
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+#  PDFs
+#  Los PDFs del dossier maestro son grandes y cambian poco
+#  Trackear solo si son documentos generados (no exportados de Word/Canva)
+# ─────────────────────────────────────────────────────────────────────────────
+*.pdf
+
+# Excepción para el dossier maestro si se decide incluirlo:
+# !01_DOCUMENTOS_VIGENTES/el-rufino_dossier-maestro_VIGENTE.pdf
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+#  NODE / DEPENDENCIAS
+# ─────────────────────────────────────────────────────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+.npm/
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+#  ARCHIVOS TEMPORALES Y DE SISTEMA
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Editor: VS Code
+.vscode/
+*.code-workspace
+
+# Editor: JetBrains
+.idea/
+*.iml
+
+# PowerShell temporales
+*.tmp
+*.temp
+*_temp.ps1
+*_test.ps1
+reorganizacion_*.log
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+#  CARPETAS DE ARCHIVO Y TRABAJO TEMPORAL
+#  _ARCHIVO\ tiene valor histórico pero no va al repo público
+#  _TEMP\ es trabajo volátil
+# ─────────────────────────────────────────────────────────────────────────────
+_ARCHIVO/
+_TEMP/
+_uploads/
+_borrador/
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+#  WORDPRESS — archivos que no pertenecen al repo de contexto IA
+#  El plugin .zip ya está excluido arriba (*.zip)
+#  Si en el futuro se separa el repo WP del repo contexto, revisar esto
+# ─────────────────────────────────────────────────────────────────────────────
+wp-config.php
+wp-content/uploads/
+wp-content/cache/
+*.log
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+#  SALIDAS DE AUDITORÍA
+#  Los reportes generados por los scripts no van al repo
+# ─────────────────────────────────────────────────────────────────────────────
+auditoria_git_*.txt
+inventario_*.csv
+inventario_*.txt
+reorganizacion_*.log
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+#  SECRETOS Y CREDENCIALES
+#  Nunca subir claves API, tokens ni contraseñas
+# ─────────────────────────────────────────────────────────────────────────────
+.env
+.env.*
+secrets.json
+api_keys.txt
+credenciales.txt
+*.key
+*.pem
+*.p12
+*.pfx
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+#  NOTA SOBRE EL REPO EL_RUFINO
+# ─────────────────────────────────────────────────────────────────────────────
+#  Este repo contiene:
+#    → documentos de contexto IA (archivos maestros v1.4)
+#    → scripts PowerShell de gestión
+#    → dashboards HTML de referencia
+#    → código del plugin v8.1.2 (PHP/JS/CSS — NO el .zip)
+#    → CHANGELOG.md y trazabilidad
+#
+#  NO contiene:
+#    → binarios del plugin (.zip)
+#    → imágenes de identidad de marca
+#    → backups y material de archivo
+#    → contenido editorial publicado (eso vive en WordPress)
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Binarios � no trackear en git
+*.zip
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.pdf
+*.psd
+*.ai
