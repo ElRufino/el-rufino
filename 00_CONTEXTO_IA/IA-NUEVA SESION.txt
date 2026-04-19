@@ -1,0 +1,1480 @@
+1776384638476_image.png
+1776384648327_image.png
+Los archivos sirve dejarlos ahi? ya estan en contexto? Que llenamos en descripción? Describe las instrucciones que tienes
+
+16 abr
+Archivos del proyecto — ya están en contexto automáticamente en cada chat del proyecto. No hace falta releerlos desde disco. ✓
+
+Descripción del proyecto — campo corto, aparece en la lista de proyectos. Sugerencia:
+
+Medio digital local · Rufino, Santa Fe · Fase 2 (40%) · Plugin v8.1.2
+Estructura: F:\HERRAMIENTAS DE IA\PROYECTOS\USINA_DE_IDEAS\
+Instrucciones activas en este proyecto:
+
+Área	Configuración
+Identidad	Paleta B (
+#c0271b · 
+#1a1a1a · #fff · 
+#f5f0e8) · Playfair Display + Source Serif 4
+Regla editorial	Hecho verificado + contexto/significado (2 capas)
+Pilares	P01 Rufino real · P02 Campo · P03 Barrio · P04 Generación · P05 Poder · P06 Datos
+Modelos	Opus → estrategia · Sonnet → código/docs · Haiku → variantes rápidas
+Archivos	Nunca borrar · mover a _ARCHIVO\ con fecha · changelog obligatorio
+Recursos	No releer archivos ya en contexto · ir directo al grano
+Estado	Fase 2 · Plugin v8.1.2 · 20 notas · pendiente: child theme, Rank Math, WhatsApp
+Checkpoint: Proyecto renombrado a USINA DE IDEAS, archivos del paquete de reorganización subidos al proyecto. FASE 1 del script lista para ejecutar.
+
+Medio digital local · Rufino, Santa Fe · Fase 2 (40%) · Plugin v8.1.2 // esto corresponde a proyecto El Rufino, Medio digital
+
+Estructura: F:\HERRAMIENTAS DE IA\PROYECTOS\USINA_DE_IDEAS\ // se denomina al reordenamiento de archivos, de ahi que veo mucha mezcla.
+
+16 abr
+Correcto. Son dos cosas distintas:
+
+Qué es	Nombre
+Proyecto editorial	Medio digital local de Rufino	EL RUFINO
+Proyecto de organización	Repositorio de herramientas IA	USINA DE IDEAS
+Descripción correcta para el proyecto Claude:
+
+Repositorio de herramientas IA · Rufino, Santa Fe
+Organización: F:\HERRAMIENTAS DE IA\
+Fase 2 pendiente: auditorías de 5 carpetas
+Pregunta clave: ¿Este proyecto Claude es el contenedor de AMBOS (herramientas IA + El Rufino medio digital), o querés tener proyectos separados?
+
+lista los proyectos
+
+16 abr
+De las imágenes y los archivos en contexto, veo estos proyectos en F:\HERRAMIENTAS DE IA\:
+
+#	Nombre	Estado
+1	EL RUFINO (→ USINA_DE_IDEAS)	Renombrado en FASE 1
+2	SISMUIF	22,202 archivos
+3	Sociedad Italiana	6,475 archivos
+4	Digesto	1,731 archivos
+5	Gestión Comercial	1,657 archivos
+6	RadioTV	1,607 archivos
+7–10	(4 más no detallados)	—
+Y en Claude.ai (sidebar de la imagen), los chats recientes sugieren proyectos activos:
+
+Archivos innecesarios y espacio en disco
+Lógica de enrutamiento por carpetas en Panel IA
+Optimización de agentes IA
+Escaneo exhaustivo y clasificación de archivos del Drive
+Organizador automático de carpetas
+Plugin última versión detalles
+Autonomía municipal en Santa Fe
+¿Cuál es la lista real de proyectos en F:\HERRAMIENTAS DE IA\PROYECTOS\? Con eso puedo ayudarte a organizar mejor qué va en qué proyecto Claude.
+
+1776385189146_image.png
+16 abr
+Perfecto. Hay exactamente 2 proyectos Claude:
+
+Proyecto Claude	Propósito correcto
+USINA DE IDEAS	Repositorio/herramientas IA · organización de F:\HERRAMIENTAS DE IA\
+EL RUFINO	Medio digital local · editorial · plugin · contenido
+La mezcla que veías era porque los archivos del paquete de reorganización (FASE1, PLANTILLAS, REGISTRO, etc.) estaban subidos al proyecto USINA DE IDEAS, que es exactamente donde corresponden.
+
+Estado correcto:
+
+USINA DE IDEAS → todo lo de organización, scripts, trazabilidad ✓
+EL RUFINO → prompt maestro, agentes, plugin, identidad editorial ✓
+¿Querés revisar qué archivos tiene cargados el proyecto EL RUFINO para verificar que no haya mezcla allá también?
+
+Desorden de carpeta, se agrup por nombre de proyectos, y se colocaron alli archivos que tenian referencia,. Por eso es necesasrio ordenarlos. Por eso, hay que reconstruir todos los archivos necesarios
+
+16 abr
+Entendido. El problema real es:
+
+Síntoma: Los chats se agruparon por "nombre de proyecto" y arrastraron archivos por referencia, no por pertenencia real.
+
+Resultado: Archivos mezclados en proyectos incorrectos.
+
+Para reconstruir correctamente, necesito saber:
+
+¿Tenés acceso a los archivos maestros originales?
+
+el-rufino_prompt-maestro_v1.3-VIGENTE.md
+el-rufino_repositorio-ia_v1.3-VIGENTE.md
+el-rufino_agentes-ia_v1.3-VIGENTE.md
+Están en F:\HERRAMIENTAS DE IA\PROYECTOS\USINA_DE_IDEAS\00_CONTEXTO_IA\ según el registro.
+
+¿Los podés subir acá o al proyecto EL RUFINO según corresponda? Con eso arrancamos la reconstrucción ordenada.
+
+
+el-rufino_agentes-ia_v1.3-VIGENTE.md
+md
+
+
+el-rufino_prompt-maestro_v1.3-VIGENTE.md
+283 líneas
+
+md
+
+
+el-rufino_repositorio-ia_v1.3-VIGENTE.md
+311 líneas
+
+md
+
+PERO ESTOS 3 ARCHIVOS HACEN REFERENCIA A: El Rufino, Medio digital
+
+16 abr
+Exacto. Confirmado:
+
+Archivo	Pertenece a
+el-rufino_prompt-maestro_v1.3-VIGENTE.md	EL RUFINO (medio digital)
+el-rufino_repositorio-ia_v1.3-VIGENTE.md	EL RUFINO (medio digital)
+el-rufino_agentes-ia_v1.3-VIGENTE.md	EL RUFINO (medio digital)
+Estos 3 van al proyecto Claude EL RUFINO, no a USINA DE IDEAS.
+
+Mapa correcto de los 2 proyectos Claude:
+
+Proyecto Claude	Archivos que le corresponden
+EL RUFINO	el-rufino_prompt-maestro_v1.3-VIGENTE.md · el-rufino_repositorio-ia_v1.3-VIGENTE.md · el-rufino_agentes-ia_v1.3-VIGENTE.md · usina_instrucciones_modelos.html (tab Fases/modelos)
+USINA DE IDEAS	REORGANIZACION_FASE1.ps1 · REGISTRO_TRAZABILIDAD.md · PLAN_AUDITORIA_REORGANIZACION.md · PLANTILLAS_AUDITORIA.md · CHANGELOG.md · CONTEXTO_DEL_PAQUETE.md
+Acción concreta:
+
+Subir los 3 archivos el-rufino_* al proyecto EL RUFINO
+Dejar en USINA DE IDEAS solo los de reorganización
+¿Querés que redacte también las instrucciones correctas para el proyecto EL RUFINO?
+
+
+usina_instrucciones_modelos_v2.html
+html
+
+
+usina_instrucciones_modelos.html
+192 líneas
+
+html
+
+16 abr
+Este HTML también tiene el problema de mezcla. Dice "USINA DE IDEAS (antes EL RUFINO)" pero el contenido es 100% del medio digital EL RUFINO.
+
+Diagnóstico del HTML:
+
+Sección	Contenido real	Proyecto correcto
+Tab "Instrucciones"	Paleta B, pilares P01-P06, plugin, fases	EL RUFINO
+Tab "Fases y modelos"	F0-F4 del medio digital	EL RUFINO
+Tab "Reglas del proyecto"	Reglas de reorganización de archivos	USINA DE IDEAS
+Propuesta: generar 2 HTMLs separados y corregidos:
+
+A) el-rufino_instrucciones_panel.html → proyecto EL RUFINO
+
+Instrucciones del medio digital
+Fases F0-F4
+Modelos por tarea editorial
+B) usina_instrucciones_repositorio.html → proyecto USINA DE IDEAS
+
+Reglas de organización de archivos
+Scripts y fases de reorganización
+Sin referencias editoriales
+¿Genero los 2 HTMLs corregidos?
+
+Que archivos deben quedar en ARCHIVOS de la parte proyectos.
+
+Acomoda las instrucciones y dame un detalle de como queda
+
+Lo siguiente que haría es que revises la carpeta f:\herramientas de IA y arranquemos desde 0 desde ahi
+
+16 abr
+PROYECTOS CLAUDE — ARCHIVOS Y INSTRUCCIONES
+
+PROYECTO: EL RUFINO (medio digital)
+
+Archivos:
+
+el-rufino_prompt-maestro_v1.3-VIGENTE.md
+el-rufino_repositorio-ia_v1.3-VIGENTE.md
+el-rufino_agentes-ia_v1.3-VIGENTE.md
+el-rufino_instrucciones_panel.html ← generar nuevo
+Instrucciones del proyecto:
+
+PROYECTO: EL RUFINO · Medio digital local · Rufino, Santa Fe
+Claim: "Lo que pasa y lo que significa"
+Paleta B: #c0271b · #1a1a1a · #ffffff · #f5f0e8
+Tipografías: Playfair Display + Source Serif 4
+Pilares: P01 Rufino real · P02 Campo · P03 Barrio · P04 Generación · P05 Poder · P06 Datos
+Regla madre: hecho verificado + contexto/significado (2 capas)
+
+ESTADO: Fase 2 · 40% · Plugin v8.1.2 · 20 notas
+PENDIENTES: categorías P01-P06 · child theme · Rank Math · WhatsApp
+
+MODELOS:
+- Estrategia/marca → Opus 4.6
+- Código/redacción/docs → Sonnet 4.6
+- Titulares/variantes → Haiku 4.5
+- Imágenes → Gemini Imagen 3
+- Tablas INDEC → GPT-4o
+
+RECURSOS: No releer archivos ya en contexto
+ARCHIVOS: Nunca borrar · mover a _ARCHIVO\ con fecha
+PROYECTO: USINA DE IDEAS (repositorio/organización)
+
+Archivos:
+
+REORGANIZACION_FASE1.ps1
+PLAN_AUDITORIA_REORGANIZACION.md
+PLANTILLAS_AUDITORIA.md
+REGISTRO_TRAZABILIDAD.md
+CHANGELOG.md
+CONTEXTO_DEL_PAQUETE.md
+usina_instrucciones_repositorio.html ← generar nuevo
+Instrucciones del proyecto:
+
+PROYECTO: USINA DE IDEAS · Repositorio de herramientas IA
+Ruta: F:\HERRAMIENTAS DE IA\
+Subproyectos contenidos: EL RUFINO · SISMUIF · Sociedad Italiana · otros
+
+REGLAS:
+- Auditar antes de mover
+- Nunca borrar · mover a _ARCHIVO\ con fecha + 90 días mínimo
+- Nomenclatura: prefijos numéricos · sin espacios · guiones bajos
+- Changelog obligatorio en cada cambio estructural
+
+ESTADO FASE 1: Ejecutada 2026-04-16
+PENDIENTE FASE 2: Auditar scripts/ · 01_NUCLEO_OPERATIVO · 
+  02_CONTENIDO · 04_DESARROLLO · _uploads
+
+MODELOS:
+- Scripts/reorganización → Sonnet 4.6
+- Decisiones estructurales → Opus 4.6
+Respecto a F:\HERRAMIENTAS DE IA — para arrancar desde cero necesito que me muestres el contenido real actual. Lo más directo: ejecutar esto en PowerShell y pegarme el resultado:
+
+powershell
+Get-ChildItem "F:\HERRAMIENTAS DE IA" | Select-Object Name, LastWriteTime | Format-Table -AutoSize
+Con eso veo qué hay realmente y armamos el plan limpio.
+
+f:
+
+16 abr
+Necesito el resultado del comando. En PowerShell:
+
+powershell
+Get-ChildItem "F:\HERRAMIENTAS DE IA" | Select-Object Name, LastWriteTime | Format-Table -AutoSize
+Pegá el output acá y arrancamos.
+
+PS C:\WINDOWS\system32> Get-ChildItem "F:\HERRAMIENTAS DE IA" | Select-Object Name, LastWriteTime | Format-Table -AutoSize
+Name                   LastWriteTime     
+----                   -------------     
+01 - PANEL INTELIGENTE 15/4/2026 06:09:49
+01-panel inteligente   15/4/2026 06:22:31
+PROYECTOS              16/4/2026 16:56:15
+scripts                15/4/2026 15:16:47
+VARIOS                 15/4/2026 06:17:04
+info.txt               16/4/2026 16:41:36
+lista.txt              16/4/2026 16:43:24
+PS C:\WINDOWS\system32> Get-ChildItem "F:\HERRAMIENTAS DE IA" | Select-Object Name, LastWriteTime | Format-Table -AutoSize
+Name                   LastWriteTime     
+----                   -------------     
+01 - PANEL INTELIGENTE 15/4/2026 06:09:49
+01-panel inteligente   15/4/2026 06:22:31
+PROYECTOS              16/4/2026 16:56:15
+scripts                15/4/2026 15:16:47
+VARIOS                 15/4/2026 06:17:04
+info.txt               16/4/2026 16:41:36
+lista.txt              16/4/2026 16:43:24
+PS C:\WINDOWS\system32>
+
+Mostrar más
+2:04
+La FASE 1 no se ejecutó. El estado real es el original:
+
+Nombre	Fecha	Estado
+01 - PANEL INTELIGENTE	15/4 06:09	Duplicado A
+01-panel inteligente	15/4 06:22	Duplicado B
+PROYECTOS	16/4	OK
+scripts	15/4	Sin auditar
+VARIOS	15/4	Sin auditar
+info.txt	16/4	¿Qué contiene?
+lista.txt	16/4	¿Qué contiene?
+Antes de ejecutar nada, necesito ver 3 cosas:
+
+1)
+
+powershell
+Get-ChildItem "F:\HERRAMIENTAS DE IA\PROYECTOS" | Select-Object Name, LastWriteTime | Format-Table -AutoSize
+2)
+
+powershell
+Get-Content "F:\HERRAMIENTAS DE IA\info.txt"
+3)
+
+powershell
+Get-Content "F:\HERRAMIENTAS DE IA\lista.txt"
+Pegá los 3 resultados y con eso tenemos el mapa completo real.
+
+1776402386403_image.png
+eneratedMSBuildEditorConfig.editorconfig
+F:\HERRAMIENTAS DE IA\PROYECTOS\SOCIEDAD ITALIANA\SOCIEDAD ITALIANA\Software - repositorio\SociedadItaliana.Data\obj\Release\net10.0-windows\SociedadItaliana.D
+ata.GlobalUsings.g.cs
+F:\HERRAMIENTAS DE IA\PROYECTOS\SOCIEDAD ITALIANA\SOCIEDAD ITALIANA\Software - repositorio\SociedadItaliana.Data\obj\Release\net10.0-windows\SociedadItaliana.D
+ata.pdb
+F:\HERRAMIENTAS DE IA\PROYECTOS\SOCIEDAD ITALIANA\SOCIEDAD ITALIANA\Software - repositorio\SociedadItaliana.Data\obj\Release\net10.0-windows\ref\SociedadItalia
+na.Data.dll
+F:\HERRAMIENTAS DE IA\PROYECTOS\SOCIEDAD ITALIANA\SOCIEDAD ITALIANA\Software - repositorio\SociedadItaliana.Data\obj\Release\net10.0-windows\refint\SociedadIta
+liana.Data.dll
+F:\HERRAMIENTAS DE IA\PROYECTOS\SOCIEDAD ITALIANA\SOCIEDAD ITALIANA\Software - repositorio\SociedadItaliana.Data\Repositories\AlquilerRepository.cs
+F:\HERRAMIENTAS DE IA\PROYECTOS\SOCIEDAD ITALIANA\SOCIEDAD ITALIANA\Software - repositorio\SociedadItaliana.Data\Repositories\ReciboRepository.cs
+F:\HERRAMIENTAS DE IA\PROYECTOS\SOCIEDAD ITALIANA\SOCIEDAD ITALIANA\Software - repositorio\SociedadItaliana.Data\Repositories\SocioRepository.cs
+F:\HERRAMIENTAS DE IA\PROYECTOS\SOCIEDAD ITALIANA\SOCIEDAD ITALIANA\Software - repositorio\SociedadItaliana.Data\Repositories\UsuarioRepository.cs
+F:\HERRAMIENTAS DE IA\PROYECTOS\SOCIEDAD ITALIANA\SOCIEDAD ITALIANA\wEB\CENTRO ESTUDIOS CULTURALES  (1).mp3
+F:\HERRAMIENTAS DE IA\PROYECTOS\SOCIEDAD ITALIANA\SOCIEDAD ITALIANA\wEB\landing_sociedad_italiana (5).html
+F:\HERRAMIENTAS DE IA\PROYECTOS\SOCIEDAD ITALIANA\SOCIEDAD ITALIANA\wEB\landing_sociedad_italiana_v6.html
+F:\HERRAMIENTAS DE IA\PROYECTOS\SOCIEDAD ITALIANA\SOCIEDAD ITALIANA\wEB\transcriptor_video.html
+F:\HERRAMIENTAS DE IA\PROYECTOS\SOCIEDAD ITALIANA\SOCIEDAD ITALIANA\wEB\video_sociedad.mp4
+F:\HERRAMIENTAS DE IA\PROYECTOS\SOCIEDAD ITALIANA\xx\505858708_10034010273382285_6376105536567514532_n.jpg
+F:\HERRAMIENTAS DE IA\PROYECTOS\SOCIEDAD ITALIANA\xx\506212685_10034010446715601_8980098125029682998_n.jpg
+F:\HERRAMIENTAS DE IA\PROYECTOS\SOCIEDAD ITALIANA\xx\506399859_10033995746717071_909521532488877837_n.jpg
+F:\HERRAMIENTAS DE IA\PROYECTOS\USINA_DE_IDEAS\00_CONTEXTO_IA
+F:\HERRAMIENTAS DE IA\PROYECTOS\USINA_DE_IDEAS\00_CONTEXTO_IA\CHANGELOG.md
+F:\HERRAMIENTAS DE IA\PROYECTOS\USINA_DE_IDEAS\00_CONTEXTO_IA\CONTEXTO_DEL_PAQUETE.md
+F:\HERRAMIENTAS DE IA\PROYECTOS\USINA_DE_IDEAS\00_CONTEXTO_IA\PLANTILLAS_AUDITORIA.md
+F:\HERRAMIENTAS DE IA\PROYECTOS\USINA_DE_IDEAS\00_CONTEXTO_IA\PLAN_AUDITORIA_REORGANIZACION.md
+F:\HERRAMIENTAS DE IA\PROYECTOS\USINA_DE_IDEAS\00_CONTEXTO_IA\README.md
+F:\HERRAMIENTAS DE IA\PROYECTOS\USINA_DE_IDEAS\00_CONTEXTO_IA\REGISTRO_TRAZABILIDAD.md
+F:\HERRAMIENTAS DE IA\PROYECTOS\USINA_DE_IDEAS\00_CONTEXTO_IA\REORGANIZACION_FASE1.ps1
+F:\HERRAMIENTAS DE IA\PROYECTOS\USINA_DE_IDEAS\00_CONTEXTO_IA\REORGANIZACION_USINA_DE_IDEAS_2026-04-16.zip
+F:\HERRAMIENTAS DE IA\scripts\el_rufino_plan_v51.ps1
+F:\HERRAMIENTAS DE IA\scripts\el_rufino_preview_fase1.ps1
+F:\HERRAMIENTAS DE IA\scripts\el_rufino_refresh_inventario.ps1
+F:\HERRAMIENTAS DE IA\VARIOS\.elrufino_scan_latest.json
+F:\HERRAMIENTAS DE IA\VARIOS\archivo-entrevistas-v2.html
+F:\HERRAMIENTAS DE IA\VARIOS\archivo-entrevistas-v3.html
+F:\HERRAMIENTAS DE IA\VARIOS\archivo-entrevistas-v4.html
+F:\HERRAMIENTAS DE IA\VARIOS\auditoria-rufino.php
+F:\HERRAMIENTAS DE IA\VARIOS\ChatGPT Image 7 ene 2026, 02_26_53 p.m..png
+F:\HERRAMIENTAS DE IA\VARIOS\ChatGPT Image 7 ene 2026, 02_30_52 p.m..png
+F:\HERRAMIENTAS DE IA\VARIOS\concejo_rufino_argentina.html
+F:\HERRAMIENTAS DE IA\VARIOS\el-rufino-plugin.zip
+F:\HERRAMIENTAS DE IA\VARIOS\gestor-avisos.html
+F:\HERRAMIENTAS DE IA\VARIOS\infografia_electoral_santa_fe.html
+F:\HERRAMIENTAS DE IA\VARIOS\la comunidad organiuzada.txt
+F:\HERRAMIENTAS DE IA\VARIOS\mapa-avisos-publicitarios.html
+F:\HERRAMIENTAS DE IA\VARIOS\portal-noticias.html
+F:\HERRAMIENTAS DE IA\VARIOS\portal_comunidad_organizada_preview_v1.html
+F:\HERRAMIENTAS DE IA\VARIOS\voces-portal-v5.html
+PS C:\WINDOWS\system32>
+
+Mostrar más
+2:06
+Ahora tengo el mapa completo. Esto es lo que hay realmente:
+
+ESTRUCTURA REAL F:\HERRAMIENTAS DE IA\
+
+├── 01 - PANEL INTELIGENTE\
+│   └── panel_operativo_ia_repositorio_el_rufino.jsx  ← EL RUFINO
+├── 01-panel inteligente\                              ← DUPLICADO
+│   └── reportes\ (6 CSVs de análisis)
+├── PROYECTOS\
+│   ├── EL_RUFINO\                                     ← existe separado
+│   ├── GESTIÓN COMERCIAL\
+│   ├── USINA_DE_IDEAS\
+│   │   └── 00_CONTEXTO_IA\ (docs reorganización)
+│   └── SOCIEDAD ITALIANA\ (proyecto .NET completo)
+├── scripts\
+│   ├── el_rufino_plan_v51.ps1                        ← EL RUFINO
+│   ├── el_rufino_preview_fase1.ps1                   ← EL RUFINO
+│   └── el_rufino_refresh_inventario.ps1              ← EL RUFINO
+├── VARIOS\
+│   ├── .elrufino_scan_latest.json                    ← EL RUFINO
+│   ├── archivo-entrevistas-v2/v3/v4.html             ← EL RUFINO
+│   ├── auditoria-rufino.php                          ← EL RUFINO
+│   ├── el-rufino-plugin.zip                          ← EL RUFINO
+│   ├── concejo_rufino_argentina.html                 ← EL RUFINO
+│   ├── infografia_electoral_santa_fe.html            ← EL RUFINO
+│   ├── portal-noticias.html                          ← EL RUFINO
+│   ├── voces-portal-v5.html                          ← EL RUFINO
+│   ├── gestor-avisos.html                            ← EL RUFINO
+│   ├── mapa-avisos-publicitarios.html                ← EL RUFINO
+│   ├── ChatGPT Image *.png (2)                       ← origen dudoso
+│   ├── portal_comunidad_organizada*.html             ← EL RUFINO
+│   └── la comunidad organizada.txt                   ← EL RUFINO
+├── info.txt                                          ← vacío
+└── lista.txt                                         ← era el inventario
+Diagnóstico claro:
+
+scripts/ y VARIOS/ son 100% archivos de EL RUFINO que quedaron sueltos en la raíz. No son globales.
+
+Plan limpio — 3 movimientos:
+
+Acción	Origen	Destino
+Mover	scripts\ completa	PROYECTOS\EL_RUFINO\06_SCRIPTS\
+Mover	VARIOS\ completa	PROYECTOS\EL_RUFINO\ + auditar
+Archivar	01-panel inteligente\ (duplicado)	_ARCHIVO\DUPLICADOS_2026-04-16\
+Renombrar	01 - PANEL INTELIGENTE\	00_PANEL_IA\
+¿Genero el script PowerShell con estos 4 movimientos para ejecutar ahora?
+
+dale
+
+2:07
+
+Creó un archivo, archivo leído
+Creó un archivo, archivo leído
+5 pasos en orden:
+
+scripts\ → EL_RUFINO\06_SCRIPTS\
+VARIOS\ → EL_RUFINO\07_VARIOS_ARCHIVO\
+Archivar 01-panel inteligente\ (duplicado) → _ARCHIVO\
+Renombrar 01 - PANEL INTELIGENTE\ → 00_PANEL_IA\
+Mover info.txt y lista.txt → _ARCHIVO\
+Para ejecutar: clic derecho en el .ps1 → "Ejecutar con PowerShell" (como administrador).
+
+Después te pido otro Get-ChildItem para verificar que quedó limpio y arrancamos con la auditoría de 07_VARIOS_ARCHIVO\.
+
+
+REORGANIZACION_REAL_v1.ps1
+ 
+da error y se cierrA
+
+2:11
+Abrí PowerShell ISE como administrador y ejecutá primero esto para ver el error:
+
+powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+Luego ejecutá el script así (no doble clic):
+
+powershell
+& "C:\ruta\donde\guardaste\REORGANIZACION_REAL_v1.ps1"
+O directamente pegá esto en PowerShell ISE y ejecutalo bloque por bloque:
+
+powershell
+# BLOQUE 1 - Verificar
+Get-ChildItem "F:\HERRAMIENTAS DE IA" | Format-Table Name, LastWriteTime -AutoSize
+Pegá el resultado y veo qué está fallando.
+
+PS C:\WINDOWS\system32> Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+PS C:\WINDOWS\system32> & "C:\ruta\donde\guardaste\REORGANIZACION_REAL_v1.ps1"
+& : El término 'C:\ruta\donde\guardaste\REORGANIZACION_REAL_v1.ps1' no se reconoce como nombre de un cmdlet, función, archivo de script o programa 
+ejecutable. Compruebe si escribió correctamente el nombre o, si incluyó una ruta de acceso, compruebe que dicha ruta es correcta e inténtelo de nuevo.
+En línea: 1 Carácter: 3
++ & "C:\ruta\donde\guardaste\REORGANIZACION_REAL_v1.ps1"
++   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\ruta\donde\g...ION_REAL_v1.ps1:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\WINDOWS\system32> # BLOQUE 1 - Verificar
+Get-ChildItem "F:\HERRAMIENTAS DE IA" | Format-Table Name, LastWriteTime -AutoSize
+Name                   LastWriteTime     
+----                   -------------     
+01 - PANEL INTELIGENTE 15/4/2026 06:09:49
+01-panel inteligente   15/4/2026 06:22:31
+PROYECTOS              16/4/2026 16:56:15
+scripts                15/4/2026 15:16:47
+VARIOS                 15/4/2026 06:17:04
+info.txt               16/4/2026 16:41:36
+lista.txt              16/4/2026 16:43:24
+PS C:\WINDOWS\system32>
+
+Mostrar más
+2:18
+El script no lo descargaste todavía. Hacelo directo en PowerShell — pegá esto completo y presioná Enter:
+
+powershell
+$RAIZ = "F:\HERRAMIENTAS DE IA"
+$RUFINO = "$RAIZ\PROYECTOS\EL_RUFINO"
+$ARCHIVO = "$RAIZ\_ARCHIVO\DUPLICADOS_2026-04-17"
+
+# Crear carpetas necesarias
+New-Item -Path "$RUFINO\06_SCRIPTS" -ItemType Directory -Force | Out-Null
+New-Item -Path "$RUFINO\07_VARIOS_ARCHIVO" -ItemType Directory -Force | Out-Null
+New-Item -Path $ARCHIVO -ItemType Directory -Force | Out-Null
+
+# PASO 1: scripts → EL_RUFINO\06_SCRIPTS
+Move-Item -Path "$RAIZ\scripts\*" -Destination "$RUFINO\06_SCRIPTS\" -Force
+Write-Host "OK: scripts movidos" -ForegroundColor Green
+
+# PASO 2: VARIOS → EL_RUFINO\07_VARIOS_ARCHIVO
+Move-Item -Path "$RAIZ\VARIOS\*" -Destination "$RUFINO\07_VARIOS_ARCHIVO\" -Force
+Write-Host "OK: VARIOS movidos" -ForegroundColor Green
+
+# PASO 3: Archivar duplicado
+Move-Item -Path "$RAIZ\01-panel inteligente" -Destination $ARCHIVO -Force
+Write-Host "OK: duplicado archivado" -ForegroundColor Green
+
+# PASO 4: Renombrar panel
+Rename-Item -Path "$RAIZ\01 - PANEL INTELIGENTE" -NewName "00_PANEL_IA" -Force
+Write-Host "OK: panel renombrado" -ForegroundColor Green
+
+# PASO 5: Limpiar txts
+Move-Item -Path "$RAIZ\info.txt" -Destination "$RAIZ\_ARCHIVO\" -Force
+Move-Item -Path "$RAIZ\lista.txt" -Destination "$RAIZ\_ARCHIVO\" -Force
+Write-Host "OK: txts movidos" -ForegroundColor Green
+
+Write-Host "`nLISTO" -ForegroundColor Magenta
+Pegá el resultado acá.
+
+Write-Host "`nLISTO" -ForegroundColor Magenta
+OK: scripts movidos
+OK: VARIOS movidos
+OK: duplicado archivado
+OK: panel renombrado
+OK: txts movidos
+LISTO
+PS C:\WINDOWS\system32>
+
+2:19
+Perfecto. Verificá:
+
+powershell
+Get-ChildItem "F:\HERRAMIENTAS DE IA" | Format-Table Name, LastWriteTime -AutoSize
+powershell
+Get-ChildItem "F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO" | Format-Table Name, LastWriteTime -AutoSize
+Pegá los 2 resultados.
+
+Get-ChildItem "F:\HERRAMIENTAS DE IA" | Format-Table Name, LastWriteTime -AutoSize
+
+2:19
+Pegá el resultado acá.
+
+PS C:\WINDOWS\system32> Get-ChildItem "F:\HERRAMIENTAS DE IA" | Format-Table Name, LastWriteTime -AutoSize
+Name        LastWriteTime     
+----        -------------     
+00_PANEL_IA 15/4/2026 06:09:49
+PROYECTOS   16/4/2026 16:56:15
+scripts     15/4/2026 15:16:47
+VARIOS      17/4/2026 02:19:30
+_ARCHIVO    17/4/2026 02:19:31
+PS C:\WINDOWS\system32> Get-ChildItem "F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO" | Format-Table Name, LastWriteTime -AutoSize
+Name              LastWriteTime     
+----              -------------     
+06_SCRIPTS        17/4/2026 02:19:30
+07_VARIOS_ARCHIVO 17/4/2026 02:19:30
+PS C:\WINDOWS\system32>
+
+Mostrar más
+2:20
+Casi perfecto. Hay 2 problemas:
+
+1. scripts y VARIOS siguen en raíz — el Move-Item movió el contenido pero no eliminó las carpetas vacías.
+
+2. EL_RUFINO solo tiene 2 carpetas — falta la estructura canónica del proyecto.
+
+Ejecutá esto:
+
+powershell
+# Eliminar carpetas vacías
+Remove-Item "F:\HERRAMIENTAS DE IA\scripts" -Force
+Remove-Item "F:\HERRAMIENTAS DE IA\VARIOS" -Force
+Write-Host "OK: carpetas vacías eliminadas" -ForegroundColor Green
+Luego verificá:
+
+powershell
+Get-ChildItem "F:\HERRAMIENTAS DE IA" | Format-Table Name -AutoSize
+Pegá resultado y seguimos con la estructura de EL_RUFINO.
+
+PS C:\WINDOWS\system32> Get-ChildItem "F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO" | Format-Table Name, LastWriteTime -AutoSize
+Name              LastWriteTime     
+----              -------------     
+06_SCRIPTS        17/4/2026 02:19:30
+07_VARIOS_ARCHIVO 17/4/2026 02:19:30
+PS C:\WINDOWS\system32> # Eliminar carpetas vacías
+Remove-Item "F:\HERRAMIENTAS DE IA\scripts" -Force
+Remove-Item "F:\HERRAMIENTAS DE IA\VARIOS" -Force
+Write-Host "OK: carpetas vacías eliminadas" -ForegroundColor Green
+OK: carpetas vacías eliminadas
+PS C:\WINDOWS\system32> Get-ChildItem "F:\HERRAMIENTAS DE IA" | Format-Table Name -AutoSize
+Name       
+----       
+00_PANEL_IA
+PROYECTOS  
+_ARCHIVO   
+PS C:\WINDOWS\system32>
+
+Mostrar más
+2:20
+Raíz limpia. Ahora sí:
+
+F:\HERRAMIENTAS DE IA\
+├── 00_PANEL_IA\
+├── PROYECTOS\
+└── _ARCHIVO\
+Ahora armamos la estructura canónica de EL_RUFINO. Pegá esto:
+
+powershell
+$RUFINO = "F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO"
+
+foreach ($carpeta in @(
+    "00_CONTEXTO_IA",
+    "01_DOCUMENTOS_VIGENTES",
+    "02_WORDPRESS_TEST",
+    "03_IDENTIDAD_MARCA",
+    "04_DASHBOARDS_REFERENCIA",
+    "05_MATERIAL_HISTORICO",
+    "06_SCRIPTS",
+    "07_VARIOS_ARCHIVO",
+    "_ARCHIVO"
+)) {
+    New-Item -Path "$RUFINO\$carpeta" -ItemType Directory -Force | Out-Null
+    Write-Host "OK: $carpeta" -ForegroundColor Green
+}
+Pegá resultado y después auditamos qué hay en 06_SCRIPTS y 07_VARIOS_ARCHIVO para clasificar correctamente.
+
+PS C:\WINDOWS\system32> $RUFINO = "F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO"
+foreach ($carpeta in @(
+    "00_CONTEXTO_IA",
+    "01_DOCUMENTOS_VIGENTES",
+    "02_WORDPRESS_TEST",
+    "03_IDENTIDAD_MARCA",
+    "04_DASHBOARDS_REFERENCIA",
+    "05_MATERIAL_HISTORICO",
+    "06_SCRIPTS",
+    "07_VARIOS_ARCHIVO",
+    "_ARCHIVO"
+)) {
+    New-Item -Path "$RUFINO\$carpeta" -ItemType Directory -Force | Out-Null
+    Write-Host "OK: $carpeta" -ForegroundColor Green
+}
+OK: 00_CONTEXTO_IA
+OK: 01_DOCUMENTOS_VIGENTES
+OK: 02_WORDPRESS_TEST
+OK: 03_IDENTIDAD_MARCA
+OK: 04_DASHBOARDS_REFERENCIA
+OK: 05_MATERIAL_HISTORICO
+OK: 06_SCRIPTS
+OK: 07_VARIOS_ARCHIVO
+OK: _ARCHIVO
+PS C:\WINDOWS\system32>
+
+Mostrar más
+2:21
+Estructura canónica creada. Ahora auditamos el contenido:
+
+powershell
+Get-ChildItem "F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO\06_SCRIPTS" | Format-Table Name -AutoSize
+powershell
+Get-ChildItem "F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO\07_VARIOS_ARCHIVO" | Format-Table Name -AutoSize
+Pegá los 2 resultados.
+
+1776403336994_image.png
+PS C:\WINDOWS\system32> Get-ChildItem "F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO\06_SCRIPTS" | Format-Table Name -AutoSize
+Name                            
+----                            
+el_rufino_plan_v51.ps1          
+el_rufino_preview_fase1.ps1     
+el_rufino_refresh_inventario.ps1
+PS C:\WINDOWS\system32> Get-ChildItem "F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO\07_VARIOS_ARCHIVO" | Format-Table Name -AutoSize
+Name                                       
+----                                       
+.elrufino_scan_latest.json                 
+archivo-entrevistas-v2.html                
+archivo-entrevistas-v3.html                
+archivo-entrevistas-v4.html                
+auditoria-rufino.php                       
+ChatGPT Image 7 ene 2026, 02_26_53 p.m..png
+ChatGPT Image 7 ene 2026, 02_30_52 p.m..png
+concejo_rufino_argentina.html              
+el-rufino-plugin.zip                       
+gestor-avisos.html                         
+infografia_electoral_santa_fe.html         
+la comunidad organiuzada.txt               
+mapa-avisos-publicitarios.html             
+portal-noticias.html                       
+portal_comunidad_organizada_preview_v1.html
+voces-portal-v5.html                       
+PS C:\WINDOWS\system32>
+
+Mostrar más
+2:22
+Estamos al 90% del límite — guardemos el checkpoint antes de continuar.
+
+CHECKPOINT — Estado actual:
+
+F:\HERRAMIENTAS DE IA\
+├── 00_PANEL_IA\                    ✓ limpio
+├── PROYECTOS\
+│   ├── EL_RUFINO\
+│   │   ├── 00_CONTEXTO_IA\         vacía - faltan archivos maestros
+│   │   ├── 01_DOCUMENTOS_VIGENTES\ vacía
+│   │   ├── 02_WORDPRESS_TEST\      vacía
+│   │   ├── 03_IDENTIDAD_MARCA\     vacía
+│   │   ├── 04_DASHBOARDS_REFERENCIA\ vacía
+│   │   ├── 05_MATERIAL_HISTORICO\  vacía
+│   │   ├── 06_SCRIPTS\             3 scripts ps1 ✓
+│   │   ├── 07_VARIOS_ARCHIVO\      16 archivos - pendiente clasificar
+│   │   └── _ARCHIVO\               vacía
+│   ├── GESTIÓN COMERCIAL\
+│   ├── SOCIEDAD ITALIANA\
+│   └── USINA_DE_IDEAS\
+└── _ARCHIVO\
+Pendiente sesión nueva:
+
+Clasificar 07_VARIOS_ARCHIVO → mover cada archivo a su carpeta canónica
+Subir archivos maestros a 00_CONTEXTO_IA
+Auditar 00_PANEL_IA (contiene el .jsx del panel)
+Para la próxima sesión pegá este checkpoint como contexto inicial.REORGANIZACION_FASE1.ps1
+ps1
+
+
+REORGANIZACION_REAL_v1.ps1
+ps1
+
+
+usina_instrucciones_repositorio.html
+17 líneas
+
+html
+
+
+REGISTRO_TRAZABILIDAD.md
+297 líneas
+
+md
+
+
+README.md
+306 líneas
+
+md
+
+
+PLANTILLAS_AUDITORIA.md
+327 líneas
+
+md
+
+
+PLAN_AUDITORIA_REORGANIZACION.md
+251 líneas
+
+md
+
+
+CONTEXTO_DEL_PAQUETE.md
+401 líneas
+
+md
+
+
+CHANGELOG.md
+161 líneas
+
+md
+
+F:\HERRAMIENTAS DE IA\
+├── 00_PANEL_IA\                    ✓ limpio
+├── PROYECTOS\
+│   ├── EL_RUFINO\
+│   │   ├── 00_CONTEXTO_IA\         vacía - faltan archivos maestros
+│   │   ├── 01_DOCUMENTOS_VIGENTES\ vacía
+│   │   ├── 02_WORDPRESS_TEST\      vacía
+│   │   ├── 03_IDENTIDAD_MARCA\     vacía
+│   │   ├── 04_DASHBOARDS_REFERENCIA\ vacía
+│   │   ├── 05_MATERIAL_HISTORICO\  vacía
+│   │   ├── 06_SCRIPTS\             3 scripts ps1 ✓
+│   │   ├── 07_VARIOS_ARCHIVO\      16 archivos - pendiente clasificar
+│   │   └── _ARCHIVO\               vacía
+│   ├── GESTIÓN COMERCIAL\
+│   ├── SOCIEDAD ITALIANA\
+│   └── USINA_DE_IDEAS\
+└── _ARCHIVO\
+
+Mostrar más
+2:34
+Espera — hay algo importante antes de avanzar.
+
+🔴 Detecté una inconsistencia crítica
+El árbol que me mostrás revela una situación que no coincide con la documentación en contexto:
+
+Según los documentos de esta sesión:
+
+El proyecto se renombró EL RUFINO → USINA_DE_IDEAS (FASE 1, 2026-04-16)
+USINA_DE_IDEAS\ debería ser la carpeta activa con contenido
+Según el árbol real que me mostrás:
+
+Existe EL_RUFINO\ con carpetas canónicas (vacías) y 06_SCRIPTS con contenido
+Existe USINA_DE_IDEAS\ también (¿vacía? ¿con qué dentro?)
+La carpeta activa parece ser EL_RUFINO\, no USINA_DE_IDEAS\
+¿Qué pasa realmente?
+Hay tres escenarios posibles:
+
+A) El script REORGANIZACION_FASE1.ps1 no se ejecutó → EL_RUFINO sigue siendo la carpeta real, USINA_DE_IDEAS es un remanente vacío o incompleto
+
+B) El script se ejecutó parcialmente → Copió/creó USINA_DE_IDEAS pero no movió el contenido, dejando ambas
+
+C) Existían dos carpetas distintas desde antes → EL_RUFINO era una copia paralela o carpeta de trabajo distinta a la que se documentó
+
+Antes de tocar nada, necesito saber:
+¿Qué hay dentro de USINA_DE_IDEAS\? ¿Está vacía o tiene contenido?
+
+Podés ejecutar esto en PowerShell y pegarme el resultado:
+
+powershell
+Get-ChildItem "F:\HERRAMIENTAS DE IA\PROYECTOS\USINA_DE_IDEAS" -Recurse | 
+  Select-Object FullName, Length | 
+  Format-Table -AutoSize
+Y también para EL_RUFINO\07_VARIOS_ARCHIVO\:
+
+powershell
+Get-ChildItem "F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO\07_VARIOS_ARCHIVO" | 
+  Select-Object Name, Length, LastWriteTime
+No muevo nada hasta entender qué es qué. Principio 4: auditar antes de mover.
+
+
+1776384638476_image.png 1776384648327_image.png Los archivos sirve dejarlos ahi? ya estan en contexto? Que llenamos en descripción? Describe las instrucciones que tienes 16 abr Archivos del proyecto — ya están en contexto automáticamente en cada chat del proyecto. No hace falta releerlos desde
+
+pasted
+
+2:35
+Perfecto, tengo el historial completo. El checkpoint es claro.
+
+Estado actual confirmado
+EL_RUFINO\
+├── 00_CONTEXTO_IA\         vacía
+├── 01_DOCUMENTOS_VIGENTES\ vacía
+├── 02_WORDPRESS_TEST\      vacía
+├── 03_IDENTIDAD_MARCA\     vacía
+├── 04_DASHBOARDS_REFERENCIA\ vacía
+├── 05_MATERIAL_HISTORICO\  vacía
+├── 06_SCRIPTS\             3 scripts ✓
+├── 07_VARIOS_ARCHIVO\      16 archivos - clasificar
+└── _ARCHIVO\               vacía
+Siguiente paso: clasificar los 16 archivos de 07_VARIOS_ARCHIVO
+Ya los conozco del inventario anterior. Mi propuesta de destino para cada uno:
+
+Archivo	Destino sugerido	Razón
+el-rufino-plugin.zip	02_WORDPRESS_TEST\	Plugin WordPress
+auditoria-rufino.php	02_WORDPRESS_TEST\	PHP del proyecto
+archivo-entrevistas-v2/v3/v4.html	04_DASHBOARDS_REFERENCIA\	Dashboards/interfaces
+concejo_rufino_argentina.html	04_DASHBOARDS_REFERENCIA\	Dashboard
+gestor-avisos.html	04_DASHBOARDS_REFERENCIA\	Dashboard
+infografia_electoral_santa_fe.html	04_DASHBOARDS_REFERENCIA\	Dashboard
+mapa-avisos-publicitarios.html	04_DASHBOARDS_REFERENCIA\	Dashboard
+portal-noticias.html	04_DASHBOARDS_REFERENCIA\	Dashboard
+portal_comunidad_organizada_preview_v1.html	04_DASHBOARDS_REFERENCIA\	Dashboard
+voces-portal-v5.html	04_DASHBOARDS_REFERENCIA\	Dashboard
+.elrufino_scan_latest.json	06_SCRIPTS\	Datos del inventario
+la comunidad organizada.txt	01_DOCUMENTOS_VIGENTES\	Documento de texto
+ChatGPT Image *.png (2)	03_IDENTIDAD_MARCA\	Imágenes generadas
+¿Confirmás esta clasificación o querés revisar algún archivo puntualmente antes de ejecutar el script de movimiento?
+
+vamos
+
+2:36
+Ejecutá esto en PowerShell:
+
+powershell
+$RUFINO = "F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO"
+$VARIOS = "$RUFINO\07_VARIOS_ARCHIVO"
+
+# WordPress
+Move-Item "$VARIOS\el-rufino-plugin.zip" "$RUFINO\02_WORDPRESS_TEST\" -Force
+Move-Item "$VARIOS\auditoria-rufino.php" "$RUFINO\02_WORDPRESS_TEST\" -Force
+Write-Host "OK: WordPress" -ForegroundColor Green
+
+# Dashboards
+$dashboards = @(
+    "archivo-entrevistas-v2.html",
+    "archivo-entrevistas-v3.html",
+    "archivo-entrevistas-v4.html",
+    "concejo_rufino_argentina.html",
+    "gestor-avisos.html",
+    "infografia_electoral_santa_fe.html",
+    "mapa-avisos-publicitarios.html",
+    "portal-noticias.html",
+    "portal_comunidad_organizada_preview_v1.html",
+    "voces-portal-v5.html"
+)
+foreach ($f in $dashboards) {
+    Move-Item "$VARIOS\$f" "$RUFINO\04_DASHBOARDS_REFERENCIA\" -Force
+}
+Write-Host "OK: Dashboards" -ForegroundColor Green
+
+# Scripts/datos
+Move-Item "$VARIOS\.elrufino_scan_latest.json" "$RUFINO\06_SCRIPTS\" -Force
+Write-Host "OK: JSON scan" -ForegroundColor Green
+
+# Documento
+Move-Item "$VARIOS\la comunidad organiuzada.txt" "$RUFINO\01_DOCUMENTOS_VIGENTES\" -Force
+Write-Host "OK: Documento" -ForegroundColor Green
+
+# Imágenes
+Move-Item "$VARIOS\ChatGPT Image 7 ene 2026, 02_26_53 p.m..png" "$RUFINO\03_IDENTIDAD_MARCA\" -Force
+Move-Item "$VARIOS\ChatGPT Image 7 ene 2026, 02_30_52 p.m..png" "$RUFINO\03_IDENTIDAD_MARCA\" -Force
+Write-Host "OK: Imágenes" -ForegroundColor Green
+
+Write-Host "`nLISTO - verificando sobrantes:" -ForegroundColor Magenta
+Get-ChildItem $VARIOS | Format-Table Name -AutoSize
+Pegá el resultado.
+
+Move-Item "$VARIOS\ChatGPT Image 7 ene 2026, 02_26_53 p.m..png" "$RUFINO\03_IDENTIDAD_MAR
+Falta la cadena en el terminador: ".
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : TerminatorExpectedAtEndOfString
+
+PS C:\WINDOWS\system32>
+
+2:36
+El problema son los espacios y puntos en el nombre del archivo. Ejecutá por partes:
+
+powershell
+$RUFINO = "F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO"
+$VARIOS = "$RUFINO\07_VARIOS_ARCHIVO"
+
+# Mover todas las imágenes PNG de una vez
+Get-ChildItem "$VARIOS\*.png" | Move-Item -Destination "$RUFINO\03_IDENTIDAD_MARCA\" -Force
+Write-Host "OK: Imágenes" -ForegroundColor Green
+
+# Verificar sobrantes
+Get-ChildItem $VARIOS | Format-Table Name -AutoSize
+Pegá el resultado.
+
+PS C:\WINDOWS\system32> $RUFINO = "F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO"
+$VARIOS = "$RUFINO\07_VARIOS_ARCHIVO"
+# Mover todas las imágenes PNG de una vez
+Get-ChildItem "$VARIOS\*.png" | Move-Item -Destination "$RUFINO\03_IDENTIDAD_MARCA\" -Force
+Write-Host "OK: Imágenes" -ForegroundColor Green
+# Verificar sobrantes
+Get-ChildItem $VARIOS | Format-Table Name -AutoSize
+OK: Imágenes
+Name                                       
+----                                       
+.elrufino_scan_latest.json                 
+archivo-entrevistas-v2.html                
+archivo-entrevistas-v3.html                
+archivo-entrevistas-v4.html                
+auditoria-rufino.php                       
+concejo_rufino_argentina.html              
+el-rufino-plugin.zip                       
+gestor-avisos.html                         
+infografia_electoral_santa_fe.html         
+la comunidad organiuzada.txt               
+mapa-avisos-publicitarios.html             
+portal-noticias.html                       
+portal_comunidad_organizada_preview_v1.html
+voces-portal-v5.html                       
+PS C:\WINDOWS\system32>
+
+Mostrar más
+2:36
+Las imágenes se movieron pero el resto no. El script anterior no se ejecutó completo. Mandá todo de una vez:
+
+powershell
+$RUFINO = "F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO"
+$VARIOS = "$RUFINO\07_VARIOS_ARCHIVO"
+
+Move-Item "$VARIOS\el-rufino-plugin.zip" "$RUFINO\02_WORDPRESS_TEST\" -Force
+Move-Item "$VARIOS\auditoria-rufino.php" "$RUFINO\02_WORDPRESS_TEST\" -Force
+
+Get-ChildItem "$VARIOS\*.html" | Move-Item -Destination "$RUFINO\04_DASHBOARDS_REFERENCIA\" -Force
+
+Move-Item "$VARIOS\.elrufino_scan_latest.json" "$RUFINO\06_SCRIPTS\" -Force
+
+Move-Item "$VARIOS\la comunidad organiuzada.txt" "$RUFINO\01_DOCUMENTOS_VIGENTES\" -Force
+
+Write-Host "LISTO" -ForegroundColor Green
+Get-ChildItem $VARIOS | Format-Table Name -AutoSize
+Pegá resultado.
+
+PS C:\WINDOWS\system32> $RUFINO = "F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO"
+$VARIOS = "$RUFINO\07_VARIOS_ARCHIVO"
+Move-Item "$VARIOS\el-rufino-plugin.zip" "$RUFINO\02_WORDPRESS_TEST\" -Force
+Move-Item "$VARIOS\auditoria-rufino.php" "$RUFINO\02_WORDPRESS_TEST\" -Force
+Get-ChildItem "$VARIOS\*.html" | Move-Item -Destination "$RUFINO\04_DASHBOARDS_REFERENCIA\" -Force
+Move-Item "$VARIOS\.elrufino_scan_latest.json" "$RUFINO\06_SCRIPTS\" -Force
+Move-Item "$VARIOS\la comunidad organiuzada.txt" "$RUFINO\01_DOCUMENTOS_VIGENTES\" -Force
+Write-Host "LISTO" -ForegroundColor Green
+Get-ChildItem $VARIOS | Format-Table Name -AutoSize
+LISTO
+PS C:\WINDOWS\system32>
+
+Mostrar más
+2:37
+Perfecto — 07_VARIOS_ARCHIVO quedó vacía. Todo clasificado.
+
+Verificá la estructura completa:
+
+powershell
+Get-ChildItem "F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO" -Recurse | 
+  Select-Object FullName | Format-Table -AutoSize
+Pegá resultado y confirmamos que todo quedó en su lugar antes de seguir con el próximo paso (subir archivos maestros a 00_CONTEXTO_IA).
+
+PS C:\WINDOWS\system32> Get-ChildItem "F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO" -Recurse | 
+  Select-Object FullName | Format-Table -AutoSize
+FullName                                                                                                      
+--------                                                                                                      
+F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO\00_CONTEXTO_IA                                                      
+F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO\01_DOCUMENTOS_VIGENTES                                              
+F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO\02_WORDPRESS_TEST                                                   
+F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO\03_IDENTIDAD_MARCA                                                  
+F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO\04_DASHBOARDS_REFERENCIA                                            
+F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO\05_MATERIAL_HISTORICO                                               
+F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO\06_SCRIPTS                                                          
+F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO\07_VARIOS_ARCHIVO                                                   
+F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO\_ARCHIVO                                                            
+F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO\01_DOCUMENTOS_VIGENTES\la comunidad organiuzada.txt                 
+F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO\02_WORDPRESS_TEST\auditoria-rufino.php                              
+F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO\02_WORDPRESS_TEST\el-rufino-plugin.zip                              
+F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO\03_IDENTIDAD_MARCA\ChatGPT Image 7 ene 2026, 02_26_53 p.m..png      
+F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO\03_IDENTIDAD_MARCA\ChatGPT Image 7 ene 2026, 02_30_52 p.m..png      
+F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO\04_DASHBOARDS_REFERENCIA\archivo-entrevistas-v2.html                
+F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO\04_DASHBOARDS_REFERENCIA\archivo-entrevistas-v3.html                
+F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO\04_DASHBOARDS_REFERENCIA\archivo-entrevistas-v4.html                
+F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO\04_DASHBOARDS_REFERENCIA\concejo_rufino_argentina.html              
+F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO\04_DASHBOARDS_REFERENCIA\gestor-avisos.html                         
+F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO\04_DASHBOARDS_REFERENCIA\infografia_electoral_santa_fe.html         
+F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO\04_DASHBOARDS_REFERENCIA\mapa-avisos-publicitarios.html             
+F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO\04_DASHBOARDS_REFERENCIA\portal-noticias.html                       
+F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO\04_DASHBOARDS_REFERENCIA\portal_comunidad_organizada_preview_v1.html
+F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO\04_DASHBOARDS_REFERENCIA\voces-portal-v5.html                       
+F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO\06_SCRIPTS\.elrufino_scan_latest.json                               
+F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO\06_SCRIPTS\el_rufino_plan_v51.ps1                                   
+F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO\06_SCRIPTS\el_rufino_preview_fase1.ps1                              
+F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO\06_SCRIPTS\el_rufino_refresh_inventario.ps1                         
+PS C:\WINDOWS\system32>
+
+Mostrar más
+2:37
+Estructura perfecta. Todo en su lugar.
+
+EL_RUFINO\
+├── 00_CONTEXTO_IA\         vacía ← próximo paso
+├── 01_DOCUMENTOS_VIGENTES\ la comunidad organizada.txt ✓
+├── 02_WORDPRESS_TEST\      plugin.zip + auditoria.php ✓
+├── 03_IDENTIDAD_MARCA\     2 imágenes ChatGPT ✓
+├── 04_DASHBOARDS_REFERENCIA\ 10 HTMLs ✓
+├── 05_MATERIAL_HISTORICO\  vacía
+├── 06_SCRIPTS\             3 ps1 + scan.json ✓
+├── 07_VARIOS_ARCHIVO\      vacía ✓
+└── _ARCHIVO\               vacía
+Próximo paso: 00_CONTEXTO_IA
+Esta carpeta necesita los 3 archivos maestros del proyecto EL RUFINO. Según el historial, estaban en USINA_DE_IDEAS\00_CONTEXTO_IA\ mezclados con los docs de reorganización.
+
+Verificá si están ahí todavía:
+
+powershell
+Get-ChildItem "F:\HERRAMIENTAS DE IA\PROYECTOS\USINA_DE_IDEAS\00_CONTEXTO_IA" | Format-Table Name -AutoSize
+Pegá resultado.
+
+PS C:\WINDOWS\system32> Get-ChildItem "F:\HERRAMIENTAS DE IA\PROYECTOS\USINA_DE_IDEAS\00_CONTEXTO_IA" | Format-Table Name -AutoSize
+Name                                        
+----                                        
+CHANGELOG.md                                
+CONTEXTO_DEL_PAQUETE.md                     
+PLANTILLAS_AUDITORIA.md                     
+PLAN_AUDITORIA_REORGANIZACION.md            
+README.md                                   
+REGISTRO_TRAZABILIDAD.md                    
+REORGANIZACION_FASE1.ps1                    
+REORGANIZACION_REAL_v1.ps1                  
+REORGANIZACION_USINA_DE_IDEAS_2026-04-16.zip
+usina_instrucciones_repositorio.html        
+PS C:\WINDOWS\system32>
+
+Mostrar más
+2:38
+Los 3 archivos maestros (el-rufino_*) no están ahí — solo hay docs de reorganización de USINA DE IDEAS, que es correcto para esa carpeta.
+
+Los maestros deben estar en otro lado. Buscamos:
+
+powershell
+Get-ChildItem "F:\HERRAMIENTAS DE IA" -Recurse -Filter "el-rufino_*" | 
+  Select-Object FullName | Format-Table -AutoSize
+Pegá resultado.
+
+
+PS C:\WINDOWS\system32> Get-ChildItem "F:\HERRAMIENTAS DE IA" -Recurse -Filter "el-rufino_*" | Select-Object FullName | Format-Table -AutoSize FullName --------
+
+pasted
+
+2:40
+Excelente hallazgo. Hay DOS carpetas EL RUFINO:
+
+F:\HERRAMIENTAS DE IA\PROYECTOS\EL RUFINO\ — con espacios, tiene TODO el contenido real (archivos maestros, identidad, WordPress, dashboards, histórico, archivo)
+F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO\ — con guión bajo, la que creamos hoy, casi vacía
+La carpeta real siempre fue EL RUFINO (con espacios). Nosotros creamos EL_RUFINO nueva y movimos los archivos sueltos ahí, pero el proyecto completo ya existía.
+
+Lo que hay que hacer: mover el contenido que pusimos en EL_RUFINO hacia EL RUFINO, y eliminar EL_RUFINO.
+
+Ejecutá:
+
+powershell
+$REAL = "F:\HERRAMIENTAS DE IA\PROYECTOS\EL RUFINO"
+$NUEVA = "F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO"
+
+# Mover lo que clasificamos hoy hacia la carpeta real
+Move-Item "$NUEVA\02_WORDPRESS_TEST\*" "$REAL\02_WORDPRESS_TEST\" -Force
+Move-Item "$NUEVA\03_IDENTIDAD_MARCA\*" "$REAL\03_IDENTIDAD_MARCA\" -Force
+Move-Item "$NUEVA\04_DASHBOARDS_REFERENCIA\*" "$REAL\04_DASHBOARDS_REFERENCIA\" -Force
+Move-Item "$NUEVA\06_SCRIPTS\*" "$REAL\06_SCRIPTS\" -Force
+Move-Item "$NUEVA\01_DOCUMENTOS_VIGENTES\*" "$REAL\01_DOCUMENTOS_VIGENTES\" -Force
+
+Write-Host "OK: contenido consolidado" -ForegroundColor Green
+
+# Eliminar carpeta vacía EL_RUFINO
+Remove-Item $NUEVA -Recurse -Force
+Write-Host "OK: EL_RUFINO eliminada" -ForegroundColor Green
+
+# Verificar
+Get-ChildItem "$REAL" | Format-Table Name -AutoSize
+Pegá resultado.
+
+PS C:\WINDOWS\system32> $REAL = "F:\HERRAMIENTAS DE IA\PROYECTOS\EL RUFINO"
+$NUEVA = "F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO"
+# Mover lo que clasificamos hoy hacia la carpeta real
+Move-Item "$NUEVA\02_WORDPRESS_TEST\*" "$REAL\02_WORDPRESS_TEST\" -Force
+Move-Item "$NUEVA\03_IDENTIDAD_MARCA\*" "$REAL\03_IDENTIDAD_MARCA\" -Force
+Move-Item "$NUEVA\04_DASHBOARDS_REFERENCIA\*" "$REAL\04_DASHBOARDS_REFERENCIA\" -Force
+Move-Item "$NUEVA\06_SCRIPTS\*" "$REAL\06_SCRIPTS\" -Force
+Move-Item "$NUEVA\01_DOCUMENTOS_VIGENTES\*" "$REAL\01_DOCUMENTOS_VIGENTES\" -Force
+Write-Host "OK: contenido consolidado" -ForegroundColor Green
+# Eliminar carpeta vacía EL_RUFINO
+Remove-Item $NUEVA -Recurse -Force
+Write-Host "OK: EL_RUFINO eliminada" -ForegroundColor Green
+# Verificar
+Get-ChildItem "$REAL" | Format-Table Name -AutoSize
+OK: contenido consolidado
+OK: EL_RUFINO eliminada
+Name                    
+----                    
+00_CONTEXTO_IA          
+01_DOCUMENTOS_VIGENTES  
+01_NUCLEO_OPERATIVO     
+02_CONTENIDO            
+02_WORDPRESS_TEST       
+03_IDENTIDAD_MARCA      
+04_DASHBOARDS_REFERENCIA
+04_DESARROLLO           
+05_MATERIAL_HISTORICO   
+06_SCRIPTS              
+_ARCHIVO                
+_uploads                
+PS C:\WINDOWS\system32>
+
+Mostrar más
+2:42
+Perfecto. Ahora sí vemos la estructura real completa de EL RUFINO:
+
+EL RUFINO\
+├── 00_CONTEXTO_IA\          archivos maestros v1.3 ✓
+├── 01_DOCUMENTOS_VIGENTES\  vigentes ✓
+├── 01_NUCLEO_OPERATIVO\     pendiente auditoría
+├── 02_CONTENIDO\            pendiente auditoría
+├── 02_WORDPRESS_TEST\       ✓
+├── 03_IDENTIDAD_MARCA\      ✓
+├── 04_DASHBOARDS_REFERENCIA\ ✓
+├── 04_DESARROLLO\           pendiente auditoría
+├── 05_MATERIAL_HISTORICO\   ✓
+├── 06_SCRIPTS\              ✓
+├── _ARCHIVO\                ✓
+└── _uploads\                pendiente auditoría
+Hay carpetas duplicadas en numeración: 01_NUCLEO_OPERATIVO convive con 01_DOCUMENTOS_VIGENTES, y 04_DESARROLLO con 04_DASHBOARDS_REFERENCIA. Eso hay que resolverlo en la auditoría.
+
+Antes de seguir — ¿qué querés hacer ahora?
+
+P: ¿Cuál es el próximo paso?
+R: lo que esta pendiente
+
+2:43
+Empezamos por orden. Ejecutá los 4 inventarios de una vez:
+
+powershell
+$REAL = "F:\HERRAMIENTAS DE IA\PROYECTOS\EL RUFINO"
+
+Write-Host "=== 01_NUCLEO_OPERATIVO ===" -ForegroundColor Cyan
+Get-ChildItem "$REAL\01_NUCLEO_OPERATIVO" -Recurse | Select-Object FullName | Format-Table -AutoSize
+
+Write-Host "=== 02_CONTENIDO ===" -ForegroundColor Cyan
+Get-ChildItem "$REAL\02_CONTENIDO" -Recurse | Select-Object FullName | Format-Table -AutoSize
+
+Write-Host "=== 04_DESARROLLO ===" -ForegroundColor Cyan
+Get-ChildItem "$REAL\04_DESARROLLO" -Recurse | Select-Object FullName | Format-Table -AutoSize
+
+Write-Host "=== _uploads ===" -ForegroundColor Cyan
+Get-ChildItem "$REAL\_uploads" -Recurse | Select-Object FullName | Format-Table -AutoSize
+Pegá el resultado completo y clasificamos todo junto.
+
+PS C:\WINDOWS\system32> $REAL = "F:\HERRAMIENTAS DE IA\PROYECTOS\EL RUFINO"
+Write-Host "=== 01_NUCLEO_OPERATIVO ===" -ForegroundColor Cyan
+Get-ChildItem "$REAL\01_NUCLEO_OPERATIVO" -Recurse | Select-Object FullName | Format-Table -AutoSize
+Write-Host "=== 02_CONTENIDO ===" -ForegroundColor Cyan
+Get-ChildItem "$REAL\02_CONTENIDO" -Recurse | Select-Object FullName | Format-Table -AutoSize
+Write-Host "=== 04_DESARROLLO ===" -ForegroundColor Cyan
+Get-ChildItem "$REAL\04_DESARROLLO" -Recurse | Select-Object FullName | Format-Table -AutoSize
+Write-Host "=== _uploads ===" -ForegroundColor Cyan
+Get-ChildItem "$REAL\_uploads" -Recurse | Select-Object FullName | Format-Table -AutoSize
+=== 01_NUCLEO_OPERATIVO ===
+FullName                                                                                        
+--------                                                                                        
+F:\HERRAMIENTAS DE IA\PROYECTOS\EL RUFINO\01_NUCLEO_OPERATIVO\PANEL_IA                          
+F:\HERRAMIENTAS DE IA\PROYECTOS\EL RUFINO\01_NUCLEO_OPERATIVO\WEB_APP                           
+F:\HERRAMIENTAS DE IA\PROYECTOS\EL RUFINO\01_NUCLEO_OPERATIVO\WORDPRESS                         
+F:\HERRAMIENTAS DE IA\PROYECTOS\EL RUFINO\01_NUCLEO_OPERATIVO\WEB_APP\el-rufino_panel-ia_v2.html
+=== 02_CONTENIDO ===
+FullName                                                            
+--------                                                            
+F:\HERRAMIENTAS DE IA\PROYECTOS\EL RUFINO\02_CONTENIDO\DOCUMENTOS   
+F:\HERRAMIENTAS DE IA\PROYECTOS\EL RUFINO\02_CONTENIDO\DOSSIER      
+F:\HERRAMIENTAS DE IA\PROYECTOS\EL RUFINO\02_CONTENIDO\PROYECTOS.lnk
+=== 04_DESARROLLO ===
+FullName                                                          
+--------                                                          
+F:\HERRAMIENTAS DE IA\PROYECTOS\EL RUFINO\04_DESARROLLO\DASHBOARDS
+F:\HERRAMIENTAS DE IA\PROYECTOS\EL RUFINO\04_DESARROLLO\TESTING   
+=== _uploads ===
+FullName                                                        
+--------                                                        
+F:\HERRAMIENTAS DE IA\PROYECTOS\EL RUFINO\_uploads\php-error.log
+F:\HERRAMIENTAS DE IA\PROYECTOS\EL RUFINO\_uploads\wp-debug.log 
+PS C:\WINDOWS\system32>
+
+Mostrar más
+2:44
+Diagnóstico claro. Propuesta para cada carpeta:
+
+01_NUCLEO_OPERATIVO — tiene 3 subcarpetas, solo 1 archivo real:
+
+WEB_APP\el-rufino_panel-ia_v2.html → mover a 04_DASHBOARDS_REFERENCIA\
+PANEL_IA\ y WORDPRESS\ vacías → eliminar
+01_NUCLEO_OPERATIVO\ queda vacía → eliminar
+02_CONTENIDO — casi vacía:
+
+DOCUMENTOS\ y DOSSIER\ vacías → eliminar
+PROYECTOS.lnk es un acceso directo de Windows → eliminar
+02_CONTENIDO\ queda vacía → eliminar
+04_DESARROLLO — vacía:
+
+DASHBOARDS\ y TESTING\ vacías → eliminar
+04_DESARROLLO\ → eliminar
+_uploads — solo logs de WordPress:
+
+php-error.log y wp-debug.log → mover a _ARCHIVO\LOGS_WP_2026-04-17\
+_uploads\ queda vacía → eliminar
+¿Ejecutamos?
+
+powershell
+$REAL = "F:\HERRAMIENTAS DE IA\PROYECTOS\EL RUFINO"
+
+# 01_NUCLEO_OPERATIVO
+Move-Item "$REAL\01_NUCLEO_OPERATIVO\WEB_APP\el-rufino_panel-ia_v2.html" "$REAL\04_DASHBOARDS_REFERENCIA\" -Force
+Remove-Item "$REAL\01_NUCLEO_OPERATIVO" -Recurse -Force
+Write-Host "OK: 01_NUCLEO_OPERATIVO" -ForegroundColor Green
+
+# 02_CONTENIDO
+Remove-Item "$REAL\02_CONTENIDO" -Recurse -Force
+Write-Host "OK: 02_CONTENIDO" -ForegroundColor Green
+
+# 04_DESARROLLO
+Remove-Item "$REAL\04_DESARROLLO" -Recurse -Force
+Write-Host "OK: 04_DESARROLLO" -ForegroundColor Green
+
+# _uploads → archivar logs
+New-Item -Path "$REAL\_ARCHIVO\LOGS_WP_2026-04-17" -ItemType Directory -Force | Out-Null
+Move-Item "$REAL\_uploads\*" "$REAL\_ARCHIVO\LOGS_WP_2026-04-17\" -Force
+Remove-Item "$REAL\_uploads" -Recurse -Force
+Write-Host "OK: _uploads" -ForegroundColor Green
+
+# Verificar estructura final
+Write-Host "`n=== ESTRUCTURA FINAL ===" -ForegroundColor Magenta
+Get-ChildItem "$REAL" | Format-Table Name -AutoSize
+1776404718859_image.png
+PS C:\WINDOWS\system32> $REAL = "F:\HERRAMIENTAS DE IA\PROYECTOS\EL RUFINO"
+# 01_NUCLEO_OPERATIVO
+Move-Item "$REAL\01_NUCLEO_OPERATIVO\WEB_APP\el-rufino_panel-ia_v2.html" "$REAL\04_DASHBOARDS_REFERENCIA\" -Force
+Remove-Item "$REAL\01_NUCLEO_OPERATIVO" -Recurse -Force
+Write-Host "OK: 01_NUCLEO_OPERATIVO" -ForegroundColor Green
+# 02_CONTENIDO
+Remove-Item "$REAL\02_CONTENIDO" -Recurse -Force
+Write-Host "OK: 02_CONTENIDO" -ForegroundColor Green
+# 04_DESARROLLO
+Remove-Item "$REAL\04_DESARROLLO" -Recurse -Force
+Write-Host "OK: 04_DESARROLLO" -ForegroundColor Green
+# _uploads → archivar logs
+New-Item -Path "$REAL\_ARCHIVO\LOGS_WP_2026-04-17" -ItemType Directory -Force | Out-Null
+Move-Item "$REAL\_uploads\*" "$REAL\_ARCHIVO\LOGS_WP_2026-04-17\" -Force
+Remove-Item "$REAL\_uploads" -Recurse -Force
+Write-Host "OK: _uploads" -ForegroundColor Green
+# Verificar estructura final
+Write-Host "`n=== ESTRUCTURA FINAL ===" -ForegroundColor Magenta
+Get-ChildItem "$REAL" | Format-Table Name -AutoSize
+OK: 01_NUCLEO_OPERATIVO
+OK: 02_CONTENIDO
+OK: 04_DESARROLLO
+OK: _uploads
+=== ESTRUCTURA FINAL ===
+Name                    
+----                    
+00_CONTEXTO_IA          
+01_DOCUMENTOS_VIGENTES  
+02_WORDPRESS_TEST       
+03_IDENTIDAD_MARCA      
+04_DASHBOARDS_REFERENCIA
+05_MATERIAL_HISTORICO   
+06_SCRIPTS              
+_ARCHIVO                
+PS C:\WINDOWS\system32>
+
+Mostrar más
+2:45
+Estructura canónica limpia y definitiva. ✓
+
+EL RUFINO\
+├── 00_CONTEXTO_IA\           archivos maestros v1.3 ✓
+├── 01_DOCUMENTOS_VIGENTES\   ✓
+├── 02_WORDPRESS_TEST\        ✓
+├── 03_IDENTIDAD_MARCA\       ✓
+├── 04_DASHBOARDS_REFERENCIA\ ✓
+├── 05_MATERIAL_HISTORICO\    ✓
+├── 06_SCRIPTS\               ✓
+└── _ARCHIVO\                 ✓
+Veo que estás al 90% del límite de sesión. Guardemos el checkpoint antes de que se corte.
+
+CHECKPOINT — 2026-04-17
+COMPLETADO hoy:
+
+Raíz F:\HERRAMIENTAS DE IA\ limpia: solo 00_PANEL_IA\, PROYECTOS\, _ARCHIVO\
+EL RUFINO\ con estructura canónica de 8 carpetas, sin duplicados ni carpetas vacías
+USINA_DE_IDEAS\00_CONTEXTO_IA\ con todos los docs de reorganización
+PENDIENTE sesión nueva:
+
+Actualizar CHANGELOG.md y REGISTRO_TRAZABILIDAD.md con los cambios de hoy
+Verificar contenido de 00_PANEL_IA\ (tiene el .jsx del panel)
+Renombrar EL RUFINO → EL_RUFINO para normalizar nomenclatura (decisión pendiente)
+Subir archivos maestros al proyecto Claude EL RUFINOPerfecto, tengo el historial completo. El checkpoint es claro.
+Estado actual confirmado
+
+EL_RUFINO\
+├── 00_CONTEXTO_IA\         vacía
+├── 01_DOCUMENTOS_VIGENTES\ vacía
+├── 02_WORDPRESS_TEST\      vacía
+├── 03_IDENTIDAD_MARCA\     vacía
+├── 04_DASHBOARDS_REFERENCIA\ vacía
+├── 05_MATERIAL_HISTORICO\  vacía
+├── 06_SCRIPTS\             3 scripts ✓
+├── 07_VARIOS_ARCHIVO\      16 archivos - clasificar
+└── _ARCHIVO\               vacía
+Siguiente paso: clasificar los 16 archivos de 07_VARIOS_ARCHIVO
+Ya los conozco del inventario anterior. Mi propuesta de destino para cada uno:
+ArchivoDestino sugeridoRazónel-rufino-plugin.zip02_WORDPRESS_TEST\Plugin WordPressauditoria-rufino.php02_WORDPRESS_TEST\PHP del proyectoarchivo-entrevistas-v2/v3/v4.html04_DASHBOARDS_REFERENCIA\Dashboards/interfacesconcejo_rufino_argentina.html04_DASHBOARDS_REFERENCIA\Dashboardgestor-avisos.html04_DASHBOARDS_REFERENCIA\Dashboardinfografia_electoral_santa_fe.html04_DASHBOARDS_REFERENCIA\Dashboardmapa-avisos-publicitarios.html04_DASHBOARDS_REFERENCIA\Dashboardportal-noticias.html04_DASHBOARDS_REFERENCIA\Dashboardportal_comunidad_organizada_preview_v1.html04_DASHBOARDS_REFERENCIA\Dashboardvoces-portal-v5.html04_DASHBOARDS_REFERENCIA\Dashboard.elrufino_scan_latest.json06_SCRIPTS\Datos del inventariola comunidad organizada.txt01_DOCUMENTOS_VIGENTES\Documento de textoChatGPT Image *.png (2)03_IDENTIDAD_MARCA\Imágenes geneCHECKPOINT — 2026-04-17
+COMPLETADO hoy:
+
+Raíz F:\HERRAMIENTAS DE IA\ limpia: solo 00_PANEL_IA\, PROYECTOS\, _ARCHIVO\
+EL RUFINO\ con estructura canónica de 8 carpetas, sin duplicados ni carpetas vacías
+USINA_DE_IDEAS\00_CONTEXTO_IA\ con todos los docs de reorganización
+PENDIENTE sesión nueva:
+
+Actualizar CHANGELOG.md y REGISTRO_TRAZABILIDAD.md con los cambios de hoy
+Verificar contenido de 00_PANEL_IA\ (tiene el .jsx del panel)
+Renombrar EL RUFINO → EL_RUFINO para normalizar nomenclatura (decisión pendiente)
+Subir archivos maestros al proyecto Claude EL RUFINO
+Mostrar más
+2:49
+Checkpoint recibido y contexto cargado. Tengo todo el historial claro.
+
+¿Por dónde arrancamos hoy?
+
+P: ¿Cuál es el primer paso para esta sesión?
+R: Actualizar CHANGELOG y REGISTRO_TRAZABILIDAD con cambios de hoy
+
+2:49
+Perfecto. Voy a leer los archivos actuales y generar las versiones actualizadas.
+
+
+Leer CHANGELOG actual
+Leer CHANGELOG actual
+Bien. Tengo ambos archivos en contexto. Genero las versiones actualizadas con los cambios del 2026-04-17.
+
+
+Se crearon 2 archivos, leyó un archivo
+Se crearon 2 archivos, leyó un archivo
+Ambos archivos listos. Lo que se actualizó:
+
+CHANGELOG — se agregó la entrada 2026-04-17 con los 5 movimientos del script REORGANIZACION_REAL_v1.ps1, la estructura resultante confirmada, y la lista de clasificaciones pendientes de 07_VARIOS_ARCHIVO. La sección "Próximas versiones" refleja el estado actual.
+
+REGISTRO_TRAZABILIDAD — se agregó la sección 2026-04-17 | FASE 2 con cada movimiento documentado (origen, destino, método, razón), el estado resultante del árbol de carpetas, y la tabla de los 16 archivos pendientes con su destino propuesto. La versión pasó de 1.0 a 1.1.
+
+Estos dos van directo a EL_RUFINO\00_CONTEXTO_IA\ reemplazando los anteriores.
+
+¿Seguimos con el script de clasificación de 07_VARIOS_ARCHIVO?
+
+
+Changelog
+Documento · MD 
+
+Registro trazabilidad
+Documento · MD 
+
+excerpt_from_previous_claude_message.txt
+1 línea
+
+txt
+
+donde esta esa careta, no la cree
+
+2:55
+Buen punto. Revisemos el inventario real que tenés documentado.
+
+Del REGISTRO_TRAZABILIDAD.md del 2026-04-15, la estructura que quedó confirmada dentro del proyecto era:
+
+EL_RUFINO\
+├── 00_CONTEXTO_IA\         ← figura en el árbol
+├── 01_DOCUMENTOS_VIGENTES\
+├── 02_WORDPRESS_TEST\
+...
+Pero en el checkpoint de hoy que me pasaste al inicio, el estado real era:
+
+EL_RUFINO\
+├── 00_CONTEXTO_IA\         vacía
+├── 01_DOCUMENTOS_VIGENTES\ vacía
+...
+├── 06_SCRIPTS\             3 scripts ✓
+├── 07_VARIOS_ARCHIVO\      16 archivos
+└── _ARCHIVO\               vacía
+Entonces 00_CONTEXTO_IA\ existe pero está vacía. Nunca se le cargó contenido.
+
+Dos opciones:
+
+P: ¿Qué hacemos con los docs de reorganización?
+R: crear una carpeta descarte y mover ahi
+
+2:56
+Entendido — los docs de reorganización son material de trabajo, no documentación permanente del proyecto. Van a una carpeta de descarte con fecha.
+
+La propuesta concreta:
+
+EL_RUFINO\
+└── _ARCHIVO\
+    └── REORGANIZACION_2026-04-17\
+        ├── CHANGELOG.md
+        ├── REGISTRO_TRAZABILIDAD.md
+        ├── PLAN_AUDITORIA_REORGANIZACION.md
+        ├── PLANTILLAS_AUDITORIA.md
+        ├── CONTEXTO_DEL_PAQUETE.md
+        ├── REORGANIZACION_FASE1.ps1
+        ├── REORGANIZACION_REAL_v1.ps1
+        └── README.md
+00_CONTEXTO_IA\ queda libre para los archivos maestros reales (el-rufino_prompt-maestro_v1.3-VIGENTE.md, etc.) cuando los subas.
+
+¿Confirmás y genero el script para ese movimiento, o lo hacés a mano?
+
+
+excerpt_from_previous_claude_message.txt
+1 línea
+
+txt
+
+no esta con _ hay 2 carpetas con ese nombre
+
+2:58
+Ah, el problema de nomenclatura que estaba pendiente. Entonces en disco tenés:
+
+F:\HERRAMIENTAS DE IA\PROYECTOS\
+├── EL RUFINO\      ← con espacio (la original)
+└── EL_RUFINO\      ← con guión bajo (creada por el script)
+¿Cuál tiene el contenido real — la del espacio o la del guión bajo?
+
+revisalo tu, me arden los ojos de lee
+
+2:59
+Entendido, déjame revisar todo lo que tengo documentado.
+
+
+Vio 3 archivos
+Vio 3 archivos
+Listo, lo tengo claro:
+
+FASE1.ps1 (2026-04-16) usaba EL RUFINO con espacio → esa es la carpeta original con contenido
+REAL_v1.ps1 (2026-04-17) usaba EL_RUFINO con guión bajo → creó una carpeta nueva vacía y metió ahí los scripts y el VARIOS
+Conclusión: el contenido real (archivos maestros, WordPress, identidad, etc.) está en EL RUFINO (con espacio). EL_RUFINO es una carpeta nueva que creó el script de hoy con solo 06_SCRIPTS y 07_VARIOS_ARCHIVO.
+
+Lo que hay que hacer es simple: mover el contenido de EL_RUFINO a EL RUFINO y borrar EL_RUFINO. ¿Genero el script para eso?

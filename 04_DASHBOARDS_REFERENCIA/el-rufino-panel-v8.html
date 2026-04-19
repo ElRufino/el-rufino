@@ -1,0 +1,681 @@
+<!--
+  ARCHIVO: el-rufino-panel-v8.html
+  PROYECTO: EL RUFINO · Panel IA v8.1.2
+  FECHA: 2026-04-18
+  PROPÓSITO: Panel operativo completo renderizado como artefacto HTML
+  GUARDAR EN: F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO\04_DASHBOARDS_REFERENCIA\
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EL RUFINO · Panel IA v8.1.2</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #f5f0e8; overflow: hidden; font-family: Georgia, serif; }
+@keyframes pulse { 0%,80%,100%{opacity:.3;transform:scale(.8)} 40%{opacity:1;transform:scale(1)} }
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #ddd8ce; border-radius: 2px; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useEffect, useRef, useCallback } = React;
+
+const P = { rojo: "#c0271b", negro: "#1a1a1a", crema: "#f5f0e8", blanco: "#ffffff", crema2: "#ece7dd", crema3: "#ddd8ce", verde: "#2e7d32", azul: "#1565c0", amber: "#e65100" };
+
+const PILARES = [
+  { code: "P01", name: "Lo que pasa", fmt: "nota · hilo · infografía", color: "#c0271b" },
+  { code: "P02", name: "El campo habla", fmt: "entrevista · dato · WhatsApp", color: "#1565c0" },
+  { code: "P03", name: "Barrio a barrio", fmt: "seguimiento · mapa · vecinos", color: "#2e7d32" },
+  { code: "P04", name: "Generación Rufino", fmt: "reels · perfil · TikTok", color: "#e65100" },
+  { code: "P05", name: "Seguimiento de promesas", fmt: "fact-check · seguimiento · archivo", color: "#6a1b9a" },
+  { code: "P06", name: "Contexto y datos", fmt: "datos · placas · explicador", color: "#00838f" },
+];
+
+const AGENTES = [
+  { id: 1, nombre: "Agente SEO", rol: "Rank Math · Schema · Keywords P01–P06", autonomia: "Alto", prompt: 'Actuá como Agente SEO de El Rufino (Rufino, Santa Fe, 19.211 hab). Generá la configuración completa de Rank Math: valores campo por campo, Schema NewsMediaOrganization en JSON-LD, Open Graph y keywords semilla para P01-P06. URL: elrufino.com.ar.' },
+  { id: 2, nombre: "Agente Arquitectura", rol: "Categorías, slugs y entradas base", autonomia: "Medio", prompt: 'Actuá como Agente Arquitectura de El Rufino. Generá la arquitectura editorial para WordPress: 6 categorías P01–P06 con slugs, 3 entradas base por categoría con regla de las 2 capas, y 5 entradas evergreen.' },
+  { id: 4, nombre: "Agente Planificador", rol: "Calendario editorial semanal", autonomia: "Medio", prompt: 'Actuá como Agente Planificador de El Rufino. Generá el calendario editorial para la próxima semana: día, pilar P01-P06, título con las 2 capas, formato, audiencia target, fuentes sugeridas. Incluir resumen WA diario 7:30 AM.' },
+  { id: 5, nombre: "Agente Redactor", rol: "Notas periodísticas listas para publicar", autonomia: "Medio", prompt: 'Actuá como Agente Redactor de El Rufino. Esperá tema, datos y pilar. Redactás nota completa: título (hecho + contexto), bajada, cuerpo 600-1000 palabras, cierre y tags. Tono: directo, verificado, local sin localista.' },
+  { id: "6A", nombre: "Agente TikTok", rol: "Guiones 60 seg · hook nativo · tendencia", autonomia: "Alto", prompt: 'Actuá como Agente TikTok de El Rufino. Convertís noticias en guiones TikTok 45-60 seg. Hook primeros 2 seg, transiciones rápidas, CTA con sonido tendencia. Audiencia 14-24 años. Formato: [TEXTO PANTALLA]. Esperá el tema.' },
+  { id: "6B", nombre: "Agente Reels", rol: "Guiones 30-60 seg · estética editorial · IG", autonomia: "Alto", prompt: 'Actuá como Agente Reels de El Rufino. Guiones Reels Instagram 30-60 seg. Hook visual 3 seg, estética editorial Playfair+crema, CTA a bio. Audiencia 22-40. Más contexto que TikTok. Esperá el tema.' },
+  { id: 7, nombre: "Agente Accountability", rol: "Seguimiento de promesas — nota + hilo + WA", autonomia: "Medio", prompt: 'Actuá como Agente Accountability de El Rufino. Redactá: 1) nota 600-800 palabras, 2) hilo Facebook 5-7 posts, 3) resumen WhatsApp máx 3 líneas. Protocolo verificador no opositor. Decime qué promesa cubrir.' },
+  { id: 8, nombre: "Agente Stack", rol: "WordPress y plugins · configuración técnica", autonomia: "Bajo", prompt: 'Actuá como Agente Stack de El Rufino. Desarrollador WordPress especializado en medios. Configurás stack técnico: plugins, child theme Newsup, Customizer, menús. Generás código PHP/CSS funcional. ¿Por dónde empezamos?' },
+  { id: 9, nombre: "Agente Servidor", rol: "Infraestructura · hosting Hostinger · velocidad", autonomia: "Bajo", prompt: 'Actuá como Agente Servidor de El Rufino. Diagnosticá elrufino.com.ar en Hostinger: velocidad, PHP version, caché, SSL. Objetivo: carga menor a 3 segundos en mobile.' },
+  { id: 10, nombre: "Agente Datos", rol: "Pilar P06 · INDEC · SAMCO · presupuesto", autonomia: "Medio", prompt: 'Actuá como Agente Agenda de Datos de El Rufino. Generá agenda completa: fuentes verificables (INDEC, municipio, SAMCO, INTA, provincia), métricas clave y estructura de tabla para Pilar P06.' },
+  { id: 11, nombre: "Agente Imágenes", rol: "Prompts para generación visual · Gemini · MJ", autonomia: "Medio", prompt: 'Actuá como Agente Imágenes de El Rufino. Generás prompts precisos para IAs de imágenes. Pedís especificaciones y devolvés prompt optimizado en español e inglés con especificaciones técnicas.' },
+  { id: 12, nombre: "Agente Crisis", rol: "Tragedia · Fake news · Desmentida", autonomia: "Medio", prompt: 'Actuá como Agente Crisis de El Rufino. Protocolo: no imágenes explícitas · esperar 2 fuentes · enfoque servicio no morbo. Para fake news: identificá el original, rastreá la deformación, redactá la desmentida. ¿Qué situación?' },
+];
+
+const WA_TEMPLATES = [
+  { nombre: "Resumen 7:30", texto: "☀️ *EL RUFINO* — {FECHA}\n\n{NOTICIA_1}\n{NOTICIA_2}\n{NOTICIA_3}\n\n📍 elrufino.com.ar" },
+  { nombre: "Alerta urgente", texto: "🔴 *ALERTA EL RUFINO*\n\n{HECHO}\n\n📍 Seguimos informando → elrufino.com.ar" },
+  { nombre: "Seguimiento P05", texto: "📋 *SEGUIMIENTO* | P05\n\nPromesa: {PROMESA}\nEstado: {ESTADO}\n\n📍 elrufino.com.ar/promesas" },
+];
+
+async function callClaude(messages, system = "") {
+  const body = { model: "claude-sonnet-4-20250514", max_tokens: 1000, messages };
+  if (system) body.system = system;
+  const res = await fetch("https://api.anthropic.com/v1/messages", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+  const data = await res.json();
+  return data.content?.map(b => b.text || "").join("") || "Sin respuesta";
+}
+
+const S = {
+  shell: { display: "flex", height: "100vh", background: P.crema, overflow: "hidden" },
+  sidebar: { width: 196, flexShrink: 0, background: P.blanco, display: "flex", flexDirection: "column", borderRight: `2px solid ${P.crema3}`, overflow: "hidden" },
+  sbHead: { padding: "14px 12px", borderBottom: `1px solid ${P.crema3}` },
+  logoMark: { background: P.rojo, color: "#fff", fontWeight: 900, fontSize: 14, padding: "5px 9px", borderRadius: 3, display: "inline-block" },
+  verTag: { fontSize: 9, color: "#aaa", marginTop: 4, fontFamily: "monospace", display: "flex", alignItems: "center", gap: 4 },
+  sbNav: { flex: 1, overflowY: "auto", padding: "6px 0" },
+  ns: { fontSize: 8, letterSpacing: "2px", textTransform: "uppercase", color: "#bbb", padding: "8px 12px 3px", fontWeight: 700, fontFamily: "monospace" },
+  main: { flex: 1, display: "flex", flexDirection: "column", minWidth: 0, overflow: "hidden" },
+  topbar: { background: "#161616", color: P.crema, padding: "9px 20px", display: "flex", alignItems: "center", gap: 10, borderBottom: "1px solid #1e1e1e", flexShrink: 0 },
+  content: { flex: 1, overflowY: "auto", padding: "20px 24px" },
+  navFt: { padding: "10px 20px", background: P.crema2, display: "flex", alignItems: "center", justifyContent: "space-between", borderTop: `1px solid ${P.crema3}`, flexShrink: 0 },
+  card: { background: P.blanco, borderRadius: 5, border: `1px solid ${P.crema3}`, padding: 12, boxShadow: "0 1px 3px rgba(0,0,0,.07)" },
+  btn: (v = "p") => {
+    const vs = { p: { background: P.rojo, color: "#fff", border: "none" }, o: { background: "transparent", color: P.rojo, border: `1px solid ${P.rojo}` }, g: { background: "transparent", color: "#888", border: `1px solid ${P.crema3}` }, b: { background: P.azul, color: "#fff", border: "none" } };
+    return { fontSize: 11, padding: "6px 12px", borderRadius: 4, cursor: "pointer", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 4, ...vs[v] };
+  },
+  badge: (c = "gr") => {
+    const cs = { g: { bg: "#e8f5e9", text: P.verde }, y: { bg: "#fff3e0", text: P.amber }, r: { bg: "#ffebee", text: "#c62828" }, b: { bg: "#e3f2fd", text: P.azul }, gr: { bg: "#f5f5f5", text: "#555" } };
+    const col = cs[c] || cs.gr;
+    return { display: "inline-flex", alignItems: "center", fontSize: 8, padding: "2px 6px", borderRadius: 8, fontWeight: 700, letterSpacing: ".7px", textTransform: "uppercase", fontFamily: "monospace", background: col.bg, color: col.text };
+  },
+};
+
+function NavItem({ label, active, onClick, badge }) {
+  return <div onClick={onClick} style={{ display: "flex", alignItems: "center", gap: 7, padding: "6px 12px", cursor: "pointer", borderLeft: active ? `2px solid ${P.rojo}` : "2px solid transparent", background: active ? "#fff0ef" : "transparent", color: active ? P.rojo : P.negro, fontSize: 11, fontWeight: active ? 600 : 400 }}>
+    <span style={{ width: 4, height: 4, borderRadius: "50%", background: active ? P.rojo : "#ddd", flexShrink: 0 }} />
+    {label}
+    {badge && <span style={{ marginLeft: "auto", fontSize: 8, padding: "1px 5px", borderRadius: 8, fontWeight: 700, fontFamily: "monospace", background: "#fff0ef", color: P.rojo }}>{badge}</span>}
+  </div>;
+}
+function SLabel({ children, style }) { return <div style={{ fontSize: 9, letterSpacing: "2px", textTransform: "uppercase", color: P.rojo, fontWeight: 700, marginBottom: 10, fontFamily: "monospace", ...style }}>{children}</div>; }
+function Divider() { return <div style={{ height: 1, background: P.crema3, margin: "16px 0" }} />; }
+function Warn({ title, children }) { return <div style={{ background: "#fffbf0", border: "1px solid #ffe082", borderRadius: 5, padding: "10px 12px", marginTop: 8 }}><div style={{ fontSize: 9, fontWeight: 700, color: P.amber, letterSpacing: "1.5px", textTransform: "uppercase", marginBottom: 3, fontFamily: "monospace" }}>{title}</div><p style={{ fontSize: 11, color: "#5d4037", lineHeight: 1.6 }}>{children}</p></div>; }
+function Info({ title, children }) { return <div style={{ background: "#f4f8ff", border: "1px solid #c5d9f0", borderRadius: 5, padding: "10px 12px", marginTop: 8 }}><div style={{ fontSize: 9, fontWeight: 700, color: P.azul, letterSpacing: "1.5px", textTransform: "uppercase", marginBottom: 3, fontFamily: "monospace" }}>{title}</div><p style={{ fontSize: 11, color: P.azul, lineHeight: 1.6 }}>{children}</p></div>; }
+function Toast({ msg }) { if (!msg) return null; return <div style={{ position: "fixed", bottom: 16, left: "50%", transform: "translateX(-50%)", background: P.negro, color: P.crema, fontSize: 11, padding: "7px 16px", borderRadius: 16, zIndex: 9999, border: `1px solid ${P.rojo}`, whiteSpace: "nowrap", pointerEvents: "none" }}>{msg}</div>; }
+function AILoader({ loading, label = "Generando..." }) { if (!loading) return null; return <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 12px", background: "#fff", border: `1px solid ${P.crema3}`, borderRadius: 5, marginTop: 8 }}><div style={{ display: "flex", gap: 3 }}>{[0,1,2].map(i => <span key={i} style={{ width: 5, height: 5, borderRadius: "50%", background: P.rojo, animation: `pulse 1.2s ease-in-out ${i*0.2}s infinite` }} />)}</div><span style={{ fontSize: 10, color: "#888", fontFamily: "monospace" }}>{label}</span></div>; }
+
+function ModInicio({ promesas, metrics, onSetMetric }) {
+  const f2Items = [
+    { label: "6 categorías P01-P06", done: false },
+    { label: "Logo/favicon/OG subidos", done: true },
+    { label: "Schema NewsMediaOrganization", done: false },
+    { label: "20 notas publicadas", done: false },
+    { label: "500 WA suscriptores", done: false },
+  ];
+  const pct = Math.round(f2Items.filter(i => i.done).length / f2Items.length * 100);
+  return <div>
+    <div style={{ background: P.negro, borderRadius: 7, padding: 20, marginBottom: 16, display: "flex", gap: 16, alignItems: "center" }}>
+      <div style={{ width: 52, height: 52, flexShrink: 0, background: P.rojo, borderRadius: 5, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900, fontSize: 18, color: "#fff" }}>ER</div>
+      <div>
+        <h2 style={{ color: P.crema, fontSize: 19, marginBottom: 5 }}>Panel El Rufino v8.1.2</h2>
+        <p style={{ color: "#aaa", fontSize: 10, lineHeight: 1.6 }}>4 pantallas · 12 agentes · Registro de promesas · Chat IA · Kanban editorial</p>
+        <div style={{ display: "flex", gap: 4, marginTop: 8, flexWrap: "wrap" }}>
+          <span style={S.badge("r")}>FASE 2 EN EJECUCIÓN</span>
+          <span style={S.badge("b")}>Plugin v8.1.2</span>
+          <span style={S.badge("g")}>Claude IA integrado</span>
+        </div>
+      </div>
+    </div>
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 7, marginBottom: 14 }}>
+      {[{ n: 12, l: "Agentes IA" }, { n: promesas.length, l: "Promesas" }, { n: `${pct}%`, l: "Fase 2" }, { n: 17, l: "Módulos" }].map(({ n, l }) => (
+        <div key={l} style={{ ...S.card, textAlign: "center" }}>
+          <div style={{ fontSize: 20, color: P.rojo, fontWeight: 900 }}>{n}</div>
+          <div style={{ fontSize: 8, color: "#888", marginTop: 2, textTransform: "uppercase", letterSpacing: 1, fontFamily: "monospace" }}>{l}</div>
+        </div>
+      ))}
+    </div>
+    <SLabel>Checklist Fase 2 — {pct}% completado</SLabel>
+    {f2Items.map((item, i) => (
+      <div key={i} style={{ display: "flex", alignItems: "center", gap: 8, padding: "7px 0", borderBottom: `1px solid ${P.crema3}`, fontSize: 11 }}>
+        <div style={{ width: 16, height: 16, borderRadius: 3, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 9, fontWeight: 700, flexShrink: 0, background: item.done ? "#e8f5e9" : "#ffebee", color: item.done ? P.verde : "#c62828" }}>{item.done ? "✓" : "✗"}</div>
+        <span style={{ flex: 1 }}>{item.label}</span>
+        <span style={S.badge(item.done ? "g" : "r")}>{item.done ? "OK" : "Pendiente"}</span>
+      </div>
+    ))}
+    <Divider />
+    <SLabel>Métricas Base Mes 0</SLabel>
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 7 }}>
+      {[
+        { key: "fb_likes", label: "Facebook Likes", meta: "5.000 al mes 6" },
+        { key: "ig_seg", label: "Instagram Seguidores", meta: "2.000 al mes 6" },
+        { key: "wa_subs", label: "WhatsApp Suscriptores", meta: "500 al mes 3" },
+        { key: "visitas_dia", label: "Visitas/día", meta: "baseline Mes 0" },
+        { key: "notas_pub", label: "Notas publicadas", meta: "20 para cerrar F2" },
+      ].map(m => (
+        <div key={m.key} style={S.card}>
+          <div style={{ fontSize: 9, color: "#aaa", fontFamily: "monospace", marginBottom: 3 }}>{m.label}</div>
+          <input type="text" placeholder="Valor actual..." value={metrics[m.key] || ""} onChange={e => onSetMetric(m.key, e.target.value)} style={{ width: "100%", padding: "5px 7px", border: `1px solid ${P.crema3}`, borderRadius: 3, fontSize: 10, fontFamily: "monospace", background: "#fafaf8", outline: "none" }} />
+          <div style={{ fontSize: 8, color: P.rojo, marginTop: 3, fontFamily: "monospace" }}>Meta: {m.meta}</div>
+        </div>
+      ))}
+    </div>
+    <Divider />
+    <Warn title="⚠ Acciones bloqueantes">Schema NewsMediaOrganization pendiente · Categorías P01-P06 sin crear · Canal WA sin configurar · Estas 3 tareas bloquean el cierre de Fase 2.</Warn>
+  </div>;
+}
+
+function ModChatIA({ showToast }) {
+  const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [sys, setSys] = useState('Sos el asistente editorial de El Rufino, medio digital de Rufino, Santa Fe, Argentina (19.211 hab). Claim: "Lo que pasa y lo que significa". Pilares P01-P06. Regla madre: toda pieza tiene 2 capas (hecho verificado + significado). Voz: directa, verificada, local sin localista.');
+  const endRef = useRef(null);
+  useEffect(() => { endRef.current?.scrollIntoView({ behavior: "smooth" }); }, [messages]);
+  const send = async () => {
+    if (!input.trim() || loading) return;
+    const userMsg = { role: "user", content: input };
+    setMessages(prev => [...prev, userMsg]);
+    setInput(""); setLoading(true);
+    try {
+      const reply = await callClaude([...messages, userMsg], sys);
+      setMessages(prev => [...prev, { role: "assistant", content: reply }]);
+    } catch { showToast("Error de conexión con Claude"); }
+    finally { setLoading(false); }
+  };
+  return <div style={{ display: "flex", flexDirection: "column", height: "calc(100vh - 130px)" }}>
+    <div style={{ fontSize: 9, color: P.rojo, letterSpacing: "3px", textTransform: "uppercase", fontWeight: 700, marginBottom: 4, fontFamily: "monospace" }}>CHAT IA · LIVE</div>
+    <div style={{ fontSize: 22, color: P.negro, lineHeight: 1.1, marginBottom: 6 }}>Chat con Claude</div>
+    <textarea value={sys} onChange={e => setSys(e.target.value)} style={{ width: "100%", padding: "7px 9px", border: `1px solid ${P.crema3}`, borderRadius: 4, fontSize: 9, fontFamily: "monospace", background: "#f8f7f4", outline: "none", resize: "none", height: 52, color: "#2d5a27", marginBottom: 8 }} />
+    <div style={{ flex: 1, overflowY: "auto", background: "#fff", border: `1px solid ${P.crema3}`, borderRadius: 5, padding: 12, marginBottom: 8, minHeight: 100 }}>
+      {messages.length === 0 && <div style={{ textAlign: "center", color: "#bbb", fontSize: 11, fontFamily: "monospace", paddingTop: 24 }}>Empezá la conversación ↓</div>}
+      {messages.map((m, i) => (
+        <div key={i} style={{ marginBottom: 10, display: "flex", justifyContent: m.role === "user" ? "flex-end" : "flex-start" }}>
+          <div style={{ maxWidth: "82%", padding: "8px 12px", borderRadius: 7, fontSize: 11, lineHeight: 1.65, background: m.role === "user" ? P.rojo : "#f5f0e8", color: m.role === "user" ? "#fff" : P.negro, whiteSpace: "pre-wrap" }}>{m.content}</div>
+        </div>
+      ))}
+      <AILoader loading={loading} label="Claude respondiendo..." />
+      <div ref={endRef} />
+    </div>
+    <div style={{ display: "flex", gap: 7 }}>
+      <textarea value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); } }} placeholder="Escribí... (Enter envía, Shift+Enter nueva línea)" style={{ flex: 1, padding: "7px 9px", border: `1px solid ${P.crema3}`, borderRadius: 4, fontSize: 11, resize: "none", minHeight: 40, outline: "none" }} />
+      <button onClick={send} disabled={loading} style={{ ...S.btn("p"), alignSelf: "flex-end", opacity: loading ? .5 : 1 }}>Enviar →</button>
+    </div>
+    {messages.length > 0 && <button onClick={() => setMessages([])} style={{ ...S.btn("g"), marginTop: 6, fontSize: 9 }}>Limpiar chat</button>}
+  </div>;
+}
+
+function ModRedactorIA({ showToast }) {
+  const [tema, setTema] = useState(""); const [pilar, setPilar] = useState("P01"); const [datos, setDatos] = useState(""); const [resultado, setResultado] = useState(""); const [loading, setLoading] = useState(false);
+  const generar = async () => {
+    if (!tema.trim()) { showToast("Ingresá el tema"); return; }
+    setLoading(true); setResultado("");
+    try {
+      const prompt = `Actuá como Agente Redactor de El Rufino (Rufino, Santa Fe, 19.211 hab). Regla de 2 capas OBLIGATORIA.\n\nTema: ${tema}\nPilar: ${pilar}\nDatos: ${datos || "Sin datos"}\n\nRedactá: Título con 2 capas, bajada, cuerpo 600-800 palabras, tags, versión WhatsApp máx 3 líneas.`;
+      const reply = await callClaude([{ role: "user", content: prompt }]);
+      setResultado(reply);
+    } catch { showToast("Error"); }
+    finally { setLoading(false); }
+  };
+  return <div>
+    <div style={{ fontSize: 9, color: P.rojo, letterSpacing: "3px", textTransform: "uppercase", fontWeight: 700, marginBottom: 4, fontFamily: "monospace" }}>REDACTOR IA · PRODUCCIÓN</div>
+    <div style={{ fontSize: 22, color: P.negro, lineHeight: 1.1, marginBottom: 10 }}>Redactor IA</div>
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 9, marginBottom: 9 }}>
+      <div>
+        <label style={{ fontSize: 9, fontWeight: 700, marginBottom: 3, display: "block", fontFamily: "monospace" }}>TEMA / HECHO *</label>
+        <input value={tema} onChange={e => setTema(e.target.value)} placeholder="Ej: El municipio anunció obras..." style={{ width: "100%", padding: "7px 9px", border: `1px solid ${P.crema3}`, borderRadius: 4, fontSize: 11, outline: "none" }} />
+      </div>
+      <div>
+        <label style={{ fontSize: 9, fontWeight: 700, marginBottom: 3, display: "block", fontFamily: "monospace" }}>PILAR EDITORIAL</label>
+        <select value={pilar} onChange={e => setPilar(e.target.value)} style={{ width: "100%", padding: "7px 9px", border: `1px solid ${P.crema3}`, borderRadius: 4, fontSize: 11, background: "#fafaf8", outline: "none" }}>
+          {PILARES.map(p => <option key={p.code} value={p.code}>{p.code} — {p.name}</option>)}
+        </select>
+      </div>
+    </div>
+    <div style={{ marginBottom: 10 }}>
+      <label style={{ fontSize: 9, fontWeight: 700, marginBottom: 3, display: "block", fontFamily: "monospace" }}>DATOS / FUENTES</label>
+      <textarea value={datos} onChange={e => setDatos(e.target.value)} placeholder="Pegá datos, citas, declaraciones..." style={{ width: "100%", padding: "7px 9px", border: `1px solid ${P.crema3}`, borderRadius: 4, fontSize: 11, outline: "none", resize: "vertical", minHeight: 65 }} />
+    </div>
+    <button onClick={generar} disabled={loading} style={{ ...S.btn("p"), opacity: loading ? .6 : 1 }}>Generar nota con IA →</button>
+    <AILoader loading={loading} label="Claude redactando con regla de 2 capas..." />
+    {resultado && <div style={{ marginTop: 12 }}>
+      <SLabel>Nota generada</SLabel>
+      <div style={{ background: "#fff", border: `1px solid ${P.crema3}`, borderRadius: 5, padding: 12, fontSize: 11, lineHeight: 1.75, whiteSpace: "pre-wrap", maxHeight: 320, overflowY: "auto" }}>{resultado}</div>
+      <div style={{ display: "flex", gap: 7, marginTop: 8 }}>
+        <button onClick={() => { navigator.clipboard.writeText(resultado); showToast("Copiada ✓"); }} style={S.btn("o")}>Copiar nota</button>
+        <button onClick={() => setResultado("")} style={S.btn("g")}>Limpiar</button>
+      </div>
+    </div>}
+  </div>;
+}
+
+function ModKanban({ showToast }) {
+  const COLS = ["Idea", "En producción", "Edición", "Publicado"];
+  const [cards, setCards] = useState([
+    { id: 1, titulo: "Obras en acceso sur — estado real", pilar: "P01", col: "Idea" },
+    { id: 2, titulo: "Precio soja en Rufino vs ROFEX", pilar: "P02", col: "En producción" },
+    { id: 3, titulo: "Barrio Norte: promesa de asfalto 2024", pilar: "P05", col: "Edición" },
+  ]);
+  const [newCard, setNewCard] = useState({ titulo: "", pilar: "P01" });
+  const [dragging, setDragging] = useState(null);
+  const colColors = { "Idea": "#f5f0e8", "En producción": "#fff3e0", "Edición": "#e3f2fd", "Publicado": "#e8f5e9" };
+  const pilColors = PILARES.reduce((a, p) => { a[p.code] = p.color; return a; }, {});
+  return <div>
+    <div style={{ fontSize: 9, color: P.rojo, letterSpacing: "3px", textTransform: "uppercase", fontWeight: 700, marginBottom: 4, fontFamily: "monospace" }}>KANBAN · PRODUCCIÓN</div>
+    <div style={{ fontSize: 22, color: P.negro, lineHeight: 1.1, marginBottom: 10 }}>Kanban Editorial</div>
+    <div style={{ ...S.card, marginBottom: 12, display: "flex", gap: 8, alignItems: "flex-end", flexWrap: "wrap" }}>
+      <div style={{ flex: 1, minWidth: 150 }}>
+        <label style={{ fontSize: 9, fontFamily: "monospace", color: "#aaa", display: "block", marginBottom: 3 }}>TÍTULO</label>
+        <input value={newCard.titulo} onChange={e => setNewCard(p => ({ ...p, titulo: e.target.value }))} placeholder="Nueva idea..." style={{ width: "100%", padding: "6px 9px", border: `1px solid ${P.crema3}`, borderRadius: 4, fontSize: 11 }} />
+      </div>
+      <div>
+        <label style={{ fontSize: 9, fontFamily: "monospace", color: "#aaa", display: "block", marginBottom: 3 }}>PILAR</label>
+        <select value={newCard.pilar} onChange={e => setNewCard(p => ({ ...p, pilar: e.target.value }))} style={{ padding: "6px 9px", border: `1px solid ${P.crema3}`, borderRadius: 4, fontSize: 11, background: "#fafaf8" }}>
+          {PILARES.map(p => <option key={p.code} value={p.code}>{p.code}</option>)}
+        </select>
+      </div>
+      <button onClick={() => { if (!newCard.titulo.trim()) { showToast("Ingresá el título"); return; } setCards(prev => [...prev, { id: Date.now(), ...newCard, col: "Idea" }]); setNewCard({ titulo: "", pilar: "P01" }); showToast("Agregada ✓"); }} style={S.btn("p")}>+ Agregar</button>
+    </div>
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 8 }}>
+      {COLS.map(col => (
+        <div key={col} onDragOver={e => e.preventDefault()} onDrop={e => { e.preventDefault(); if (dragging) { setCards(prev => prev.map(c => c.id === dragging ? { ...c, col } : c)); setDragging(null); } }} style={{ background: colColors[col], borderRadius: 5, padding: 8, minHeight: 160, border: `1px solid ${P.crema3}` }}>
+          <div style={{ fontSize: 8, fontWeight: 700, color: "#888", textTransform: "uppercase", letterSpacing: "1.5px", fontFamily: "monospace", marginBottom: 8, paddingBottom: 6, borderBottom: `1px solid ${P.crema3}` }}>
+            {col} ({cards.filter(c => c.col === col).length})
+          </div>
+          {cards.filter(c => c.col === col).map(card => (
+            <div key={card.id} draggable onDragStart={() => setDragging(card.id)} style={{ background: "#fff", border: `1px solid ${P.crema3}`, borderLeft: `3px solid ${pilColors[card.pilar] || P.rojo}`, borderRadius: 4, padding: "8px 9px", marginBottom: 5, cursor: "grab" }}>
+              <div style={{ fontSize: 10, color: P.negro, lineHeight: 1.4, marginBottom: 5 }}>{card.titulo}</div>
+              <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                <span style={{ fontSize: 8, padding: "1px 4px", borderRadius: 6, background: `${pilColors[card.pilar]}18`, color: pilColors[card.pilar], fontWeight: 700, fontFamily: "monospace" }}>{card.pilar}</span>
+                <button onClick={() => setCards(prev => prev.filter(c => c.id !== card.id))} style={{ marginLeft: "auto", background: "none", border: "none", color: "#ccc", cursor: "pointer", fontSize: 12 }}>×</button>
+              </div>
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+  </div>;
+}
+
+function ModWhatsApp({ showToast }) {
+  const [ti, setTi] = useState(0);
+  const [texto, setTexto] = useState(WA_TEMPLATES[0].texto);
+  const [loading, setLoading] = useState(false);
+  const gen = async () => {
+    setLoading(true);
+    try { const r = await callClaude([{ role: "user", content: "Actuá como redactor de El Rufino. Generá el resumen matutino para WhatsApp: 3-4 noticias de ciudad pampeana 19k hab, 2 líneas cada una, tono directo humano, sin markdown. Inventá noticias verosímiles." }]); setTexto(r); }
+    catch { showToast("Error"); }
+    finally { setLoading(false); }
+  };
+  return <div>
+    <div style={{ fontSize: 9, color: P.rojo, letterSpacing: "3px", textTransform: "uppercase", fontWeight: 700, marginBottom: 4, fontFamily: "monospace" }}>COMPOSITOR WA · PRODUCCIÓN</div>
+    <div style={{ fontSize: 22, color: P.negro, lineHeight: 1.1, marginBottom: 10 }}>Compositor WhatsApp</div>
+    <div style={{ display: "flex", gap: 5, marginBottom: 10, flexWrap: "wrap" }}>
+      {WA_TEMPLATES.map((t, i) => <button key={i} onClick={() => { setTi(i); setTexto(t.texto); }} style={{ ...S.btn(i === ti ? "p" : "g"), fontSize: 10 }}>{t.nombre}</button>)}
+    </div>
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+      <div>
+        <SLabel>Editor</SLabel>
+        <textarea value={texto} onChange={e => setTexto(e.target.value)} style={{ width: "100%", padding: "9px 11px", border: `1px solid ${P.crema3}`, borderRadius: 5, fontSize: 11, fontFamily: "monospace", background: "#f8f7f4", outline: "none", resize: "vertical", minHeight: 160, lineHeight: 1.7 }} />
+        <div style={{ display: "flex", gap: 6, marginTop: 8 }}>
+          <button onClick={gen} disabled={loading} style={{ ...S.btn("p"), opacity: loading ? .6 : 1 }}>IA → generar</button>
+          <button onClick={() => { navigator.clipboard.writeText(texto); showToast("Copiado ✓"); }} style={S.btn("o")}>Copiar</button>
+        </div>
+        <AILoader loading={loading} label="Generando resumen..." />
+      </div>
+      <div>
+        <SLabel>Preview</SLabel>
+        <div style={{ background: "#e5ddd5", borderRadius: 7, padding: 12, minHeight: 160 }}>
+          <div style={{ background: "#25d366", color: "#fff", borderRadius: "7px 7px 0 0", padding: "7px 12px", fontSize: 10, fontWeight: 700, display: "flex", alignItems: "center", gap: 7 }}>
+            <div style={{ width: 22, height: 22, borderRadius: "50%", background: P.rojo, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 8, fontWeight: 900, color: "#fff" }}>ER</div>
+            EL RUFINO
+          </div>
+          <div style={{ background: "#fff", borderRadius: "0 0 7px 7px", padding: "10px 12px", fontSize: 10, lineHeight: 1.65, whiteSpace: "pre-wrap", minHeight: 100 }}>{texto || <span style={{ color: "#ccc" }}>Vista previa...</span>}</div>
+        </div>
+      </div>
+    </div>
+  </div>;
+}
+
+function ModAgentes({ showToast }) {
+  const [activeAgent, setActiveAgent] = useState(null); const [agentOutput, setAgentOutput] = useState(""); const [loading, setLoading] = useState(false); const [extra, setExtra] = useState("");
+  const activar = async (ag) => {
+    setActiveAgent(ag); setAgentOutput(""); setLoading(true);
+    try { const reply = await callClaude([{ role: "user", content: extra ? `${ag.prompt}\n\nDatos adicionales: ${extra}` : ag.prompt }]); setAgentOutput(reply); }
+    catch { showToast("Error"); }
+    finally { setLoading(false); }
+  };
+  const cats = [{ label: "Editoriales (1–7)", ids: [1, 2, 4, 5, "6A", "6B", 7] }, { label: "Técnicos (8–9)", ids: [8, 9] }, { label: "Contenido (10–12)", ids: [10, 11, 12] }];
+  const aColor = { "Alto": P.verde, "Medio": P.amber, "Bajo": P.azul };
+  return <div>
+    <div style={{ fontSize: 9, color: P.rojo, letterSpacing: "3px", textTransform: "uppercase", fontWeight: 700, marginBottom: 4, fontFamily: "monospace" }}>12 AGENTES IA · INTELIGENCIA</div>
+    <div style={{ fontSize: 22, color: P.negro, lineHeight: 1.1, marginBottom: 10 }}>Agentes IA</div>
+    <div style={{ marginBottom: 10 }}>
+      <label style={{ fontSize: 9, fontFamily: "monospace", color: "#aaa", display: "block", marginBottom: 3 }}>CONTEXTO ADICIONAL (opcional)</label>
+      <textarea value={extra} onChange={e => setExtra(e.target.value)} placeholder="Datos, nombres, fechas..." style={{ width: "100%", padding: "7px 9px", border: `1px solid ${P.crema3}`, borderRadius: 4, fontSize: 10, fontFamily: "monospace", background: "#fafaf8", outline: "none", resize: "vertical", minHeight: 40 }} />
+    </div>
+    {cats.map(cat => (
+      <div key={cat.label}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, margin: "12px 0 8px" }}>
+          <div style={{ flex: 1, height: 1, background: P.crema3 }} />
+          <span style={{ fontSize: 8, color: "#bbb", fontFamily: "monospace", textTransform: "uppercase" }}>{cat.label}</span>
+          <div style={{ flex: 1, height: 1, background: P.crema3 }} />
+        </div>
+        {AGENTES.filter(a => cat.ids.includes(a.id)).map(ag => (
+          <div key={ag.id} style={{ ...S.card, marginBottom: 6, borderLeft: ag.id === 12 ? `3px solid ${P.rojo}` : (ag.id === 8 || ag.id === 9) ? `3px solid ${P.azul}` : `3px solid ${P.crema3}` }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
+              <div style={{ background: ag.id === 12 ? P.rojo : (ag.id === 8 || ag.id === 9) ? P.azul : P.negro, color: "#fff", fontSize: 8, fontWeight: 800, width: 20, height: 20, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, fontFamily: "monospace" }}>{ag.id}</div>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontSize: 12, color: P.negro, fontWeight: 700 }}>{ag.nombre}</div>
+                <div style={{ fontSize: 9, color: P.rojo }}>{ag.rol}</div>
+              </div>
+              <span style={{ fontSize: 7, padding: "1px 5px", borderRadius: 6, background: `${aColor[ag.autonomia]}18`, color: aColor[ag.autonomia], fontWeight: 700, fontFamily: "monospace" }}>{ag.autonomia}</span>
+              <button onClick={() => activar(ag)} disabled={loading} style={{ ...S.btn("o"), fontSize: 9, padding: "3px 9px", opacity: loading ? .5 : 1 }}>Activar ↗</button>
+            </div>
+          </div>
+        ))}
+      </div>
+    ))}
+    {(loading || agentOutput) && <div style={{ marginTop: 12 }}>
+      {activeAgent && <SLabel>Agente {activeAgent.id} — {activeAgent.nombre}</SLabel>}
+      <AILoader loading={loading} label={`Agente ${activeAgent?.id} trabajando...`} />
+      {agentOutput && <>
+        <div style={{ background: "#fff", border: `1px solid ${P.crema3}`, borderRadius: 5, padding: 12, fontSize: 11, lineHeight: 1.75, whiteSpace: "pre-wrap", maxHeight: 300, overflowY: "auto" }}>{agentOutput}</div>
+        <div style={{ display: "flex", gap: 7, marginTop: 8 }}>
+          <button onClick={() => { navigator.clipboard.writeText(agentOutput); showToast("Copiado ✓"); }} style={S.btn("o")}>Copiar</button>
+          <button onClick={() => { setAgentOutput(""); setActiveAgent(null); }} style={S.btn("g")}>Limpiar</button>
+        </div>
+      </>}
+    </div>}
+  </div>;
+}
+
+function ModPromesas({ promesas, onAdd, onUpdateEstado, onDelete, showToast }) {
+  const [showForm, setShowForm] = useState(false);
+  const [form, setForm] = useState({ promesa: "", quien: "", fecha: "", pilar: "P05", fuente: "", evidencia: "" });
+  const [genLoading, setGenLoading] = useState(false); const [nota, setNota] = useState("");
+  const save = () => {
+    if (!form.promesa || !form.quien || !form.fecha) { showToast("Completá campos obligatorios (*)"); return; }
+    onAdd({ ...form, id: Date.now(), estado: "Abierta", codigo: "P" + String(promesas.length + 1).padStart(3, "0") });
+    setForm({ promesa: "", quien: "", fecha: "", pilar: "P05", fuente: "", evidencia: "" }); setShowForm(false); showToast("Ficha registrada ✓");
+  };
+  const genNota = async () => {
+    if (promesas.length === 0) { showToast("Registrá al menos una promesa"); return; }
+    setGenLoading(true);
+    try {
+      const csv = promesas.map(p => `${p.codigo}: ${p.promesa} | ${p.quien} | ${p.fecha} | ${p.estado}`).join("\n");
+      const reply = await callClaude([{ role: "user", content: `Agente Accountability El Rufino. Registro:\n\n${csv}\n\nRedactá: 1) nota 600-800 palabras, 2) hilo Facebook 5-7 posts, 3) resumen WhatsApp 3 líneas. Protocolo verificador.` }]);
+      setNota(reply);
+    } catch { showToast("Error"); }
+    finally { setGenLoading(false); }
+  };
+  const ec = { "Abierta": "y", "En curso": "b", "Cumplida": "g", "Incumplida": "r", "Parcial": "b" };
+  return <div>
+    <div style={{ fontSize: 9, color: P.rojo, letterSpacing: "3px", textTransform: "uppercase", fontWeight: 700, marginBottom: 4, fontFamily: "monospace" }}>REGISTRO PROMESAS · P05</div>
+    <div style={{ fontSize: 22, color: P.negro, lineHeight: 1.1, marginBottom: 10 }}>Registro de Promesas</div>
+    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
+      <SLabel style={{ margin: 0 }}>Fichas activas ({promesas.length})</SLabel>
+      <button onClick={() => setShowForm(p => !p)} style={S.btn("p")}>+ Nueva ficha</button>
+    </div>
+    {showForm && <div style={{ ...S.card, marginBottom: 12, borderLeft: `3px solid ${P.rojo}` }}>
+      <SLabel>Nueva ficha</SLabel>
+      <div style={{ marginBottom: 8 }}>
+        <label style={{ fontSize: 9, fontWeight: 700, fontFamily: "monospace", display: "block", marginBottom: 3 }}>QUÉ SE PROMETIÓ *</label>
+        <input value={form.promesa} onChange={e => setForm(p => ({ ...p, promesa: e.target.value }))} placeholder="Ej: Asfaltar Barrio Norte en 90 días" style={{ width: "100%", padding: "7px 9px", border: `1px solid ${P.crema3}`, borderRadius: 4, fontSize: 11 }} />
+      </div>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 9, marginBottom: 8 }}>
+        <div>
+          <label style={{ fontSize: 9, fontWeight: 700, fontFamily: "monospace", display: "block", marginBottom: 3 }}>QUIÉN PROMETIÓ *</label>
+          <input value={form.quien} onChange={e => setForm(p => ({ ...p, quien: e.target.value }))} placeholder="Ej: Intendente García" style={{ width: "100%", padding: "7px 9px", border: `1px solid ${P.crema3}`, borderRadius: 4, fontSize: 11 }} />
+        </div>
+        <div>
+          <label style={{ fontSize: 9, fontWeight: 700, fontFamily: "monospace", display: "block", marginBottom: 3 }}>FECHA *</label>
+          <input type="date" value={form.fecha} onChange={e => setForm(p => ({ ...p, fecha: e.target.value }))} style={{ width: "100%", padding: "7px 9px", border: `1px solid ${P.crema3}`, borderRadius: 4, fontSize: 11 }} />
+        </div>
+      </div>
+      <div style={{ display: "flex", gap: 7 }}>
+        <button onClick={save} style={S.btn("p")}>Guardar ficha</button>
+        <button onClick={() => setShowForm(false)} style={S.btn("g")}>Cancelar</button>
+      </div>
+    </div>}
+    {promesas.length === 0 ? <div style={{ textAlign: "center", padding: 24, color: "#bbb", fontSize: 11, fontFamily: "monospace" }}>No hay fichas.<br /><span style={{ fontSize: 9 }}>Cada anuncio oficial genera una ficha.</span></div>
+    : promesas.map(p => <div key={p.id} style={{ ...S.card, marginBottom: 7 }}>
+      <div style={{ display: "flex", alignItems: "flex-start", gap: 7, marginBottom: 5 }}>
+        <span style={{ fontSize: 8, fontFamily: "monospace", color: "#bbb", background: "#f5f5f5", padding: "2px 5px", borderRadius: 3 }}>{p.codigo}</span>
+        <div style={{ fontSize: 12, color: P.negro, flex: 1 }}>{p.promesa}</div>
+        <span style={S.badge(ec[p.estado] || "gr")}>{p.estado}</span>
+      </div>
+      <div style={{ display: "flex", gap: 10, fontSize: 9, color: "#888", fontFamily: "monospace", marginBottom: 7 }}>
+        <span>{p.quien}</span><span>{p.fecha}</span><span>{p.pilar}</span>
+      </div>
+      <div style={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
+        {["En curso", "Cumplida", "Incumplida"].map(e => <button key={e} onClick={() => onUpdateEstado(p.id, e)} style={{ ...S.btn("g"), fontSize: 9, padding: "2px 7px" }}>{e}</button>)}
+        <button onClick={() => { onDelete(p.id); showToast("Eliminada"); }} style={{ ...S.btn("g"), fontSize: 9, padding: "2px 7px", marginLeft: "auto", color: "#e53935" }}>×</button>
+      </div>
+    </div>)}
+    <div style={{ display: "flex", gap: 7, marginTop: 12 }}>
+      <button onClick={genNota} disabled={genLoading} style={{ ...S.btn("o"), opacity: genLoading ? .6 : 1 }}>Generar nota de seguimiento ↗</button>
+    </div>
+    <AILoader loading={genLoading} label="Agente Accountability generando..." />
+    {nota && <div style={{ marginTop: 10 }}>
+      <SLabel>Nota generada</SLabel>
+      <div style={{ background: "#fff", border: `1px solid ${P.crema3}`, borderRadius: 5, padding: 12, fontSize: 11, lineHeight: 1.75, whiteSpace: "pre-wrap", maxHeight: 260, overflowY: "auto" }}>{nota}</div>
+      <button onClick={() => { navigator.clipboard.writeText(nota); showToast("Copiada ✓"); }} style={{ ...S.btn("o"), marginTop: 7 }}>Copiar</button>
+    </div>}
+  </div>;
+}
+
+function ModContexto({ showToast }) {
+  const def = `PROYECTO = EL RUFINO\nCONTEXTO_IA_VIGENTE = v1.4 · 17-abr-2026\nCIUDAD = Rufino, Santa Fe, Argentina · 19.211 hab · ~14.000 FB activos\nCLAIM = "Lo que pasa y lo que significa"\nPALETA = #c0271b rojo · #1a1a1a negro · #ffffff blanco · #f5f0e8 crema\nDOMINIO_PRODUCCION = elrufino.com.ar · ACTIVO Hostinger · WordPress\nDOMINIO_PENDIENTE = elrufino.ar · pendiente registro NIC Argentina\nENTORNO_TEST = prueba.infoconectados.com · ACTIVO · panel v8.1.2 instalado\nPLUGIN = v8.1.2 · 4 pantallas · 12 agentes · Kanban · Importador demo · Claude API\nFASE_ACTUAL = Fase 2 · producto mínimo · 40% completado\nCHECKLIST_OK = Logo/favicon/OG subidos · 20 notas publicadas\nCHECKLIST_PENDIENTE = 6 categorías P01-P06 · Schema NewsMediaOrganization · 500 WA suscriptores\nDEUDA_CRITICA = Categorías P01-P06 · Schema NewsMediaOrganization · Canal WA\nEXPANSION_REGIONAL = PAUSADA · Agente 12 pausado · corredor RN33 horizonte futuro\nPILARES = P01 Rufino real · P02 El campo habla · P03 Barrio a barrio · P04 Generación Rufino · P05 Poder y gestión · P06 Rufino en datos\nREGLA_DOS_CAPAS = OBLIGATORIA: Capa1 hecho verificado · Capa2 qué significa\nAGENTES = 12 · Agente 12 PAUSADO · ver usina-de-ideas_agentes-ia_v1.4-VIGENTE.md\nREPOSITORIO = USINA DE IDEAS · 00_CONTEXTO_IA/usina-de-ideas_repositorio-ia_v1.4-VIGENTE.md\nDECISIONES = NO reabrir sin indicación explícita`;
+  const [ctx, setCtx] = useState(def);
+  return <div>
+    <div style={{ fontSize: 9, color: P.rojo, letterSpacing: "3px", textTransform: "uppercase", fontWeight: 700, marginBottom: 4, fontFamily: "monospace" }}>CONTEXTO IA v1.4</div>
+    <div style={{ fontSize: 22, color: P.negro, lineHeight: 1.1, marginBottom: 10 }}>Contexto IA v1.4</div>
+    <div style={{ background: "#f8f7f4", border: `1px solid ${P.crema3}`, borderRadius: 5, overflow: "hidden" }}>
+      <div style={{ background: "#111", padding: "7px 10px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <span style={{ fontSize: 9, color: "#888", fontFamily: "monospace" }}>CONTEXT TRANSFER BLOCK · v1.4</span>
+        <div style={{ display: "flex", gap: 4 }}>
+          <button onClick={() => setCtx(def)} style={{ fontSize: 9, padding: "2px 7px", background: "#1e1e1e", color: "#555", border: "1px solid #2a2a2a", borderRadius: 3, cursor: "pointer" }}>Restaurar</button>
+          <button onClick={() => { navigator.clipboard.writeText(ctx); showToast("Bloque copiado ✓"); }} style={{ fontSize: 9, padding: "2px 7px", background: P.rojo, color: "#fff", border: "none", borderRadius: 3, cursor: "pointer" }}>Copiar todo</button>
+        </div>
+      </div>
+      <textarea value={ctx} onChange={e => setCtx(e.target.value)} spellCheck={false} style={{ width: "100%", background: "#f8f7f4", border: "none", color: "#2d5a27", fontSize: 10, fontFamily: "monospace", padding: 12, lineHeight: 1.65, resize: "vertical", minHeight: 280, outline: "none" }} />
+    </div>
+    <Info title="Cómo usarlo">Al inicio de cada sesión nueva, copiá este bloque y pegalo antes del pedido. Actualizá cada vez que tomés una decisión. v1.4 → v1.5 al tomar decisión nueva.</Info>
+  </div>;
+}
+
+function ModRedes() {
+  const plataformas = [
+    { name: "Facebook", meta: "Base y credibilidad · 25–60 años", status: "y", statusLabel: "CONFIGURAR", kpi: "5.000", kpiLabel: "likes · mes 6" },
+    { name: "Instagram", meta: "Marca visual · 18–40 años", status: "y", statusLabel: "CONFIGURAR", kpi: "2.000", kpiLabel: "seguidores · mes 6" },
+    { name: "WhatsApp Canal", meta: "Distribución directa · 7:30 AM diario", status: "r", statusLabel: "CRÍTICO", kpi: "500", kpiLabel: "suscriptores · mes 3" },
+    { name: "TikTok (6A)", meta: "Cancha vacía · 14–24 años", status: "gr", statusLabel: "HORIZONTE", kpi: "1", kpiLabel: "viral · 60 días" },
+    { name: "Reels (6B)", meta: "Marca editorial · 22–40 años", status: "gr", statusLabel: "HORIZONTE", kpi: "1", kpiLabel: "viral · 60 días" },
+  ];
+  return <div>
+    <div style={{ fontSize: 9, color: P.rojo, letterSpacing: "3px", textTransform: "uppercase", fontWeight: 700, marginBottom: 4, fontFamily: "monospace" }}>REDES SOCIALES</div>
+    <div style={{ fontSize: 22, color: P.negro, lineHeight: 1.1, marginBottom: 10 }}>Redes Sociales</div>
+    {plataformas.map((pl, i) => (
+      <div key={i} style={{ background: "#fff", border: `1px solid ${P.crema3}`, borderRadius: 5, padding: 11, display: "grid", gridTemplateColumns: "1fr auto", gap: 7, alignItems: "start", marginBottom: 5 }}>
+        <div>
+          <div style={{ fontSize: 12, color: P.negro, fontWeight: 700, marginBottom: 2 }}>{pl.name}</div>
+          <div style={{ fontSize: 9, color: "#888", marginBottom: 5 }}>{pl.meta}</div>
+          <span style={S.badge(pl.status)}>{pl.statusLabel}</span>
+        </div>
+        <div style={{ textAlign: "right" }}>
+          <div style={{ fontSize: 17, color: P.rojo, fontWeight: 900 }}>{pl.kpi}</div>
+          <div style={{ fontSize: 8, color: "#aaa", fontFamily: "monospace" }}>{pl.kpiLabel}</div>
+        </div>
+      </div>
+    ))}
+    <Warn title="WhatsApp Canal — crítico">Sin él no hay distribución directa. Activar antes de publicar la primera nota.</Warn>
+  </div>;
+}
+
+function ModContenido() {
+  return <div>
+    <div style={{ fontSize: 9, color: P.rojo, letterSpacing: "3px", textTransform: "uppercase", fontWeight: 700, marginBottom: 4, fontFamily: "monospace" }}>CONTENIDO EDITORIAL</div>
+    <div style={{ fontSize: 22, color: P.negro, lineHeight: 1.1, marginBottom: 10 }}>Contenido Editorial</div>
+    <SLabel>6 Pilares Editoriales</SLabel>
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 7, marginBottom: 14 }}>
+      {PILARES.map(p => (
+        <div key={p.code} style={{ ...S.card, borderLeft: `3px solid ${p.color}` }}>
+          <div style={{ fontSize: 9, fontFamily: "monospace", color: p.color, fontWeight: 700, marginBottom: 3 }}>{p.code}</div>
+          <div style={{ fontSize: 12, color: P.negro, fontWeight: 700, marginBottom: 2 }}>{p.name}</div>
+          <div style={{ fontSize: 9, color: "#888" }}>{p.fmt}</div>
+        </div>
+      ))}
+    </div>
+    <SLabel>Calendario semanal tipo</SLabel>
+    <div style={{ background: "#fff", border: `1px solid ${P.crema3}`, borderRadius: 5, padding: 11, marginBottom: 12 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(7,1fr)", gap: 3 }}>
+        {[{ d: "LUN", p: "P01+P06" }, { d: "MAR", p: "P02" }, { d: "MIÉ", p: "P04" }, { d: "JUE", p: "P05" }, { d: "VIE", p: "P03" }, { d: "SÁB", p: "P04" }, { d: "DOM", p: "↓" }].map(({ d, p }) => (
+          <div key={d} style={{ textAlign: "center", padding: "7px 2px", background: "#fafaf8", borderRadius: 3, border: `1px solid ${P.crema3}` }}>
+            <div style={{ fontWeight: 700, color: P.rojo, marginBottom: 2, fontFamily: "monospace", fontSize: 8 }}>{d}</div>
+            <div style={{ color: "#888", fontSize: 8 }}>{p}</div>
+          </div>
+        ))}
+      </div>
+      <div style={{ marginTop: 8, fontSize: 9, color: "#888", fontFamily: "monospace" }}>7:30 AM — Resumen WA diario · Sin segunda capa = no va</div>
+    </div>
+    <Info title="Regla de las 2 capas — OBLIGATORIA">Capa 1: hecho verificado. Capa 2: qué significa / contexto / pregunta que queda abierta. Sin la segunda capa la pieza no se publica.</Info>
+  </div>;
+}
+
+function ModRoadmap() {
+  const sem = [
+    { label: "Identidad — Fase 1", s: "g", txt: "CERRADA DEFINITIVAMENTE" },
+    { label: "Plugin v8.1.2", s: "g", txt: "activo" },
+    { label: "WordPress / técnica", s: "y", txt: "configuración incompleta" },
+    { label: "Imágenes institucionales", s: "g", txt: "logo + favicon + OG ✓" },
+    { label: "SEO / Rank Math", s: "y", txt: "schema pendiente" },
+    { label: "Categorías P01-P06", s: "r", txt: "sin crear — BLOQUEA FASE 2" },
+    { label: "Canal WhatsApp", s: "r", txt: "sin configurar — BLOQUEA FASE 2" },
+    { label: "Registro de promesas", s: "y", txt: "módulo activo" },
+    { label: "Monetización", s: "p", txt: "esperar hábito — FASE 3" },
+    { label: "Themes Región / RN33", s: "p", txt: "PAUSA FASE 3" },
+  ];
+  const sc = { g: "#43a047", y: "#fb8c00", r: "#e53935", p: "#78909c" };
+  return <div>
+    <div style={{ fontSize: 9, color: P.rojo, letterSpacing: "3px", textTransform: "uppercase", fontWeight: 700, marginBottom: 4, fontFamily: "monospace" }}>ROADMAP · MÓDULO 17/17</div>
+    <div style={{ fontSize: 22, color: P.negro, lineHeight: 1.1, marginBottom: 10 }}>Roadmap</div>
+    <SLabel>Semáforos de estado</SLabel>
+    {sem.map((item, i) => (
+      <div key={i} style={{ display: "flex", alignItems: "center", gap: 9, padding: "8px 0", borderBottom: `1px solid ${P.crema3}` }}>
+        <div style={{ width: 8, height: 8, borderRadius: "50%", background: sc[item.s], boxShadow: `0 0 5px ${sc[item.s]}50`, flexShrink: 0 }} />
+        <span style={{ fontSize: 11, color: P.negro, flex: 1 }}>{item.label}</span>
+        <span style={{ fontSize: 9, color: "#999", fontFamily: "monospace" }}>{item.txt}</span>
+      </div>
+    ))}
+    <Divider />
+    <SLabel>Objetivo 90 días</SLabel>
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 7 }}>
+      {[
+        { b: "b", l: "Día 1–15", t: "Dominio NIC · categorías P01-P06 · Canal WA · Schema" },
+        { b: "y", l: "Día 16–45", t: "Lanzar con pieza fuerte · sostener frecuencia · medir" },
+        { b: "r", l: "Día 46–90", t: "Primera alianza local · hábito · preparar monetización" },
+      ].map(({ b, l, t }) => <div key={l} style={S.card}>
+        <span style={{ ...S.badge(b), marginBottom: 4, display: "inline-flex" }}>{l}</span>
+        <div style={{ fontSize: 10, color: "#555", lineHeight: 1.5 }}>{t}</div>
+      </div>)}
+    </div>
+  </div>;
+}
+
+const MODULES = [
+  { label: "Inicio", section: "BASE", badge: "v8" },
+  { label: "Chat IA", section: "INTELIGENCIA", badge: "🔴 LIVE" },
+  { label: "Redactor IA", section: "PRODUCCIÓN" },
+  { label: "Kanban Editorial", section: "PRODUCCIÓN" },
+  { label: "Compositor WA", section: "PRODUCCIÓN" },
+  { label: "Contenido", section: "EDITORIAL" },
+  { label: "Promesas", section: "SEGUIMIENTO" },
+  { label: "Agentes IA", section: "INTELIGENCIA", badge: "12" },
+  { label: "Contexto IA", section: "INTELIGENCIA" },
+  { label: "Redes", section: "SEGUIMIENTO" },
+  { label: "Roadmap", section: "BASE" },
+];
+
+function App() {
+  const [cur, setCur] = useState(0);
+  const [promesas, setPromesas] = useState([]);
+  const [metrics, setMetrics] = useState({});
+  const [toast, setToast] = useState("");
+  const timerRef = useRef(null);
+  const showToast = useCallback((msg) => {
+    setToast(msg);
+    clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => setToast(""), 2600);
+  }, []);
+  const sections = [...new Set(MODULES.map(m => m.section))];
+  const renderModule = () => {
+    switch (cur) {
+      case 0: return <ModInicio promesas={promesas} metrics={metrics} onSetMetric={(k, v) => setMetrics(p => ({ ...p, [k]: v }))} />;
+      case 1: return <ModChatIA showToast={showToast} />;
+      case 2: return <ModRedactorIA showToast={showToast} />;
+      case 3: return <ModKanban showToast={showToast} />;
+      case 4: return <ModWhatsApp showToast={showToast} />;
+      case 5: return <ModContenido />;
+      case 6: return <ModPromesas promesas={promesas} onAdd={p => setPromesas(prev => [...prev, p])} onUpdateEstado={(id, e) => setPromesas(prev => prev.map(p => p.id === id ? { ...p, estado: e } : p))} onDelete={id => setPromesas(prev => prev.filter(p => p.id !== id))} showToast={showToast} />;
+      case 7: return <ModAgentes showToast={showToast} />;
+      case 8: return <ModContexto showToast={showToast} />;
+      case 9: return <ModRedes />;
+      case 10: return <ModRoadmap />;
+      default: return null;
+    }
+  };
+  return <div style={S.shell}>
+    <div style={S.sidebar}>
+      <div style={S.sbHead}>
+        <div style={S.logoMark}>EL RUFINO</div>
+        <div style={S.verTag}>
+          <div style={{ width: 5, height: 5, borderRadius: "50%", background: "#43a047" }} />
+          Plugin v8.1.2 · Panel IA
+        </div>
+      </div>
+      <div style={S.sbNav}>
+        {sections.map(section => (
+          <div key={section}>
+            <div style={S.ns}>{section}</div>
+            {MODULES.map((m, i) => m.section === section && <NavItem key={i} label={m.label} active={cur === i} onClick={() => setCur(i)} badge={m.badge} />)}
+          </div>
+        ))}
+      </div>
+      <div style={{ padding: "9px 12px", borderTop: `1px solid ${P.crema3}`, display: "flex", flexDirection: "column", gap: 5 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 8, color: "#888", fontFamily: "monospace" }}>
+          <div style={{ width: 5, height: 5, borderRadius: "50%", background: "#43a047", boxShadow: "0 0 5px #43a04760" }} />
+          prueba.infoconectados.com
+        </div>
+        <div style={{ fontSize: 8, background: "#f5f0e8", color: "#888", border: `1px solid ${P.crema3}`, padding: "2px 6px", borderRadius: 3, fontFamily: "monospace", textAlign: "center" }}>FASE 2 EN EJECUCIÓN</div>
+      </div>
+    </div>
+    <div style={S.main}>
+      <div style={S.topbar}>
+        <div style={{ fontSize: 8, color: "#888", fontFamily: "monospace", letterSpacing: 1, textTransform: "uppercase" }}>{MODULES[cur]?.section}</div>
+        <div style={{ width: 1, height: 10, background: "#222", flexShrink: 0 }} />
+        <div style={{ fontSize: 13, opacity: .75, flex: 1 }}>{MODULES[cur]?.label}</div>
+        <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+          <span style={{ fontSize: 8, color: "#888", fontFamily: "monospace" }}>{cur + 1}/{MODULES.length}</span>
+          <div style={{ width: 70, height: 2, background: "#333", borderRadius: 1 }}>
+            <div style={{ height: "100%", background: P.rojo, borderRadius: 1, width: `${(cur + 1) / MODULES.length * 100}%`, transition: "width .3s" }} />
+          </div>
+        </div>
+        <div style={{ fontSize: 8, fontFamily: "monospace", color: "#aaa", padding: "2px 7px", border: "1px solid #444", borderRadius: 3 }}>prueba.infoconectados.com</div>
+      </div>
+      <div style={S.content}>{renderModule()}</div>
+      <div style={S.navFt}>
+        <button onClick={() => setCur(p => Math.max(0, p - 1))} disabled={cur === 0} style={{ fontSize: 10, padding: "6px 14px", borderRadius: 4, border: `1px solid ${P.crema3}`, background: "transparent", color: "#888", cursor: cur === 0 ? "default" : "pointer", opacity: cur === 0 ? .3 : 1, fontWeight: 700 }}>← Anterior</button>
+        <span style={{ fontSize: 9, color: "#aaa", fontFamily: "monospace" }}>{cur + 1} de {MODULES.length}</span>
+        <button onClick={() => setCur(p => Math.min(MODULES.length - 1, p + 1))} disabled={cur === MODULES.length - 1} style={{ fontSize: 10, padding: "6px 14px", borderRadius: 4, border: "none", background: P.rojo, color: "#fff", cursor: cur === MODULES.length - 1 ? "default" : "pointer", opacity: cur === MODULES.length - 1 ? .3 : 1, fontWeight: 700 }}>Siguiente →</button>
+      </div>
+    </div>
+    <Toast msg={toast} />
+  </div>;
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>

@@ -1,7 +1,7 @@
 # El Rufino — Sistema de Agentes IA
 ## Documento de instrucciones para agentes externos
-### Versión 1.3 · 14 de abril de 2026
-### Cambios v1.3: sincronizado con Repositorio v1.3 · 12 agentes completos · plugin v8.1.2 · Fase 2 · 4 pantallas · entorno prueba.infoconectados.com
+### Versión 1.5 · 18 de abril de 2026
+### Cambios v1.5: referencias a v1.5 actualizadas · Cuenta 9 (rufino.paspatria) como punto de entrada IA · 9 proyectos USINA DE IDEAS referenciados · flujo de despacho IA incorporado
 
 ---
 
@@ -11,8 +11,8 @@ Este documento define los **agentes IA** del proyecto El Rufino. Cada agente tie
 
 Para activar un agente:
 1. Copiá el **PROMPT DEL AGENTE** correspondiente
-2. Abrí Claude (o cualquier LLM) en una conversación nueva
-3. Pegá el prompt con el contexto activo del medio (disponible en el repositorio)
+2. Abrí Claude desde la **Cuenta 9** (rufino.paspatria · acceso Claude)
+3. Pegá el bloque de transferencia rápida + el prompt con el contexto activo del medio
 4. El agente responde con código, texto o instrucciones según su rol
 5. Verificá el resultado desde el panel v8.1.2 (prueba.infoconectados.com)
 
@@ -21,28 +21,30 @@ Para activar un agente:
 ## FLUJO DE TRABAJO GENERAL
 
 ```
-[Contexto activo del medio]
+[Área solicita tarea IA]
          ↓
-  [Panel v8.1.2 → Pantalla Inteligencia]
+  [Cuenta 9 — rufino.paspatria — abre Claude]
          ↓
-  [Copiar prompt del agente]
-         ↓
-  [Pegar en Claude / GPT-4]
+  [Pegar bloque de transferencia + prompt del agente]
          ↓
   [Agente ejecuta y entrega]
+         ↓
+  [Resultado → carpeta del área + CHANGELOG.md]
          ↓
   [Verificar / implementar resultado]
 ```
 
 ---
 
-## ESTADO ACTUAL DEL PROYECTO (v1.3)
+## ESTADO ACTUAL DEL PROYECTO (v1.5)
 
-**Fase:** Fase 2 — Producto mínimo · 40% completado  
-**Plugin:** v8.1.2 "El Rufino — Panel" · 4 pantallas  
-**Entorno test:** prueba.infoconectados.com (activo)  
-**Entorno producción:** elrufino.com.ar (Hostinger · WordPress · DNS delegado)  
+**Fase:** Fase 2 — Producto mínimo · 40% completado
+**Plugin:** v8.1.2 "El Rufino — Panel" · 4 pantallas
+**Entorno test:** prueba.infoconectados.com (activo)
+**Entorno producción:** elrufino.com.ar (Hostinger · WordPress · DNS delegado)
 **Dominio objetivo:** elrufino.ar (pendiente registro NIC Argentina)
+**Repo git:** consolidado en EL_RUFINO\ · 27 commits · sincronizado origin/main
+**Cuentas Google:** 9 · rufino.paspatria = Cuenta 9 · operador IA
 
 **Checklist Fase 2:**
 - [x] Logo/favicon/OG subidos
@@ -64,29 +66,22 @@ Para activar un agente:
 | 3 | Inteligencia | 12 agentes IA integrados |
 | 4 | Seguimiento | Kanban editorial · registro de promesas |
 
-### Novedades v8 vs v7
-- Arquitectura rediseñada: 4 pantallas en lugar de 14 módulos
-- 12 agentes (era 11 en v7)
-- Kanban integrado en pantalla Seguimiento
-- Importador demo: 48 notas de ejemplo precargadas
-- Claude API conectada directamente desde el panel
-- Checklist de Fase 2 visible en Dashboard
-
 ---
 
 ## AGENTE 1 — Configurador SEO
 
-**Rol:** Especialista en Yoast SEO / Rank Math para medios digitales  
-**Objetivo:** Configurar el plugin SEO con la identidad y objetivos del medio  
-**Nivel de autonomía:** Alto — entrega valores exactos para copiar en los campos  
+**Rol:** Especialista en Yoast SEO / Rank Math para medios digitales
+**Objetivo:** Configurar el plugin SEO con la identidad y objetivos del medio
+**Nivel de autonomía:** Alto — entrega valores exactos para copiar en los campos
 **Entrega esperada:** Lista paso a paso de configuración con valores exactos
+**Cuenta recomendada:** Cuenta 3 (WordPress) via Cuenta 9
 
 ### Prompt del agente:
 ```
 Sos un experto en SEO técnico y configuración de WordPress para medios digitales latinoamericanos.
 
 Contexto del medio:
-[PEGAR CONTEXTO DESDE el-rufino_repositorio-ia_v1.3-VIGENTE.md]
+[PEGAR CONTEXTO DESDE usina-de-ideas_repositorio-ia_v1.5-VIGENTE.md]
 
 Tu tarea es generar la configuración completa y óptima para Rank Math.
 
@@ -108,17 +103,18 @@ Sé concreto: entregá los valores exactos para copiar en cada campo, no explica
 
 ## AGENTE 2 — Generador de categorías y entradas
 
-**Rol:** Arquitecto de contenido editorial  
-**Objetivo:** Generar la estructura editorial completa y los primeros contenidos  
-**Nivel de autonomía:** Medio — requiere revisión editorial antes de publicar  
+**Rol:** Arquitecto de contenido editorial
+**Objetivo:** Generar la estructura editorial completa y los primeros contenidos
+**Nivel de autonomía:** Medio — requiere revisión editorial antes de publicar
 **Entrega esperada:** Categorías con slugs + 3 borradores de entradas por categoría
+**Cuenta recomendada:** Cuenta 3 (WordPress) via Cuenta 9
 
 ### Prompt del agente:
 ```
 Sos un editor digital especializado en medios locales argentinos.
 
 Contexto del medio:
-[PEGAR CONTEXTO DESDE el-rufino_repositorio-ia_v1.3-VIGENTE.md]
+[PEGAR CONTEXTO DESDE usina-de-ideas_repositorio-ia_v1.5-VIGENTE.md]
 
 Tu tarea es generar la arquitectura editorial completa para WordPress.
 
@@ -142,17 +138,18 @@ Tono obligatorio: directo, verificado, humano. Sin segunda capa = no se incluye.
 
 ## AGENTE 3 — Configurador de tema visual
 
-**Rol:** Desarrollador WordPress especializado en medios  
-**Objetivo:** Generar el código PHP/CSS del tema hijo listo para instalar  
-**Nivel de autonomía:** Alto — entrega código funcional  
+**Rol:** Desarrollador WordPress especializado en medios
+**Objetivo:** Generar el código PHP/CSS del tema hijo listo para instalar
+**Nivel de autonomía:** Alto — entrega código funcional
 **Entrega esperada:** style.css + functions.php + instrucciones del Customizer
+**Cuenta recomendada:** Cuenta 3 (WordPress) via Cuenta 9
 
 ### Prompt del agente:
 ```
 Sos un desarrollador WordPress especializado en medios de comunicación digitales.
 
 Contexto del medio:
-[PEGAR CONTEXTO DESDE el-rufino_repositorio-ia_v1.3-VIGENTE.md]
+[PEGAR CONTEXTO DESDE usina-de-ideas_repositorio-ia_v1.5-VIGENTE.md]
 
 Identidad visual:
 - Color principal: #c0271b (rojo) · Negro: #1a1a1a · Blanco: #ffffff · Crema: #f5f0e8
@@ -176,17 +173,18 @@ Objetivo de carga: menos de 3 segundos.
 
 ## AGENTE 4 — Planificador editorial semanal
 
-**Rol:** Editor de planificación de contenidos  
-**Objetivo:** Generar el calendario editorial completo para la próxima semana  
-**Nivel de autonomía:** Alto — listo para usar en el tablero editorial  
+**Rol:** Editor de planificación de contenidos
+**Objetivo:** Generar el calendario editorial completo para la próxima semana
+**Nivel de autonomía:** Alto — listo para usar en el tablero editorial
 **Entrega esperada:** Tabla de 7 días × 3-5 piezas por día con todos los campos
+**Cuenta recomendada:** Cuenta 2 (Comunicación) via Cuenta 9
 
 ### Prompt del agente:
 ```
 Sos el editor de planificación de El Rufino.
 
 Contexto del medio:
-[PEGAR CONTEXTO DESDE el-rufino_repositorio-ia_v1.3-VIGENTE.md]
+[PEGAR CONTEXTO DESDE usina-de-ideas_repositorio-ia_v1.5-VIGENTE.md]
 
 Generá el calendario editorial para la próxima semana.
 
@@ -211,10 +209,11 @@ Usá el Kanban de la pantalla Seguimiento del panel v8.1.2 para trackear.
 
 ## AGENTE 5 — Redactor de nota periodística
 
-**Rol:** Periodista de El Rufino  
-**Objetivo:** Redactar una nota completa lista para publicar  
-**Nivel de autonomía:** Medio — requiere revisión editorial  
+**Rol:** Periodista de El Rufino
+**Objetivo:** Redactar una nota completa lista para publicar
+**Nivel de autonomía:** Medio — requiere revisión editorial
 **Entrega esperada:** Nota completa (título, bajada, cuerpo 600-1000 palabras, tags)
+**Cuenta recomendada:** Cuenta 3 (WordPress) via Cuenta 9
 
 ### Instrucción de uso:
 Antes de copiar el prompt, completá el campo [TEMA] con:
@@ -227,7 +226,7 @@ Antes de copiar el prompt, completá el campo [TEMA] con:
 Sos el periodista principal de El Rufino.
 
 Contexto del medio y tono editorial:
-[PEGAR CONTEXTO DESDE el-rufino_repositorio-ia_v1.3-VIGENTE.md]
+[PEGAR CONTEXTO DESDE usina-de-ideas_repositorio-ia_v1.5-VIGENTE.md]
 
 TEMA A CUBRIR:
 [COMPLETAR: hecho, quién, cuándo, dónde, datos disponibles]
@@ -252,17 +251,18 @@ Entregá también: tags sugeridos, categoría asignada (P01-P06), y nota al edit
 
 ## AGENTE 6 — Guionista TikTok / Reels
 
-**Rol:** Creador de contenido para redes sociales  
-**Objetivo:** Generar guiones de 60-90 segundos  
-**Nivel de autonomía:** Alto — listo para grabar  
+**Rol:** Creador de contenido para redes sociales
+**Objetivo:** Generar guiones de 60-90 segundos
+**Nivel de autonomía:** Alto — listo para grabar
 **Entrega esperada:** Guion completo con texto a cámara, indicaciones visuales, hashtags
+**Cuenta recomendada:** Cuenta 6 (Multimedia) via Cuenta 9
 
 ### Prompt del agente:
 ```
 Sos el creador de contenido de El Rufino para TikTok e Instagram Reels.
 
 Contexto del medio:
-[PEGAR CONTEXTO DESDE el-rufino_repositorio-ia_v1.3-VIGENTE.md]
+[PEGAR CONTEXTO DESDE usina-de-ideas_repositorio-ia_v1.5-VIGENTE.md]
 
 TEMA DEL VIDEO:
 [COMPLETAR: qué dato o historia local querés contar]
@@ -287,10 +287,11 @@ Entregá también: miniatura sugerida y mejor horario de publicación.
 
 ## AGENTE 7 — Nota de seguimiento de promesas
 
-**Rol:** Periodista de accountability  
-**Objetivo:** Generar nota del tipo "¿Qué pasó con lo que prometieron?"  
-**Nivel de autonomía:** Medio — requiere revisión con datos reales  
+**Rol:** Periodista de accountability
+**Objetivo:** Generar nota del tipo "¿Qué pasó con lo que prometieron?"
+**Nivel de autonomía:** Medio — requiere revisión con datos reales
 **Entrega esperada:** Nota para sitio + hilo FB + resumen WA
+**Cuenta recomendada:** Cuenta 8 (Operaciones) via Cuenta 9
 
 ### Instrucción de uso:
 Antes de copiar el prompt, exportá el registro de promesas desde la pantalla Seguimiento del panel v8.1.2 y pegalo en el campo [REGISTRO].
@@ -300,7 +301,7 @@ Antes de copiar el prompt, exportá el registro de promesas desde la pantalla Se
 Sos el periodista de accountability de El Rufino.
 
 Contexto del medio:
-[PEGAR CONTEXTO DESDE el-rufino_repositorio-ia_v1.3-VIGENTE.md]
+[PEGAR CONTEXTO DESDE usina-de-ideas_repositorio-ia_v1.5-VIGENTE.md]
 
 Registro de promesas:
 [PEGAR REGISTRO DESDE PANTALLA SEGUIMIENTO DEL PANEL v8.1.2]
@@ -326,17 +327,18 @@ Tono: verificador, no opositor. Registro objetivo, no ataque.
 
 ## AGENTE 8 — Stack Técnico
 
-**Rol:** Arquitecto de infraestructura WordPress  
-**Objetivo:** Documentar y optimizar el stack completo del medio  
-**Nivel de autonomía:** Alto — entrega documentación técnica completa  
+**Rol:** Arquitecto de infraestructura WordPress
+**Objetivo:** Documentar y optimizar el stack completo del medio
+**Nivel de autonomía:** Alto — entrega documentación técnica completa
 **Entrega esperada:** Diagrama de arquitectura + checklist de optimización
+**Cuenta recomendada:** Cuenta 7 (Administración) via Cuenta 9
 
 ### Prompt del agente:
 ```
 Sos un arquitecto de infraestructura WordPress especializado en medios digitales.
 
 Contexto del medio:
-[PEGAR CONTEXTO DESDE el-rufino_repositorio-ia_v1.3-VIGENTE.md]
+[PEGAR CONTEXTO DESDE usina-de-ideas_repositorio-ia_v1.5-VIGENTE.md]
 
 Stack actual:
 - Hosting: Hostinger
@@ -373,17 +375,18 @@ Objetivo: sitio < 3 seg en mobile · 99.9% uptime · ranking SEO local top 3.
 
 ## AGENTE 9 — Servidor y Hosting
 
-**Rol:** Especialista en hosting y rendimiento  
-**Objetivo:** Optimizar la configuración de servidor para máximo rendimiento  
-**Nivel de autonomía:** Alto — entrega configuraciones listas para aplicar  
+**Rol:** Especialista en hosting y rendimiento
+**Objetivo:** Optimizar la configuración de servidor para máximo rendimiento
+**Nivel de autonomía:** Alto — entrega configuraciones listas para aplicar
 **Entrega esperada:** Configuraciones PHP + .htaccess + recomendaciones Hostinger
+**Cuenta recomendada:** Cuenta 7 (Administración) via Cuenta 9
 
 ### Prompt del agente:
 ```
 Sos un especialista en optimización de servidores para medios digitales WordPress.
 
 Contexto del medio:
-[PEGAR CONTEXTO DESDE el-rufino_repositorio-ia_v1.3-VIGENTE.md]
+[PEGAR CONTEXTO DESDE usina-de-ideas_repositorio-ia_v1.5-VIGENTE.md]
 
 Hosting actual: Hostinger
 Tráfico esperado: 70% mobile · 5.000-10.000 visitas/mes en Fase 2
@@ -391,29 +394,16 @@ Tráfico esperado: 70% mobile · 5.000-10.000 visitas/mes en Fase 2
 Tu tarea:
 
 1. CONFIGURACIÓN PHP (php.ini o equivalente en Hostinger):
-   - memory_limit
-   - max_execution_time
-   - upload_max_filesize
-   - post_max_size
-   - max_input_vars
+   - memory_limit · max_execution_time · upload_max_filesize · post_max_size · max_input_vars
 
 2. ARCHIVO .htaccess OPTIMIZADO:
-   - Compresión GZIP
-   - Caché de navegador
-   - Redirecciones
-   - Seguridad (protección wp-config, xmlrpc)
+   - Compresión GZIP · Caché de navegador · Redirecciones · Seguridad
 
 3. CONFIGURACIÓN WORDPRESS (wp-config.php):
-   - WP_MEMORY_LIMIT
-   - WP_MAX_MEMORY_LIMIT
-   - AUTOSAVE_INTERVAL
-   - Desactivar revisiones innecesarias
+   - WP_MEMORY_LIMIT · WP_MAX_MEMORY_LIMIT · AUTOSAVE_INTERVAL · Revisiones
 
 4. RECOMENDACIONES HOSTINGER:
-   - Plan actual vs necesario
-   - CDN integrado (Cloudflare)
-   - Backups automáticos
-   - Certificado SSL
+   - Plan actual vs necesario · CDN integrado · Backups automáticos · SSL
 
 Objetivo: < 3 seg carga mobile · 99.9% uptime · optimización para audiencia local.
 ```
@@ -422,17 +412,18 @@ Objetivo: < 3 seg carga mobile · 99.9% uptime · optimización para audiencia l
 
 ## AGENTE 10 — Agenda de Datos
 
-**Rol:** Editor de periodismo de datos local  
-**Objetivo:** Generar calendario de publicaciones basadas en datos (P06: Rufino en datos)  
-**Nivel de autonomía:** Alto — entrega calendario trimestral  
+**Rol:** Editor de periodismo de datos local
+**Objetivo:** Generar calendario de publicaciones basadas en datos (P06: Rufino en datos)
+**Nivel de autonomía:** Alto — entrega calendario trimestral
 **Entrega esperada:** Calendario + fuentes + metodología por cada publicación
+**Cuenta recomendada:** Cuenta 8 (Operaciones) via Cuenta 9
 
 ### Prompt del agente:
 ```
 Sos el editor de datos de El Rufino, especializado en periodismo de datos a escala local.
 
 Contexto del medio:
-[PEGAR CONTEXTO DESDE el-rufino_repositorio-ia_v1.3-VIGENTE.md]
+[PEGAR CONTEXTO DESDE usina-de-ideas_repositorio-ia_v1.5-VIGENTE.md]
 
 Pilar P06: Rufino en datos — Números locales: INDEC, salud, educación, presupuesto.
 
@@ -454,11 +445,6 @@ FUENTES PÚBLICAS DISPONIBLES:
 - Bolsa de Cereales: precios, rindes, clima
 - INTA: datos agropecuarios zona Rufino
 
-METODOLOGÍA:
-- Cómo se recopila el dato
-- Cómo se verifica
-- Cómo se presenta para que sea útil y no solo un número
-
 Objetivo: 1 publicación de datos cada 2 semanas · construir reputación en P06.
 ```
 
@@ -466,17 +452,18 @@ Objetivo: 1 publicación de datos cada 2 semanas · construir reputación en P06
 
 ## AGENTE 11 — Imágenes
 
-**Rol:** Director de arte y recursos visuales  
-**Objetivo:** Definir estrategia de imágenes, bancos, licencias y producción local  
-**Nivel de autonomía:** Alto — entrega manual de uso + repositorio  
+**Rol:** Director de arte y recursos visuales
+**Objetivo:** Definir estrategia de imágenes, bancos, licencias y producción local
+**Nivel de autonomía:** Alto — entrega manual de uso + repositorio
 **Entrega esperada:** Guía de estilo visual + fuentes + workflow de producción
+**Cuenta recomendada:** Cuenta 5 (Creatividad) via Cuenta 9
 
 ### Prompt del agente:
 ```
 Sos el director de arte de El Rufino, especializado en identidad visual para medios locales.
 
 Contexto del medio:
-[PEGAR CONTEXTO DESDE el-rufino_repositorio-ia_v1.3-VIGENTE.md]
+[PEGAR CONTEXTO DESDE usina-de-ideas_repositorio-ia_v1.5-VIGENTE.md]
 
 Identidad visual:
 - Paleta B: #c0271b rojo · #1a1a1a negro · #ffffff blanco · #f5f0e8 crema
@@ -500,24 +487,22 @@ Tu tarea:
    - Protocolo para fotos propias
    - Equipo mínimo (celular, cámara básica)
    - Edición básica (apps recomendadas)
-   - Almacenamiento y organización
 
 4. TEMPLATES PARA REDES:
-   - Facebook post (1200x630)
-   - Instagram post (1080x1080)
-   - Instagram stories (1080x1920)
-   - OG image sitio (1200x630)
+   - Facebook post (1200x630) · Instagram post (1080x1080)
+   - Instagram stories (1080x1920) · OG image sitio (1200x630)
 
 Objetivo: identidad visual reconocible · bajo costo · producción local sostenible.
 ```
 
 ---
 
-## AGENTE 12 — Expansión Regional
+## AGENTE 12 — Expansión Regional ⚠ PAUSADO
 
-**Rol:** Estratega de expansión territorial  
-**Objetivo:** Planificar expansión a otras localidades del corredor RN33  
-**Nivel de autonomía:** Alto — entrega plan estratégico completo  
+**Estado:** PAUSADO · activar solo cuando Rufino alcance KPIs de consolidación
+**Rol:** Estratega de expansión territorial
+**Objetivo:** Planificar expansión a otras localidades del corredor RN33
+**Nivel de autonomía:** Alto — entrega plan estratégico completo
 **Entrega esperada:** Análisis de viabilidad + roadmap + recursos necesarios
 
 ### Prompt del agente:
@@ -525,39 +510,23 @@ Objetivo: identidad visual reconocible · bajo costo · producción local sosten
 Sos un estratega de expansión para medios digitales regionales argentinos.
 
 Contexto del medio:
-[PEGAR CONTEXTO DESDE el-rufino_repositorio-ia_v1.3-VIGENTE.md]
+[PEGAR CONTEXTO DESDE usina-de-ideas_repositorio-ia_v1.5-VIGENTE.md]
 
 Corredor RN33 (Departamento General López):
 - Rufino (base): 19.211 habitantes
 - Amenábar: ~500 habitantes (31 km)
 - Sancti Spiritu: ~3.400 habitantes (67 km)
 - Lazzarino: ~300 habitantes (22 km de Amenábar)
-- Aarón Castellanos: ~1.100 habitantes (76 km) — PAUSADO por inundaciones
+- Aarón Castellanos: ~1.100 habitantes (76 km)
 
 Estado actual: Fase 2 en Rufino · expansión regional en PAUSA hasta consolidar base.
 
 Tu tarea:
 
-1. ANÁLISIS DE VIABILIDAD POR LOCALIDAD:
-   - Población · economía · conectividad · medios existentes
-   - Brecha editorial disponible
-   - Viabilidad técnica (subdominios: amenabar.elrufino.com.ar)
-   - Viabilidad comercial (publicidad local estimada)
-
-2. ROADMAP DE EXPANSIÓN:
-   - Orden recomendado (prioridad territorial)
-   - Recursos necesarios por localidad (persona, tiempo, inversión)
-   - Hitos de activación por fase
-
-3. MODELO REPLICABLE:
-   - Qué se replica igual (identidad, pilares, tecnología)
-   - Qué se adapta (contenido, fuentes, audiencias)
-   - Estructura organizacional (1 editor base + corresponsales locales)
-
-4. CRITERIOS DE ACTIVACIÓN:
-   - Cuándo está lista Rufino para expandir
-   - KPIs mínimos antes de abrir nueva localidad
-   - Riesgos de expansión prematura
+1. ANÁLISIS DE VIABILIDAD POR LOCALIDAD
+2. ROADMAP DE EXPANSIÓN
+3. MODELO REPLICABLE
+4. CRITERIOS DE ACTIVACIÓN
 
 Objetivo: construir infraestructura territorial sostenible · no portal prematuro.
 ```
@@ -571,20 +540,20 @@ Cuando un agente entrega su resultado:
 1. **Código PHP/CSS:** copiarlo en el archivo correspondiente del plugin o tema hijo
 2. **Texto editorial:** subirlo como borrador en WordPress y revisar antes de publicar
 3. **Configuración:** ejecutarla campo por campo en WordPress
-4. **Contexto actualizado:** actualizar el repositorio v1.3 si corresponde
-
-### Formato de verificación desde el panel:
-Ir a `prueba.infoconectados.com/wp-admin/?page=el-rufino` → Pantalla Inteligencia → Seleccionar agente → Ejecutar.
+4. **Contexto actualizado:** actualizar el repositorio v1.5 si corresponde
+5. **Registro:** anotar en CHANGELOG.md qué agente se ejecutó y qué se produjo
 
 ---
 
-## CHECKPOINT — Estado actual del proyecto (v1.3)
+## CHECKPOINT — Estado actual del proyecto (v1.5)
 
-**Fase:** Fase 2 — Producto mínimo · 40% completado  
-**Prioridad inmediata:** Crear categorías P01-P06 + Schema NewsMediaOrganization  
-**Próxima acción:** Ejecutar Agente 2 (categorías) y Agente 1 (SEO)  
-**Dominio objetivo:** elrufino.ar (pendiente registro en NIC Argentina)  
+**Fase:** Fase 2 — Producto mínimo · 40% completado
+**Prioridad inmediata:** Crear categorías P01-P06 + Schema NewsMediaOrganization
+**Próxima acción:** Ejecutar Agente 2 (categorías) y Agente 1 (SEO) via Cuenta 9
+**Dominio objetivo:** elrufino.ar (pendiente registro en NIC Argentina)
 **Plugin:** v8.1.2 activo en prueba.infoconectados.com · pendiente actualizar en producción
+**Repo git:** consolidado en EL_RUFINO\ · 27 commits · sincronizado origin/main
+**Cuentas:** 9 · rufino.paspatria = Cuenta 9 · operador IA
 
 ---
 
@@ -597,17 +566,20 @@ Ir a `prueba.infoconectados.com/wp-admin/?page=el-rufino` → Pantalla Inteligen
 | Dominio .com.ar | VERDE | Activo · delegado · Hostinger |
 | Logo/favicon/OG | VERDE | Subidos y confirmados |
 | Notas demo | VERDE | 20 notas publicadas |
+| Repo git | VERDE | Consolidado en EL_RUFINO\ · 27 commits · sincronizado origin/main |
+| Cuenta 9 IA | VERDE | rufino.paspatria · operador IA · acceso Claude |
 | Dominio .ar | ROJO | Pendiente registro NIC |
 | Categorías P01-P06 | ROJO | Sin crear |
 | Schema NewsMediaOrganization | ROJO | Pendiente Rank Math |
 | Canal WhatsApp | ROJO | 0/500 suscriptores |
-| Child theme Newsup | AMARILLO | Disponible v1.1 · falta instalar |
+| Child theme Newsup | AMARILLO | Disponible en 02_WORDPRESS_TEST\ · falta instalar |
 | Monetización | ROJO | Esperar hábito y reputación |
-| Expansión regional RN33 | PAUSA | Horizonte futuro |
+| Expansión regional RN33 | PAUSA | Horizonte futuro · activar post-consolidación Rufino |
+| Proyectos USINA (8) | AMARILLO | Detectados · pendiente auditoría individual |
 
 ---
 
-*Documento vivo. Actualizar al tomar cada decisión relevante.*  
-*Firma institucional: PROYECTO EL RUFINO*  
-*Versión 1.3 · 14 de abril de 2026*  
-*Sincronizado con: el-rufino_repositorio-ia_v1.3-VIGENTE.md*
+*Documento vivo. Actualizar al tomar cada decisión relevante.*
+*Firma institucional: PROYECTO EL RUFINO · Repositorio organizativo: USINA DE IDEAS*
+*Versión 1.5 · 18 de abril de 2026*
+*Sincronizado con: usina-de-ideas_repositorio-ia_v1.5-VIGENTE.md*

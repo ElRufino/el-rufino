@@ -1,7 +1,7 @@
 # PROMPT MAESTRO — EL RUFINO
 ## Agente de IA · Contexto de transferencia
-### Versión 1.4 · 17 de abril de 2026
-### Cambios v1.4: renombrado repositorio EL RUFINO → USINA DE IDEAS · rutas actualizadas a EL_RUFINO · FASE 3 completada (07_VARIOS_ARCHIVO clasificado · repo git consolidado) · archivos maestros renombrados usina-de-ideas_*
+### Versión 1.5 · 18 de abril de 2026
+### Cambios v1.5: Cuenta 9 agregada (rufino.paspatria · operador IA · acceso Claude) · 9 proyectos USINA DE IDEAS documentados · flujo de despacho IA incorporado · bloque de transferencia actualizado
 
 ---
 
@@ -34,10 +34,12 @@ CHECKLIST_PENDIENTE = 6 categorias P01-P06 · Schema NewsMediaOrganization · 50
 EXPANSION_REGIONAL = horizonte futuro · NO fase activa (corredor RN33 pausado)
 ROLES = funcionales · no cargos rigidos
 NOMBRES = Fabian Longo (El Diferente) · Adriana Gimenez (Voces otra mirada)
-ARCHIVO_CONTEXTO = 00_CONTEXTO_IA/usina-de-ideas_repositorio-ia_v1.4-VIGENTE.md
-ARCHIVO_AGENTES = 00_CONTEXTO_IA/usina-de-ideas_agentes-ia_v1.4-VIGENTE.md
+ARCHIVO_CONTEXTO = 00_CONTEXTO_IA/usina-de-ideas_repositorio-ia_v1.5-VIGENTE.md
+ARCHIVO_AGENTES = 00_CONTEXTO_IA/usina-de-ideas_agentes-ia_v1.5-VIGENTE.md
 DECISIONES = NO reabrir las listadas sin indicacion explicita del usuario
 REPOSITORIO_ORGANIZATIVO = USINA DE IDEAS · F:\HERRAMIENTAS DE IA\PROYECTOS\USINA_DE_IDEAS\
+PROYECTOS_USINA = EL_RUFINO · GESTION_COMERCIAL · SISMUIF · SOCIEDAD_ITALIANA · RADIOTV · DIGESTO · PJ · INFOCONECTADOS · LA_COMUNIDAD_ORGANIZADA
+CUENTAS = 9 · rufino.paspatria = Cuenta 9 · operador IA · acceso Claude · todos los agentes
 ```
 
 ---
@@ -171,8 +173,6 @@ Rufino es una ciudad de 19.211 habitantes (INDEC, 2022) ubicada en el sudoeste d
 - Inteligencia — 12 agentes IA
 - Seguimiento — Kanban + Promesas
 
-**Novedades v8 vs v7:** 4 pantallas en vez de 14 modulos · 12 agentes (era 11) · Kanban integrado · Importador demo (48 notas) · Claude API conectada directamente
-
 **Checklist Fase 2 (estado real desde panel):**
 - [x] Logo/favicon/OG subidos a Media Library
 - [x] 20 notas publicadas (demo)
@@ -186,6 +186,41 @@ Rufino es una ciudad de 19.211 habitantes (INDEC, 2022) ubicada en el sudoeste d
 
 ---
 
+## SISTEMA DE 9 CUENTAS GOOGLE
+
+| # | Email | Rol |
+|---|---|---|
+| 1 | cristianobermeller@gmail.com | HUB MAESTRO — centro neuralgico |
+| 2 | conectadosrufino@gmail.com | Comunicacion y difusion |
+| 3 | Pjrufino.ar@gmail.com | WordPress y contenido editorial |
+| 4 | sbrodriguezrufino@gmail.com | Recursos humanos y coordinacion |
+| 5 | ideassublimadasrufino@gmail.com | Creatividad e identidad visual |
+| 6 | medioelrufino@gmail.com | Prensa y multimedia |
+| 7 | cecsibar@gmail.com | Administracion y legales |
+| 8 | Bosatrabajo.fp@gmail.com | Operaciones y campo |
+| 9 | rufino.paspatria@gmail.com | Operador IA · acceso Claude · todos los agentes |
+
+**Flujo de despacho IA (Cuenta 9):**
+Cualquier area solicita tarea IA → Cuenta 9 abre Claude → pega bloque de transferencia + contexto → ejecuta agente → entrega resultado a carpeta del area → registra en CHANGELOG.md.
+
+---
+
+## PROYECTOS DE USINA DE IDEAS (detectados en auditoria 2026-04-18)
+
+| Proyecto | Items aprox. | Estado |
+|---|---|---|
+| EL_RUFINO | 730 | ACTIVO · documentado v1.5 |
+| GESTION_COMERCIAL | 1.777 | ACTIVO · parcialmente documentado |
+| SISMUIF | 24.335 | ACTIVO · pendiente auditoria |
+| SOCIEDAD_ITALIANA | 6.684 | ACTIVO · pendiente auditoria |
+| RADIOTV | 1.762 | ACTIVO · pendiente auditoria |
+| DIGESTO | 1.751 | ACTIVO · pendiente auditoria |
+| PJ | 197 | ACTIVO · pendiente auditoria |
+| INFOCONECTADOS | 63 | ACTIVO · pendiente auditoria |
+| LA_COMUNIDAD_ORGANIZADA | 9 | ACTIVO · pendiente auditoria |
+
+---
+
 ## SEMAFOROS DE ESTADO
 
 | Eje | Estado | Nota |
@@ -196,6 +231,7 @@ Rufino es una ciudad de 19.211 habitantes (INDEC, 2022) ubicada en el sudoeste d
 | Logo/favicon/OG | VERDE | Subidos (confirmado desde panel) |
 | Notas demo | VERDE | 20 notas publicadas |
 | Repo git | VERDE | Consolidado en EL_RUFINO\ · 27 commits · sincronizado origin/main |
+| Cuenta 9 IA | VERDE | rufino.paspatria · operador IA · acceso Claude |
 | Dominio .ar | ROJO | Pendiente registro NIC |
 | Categorias P01-P06 | ROJO | Sin crear |
 | Schema NewsMediaOrganization | ROJO | Pendiente Rank Math |
@@ -203,6 +239,7 @@ Rufino es una ciudad de 19.211 habitantes (INDEC, 2022) ubicada en el sudoeste d
 | Child theme Newsup | AMARILLO | Archivo disponible · falta instalar |
 | Monetizacion | ROJO | Esperar habito y reputacion |
 | Expansion regional RN33 | PAUSA | Horizonte futuro, no fase activa |
+| Proyectos USINA (8 no-EL_RUFINO) | AMARILLO | Detectados · pendiente auditoria individual |
 
 ---
 
@@ -229,8 +266,9 @@ Rufino es una ciudad de 19.211 habitantes (INDEC, 2022) ubicada en el sudoeste d
 1. Siempre pegar el bloque de transferencia rapida al inicio de cada conversacion nueva
 2. No pedir a la IA que reconstruya contexto: darselo directamente
 3. Versionar este documento cada vez que se toma una decision nueva
-4. Los agentes operativos estan en usina-de-ideas_agentes-ia_v1.4-VIGENTE.md: referenciarlos por numero
-5. El repositorio detallado completo esta en usina-de-ideas_repositorio-ia_v1.4-VIGENTE.md
+4. Los agentes operativos estan en usina-de-ideas_agentes-ia_v1.5-VIGENTE.md: referenciarlos por numero
+5. El repositorio detallado completo esta en usina-de-ideas_repositorio-ia_v1.5-VIGENTE.md
+6. Cuenta 9 (rufino.paspatria) es el punto de entrada al sistema IA para todas las areas
 
 ---
 
@@ -244,6 +282,8 @@ Rufino es una ciudad de 19.211 habitantes (INDEC, 2022) ubicada en el sudoeste d
 | Registrar elrufino.ar en NIC Argentina | Pendiente |
 | Lanzar canal WhatsApp broadcast | Pendiente |
 | Publicar primera nota con segunda capa real | Siguiente paso editorial |
+| Ejecutar limpieza escritorio (script) | Pendiente · mover contraseñas primero |
+| Auditar SISMUIF | Pendiente · prioridad por volumen |
 
 ---
 
@@ -255,9 +295,9 @@ F:\HERRAMIENTAS DE IA\
 ├── PROYECTOS\
 │   ├── EL_RUFINO\                          proyecto editorial
 │   │   ├── 00_CONTEXTO_IA\                 fuente unica de verdad para IAs
-│   │   │   ├── usina-de-ideas_agentes-ia_v1.4-VIGENTE.md
-│   │   │   ├── usina-de-ideas_prompt-maestro_v1.4-VIGENTE.md   este archivo
-│   │   │   └── usina-de-ideas_repositorio-ia_v1.4-VIGENTE.md
+│   │   │   ├── usina-de-ideas_agentes-ia_v1.5-VIGENTE.md
+│   │   │   ├── usina-de-ideas_prompt-maestro_v1.5-VIGENTE.md   este archivo
+│   │   │   └── usina-de-ideas_repositorio-ia_v1.5-VIGENTE.md
 │   │   ├── 01_DOCUMENTOS_VIGENTES\
 │   │   ├── 02_WORDPRESS_TEST\
 │   │   ├── 03_IDENTIDAD_MARCA\
@@ -265,6 +305,14 @@ F:\HERRAMIENTAS DE IA\
 │   │   ├── 05_MATERIAL_HISTORICO\
 │   │   ├── 06_SCRIPTS\
 │   │   └── _ARCHIVO\
+│   ├── GESTION_COMERCIAL\
+│   ├── SISMUIF\                            24.335 items · pendiente auditoria
+│   ├── SOCIEDAD_ITALIANA\                  6.684 items · pendiente auditoria
+│   ├── RADIOTV\                            1.762 items · pendiente auditoria
+│   ├── DIGESTO\                            1.751 items · pendiente auditoria
+│   ├── PJ\                                 197 items · pendiente auditoria
+│   ├── INFOCONECTADOS\                     63 items · pendiente auditoria
+│   ├── LA_COMUNIDAD_ORGANIZADA\            9 items · pendiente auditoria
 │   └── USINA_DE_IDEAS\                     repositorio organizativo de herramientas IA
 │       └── 00_CONTEXTO_IA\
 └── _ARCHIVO\
@@ -284,4 +332,4 @@ We Are Social & Hootsuite. (2024). Digital 2024: Argentina. https://datareportal
 
 Documento vivo. Actualizar al tomar cada decision relevante.
 Firma institucional: PROYECTO EL RUFINO · Repositorio organizativo: USINA DE IDEAS
-Version 1.4 · 17 de abril de 2026
+Version 1.5 · 18 de abril de 2026

@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manual de Identidad · El Rufino</title>
+  <style>
+    :root{
+      --bg:#f6f1e7;
+      --bg-soft:#fbf8f2;
+      --surface:#fffdf9;
+      --surface-2:#efe7d9;
+      --line:#ddd3c3;
+      --text:#1f2a30;
+      --muted:#5d676d;
+      --brand:#b55233;
+      --brand-2:#8b3d24;
+      --route:#2f6484;
+      --field:#617a45;
+      --warn:#c58a2b;
+      --alert:#b23a35;
+      --rain:#afc6d6;
+      --shadow:0 10px 30px rgba(39,46,51,.08);
+      --radius:18px;
+      --radius-sm:12px;
+      --sidebar:290px;
+      --serif: Georgia, "Times New Roman", serif;
+      --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:var(--sans);
+      color:var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(181,82,51,.08), transparent 22%),
+        linear-gradient(180deg, #fbf8f2 0%, #f6f1e7 100%);
+    }
+
+    .app{
+      display:grid;
+      grid-template-columns: var(--sidebar) 1fr;
+      min-height:100vh;
+    }
+
+    .sidebar{
+      position:sticky;
+      top:0;
+      height:100vh;
+      padding:28px 22px;
+      border-right:1px solid var(--line);
+      background:rgba(251,248,242,.9);
+      backdrop-filter: blur(10px);
+    }
+
+    .brandbox{
+      background:var(--surface);
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:18px;
+      box-shadow:var(--shadow);
+      margin-bottom:18px;
+    }
+    .eyebrow{
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      color:var(--brand);
+      font-weight:700;
+      margin-bottom:8px;
+    }
+    .logo-mark{
+      display:flex;
+      align-items:baseline;
+      gap:8px;
+      margin-bottom:8px;
+    }
+    .logo-el{font-size:22px;font-weight:700;color:var(--muted)}
+    .logo-rufino{
+      font-family:var(--serif);
+      font-weight:700;
+      font-size:42px;
+      line-height:1;
+      letter-spacing:-.03em;
+      color:var(--text);
+    }
+    .tagline{
+      font-size:14px;
+      line-height:1.5;
+      color:var(--muted);
+      margin:0;
+    }
+
+    .microgrid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin:16px 0 0;
+    }
+    .microcard{
+      background:var(--surface-2);
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:10px;
+    }
+    .microcard strong{display:block;font-size:12px}
+    .microcard span{font-size:11px;color:var(--muted)}
+
+    nav a{
+      display:block;
+      padding:11px 12px;
+      margin:4px 0;
+      border-radius:12px;
+      text-decoration:none;
+      color:var(--text);
+      font-weight:600;
+      font-size:14px;
+    }
+    nav a:hover, nav a.active{
+      background:var(--surface);
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+    }
+
+    .sidebar-note{
+      margin-top:18px;
+      padding:14px;
+      border-radius:14px;
+      background:#f1e9dc;
+      border:1px solid var(--line);
+      font-size:13px;
+      line-height:1.55;
+      color:var(--muted);
+    }
+
+    .main{
+      padding:28px;
+    }
+
+    .hero{
+      background:linear-gradient(135deg, rgba(255,253,249,.98), rgba(239,231,217,.88));
+      border:1px solid var(--line);
+      border-radius:28px;
+      padding:32px;
+      box-shadow:var(--shadow);
+      margin-bottom:22px;
+      position:relative;
+      overflow:hidden;
+    }
+    .hero::after{
+      content:"";
+      position:absolute;
+      right:-80px;
+      top:-60px;
+      width:280px;
+      height:280px;
+      border-radius:999px;
+      background:radial-gradient(circle, rgba(47,100,132,.13), transparent 62%);
+      pointer-events:none;
+    }
+    .hero h1{
+      margin:0 0 10px;
+      font-family:var(--serif);
+      font-size:56px;
+      line-height:.98;
+      letter-spacing:-.04em;
+      max-width:850px;
+    }
+    .hero h1 .accent{color:var(--brand)}
+    .hero p{
+      max-width:850px;
+      font-size:18px;
+      line-height:1.65;
+      color:var(--muted);
+      margin:0;
+    }
+
+    .strip{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:12px;
+      margin-top:24px;
+    }
+    .strip .item{
+      background:var(--surface);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:14px;
+    }
+    .strip .n{
+      display:block;
+      font-family:var(--serif);
+      font-size:28px;
+      line-height:1;
+      margin-bottom:4px;
+    }
+    .strip .l{font-size:13px;color:var(--muted)}
+
+    section{
+      background:var(--surface);
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:26px;
+      box-shadow:var(--shadow);
+      margin-bottom:20px;
+      scroll-margin-top:20px;
+    }
+
+    .section-top{
+      display:flex;
+      justify-content:space-between;
+      gap:20px;
+      align-items:flex-start;
+      margin-bottom:18px;
+    }
+    .section-top h2{
+      margin:0;
+      font-family:var(--serif);
+      font-size:34px;
+      letter-spacing:-.03em;
+    }
+    .section-top p{
+      max-width:740px;
+      margin:8px 0 0;
+      font-size:16px;
+      line-height:1.65;
+      color:var(--muted);
+    }
+
+    .badge-row{display:flex;flex-wrap:wrap;gap:8px}
+    .badge{
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.02em;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:var(--bg-soft);
+    }
+
+    .grid-2{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+
+    .card{
+      background:var(--bg-soft);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:18px;
+      height:100%;
+    }
+    .card h3,.card h4{margin:0 0 8px}
+    .card p{margin:0;color:var(--muted);line-height:1.6}
+
+    .decision{
+      border-left:4px solid var(--brand);
+      background:#fbf6ee;
+    }
+    .decision .label{
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.13em;
+      color:var(--brand);
+      font-weight:800;
+      margin-bottom:8px;
+    }
+
+    .logo-demo{
+      background:linear-gradient(180deg,#fffdf9,#f5efe4);
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:22px;
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+      min-height:100%;
+    }
+    .logo-lockup{display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap}
+    .logo-lockup .el{font-size:18px;font-weight:700;color:var(--muted)}
+    .logo-lockup .rufino{font-family:var(--serif);font-size:54px;font-weight:700;line-height:.9}
+    .subbrand{
+      display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;
+      padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:#fff;
+      width:max-content;font-size:13px;font-weight:700;color:var(--route)
+    }
+    .route-line{width:32px;height:3px;border-radius:99px;background:linear-gradient(90deg,var(--brand),var(--route));display:inline-block}
+
+    .palette-swatch{
+      border-radius:18px;
+      border:1px solid rgba(0,0,0,.06);
+      padding:14px;
+      min-height:120px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.15);
+    }
+    .palette-swatch strong{font-size:14px}
+    .palette-swatch span{font-size:12px;opacity:.9}
+
+    .type-specimen{
+      display:grid;
+      gap:14px;
+    }
+    .spec-line{
+      border:1px solid var(--line);
+      background:var(--bg-soft);
+      border-radius:16px;
+      padding:16px;
+    }
+    .spec-line .meta{font-size:12px;color:var(--muted);margin-bottom:6px;font-weight:700}
+
+    .voice-example{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+    }
+    .voice-box{
+      border-radius:16px;
+      padding:16px;
+      border:1px solid var(--line);
+      min-height:140px;
+    }
+    .voice-box.no{background:#fbf0ef;border-color:#e7c5c2}
+    .voice-box.yes{background:#eef5f8;border-color:#c4d8e4}
+    .voice-box .label{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+    .voice-box.no .label{color:var(--alert)}
+    .voice-box.yes .label{color:var(--route)}
+    .voice-box p{margin:0;line-height:1.65}
+
+    .pillars{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+    .pillar{position:relative;padding:18px 18px 18px 56px}
+    .pillar .num{
+      position:absolute;left:16px;top:18px;width:26px;height:26px;border-radius:999px;
+      display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;
+      background:var(--surface);border:1px solid var(--line);color:var(--brand)
+    }
+
+    .table-wrap{overflow:auto}
+    table{
+      width:100%;border-collapse:collapse;min-width:800px;font-size:14px;
+    }
+    th, td{padding:14px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+    th{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+    tr:last-child td{border-bottom:none}
+
+    .kicker{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--brand);margin-bottom:8px}
+
+    .component-demo{
+      display:grid;gap:12px;
+    }
+    .news-card{
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:#fff;
+      overflow:hidden;
+    }
+    .news-top{
+      padding:18px 18px 12px;
+      border-bottom:1px solid var(--line);
+    }
+    .news-top .meta{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--route);font-weight:800}
+    .news-top h4{margin:8px 0 0;font-size:24px;font-family:var(--serif);line-height:1.15}
+    .news-body{padding:18px;display:grid;gap:12px}
+    .context-box{
+      padding:12px;border-radius:14px;background:#f7fbfd;border:1px solid #d8e7ef
+    }
+    .context-box strong{display:block;margin-bottom:4px;font-size:13px;color:var(--route)}
+    .context-box span{font-size:14px;color:var(--muted);line-height:1.55}
+
+    .switcher{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+    .switcher button{
+      appearance:none;border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 12px;
+      font-weight:700;color:var(--text);cursor:pointer
+    }
+    .switcher button.active{background:var(--text);color:#fff;border-color:var(--text)}
+
+    .preview-surface{
+      border:1px solid var(--line);
+      border-radius:22px;
+      overflow:hidden;
+      background:#fff;
+    }
+    .preview-header{
+      padding:14px 18px;
+      border-bottom:1px solid var(--line);
+      display:flex;justify-content:space-between;align-items:center;gap:20px;
+      background:#fffdf9;
+    }
+    .preview-title{display:flex;align-items:end;gap:8px;font-weight:700}
+    .preview-title .big{font-family:var(--serif);font-size:28px}
+    .preview-menu{display:flex;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+    .preview-grid{display:grid;grid-template-columns:1.4fr .8fr;gap:0}
+    .preview-main{padding:20px;border-right:1px solid var(--line)}
+    .preview-side{padding:20px;background:#fcfaf5}
+    .mini-post{padding:14px 0;border-bottom:1px solid var(--line)}
+    .mini-post:last-child{border-bottom:none}
+    .mini-post strong{display:block;font-size:15px;margin-bottom:4px}
+    .mini-post span{font-size:13px;color:var(--muted);line-height:1.5}
+
+    .footer{
+      font-size:13px;
+      color:var(--muted);
+      display:flex;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+    }
+
+    .small{font-size:13px;color:var(--muted);line-height:1.55}
+
+    @media (max-width: 1120px){
+      .app{grid-template-columns:1fr}
+      .sidebar{position:relative;height:auto;border-right:none;border-bottom:1px solid var(--line)}
+      .grid-2,.grid-3,.grid-4,.pillars,.voice-example,.preview-grid{grid-template-columns:1fr}
+      .strip{grid-template-columns:repeat(2,1fr)}
+      .main{padding:18px}
+      .hero h1{font-size:42px}
+    }
+
+    @media (max-width: 720px){
+      .strip{grid-template-columns:1fr}
+      .section-top{display:block}
+      .hero{padding:24px}
+      .hero h1{font-size:34px}
+      section{padding:18px}
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brandbox">
+        <div class="eyebrow">Manual de identidad · versión operativa</div>
+        <div class="logo-mark">
+          <span class="logo-el">El</span>
+          <span class="logo-rufino">Rufino</span>
+        </div>
+        <p class="tagline">Medio local de Rufino dentro del ecosistema de la comunidad organizada, con identidad editorial propia, foco en contexto, seguimiento y territorio.</p>
+        <div class="microgrid">
+          <div class="microcard"><strong>Marca madre</strong><span>El Rufino</span></div>
+          <div class="microcard"><strong>Sello territorial</strong><span>La 33</span></div>
+          <div class="microcard"><strong>Tono</strong><span>Claro y firme</span></div>
+          <div class="microcard"><strong>Clima visual</strong><span>Editorial cálido</span></div>
+        </div>
+      </div>
+
+      <nav>
+        <a class="active" href="#fundamento">Fundamento</a>
+        <a href="#arquitectura">Arquitectura de marca</a>
+        <a href="#visual">Sistema visual</a>
+        <a href="#tipografia">Tipografía</a>
+        <a href="#voz">Voz y caras</a>
+        <a href="#contenido">Sistema editorial</a>
+        <a href="#componentes">Componentes</a>
+        <a href="#preview">Vista de portada</a>
+      </nav>
+
+      <div class="sidebar-note">
+        <strong>Decisión estratégica:</strong><br>
+        “La 33” no conviene como marca principal. Funciona mejor como sello narrativo y territorial dentro de <strong>El Rufino</strong>: suma potencia simbólica sin achicar el alcance del medio.
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="hero">
+        <div class="eyebrow">El Rufino · manual base para web, redes y piezas editoriales</div>
+        <h1><span class="accent">Manual interactivo</span> de identidad visual y editorial</h1>
+        <p>Este sistema ubica al medio dentro de la comunidad organizada, pero evita que la marca pública quede encerrada en una lectura partidaria estrecha. La identidad visible debe transmitir territorio, credibilidad, claridad y seguimiento. La épica puede existir; la interfaz tiene que seguir siendo abierta y legible.</p>
+        <div class="strip">
+          <div class="item"><span class="n">01</span><span class="l">Marca madre amplia: El Rufino</span></div>
+          <div class="item"><span class="n">02</span><span class="l">Sello territorial: La 33</span></div>
+          <div class="item"><span class="n">03</span><span class="l">Presentación clara, no oscura</span></div>
+          <div class="item"><span class="n">04</span><span class="l">Contexto + seguimiento como firma</span></div>
+        </div>
+      </div>
+
+      <section id="fundamento">
+        <div class="section-top">
+          <div>
+            <div class="eyebrow">01 · Fundamento</div>
+            <h2>Qué representa la marca</h2>
+            <p>El medio debe ser leído como un actor de utilidad pública local. No alcanza con “ser de Rufino”; tiene que parecer hecho para Rufino. La identidad no debe copiar la estética de un portal policial ni la de un dashboard oscuro de laboratorio. Tiene que parecer un medio serio, vivo, legible y cercano.</p>
+          </div>
+          <div class="badge-row">
+            <span class="badge">Territorio</span>
+            <span class="badge">Comunidad organizada</span>
+            <span class="badge">Contexto</span>
+            <span class="badge">Seguimiento</span>
+            <span class="badge">Campo + ciudad</span>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card decision">
+            <div class="label">Definición central</div>
+            <h3>El Rufino es la marca pública. La 33 es la línea simbólica.</h3>
+            <p>“El Rufino” nombra a la ciudad completa y permite crecer desde noticias, datos, comercio, barrios y comunidad. “La 33” debe operar como sub-sello: especial de rutas, corredor productivo, deuda histórica de infraestructura, crónicas del territorio y piezas de fuerte carga simbólica.</p>
+          </div>
+          <div class="card">
+            <h3>Riesgo a evitar</h3>
+            <p>Si la identidad principal queda tomada por una sola lectura política, el medio puede ganar intensidad en un segmento pero perder amplitud y confianza en otros. La solución no es borrar la orientación cultural: es traducirla en valores editoriales y no en clausura visual.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="arquitectura">
+        <div class="section-top">
+          <div>
+            <div class="eyebrow">02 · Arquitectura de marca</div>
+            <h2>Cómo conviven El Rufino y La 33</h2>
+            <p>La arquitectura propuesta permite abrir el medio al conjunto de la ciudad y, al mismo tiempo, capitalizar la fuerza de la Ruta 33 como símbolo de reclamo, producción y memoria regional.</p>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="logo-demo">
+            <div>
+              <div class="kicker">Marca principal</div>
+              <div class="logo-lockup">
+                <span class="el">El</span>
+                <span class="rufino">Rufino</span>
+              </div>
+            </div>
+            <div class="subbrand"><span class="route-line"></span> La 33 · corredor productivo y seguimiento territorial</div>
+            <p class="small">Uso recomendado: “El Rufino” en portada, redes y firma institucional. “La 33” como etiqueta o colección para coberturas de rutas, campo, infraestructura y región.</p>
+          </div>
+          <div class="grid-3">
+            <div class="card">
+              <h4>Marca madre</h4>
+              <p><strong>El Rufino</strong>. Usa la ciudad como núcleo. Sirve para noticias, datos, agenda, comercio y pertenencia.</p>
+            </div>
+            <div class="card">
+              <h4>Submarca editorial</h4>
+              <p><strong>La 33</strong>. Serie, dossier, sello visual y eje narrativo del territorio olvidado y productivo.</p>
+            </div>
+            <div class="card">
+              <h4>Programa de voces</h4>
+              <p><strong>Voces de El Rufino</strong>. Espacio para productores, conductores y convocatorias abiertas futuras.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="visual">
+        <div class="section-top">
+          <div>
+            <div class="eyebrow">03 · Sistema visual</div>
+            <h2>Paleta, clima y elementos gráficos</h2>
+            <p>La paleta combina papel, tinta y territorio. El objetivo no es parecer “premium oscuro”, sino legible y recordable. La marca debe poder convivir con política, campo, comercio, salud y barrio sin romperse.</p>
+          </div>
+        </div>
+
+        <div class="grid-4">
+          <div class="palette-swatch" style="background:#f5f1e8;color:#1f2a30"><div><strong>Papel Rufino</strong><br><span>#F5F1E8</span></div><span>Fondo principal</span></div>
+          <div class="palette-swatch" style="background:#1f2a30;color:#fff"><div><strong>Tinta Sur</strong><br><span>#1F2A30</span></div><span>Texto y contraste</span></div>
+          <div class="palette-swatch" style="background:#b55233;color:#fff"><div><strong>Terracota Cívico</strong><br><span>#B55233</span></div><span>Marca y acento</span></div>
+          <div class="palette-swatch" style="background:#2f6484;color:#fff"><div><strong>Azul Ruta</strong><br><span>#2F6484</span></div><span>Datos y gestión</span></div>
+          <div class="palette-swatch" style="background:#617a45;color:#fff"><div><strong>Verde Campo</strong><br><span>#617A45</span></div><span>Producción y agro</span></div>
+          <div class="palette-swatch" style="background:#c58a2b;color:#fff"><div><strong>Ámbar Alerta</strong><br><span>#C58A2B</span></div><span>Advertencias</span></div>
+          <div class="palette-swatch" style="background:#b23a35;color:#fff"><div><strong>Rojo Incidente</strong><br><span>#B23A35</span></div><span>Seguridad y urgencia</span></div>
+          <div class="palette-swatch" style="background:#afc6d6;color:#1f2a30"><div><strong>Celeste Lluvia</strong><br><span>#AFC6D6</span></div><span>Agua, clima, salud</span></div>
+        </div>
+
+        <div class="grid-3" style="margin-top:14px">
+          <div class="card">
+            <h4>Regla de proporción</h4>
+            <p>70% neutros claros, 15% tinta y grises, 10% color de marca, 5% colores de estado. El color debe ordenar, no saturar.</p>
+          </div>
+          <div class="card">
+            <h4>Elementos gráficos</h4>
+            <p>Línea de ruta, tarjetas de contexto, cronologías de promesas, pastillas temáticas, mapas barriales y módulos de seguimiento.</p>
+          </div>
+          <div class="card">
+            <h4>Estilo fotográfico</h4>
+            <p>Foto real, documental, con color natural y contraste moderado. Evitar stock genérico y dramatización excesiva.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="tipografia">
+        <div class="section-top">
+          <div>
+            <div class="eyebrow">04 · Tipografía</div>
+            <h2>Sistema tipográfico recomendado</h2>
+            <p>El conjunto óptimo es una serif editorial para títulos y una sans nítida para cuerpo e interfaz. Si el sitio no tiene esas fuentes disponibles, el fallback debe preservar el mismo comportamiento visual.</p>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="type-specimen">
+            <div class="spec-line">
+              <div class="meta">Titular · Source Serif 4 / Serif editorial</div>
+              <div style="font-family:var(--serif);font-size:42px;line-height:1.05;font-weight:700">Cuando pasa algo en Rufino, los demás lo cuentan. El Rufino lo explica y lo sigue.</div>
+            </div>
+            <div class="spec-line">
+              <div class="meta">Bajada · Inter Medium / Sans</div>
+              <div style="font-size:19px;line-height:1.55;font-weight:500">Información verificada, contexto útil, memoria pública y territorio. Un medio para la ciudad y para el corredor productivo.</div>
+            </div>
+            <div class="spec-line">
+              <div class="meta">Cuerpo · Inter Regular / Sans</div>
+              <div style="font-size:16px;line-height:1.7">La lectura principal debe poder sostenerse en móvil, escritorio, imágenes de carrusel y capturas reenviadas por WhatsApp. La claridad manda sobre cualquier gesto ornamental.</div>
+            </div>
+          </div>
+          <div class="grid-3">
+            <div class="card"><h4>Títulos</h4><p>Source Serif 4 Semibold/Bold. Si no está disponible, Georgia.</p></div>
+            <div class="card"><h4>Cuerpo</h4><p>Inter Regular/Medium. Si no está disponible, system-ui.</p></div>
+            <div class="card"><h4>Datos</h4><p>Inter Medium con números tabulares cuando se pueda.</p></div>
+            <div class="card"><h4>H1</h4><p>44–56 px</p></div>
+            <div class="card"><h4>H2</h4><p>32–40 px</p></div>
+            <div class="card"><h4>Cuerpo</h4><p>16–18 px</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="voz">
+        <div class="section-top">
+          <div>
+            <div class="eyebrow">05 · Voz y caras</div>
+            <h2>Modelo de presencia humana</h2>
+            <p>La marca puede empezar con una voz productora central, pero no conviene cerrarla sobre una única cara para siempre. El sistema debe permitir sucesión de imágenes, conductor/a principal, colaboradores y convocatoria futura a voces femeninas y masculinas con lenguaje inclusivo de hecho, no forzado.</p>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <h4>Etapa 1 · Productor visible</h4>
+            <p>La primera confianza puede anclarse en vos como productor/editor. Sirve para lanzamiento, tono y criterio.</p>
+          </div>
+          <div class="card">
+            <h4>Etapa 2 · Sucesión de imágenes</h4>
+            <p>Piezas con distintas voces, manos, miradas, escenas de barrio y territorio. La marca empieza a separarse del rostro único.</p>
+          </div>
+          <div class="card">
+            <h4>Etapa 3 · Programa de voces</h4>
+            <p>Convocatoria editorial abierta: voces femeninas y masculinas, jóvenes y adultas, desde distintos barrios y ámbitos.</p>
+          </div>
+        </div>
+
+        <div class="voice-example" style="margin-top:14px">
+          <div class="voice-box no">
+            <div class="label">No conviene</div>
+            <p>“Buscamos una mujer y un hombre para que le den diversidad al medio.”<br><br>Problema: reduce la convocatoria a cupo visual y puede sonar instrumental.</p>
+          </div>
+          <div class="voice-box yes">
+            <div class="label">Sí conviene</div>
+            <p>“El Rufino abre una convocatoria para sumar nuevas voces de la ciudad y la región: mujeres y varones con mirada propia, capacidad de contar, preguntar y representar distintos territorios, generaciones y experiencias.”</p>
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top:14px">
+          <div class="card">
+            <h4>Regla editorial</h4>
+            <p>La cara nunca reemplaza al criterio. Las voces deben sumar autoridad, cercanía y pluralidad, no espectáculo vacío.</p>
+          </div>
+          <div class="card">
+            <h4>Formato sugerido</h4>
+            <p>Presentación en cámara, voz en off, fotos de contexto, placas de datos, citas sobreimpresas y cierres con llamada a seguimiento.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="contenido">
+        <div class="section-top">
+          <div>
+            <div class="eyebrow">06 · Sistema editorial</div>
+            <h2>Pilares y promesa de lectura</h2>
+            <p>La identidad visual no se sostiene sin identidad editorial. Estos pilares convierten la estética en promesa reconocible.</p>
+          </div>
+        </div>
+
+        <div class="pillars">
+          <div class="card pillar"><span class="num">1</span><h4>Rufino real</h4><p>El hecho y lo que significa. Antídoto contra rumor y comunicado sin contexto.</p></div>
+          <div class="card pillar"><span class="num">2</span><h4>La 33 / corredor productivo</h4><p>Rutas, logística, campo, deuda de infraestructura y economía regional.</p></div>
+          <div class="card pillar"><span class="num">3</span><h4>Barrio a barrio</h4><p>Geografía del reclamo, seguimiento de promesas, vecinos y mapas.</p></div>
+          <div class="card pillar"><span class="num">4</span><h4>Generación Rufino</h4><p>Jóvenes, emprendedores, artistas, deporte, oportunidades y tensiones reales.</p></div>
+          <div class="card pillar"><span class="num">5</span><h4>Poder y gestión</h4><p>Lo anunciado, lo ejecutado, lo frenado y lo que falta explicar.</p></div>
+          <div class="card pillar"><span class="num">6</span><h4>Comunidad organizada</h4><p>Instituciones, clubes, trabajo, actores sociales y entramado local no estatal.</p></div>
+        </div>
+
+        <div class="table-wrap" style="margin-top:16px">
+          <table>
+            <thead>
+              <tr>
+                <th>Cuando pasa algo</th>
+                <th>Los otros</th>
+                <th>El Rufino</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Robo o hecho policial</td>
+                <td>Publican rápido, amplifican impacto y comentarios.</td>
+                <td>Publica + agrega antecedentes, datos, parte oficial, mapa y pregunta de seguimiento.</td>
+              </tr>
+              <tr>
+                <td>Anuncio de obra</td>
+                <td>Replican comunicado o entrevista.</td>
+                <td>Repasa historial, fechas previas, etapa real y qué falta para que ocurra.</td>
+              </tr>
+              <tr>
+                <td>Tema de Ruta 33</td>
+                <td>Lo tratan como hecho aislado.</td>
+                <td>Lo inserta en la línea territorial “La 33” y lo vincula con producción, política y memoria pública.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="componentes">
+        <div class="section-top">
+          <div>
+            <div class="eyebrow">07 · Componentes</div>
+            <h2>Cómo se ve una pieza de El Rufino</h2>
+            <p>Los módulos deben volver visible la diferencia editorial: no solo una noticia, sino una noticia con contexto, memoria y próxima pregunta.</p>
+          </div>
+        </div>
+
+        <div class="component-demo">
+          <div class="news-card">
+            <div class="news-top">
+              <div class="meta">Poder y gestión · seguimiento</div>
+              <h4>Prometieron el asfalto para Barrio Norte. Qué se anunció, qué se hizo y qué sigue sin fecha.</h4>
+            </div>
+            <div class="news-body">
+              <div class="context-box"><strong>Qué pasó</strong><span>El municipio volvió a anunciar la obra en un acto público.</span></div>
+              <div class="context-box"><strong>Qué significa</strong><span>Es la tercera comunicación sobre el mismo tramo en menos de dos años.</span></div>
+              <div class="context-box"><strong>Qué falta saber</strong><span>Plazos reales, financiamiento, etapa administrativa y comienzo efectivo.</span></div>
+            </div>
+          </div>
+
+          <div class="grid-3">
+            <div class="card"><h4>Pastillas</h4><p>Máximo 2 por pieza. Sirven para tema, no para decorar.</p></div>
+            <div class="card"><h4>Seguimiento</h4><p>Etiquetas sugeridas: anunciado, licitado, iniciado, frenado, terminado.</p></div>
+            <div class="card"><h4>Cierre</h4><p>Toda pieza importante debe terminar con la próxima pregunta periodística.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="preview">
+        <div class="section-top">
+          <div>
+            <div class="eyebrow">08 · Preview</div>
+            <h2>Vista de portada en modo claro</h2>
+            <p>Mockup conceptual para navegador. No es diseño final de WordPress, pero ya muestra la lógica correcta: editorial, clara, modular y territorial.</p>
+          </div>
+        </div>
+
+        <div class="switcher">
+          <button class="active" data-mode="base">Marca madre</button>
+          <button data-mode="ruta">Modo La 33</button>
+          <button data-mode="comunidad">Modo comunidad</button>
+        </div>
+
+        <div class="preview-surface" id="previewSurface">
+          <div class="preview-header">
+            <div class="preview-title"><span>El</span><span class="big">Rufino</span></div>
+            <div class="preview-menu">
+              <span>Rufino real</span>
+              <span>La 33</span>
+              <span>Barrios</span>
+              <span>Datos</span>
+              <span>Comunidad</span>
+            </div>
+          </div>
+          <div class="preview-grid">
+            <div class="preview-main">
+              <div class="news-card">
+                <div class="news-top">
+                  <div class="meta" id="previewMeta">La 33 · corredor productivo</div>
+                  <h4 id="previewTitle">Ruta 33: por qué el tema vuelve siempre y cómo impacta en la ciudad, el campo y la logística local.</h4>
+                </div>
+                <div class="news-body">
+                  <div class="context-box"><strong>Clave editorial</strong><span id="previewBody">No tomar el tema solo como reclamo vial. Convertirlo en eje de territorio, economía regional, memoria de promesas y vida cotidiana.</span></div>
+                </div>
+              </div>
+            </div>
+            <aside class="preview-side">
+              <div class="mini-post">
+                <strong>Resumen matutino</strong>
+                <span>Las 3 noticias que importan hoy en Rufino y qué cambió desde ayer.</span>
+              </div>
+              <div class="mini-post">
+                <strong>Barrio a barrio</strong>
+                <span>Mapa de reclamos: norte, centro, este, oeste, sur e industrial.</span>
+              </div>
+              <div class="mini-post">
+                <strong>Voces</strong>
+                <span>Historias, entrevistas y convocatorias para sumar nuevas miradas.</span>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <div class="footer">
+        <div><strong>Versión:</strong> 1.0.0 · borrador operativo</div>
+        <div><strong>Paquete:</strong> HTML + info.txt + changelog.txt</div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const links = [...document.querySelectorAll('nav a')];
+    const sections = [...document.querySelectorAll('section')];
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          links.forEach(l => l.classList.remove('active'));
+          const active = links.find(l => l.getAttribute('href') === '#' + entry.target.id);
+          if(active) active.classList.add('active');
+        }
+      });
+    }, { threshold: .35 });
+
+    sections.forEach(s => observer.observe(s));
+
+    const buttons = [...document.querySelectorAll('.switcher button')];
+    const previewSurface = document.getElementById('previewSurface');
+    const previewMeta = document.getElementById('previewMeta');
+    const previewTitle = document.getElementById('previewTitle');
+    const previewBody = document.getElementById('previewBody');
+
+    const modes = {
+      base: {
+        border: '#ddd3c3',
+        meta: 'La 33 · corredor productivo',
+        title: 'Ruta 33: por qué el tema vuelve siempre y cómo impacta en la ciudad, el campo y la logística local.',
+        body: 'No tomar el tema solo como reclamo vial. Convertirlo en eje de territorio, economía regional, memoria de promesas y vida cotidiana.',
+        header: '#fffdf9'
+      },
+      ruta: {
+        border: '#c8d9e4',
+        meta: 'Especial La 33 · seguimiento territorial',
+        title: 'La 33 como relato: producción, deuda vial, memoria pública y corredor del sur.',
+        body: 'Este modo subraya el eje territorial. Útil para especiales, series, dossiers, mapas y coberturas de infraestructura.',
+        header: '#f3f8fb'
+      },
+      comunidad: {
+        border: '#d9e2cf',
+        meta: 'Comunidad organizada · tejido local',
+        title: 'Clubes, instituciones, trabajo y redes de la ciudad: dónde está la comunidad cuando el Estado no alcanza.',
+        body: 'Este modo prioriza sociedad, instituciones intermedias, ayuda mutua, cultura y vida común sin perder tono periodístico.',
+        header: '#f6faef'
+      }
+    };
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const mode = modes[btn.dataset.mode];
+        previewSurface.style.borderColor = mode.border;
+        previewSurface.querySelector('.preview-header').style.background = mode.header;
+        previewMeta.textContent = mode.meta;
+        previewTitle.textContent = mode.title;
+        previewBody.textContent = mode.body;
+      });
+    });
+  </script>
+</body>
+</html>

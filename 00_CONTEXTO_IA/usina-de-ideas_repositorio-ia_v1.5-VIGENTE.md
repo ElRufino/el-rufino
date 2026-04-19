@@ -1,7 +1,7 @@
 # REPOSITORIO IA — EL RUFINO
 ## Documento de contexto para transferencia entre instancias
-### Versión 1.4 · 17 de abril de 2026
-### Cambios v1.4: renombrado repositorio EL RUFINO → USINA DE IDEAS · rutas actualizadas a EL_RUFINO · FASE 3 completada (07_VARIOS_ARCHIVO clasificado · repo git consolidado en EL_RUFINO · 27 commits · sincronizado origin/main) · archivos maestros renombrados usina-de-ideas_* · semáforo repo git agregado · typo corregido (la comunidad organizada.txt)
+### Versión 1.5 · 18 de abril de 2026
+### Cambios v1.5: Cuenta 9 agregada (rufino.paspatria · operador IA · acceso Claude) · 9 proyectos USINA DE IDEAS documentados con items reales del escaneo 2026-04-18 · flujo de despacho IA incorporado · semáforo Cuenta 9 y proyectos USINA agregados · estructura de archivos actualizada con proyectos reales
 
 ---
 
@@ -37,13 +37,15 @@ NOMBRES = Fabián Longo (El Diferente) · Adriana Giménez (Voces otra mirada)
 NORMAS_CITAS = APA 7ma edición
 DECISIONES = NO reabrir las listadas sin indicación explícita del usuario
 REPOSITORIO_ORGANIZATIVO = USINA DE IDEAS · F:\HERRAMIENTAS DE IA\PROYECTOS\USINA_DE_IDEAS\
-ARCHIVO_CONTEXTO = 00_CONTEXTO_IA/usina-de-ideas_repositorio-ia_v1.4-VIGENTE.md
-ARCHIVO_AGENTES = 00_CONTEXTO_IA/usina-de-ideas_agentes-ia_v1.4-VIGENTE.md
+ARCHIVO_CONTEXTO = 00_CONTEXTO_IA/usina-de-ideas_repositorio-ia_v1.5-VIGENTE.md
+ARCHIVO_AGENTES = 00_CONTEXTO_IA/usina-de-ideas_agentes-ia_v1.5-VIGENTE.md
+PROYECTOS_USINA = EL_RUFINO · GESTION_COMERCIAL · SISMUIF · SOCIEDAD_ITALIANA · RADIOTV · DIGESTO · PJ · INFOCONECTADOS · LA_COMUNIDAD_ORGANIZADA
+CUENTAS = 9 · rufino.paspatria = Cuenta 9 · operador IA · acceso Claude · todos los agentes
 ```
 
 ---
 
-## SECCIÓN 2 — ARQUITECTURA TÉCNICA REAL (v1.4)
+## SECCIÓN 2 — ARQUITECTURA TÉCNICA REAL (v1.5)
 
 ### 2.1 Dominios y entornos
 
@@ -60,7 +62,7 @@ ARCHIVO_AGENTES = 00_CONTEXTO_IA/usina-de-ideas_agentes-ia_v1.4-VIGENTE.md
 **Versión en producción (elrufino.com.ar):** v7.0.5 (pendiente actualizar a v8.1.2)
 **Archivo disponible:** `F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO\02_WORDPRESS_TEST\el-rufino-panel-v8.1.2.zip`
 
-#### Estructura de pantallas (4 pantallas · rediseño total vs v7)
+#### Estructura de pantallas (4 pantallas)
 
 | # | Pantalla | Tools / Contenido |
 |---|---|---|
@@ -69,16 +71,7 @@ ARCHIVO_AGENTES = 00_CONTEXTO_IA/usina-de-ideas_agentes-ia_v1.4-VIGENTE.md
 | 3 | Inteligencia | 12 agentes IA integrados |
 | 4 | Seguimiento | Kanban editorial · registro de promesas |
 
-#### Novedades v8 respecto a v7
-
-- Arquitectura rediseñada: 4 pantallas en lugar de 14 módulos
-- 12 agentes (era 11 en v7)
-- Kanban integrado en pantalla Seguimiento
-- Importador demo: 48 notas de ejemplo precargadas
-- Claude API conectada directamente desde el panel
-- Checklist de Fase 2 visible en Dashboard
-
-#### Estado del checklist Fase 2 (verificado desde panel · 14/04/2026)
+#### Estado del checklist Fase 2
 
 | Item | Estado |
 |---|---|
@@ -107,54 +100,87 @@ ARCHIVO_AGENTES = 00_CONTEXTO_IA/usina-de-ideas_agentes-ia_v1.4-VIGENTE.md
 | 11 | Imágenes | Contenido |
 | 12 | Expansión Regional | Estratégico · PAUSADO |
 
-### 2.4 Estructura de archivos del proyecto
+### 2.4 Sistema de 9 cuentas Google
+
+| # | Email | Rol |
+|---|---|---|
+| 1 | cristianobermeller@gmail.com | HUB MAESTRO — centro neurálgico |
+| 2 | conectadosrufino@gmail.com | Comunicación y difusión |
+| 3 | Pjrufino.ar@gmail.com | WordPress y contenido editorial |
+| 4 | sbrodriguezrufino@gmail.com | Recursos humanos y coordinación |
+| 5 | ideassublimadasrufino@gmail.com | Creatividad e identidad visual |
+| 6 | medioelrufino@gmail.com | Prensa y multimedia |
+| 7 | cecsibar@gmail.com | Administración y legales |
+| 8 | Bosatrabajo.fp@gmail.com | Operaciones y campo |
+| 9 | rufino.paspatria@gmail.com | Operador IA · acceso Claude · todos los agentes |
+
+**Flujo de despacho IA — Cuenta 9:**
+Cualquier área solicita tarea IA → Cuenta 9 abre Claude → pega bloque de transferencia + contexto del área → ejecuta agente correspondiente (A01-A12) → entrega resultado a carpeta del área → registra en CHANGELOG.md. Decisiones estructurales: consultar Cuenta 1 (HUB) antes de proceder.
+
+### 2.5 Proyectos de USINA DE IDEAS (detectados en escaneo 2026-04-18)
+
+| Proyecto | Items (escaneo) | Estado |
+|---|---|---|
+| EL_RUFINO | 730 | ACTIVO · documentado v1.5 |
+| GESTION_COMERCIAL | 1.777 | ACTIVO · parcialmente documentado |
+| SISMUIF | 24.335 | ACTIVO · pendiente auditoría · prioridad por volumen |
+| SOCIEDAD_ITALIANA | 6.684 | ACTIVO · pendiente auditoría |
+| RADIOTV | 1.762 | ACTIVO · pendiente auditoría |
+| DIGESTO | 1.751 | ACTIVO · pendiente auditoría |
+| PJ | 197 | ACTIVO · pendiente auditoría |
+| INFOCONECTADOS | 63 | ACTIVO · pendiente auditoría |
+| LA_COMUNIDAD_ORGANIZADA | 9 | ACTIVO · pendiente auditoría |
+
+**Total USINA DE IDEAS:** ~38.578 items · 9 proyectos
+
+### 2.6 Estructura de archivos del proyecto
 
 **Ruta base:** `F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO\`
 
 ```
 EL_RUFINO\
 ├── 00_CONTEXTO_IA\
-│   ├── usina-de-ideas_agentes-ia_v1.4-VIGENTE.md
-│   ├── usina-de-ideas_prompt-maestro_v1.4-VIGENTE.md
-│   └── usina-de-ideas_repositorio-ia_v1.4-VIGENTE.md       este archivo
+│   ├── usina-de-ideas_agentes-ia_v1.5-VIGENTE.md
+│   ├── usina-de-ideas_prompt-maestro_v1.5-VIGENTE.md
+│   └── usina-de-ideas_repositorio-ia_v1.5-VIGENTE.md       este archivo
 ├── 01_DOCUMENTOS_VIGENTES\
-│   ├── el-rufino_dashboard-operativo_v5-VIGENTE.html
-│   ├── el-rufino_dossier-fase0_v3-VIGENTE.html
-│   ├── el-rufino_dossier-fundacional.html
-│   ├── el-rufino_dossier-maestro_VIGENTE.pdf
-│   ├── el-rufino_informe-memoria_v4.0.html
-│   ├── el-rufino_plan-fundacional.html
-│   └── la comunidad organizada.txt
 ├── 02_WORDPRESS_TEST\
-│   ├── el-rufino-plugin.zip
-│   ├── auditoria-rufino.php
-│   └── [archivos del plugin y child theme]
 ├── 03_IDENTIDAD_MARCA\
-│   └── [logos · favicon · OG · manuales · imágenes de referencia]
 ├── 04_DASHBOARDS_REFERENCIA\
-│   └── [11 HTMLs de dashboards]
 ├── 05_MATERIAL_HISTORICO\
 ├── 06_SCRIPTS\
-│   ├── .elrufino_scan_latest.json
-│   ├── REORGANIZACION_FASE3.ps1
-│   └── [scripts PowerShell]
 ├── _ARCHIVO\
-├── .git                                    repo git · 27 commits · sincronizado origin/main
-└── CHANGELOG.md
+└── .git                                    repo git · 27 commits · sincronizado origin/main
 ```
 
-### 2.5 Repositorio git
+**Estructura completa PROYECTOS:**
+
+```
+F:\HERRAMIENTAS DE IA\PROYECTOS\
+├── EL_RUFINO\                  730 items · documentado
+├── GESTION_COMERCIAL\          1.777 items · parcialmente documentado
+├── SISMUIF\                    24.335 items · pendiente auditoria
+├── SOCIEDAD_ITALIANA\          6.684 items · pendiente auditoria
+├── RADIOTV\                    1.762 items · pendiente auditoria
+├── DIGESTO\                    1.751 items · pendiente auditoria
+├── PJ\                         197 items · pendiente auditoria
+├── INFOCONECTADOS\             63 items · pendiente auditoria
+├── LA_COMUNIDAD_ORGANIZADA\    9 items · pendiente auditoria
+└── USINA_DE_IDEAS\             repositorio organizativo
+    └── 00_CONTEXTO_IA\
+```
+
+### 2.7 Repositorio git
 
 **Remote:** https://github.com/ElRufino/el-rufino.git
 **Branch activa:** main
-**Último commit:** reorganizacion FASE 3
-**Estado:** sincronizado con origin/main
+**Estado:** sincronizado con origin/main · 27 commits
 
-### 2.6 Checklist WordPress — estado actual
+### 2.8 Checklist WordPress — estado actual
 
 - [x] Plugin v8.1.2 disponible (activo en test, pendiente en producción)
 - [x] DNS delegado · sitio resuelve en dominio definitivo
-- [x] Logo, favicon y OG image subidos a Media Library (confirmado en panel)
+- [x] Logo, favicon y OG image subidos a Media Library
 - [x] 20 notas demo publicadas
 - [ ] Actualizar plugin en elrufino.com.ar de v7.0.5 a v8.1.2
 - [ ] Child theme Newsup instalado y activo con paleta B
@@ -187,8 +213,6 @@ Rufino es una ciudad de 19.211 habitantes (INDEC, 2022) ubicada en el sudoeste d
 | Municipalidad | 17.983 | canal oficial | lectura crítica, contraste |
 | El Diferente | 11.011 | trayectoria, memoria | brecha disponible |
 | Rufino Web | 10.634 | marca digital visible | espesor visual y analítico |
-
-**Diagnóstico:** Todos los medios cubren el hecho. Ninguno construye arquitectura de contexto, seguimiento ni archivo útil.
 
 ### 3.3 Audiencias prioritarias
 
@@ -279,6 +303,7 @@ Rufino es una ciudad de 19.211 habitantes (INDEC, 2022) ubicada en el sudoeste d
 | Logo/favicon/OG | VERDE | Subidos y confirmados desde panel |
 | Notas demo | VERDE | 20 notas publicadas |
 | Repo git | VERDE | Consolidado en EL_RUFINO\ · 27 commits · sincronizado origin/main |
+| Cuenta 9 IA | VERDE | rufino.paspatria · operador IA · acceso Claude |
 | Dominio .ar | ROJO | Pendiente registro NIC Argentina |
 | Plugin en producción | AMARILLO | v7.0.5 en elrufino.com.ar · actualizar a v8.1.2 |
 | Child theme Newsup | AMARILLO | Archivo disponible en 02_WORDPRESS_TEST\ · falta instalar |
@@ -287,6 +312,7 @@ Rufino es una ciudad de 19.211 habitantes (INDEC, 2022) ubicada en el sudoeste d
 | Canal WhatsApp broadcast | ROJO | Sin configurar |
 | Monetización | ROJO | Esperar hábito y reputación |
 | Expansión regional RN33 | PAUSA | Horizonte futuro, no fase activa |
+| Proyectos USINA (8) | AMARILLO | Detectados en escaneo · pendiente auditoría individual |
 
 ---
 
@@ -318,7 +344,8 @@ Rufino es una ciudad de 19.211 habitantes (INDEC, 2022) ubicada en el sudoeste d
 2. **Si la tarea es técnica (WP/plugin):** agregar Sección 2
 3. **Si la tarea es editorial:** agregar Secciones 5 y 6
 4. **Si la tarea es estratégica:** agregar Secciones 3, 4 y 7
-5. **Para activar un agente:** referenciar por número (1-12) desde la pantalla Inteligencia del panel
+5. **Para activar un agente:** referenciar por número (1-12) desde la pantalla Inteligencia del panel o via Cuenta 9
+6. **Cuenta 9 (rufino.paspatria):** punto de entrada IA para todas las áreas
 
 **Versionado:** al tomar una decisión nueva → identificar sección afectada → actualizar → cambiar versión → subir al repositorio.
 
@@ -336,4 +363,4 @@ We Are Social & Hootsuite. (2024). *Digital 2024: Argentina*. DataReportal. http
 
 *Documento vivo. Actualizar al tomar cada decisión relevante.*
 *Firma institucional: PROYECTO EL RUFINO · Repositorio organizativo: USINA DE IDEAS*
-*Versión 1.4 · 17 de abril de 2026*
+*Versión 1.5 · 18 de abril de 2026*

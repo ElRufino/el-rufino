@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Bolsa de Trabajo · Rufino</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+<style>
+/* ── RESET & BASE ─────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:#F2F5FB;color:#0D1B2A;min-height:100vh}
+h1,h2,h3,h4,h5,h6,.font-sora{font-family:'Sora',sans-serif}
+button,input,select,textarea{font-family:'Inter',sans-serif}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-thumb{background:#C2CCE0;border-radius:4px}
+::-webkit-scrollbar-track{background:transparent}
+
+/* ── TOKENS ───────────────────────────────────────────────────── */
+:root{
+  /* Azul Rufino — extraído del logo Instagram */
+  --blue-700: #0041A8;
+  --blue-600: #0052CC;
+  --blue-500: #0066FF;
+  --blue-400: #3385FF;
+  --blue-100: #D6E4FF;
+  --blue-50:  #EBF2FF;
+  /* Grises */
+  --gray-900: #0D1B2A;
+  --gray-700: #1E2D40;
+  --gray-500: #4A5568;
+  --gray-400: #718096;
+  --gray-300: #A0AEC0;
+  --gray-200: #CBD5E0;
+  --gray-100: #E2E8F0;
+  --gray-50:  #F7F9FC;
+  /* Semánticos */
+  --green:    #12B76A;
+  --green-bg: #ECFDF3;
+  --amber:    #F59E0B;
+  --amber-bg: #FFFBEB;
+  --red:      #EF4444;
+  --red-bg:   #FEF2F2;
+  --purple:   #7C3AED;
+  --purple-bg:#F5F3FF;
+  /* Layout */
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 20px;
+  --r-2xl:24px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+  --shadow-md: 0 4px 16px rgba(0,66,168,.08),0 2px 6px rgba(0,0,0,.04);
+  --shadow-lg: 0 8px 32px rgba(0,66,168,.12),0 4px 12px rgba(0,0,0,.06);
+  --shadow-blue:0 4px 20px rgba(0,82,204,.28);
+}
+
+/* ── KEYFRAMES ────────────────────────────────────────────────── */
+@keyframes fadeSlideDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes scaleIn{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
+@keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+@keyframes slideRight{from{transform:translateX(-100%)}to{transform:translateX(0)}}
+
+/* ── MOBILE NAV OVERLAY ───────────────────────────────────────── */
+.mobile-nav{
+  position:fixed;inset:0;z-index:999;display:flex;flex-direction:column;
+  background:var(--gray-900);transform:translateX(-100%);transition:transform .3s cubic-bezier(.4,0,.2,1);
+}
+.mobile-nav.open{transform:translateX(0);animation:slideRight .3s cubic-bezier(.4,0,.2,1)}
+.mobile-nav-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 20px 16px;border-bottom:1px solid rgba(255,255,255,.08)
+}
+.mobile-nav-links{flex:1;padding:12px 12px;display:flex;flex-direction:column;gap:4px;overflow-y:auto}
+.mobile-nav-link{
+  display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:var(--r-md);
+  color:rgba(255,255,255,.7);font-size:15px;font-weight:500;border:none;background:none;
+  cursor:pointer;transition:all .15s;text-align:left;width:100%
+}
+.mobile-nav-link.active,.mobile-nav-link:hover{background:var(--blue-600);color:#fff}
+.mobile-nav-link svg{width:18px;height:18px;flex-shrink:0}
+.mobile-nav-footer{padding:16px 20px;border-top:1px solid rgba(255,255,255,.08)}
+
+/* ── HAMBURGER BUTTON ─────────────────────────────────────────── */
+.hamburger{
+  display:none;flex-direction:column;justify-content:center;gap:5px;
+  width:40px;height:40px;border:none;background:rgba(255,255,255,.12);
+  border-radius:var(--r-sm);cursor:pointer;padding:8px;flex-shrink:0
+}
+.hamburger span{
+  display:block;height:2px;background:#fff;border-radius:2px;
+  transition:all .25s cubic-bezier(.4,0,.2,1);transform-origin:center
+}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* ── VALIDATION HELPERS ───────────────────────────────────────── */
+.field-error{border-color:var(--red)!important}
+.error-msg{color:var(--red);font-size:12px;margin-top:-10px;margin-bottom:12px;display:flex;align-items:center;gap:4px}
+.error-msg::before{content:'⚠';font-size:11px}
+
+/* ── BADGE ────────────────────────────────────────────────────── */
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap}
+.badge-blue{background:var(--blue-50);color:var(--blue-600)}
+.badge-green{background:var(--green-bg);color:#059669}
+.badge-amber{background:var(--amber-bg);color:#B45309}
+.badge-red{background:var(--red-bg);color:#B91C1C}
+.badge-purple{background:var(--purple-bg);color:var(--purple)}
+.badge-gray{background:var(--gray-100);color:var(--gray-500)}
+
+/* ── UTILS ────────────────────────────────────────────────────── */
+.visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+.overlay{position:fixed;inset:0;background:rgba(13,27,42,.55);z-index:400;display:flex;align-items:center;justify-content:center;animation:fadeUp .2s ease}
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+const { useState, useEffect, useRef, useCallback } = React;
+
+/* ═══════════════════════════════════════════════════════════════
+   CONSTANTES Y DATOS
+═══════════════════════════════════════════════════════════════ */
+const SK_JOBS = "rufino-jobs-v2";
+const SK_APPLICANTS = "rufino-applicants-v2";
+const ADMIN_PASS = "rufino2026";
+
+const CATEGORIES = [
+  "Todas","Construcción","Gastronomía","Administración","Mecánica",
+  "Educación","Comercio","Salud","Transporte","Tecnología","Oficios","Otro"
+];
+const JOB_TYPES = { full:"Tiempo completo", part:"Medio tiempo", freelance:"Por cuenta propia" };
+const SALARY_RANGES = ["A convenir","$150.000 – $250.000","$250.000 – $400.000","$400.000 – $600.000","$600.000 o más"];
+const EXPERIENCE = ["Sin experiencia","1-2 años","3-5 años","5+ años"];
+
+const CAT_COLOR = {
+  "Construcción":"blue","Gastronomía":"amber","Administración":"purple",
+  "Mecánica":"gray","Educación":"green","Comercio":"blue","Salud":"green",
+  "Transporte":"amber","Tecnología":"purple","Oficios":"gray","Otro":"gray"
+};
+
+const DEMO_JOBS = [
+  {id:1,title:"Albañil con experiencia",category:"Construcción",type:"full",location:"Rufino Centro",salary:"$250.000 – $400.000",experience:"3-5 años",description:"Se busca albañil para obra nueva en barrio sur. Experiencia mínima 2 años en mampostería, revoque y pintura. Relación de dependencia con obra social. Excelente clima laboral.",contact:"José M. – 3382-401234",whatsapp:"3382401234",date:"2026-03-25",featured:true,active:true,views:42},
+  {id:2,title:"Costurera / Modista",category:"Oficios",type:"part",location:"Rufino",salary:"A convenir",experience:"1-2 años",description:"Taller de ropa busca modista con conocimientos en confección y arreglos. Jornada parcial turno mañana. Buen ambiente de trabajo.",contact:"Marta – 3382-512345",whatsapp:"3382512345",date:"2026-03-24",featured:true,active:true,views:31},
+  {id:3,title:"Auxiliar Administrativo/a",category:"Administración",type:"full",location:"Rufino",salary:"$250.000 – $400.000",experience:"1-2 años",description:"Empresa local incorpora auxiliar administrativo. Manejo de PC, Excel básico, buena presencia. Posibilidad de crecimiento interno.",contact:"info@empresa.com",whatsapp:"",date:"2026-03-23",featured:false,active:true,views:87},
+  {id:4,title:"Mecánico de autos",category:"Mecánica",type:"full",location:"Ruta 8 Km 420",salary:"A convenir",experience:"3-5 años",description:"Taller mecánico incorpora mecánico con experiencia en motores nafteros y diesel. Sueldo a convenir según experiencia.",contact:"Taller del Sur – 3382-678901",whatsapp:"3382678901",date:"2026-03-22",featured:false,active:true,views:56},
+  {id:5,title:"Maestra particular",category:"Educación",type:"freelance",location:"Domicilio",salary:"A convenir",experience:"1-2 años",description:"Ofrezco clases particulares nivel primario y secundario. Matemáticas, Lengua y Ciencias Naturales. Domicilio propio o del alumno.",contact:"Laura – 3382-789012",whatsapp:"3382789012",date:"2026-03-21",featured:false,active:true,views:29},
+  {id:6,title:"Repositor/a supermercado",category:"Comercio",type:"full",location:"Rufino Centro",salary:"$150.000 – $250.000",experience:"Sin experiencia",description:"Supermercado incorpora repositores para turno tarde. Con o sin experiencia. Jóvenes bienvenidos.",contact:"RRHH – 3382-890123",whatsapp:"3382890123",date:"2026-03-20",featured:false,active:true,views:73},
+  {id:7,title:"Cocinero/a",category:"Gastronomía",type:"full",location:"Rufino",salary:"$250.000 – $400.000",experience:"3-5 años",description:"Restaurante céntrico busca cocinero/a con experiencia en cocina argentina y parrilla. Turno tarde/noche. Propinas incluidas.",contact:"El Criollo – 3382-112233",whatsapp:"3382112233",date:"2026-03-19",featured:true,active:true,views:61},
+  {id:8,title:"Chofer con registro C",category:"Transporte",type:"full",location:"Rufino",salary:"$400.000 – $600.000",experience:"5+ años",description:"Transporte de granos busca chofer con registro C vigente y experiencia en transporte agrícola. Viajes regionales.",contact:"Agro Pampa – 3382-445566",whatsapp:"3382445566",date:"2026-03-18",featured:false,active:true,views:44},
+];
+
+const DEMO_APPLICANTS = [
+  {id:1,name:"Carlos Fernández",category:"Construcción",skills:"Albañilería, revoque, pintura, ceramista",phone:"3382-111222",email:"carlos@mail.com",availability:"Inmediata",date:"2026-03-26"},
+  {id:2,name:"Ana García",category:"Educación",skills:"Maestra de grado, apoyo escolar, inglés básico, computación",phone:"3382-333444",email:"ana.garcia@mail.com",availability:"Dentro de 30 días",date:"2026-03-25"},
+  {id:3,name:"Marcos López",category:"Mecánica",skills:"Mecánico automotriz, electricidad del automóvil, soldadura",phone:"3382-555666",email:"marcos.lopez@mail.com",availability:"Inmediata",date:"2026-03-24"},
+  {id:4,name:"Sofía Ramírez",category:"Administración",skills:"Recepcionista, atención al cliente, facturación, AFIP básico",phone:"3382-777888",email:"sofia.r@mail.com",availability:"Dentro de 15 días",date:"2026-03-23"},
+  {id:5,name:"Diego Torres",category:"Gastronomía",skills:"Cocinero, pastelería, barista, atención en salón",phone:"3382-999000",email:"diego.t@mail.com",availability:"Inmediata",date:"2026-03-22"},
+];
+
+/* helpers localStorage */
+function lsGet(k,fb){try{const v=localStorage.getItem(k);return v?JSON.parse(v):fb}catch{return fb}}
+function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}}
+
+/* validate */
+function validateEmail(e){return/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)}
+function validatePhone(p){return p.replace(/\D/g,"").length>=7}
+
+/* ═══════════════════════════════════════════════════════════════
+   COMPONENTES UI REUTILIZABLES
+═══════════════════════════════════════════════════════════════ */
+
+/* Botón */
+const Btn = ({children,variant="primary",size="md",onClick,disabled,style={},...rest})=>{
+  const base={
+    display:"inline-flex",alignItems:"center",justifyContent:"center",gap:6,
+    border:"none",cursor:disabled?"not-allowed":"pointer",fontFamily:"'Inter',sans-serif",
+    fontWeight:600,transition:"all .18s cubic-bezier(.4,0,.2,1)",
+    opacity:disabled?.55:1,flexShrink:0
+  };
+  const sizes={sm:{padding:"6px 14px",fontSize:12,borderRadius:8},md:{padding:"10px 20px",fontSize:14,borderRadius:10},lg:{padding:"13px 28px",fontSize:15,borderRadius:12}};
+  const variants={
+    primary:{background:"var(--blue-600)",color:"#fff",boxShadow:"var(--shadow-blue)"},
+    secondary:{background:"var(--blue-50)",color:"var(--blue-600)",border:"1.5px solid var(--blue-100)"},
+    outline:{background:"transparent",color:"var(--blue-600)",border:"1.5px solid var(--blue-600)"},
+    ghost:{background:"transparent",color:"var(--gray-500)",border:"1.5px solid var(--gray-200)"},
+    danger:{background:"var(--red-bg)",color:"var(--red)",border:"1.5px solid #FECACA"},
+    success:{background:"var(--green-bg)",color:"#059669",border:"1.5px solid #BBF7D0"},
+    white:{background:"#fff",color:"var(--blue-600)",boxShadow:"var(--shadow-sm)"},
+  };
+  return(
+    <button style={{...base,...sizes[size],...variants[variant],...style}}
+      onClick={onClick} disabled={disabled}
+      onMouseEnter={e=>{if(!disabled){if(variant==="primary")e.currentTarget.style.background="var(--blue-700)";e.currentTarget.style.transform="translateY(-1px)";}}}
+      onMouseLeave={e=>{if(!disabled){if(variant==="primary")e.currentTarget.style.background="var(--blue-600)";e.currentTarget.style.transform="translateY(0)";}}}
+      {...rest}>{children}</button>
+  );
+};
+
+/* Input field con validación */
+const Field = ({label,error,children,required})=>(
+  <div style={{marginBottom:error?8:16}}>
+    {label&&<label style={{display:"block",fontSize:13,fontWeight:600,color:"var(--gray-700)",marginBottom:6}}>
+      {label}{required&&<span style={{color:"var(--red)",marginLeft:2}}>*</span>}
+    </label>}
+    {children}
+    {error&&<div className="error-msg">{error}</div>}
+  </div>
+);
+
+const inputStyle=(err)=>({
+  width:"100%",padding:"11px 14px",borderRadius:10,
+  border:`1.5px solid ${err?"var(--red)":"var(--gray-200)"}`,
+  fontSize:14,outline:"none",background:"#fff",transition:"border-color .15s",
+  color:"var(--gray-900)",
+});
+
+/* Card */
+const Card = ({children,style={},...rest})=>(
+  <div style={{background:"#fff",borderRadius:16,padding:24,boxShadow:"var(--shadow-md)",border:"1px solid rgba(0,82,204,.06)",...style}} {...rest}>{children}</div>
+);
+
+/* Tag de categoría */
+const CatBadge = ({cat})=>{
+  const color = CAT_COLOR[cat]||"gray";
+  return <span className={`badge badge-${color}`}>{cat}</span>;
+};
+
+/* Toast */
+const Toast = ({msg,type,onDone})=>{
+  useEffect(()=>{const t=setTimeout(onDone,3400);return()=>clearTimeout(t)},[]);
+  const colors={success:{bg:"#0D1B2A",icon:"✅"},error:{bg:"var(--red)",icon:"⚠️"},info:{bg:"var(--blue-700)",icon:"ℹ️"}};
+  const c=colors[type]||colors.success;
+  return(
+    <div style={{position:"fixed",bottom:24,right:24,zIndex:9999,background:c.bg,color:"#fff",borderRadius:14,padding:"14px 20px",fontSize:14,fontWeight:500,display:"flex",alignItems:"center",gap:10,boxShadow:"0 8px 32px rgba(0,0,0,.28)",animation:"fadeSlideDown .3s ease",maxWidth:360}}>
+      <span>{c.icon}</span><span>{msg}</span>
+    </div>
+  );
+};
+
+/* KPI Card */
+const KpiCard = ({val,label,sub,color="var(--blue-600)"})=>(
+  <div style={{background:"#fff",borderRadius:14,padding:"18px 20px",boxShadow:"var(--shadow-sm)",border:"1px solid var(--gray-100)"}}>
+    <div style={{fontSize:11,fontWeight:600,color:"var(--gray-400)",letterSpacing:.5,textTransform:"uppercase",marginBottom:6}}>{label}</div>
+    <div style={{fontFamily:"'Sora',sans-serif",fontSize:30,fontWeight:800,color,lineHeight:1}}>{val}</div>
+    {sub&&<div style={{fontSize:12,color:"var(--green)",marginTop:4}}>{sub}</div>}
+  </div>
+);
+
+/* ═══════════════════════════════════════════════════════════════
+   APP PRINCIPAL
+═══════════════════════════════════════════════════════════════ */
+function App(){
+  const [jobs,       setJobs]        = useState(()=>lsGet(SK_JOBS,DEMO_JOBS));
+  const [applicants, setApps]        = useState(()=>lsGet(SK_APPLICANTS,DEMO_APPLICANTS));
+  const [view,       setView]        = useState("home");
+  const [selJob,     setSelJob]      = useState(null);
+  const [fCat,       setFCat]        = useState("Todas");
+  const [fType,      setFType]       = useState("Todos");
+  const [fSalary,    setFSalary]     = useState("Todos");
+  const [fExp,       setFExp]        = useState("Todos");
+  const [fFeatured,  setFFeatured]   = useState(false);
+  const [search,     setSearch]      = useState("");
+  const [dashTab,    setDashTab]     = useState("stats");
+  const [toast,      setToast]       = useState(null);
+  const [adminMode,  setAdminMode]   = useState(false);
+  const [adminPass,  setAdminPass]   = useState("");
+  const [showAdminDlg,setAdminDlg]  = useState(false);
+  const [mobileOpen, setMobileOpen]  = useState(false);
+  const [aiLoading,  setAiLoading]   = useState(false);
+  const [errors,     setErrors]      = useState({});
+
+  /* Formulario aviso — campos ampliados */
+  const [postForm, setPost] = useState({
+    title:"",category:"Construcción",type:"full",location:"",
+    salary:"A convenir",experience:"Sin experiencia",
+    description:"",contact:"",whatsapp:"",featured:false,urgent:false
+  });
+  /* Formulario registro — con validación */
+  const [regForm, setReg] = useState({
+    name:"",category:"Construcción",skills:"",phone:"",email:"",
+    availability:"Inmediata",hasCV:false
+  });
+
+  const notify=(msg,type="success")=>setToast({msg,type});
+  const saveJobs=(d)=>{lsSet(SK_JOBS,d);setJobs(d)};
+  const saveApps=(d)=>{lsSet(SK_APPLICANTS,d);setApps(d)};
+
+  const go=(v)=>{setView(v);setMobileOpen(false);window.scrollTo(0,0)};
+
+  const openJob=(job)=>{
+    const upd=jobs.map(j=>j.id===job.id?{...j,views:(j.views||0)+1}:j);
+    saveJobs(upd);setSelJob({...job,views:(job.views||0)+1});go("detail");
+  };
+
+  /* Filtros */
+  const filtered = jobs.filter(j=>{
+    if(!j.active) return false;
+    if(fCat!=="Todas"&&j.category!==fCat) return false;
+    if(fType!=="Todos"&&j.type!==fType) return false;
+    if(fSalary!=="Todos"&&j.salary!==fSalary) return false;
+    if(fExp!=="Todos"&&j.experience!==fExp) return false;
+    if(fFeatured&&!j.featured) return false;
+    if(search){
+      const q=search.toLowerCase();
+      if(!j.title.toLowerCase().includes(q)&&!j.description.toLowerCase().includes(q)&&!j.category.toLowerCase().includes(q)) return false;
+    }
+    return true;
+  });
+  const featured=jobs.filter(j=>j.featured&&j.active);
+  const stats={
+    total:jobs.filter(j=>j.active).length,
+    applicants:applicants.length,
+    featured:featured.length,
+    views:jobs.reduce((a,j)=>a+(j.views||0),0),
+    byCategory:CATEGORIES.slice(1).map(c=>({c,n:jobs.filter(j=>j.category===c&&j.active).length})).filter(x=>x.n>0).sort((a,b)=>b.n-a.n),
+  };
+
+  /* Validación aviso */
+  const validatePost=()=>{
+    const e={};
+    if(!postForm.title.trim())e.title="El título es obligatorio";
+    if(!postForm.location.trim())e.location="La ubicación es obligatoria";
+    if(postForm.description.trim().length<20)e.description="La descripción debe tener al menos 20 caracteres";
+    if(!postForm.contact.trim())e.contact="El contacto es obligatorio";
+    setErrors(e);return Object.keys(e).length===0;
+  };
+  /* Validación registro */
+  const validateReg=()=>{
+    const e={};
+    if(!regForm.name.trim())e.name="El nombre es obligatorio";
+    if(!validatePhone(regForm.phone))e.phone="Ingresá un teléfono válido";
+    if(regForm.email&&!validateEmail(regForm.email))e.email="Email inválido";
+    if(regForm.skills.trim().length<10)e.skills="Describí tu oficio con más detalle (mínimo 10 caracteres)";
+    setErrors(e);return Object.keys(e).length===0;
+  };
+
+  const handlePost=()=>{
+    if(!validatePost())return;
+    saveJobs([{...postForm,id:Date.now(),date:new Date().toISOString().split("T")[0],active:true,views:0},...jobs]);
+    notify("¡Aviso publicado exitosamente! Ya está visible en la comunidad.");
+    setPost({title:"",category:"Construcción",type:"full",location:"",salary:"A convenir",experience:"Sin experiencia",description:"",contact:"",whatsapp:"",featured:false,urgent:false});
+    setErrors({});go("jobs");
+  };
+  const handleReg=()=>{
+    if(!validateReg())return;
+    saveApps([{...regForm,id:Date.now(),date:new Date().toISOString().split("T")[0]},...applicants]);
+    notify("¡Registro exitoso! Formás parte de la comunidad laboral de Rufino.");
+    setReg({name:"",category:"Construcción",skills:"",phone:"",email:"",availability:"Inmediata",hasCV:false});
+    setErrors({});go("home");
+  };
+  const handleDeleteJob=(id)=>{saveJobs(jobs.map(j=>j.id===id?{...j,active:false}:j));notify("Aviso eliminado.")};
+  const handleToggleFeat=(id)=>{saveJobs(jobs.map(j=>j.id===id?{...j,featured:!j.featured}:j));notify("Destacado actualizado.")};
+  const handleAdminLogin=()=>{
+    if(adminPass===ADMIN_PASS){setAdminMode(true);setAdminDlg(false);go("dashboard");notify("Acceso de administrador activado.")}
+    else notify("Contraseña incorrecta.","error");
+  };
+
+  /* IA: sugerir descripción */
+  const getAiSuggestion=async()=>{
+    if(!postForm.title||!postForm.category){notify("Completá título y categoría primero.","error");return}
+    setAiLoading(true);
+    try{
+      const res=await fetch("https://api.anthropic.com/v1/messages",{
+        method:"POST",
+        headers:{"Content-Type":"application/json","anthropic-version":"2023-06-01"},
+        body:JSON.stringify({
+          model:"claude-sonnet-4-20250514",max_tokens:300,
+          system:"Sos un asistente para una bolsa de trabajo comunitaria en Rufino, Argentina. Generás descripciones breves, claras y profesionales en español rioplatense. Respondé SOLO con la descripción, sin más texto.",
+          messages:[{role:"user",content:`Descripción de aviso laboral para: "${postForm.title}" en categoría "${postForm.category}". Máximo 3 oraciones, tono cercano y directo.`}]
+        })
+      });
+      const data=await res.json();
+      const txt=data.content?.find(b=>b.type==="text")?.text||"";
+      if(txt){setPost(f=>({...f,description:txt}));notify("✨ Descripción generada por IA.")}
+      else notify("No se pudo generar descripción. Intentá de nuevo.","error");
+    }catch{notify("Error al conectar con la IA.","error")}
+    setAiLoading(false);
+  };
+
+  /* ── NAV ITEMS ────────────────────────────────────────────────── */
+  const NAV=[
+    {v:"home",l:"Inicio",icon:<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>},
+    {v:"jobs",l:"Empleos",icon:<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>},
+    {v:"register",l:"Registrarme",icon:<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>},
+    {v:"post",l:"Publicar aviso",icon:<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>},
+    {v:"dashboard",l:"Dashboard",icon:<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>},
+  ];
+
+  /* ── JOB CARD ─────────────────────────────────────────────────── */
+  const JobCard=({job})=>{
+    const [hov,setHov]=useState(false);
+    return(
+      <div onClick={()=>openJob(job)} onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)}
+        style={{background:"#fff",borderRadius:16,padding:"20px 22px",boxShadow:hov?"var(--shadow-lg)":"var(--shadow-sm)",border:job.featured?"1.5px solid var(--blue-400)":"1px solid var(--gray-100)",cursor:"pointer",transform:hov?"translateY(-3px)":"translateY(0)",transition:"all .2s cubic-bezier(.4,0,.2,1)",display:"grid",gridTemplateColumns:"1fr auto",gap:12,alignItems:"start"}}>
+        <div>
+          <div style={{display:"flex",alignItems:"center",flexWrap:"wrap",gap:6,marginBottom:8}}>
+            {job.featured&&<span className="badge" style={{background:"var(--amber-bg)",color:"var(--amber)",fontWeight:700}}>⭐ Destacado</span>}
+            {job.urgent&&<span className="badge badge-red">🔴 Urgente</span>}
+            <CatBadge cat={job.category}/>
+            <span className="badge badge-gray">{JOB_TYPES[job.type]}</span>
+          </div>
+          <div style={{fontFamily:"'Sora',sans-serif",fontWeight:700,fontSize:16,color:"var(--gray-900)",marginBottom:4,lineHeight:1.3}}>{job.title}</div>
+          <div style={{display:"flex",flexWrap:"wrap",gap:12,marginBottom:8,fontSize:12,color:"var(--gray-400)"}}>
+            <span>📍 {job.location}</span>
+            <span>💰 {job.salary}</span>
+            <span>🎓 {job.experience}</span>
+          </div>
+          <div style={{fontSize:13,color:"var(--gray-500)",lineHeight:1.6}}>{job.description.substring(0,120)}{job.description.length>120?"…":""}</div>
+        </div>
+        <div style={{display:"flex",flexDirection:"column",alignItems:"flex-end",gap:8,minWidth:70}}>
+          <div style={{fontSize:11,color:"var(--gray-300)"}}>{job.date}</div>
+          <div style={{fontSize:11,color:"var(--gray-400)"}}>👁 {job.views||0}</div>
+          <Btn variant="secondary" size="sm" onClick={e=>{e.stopPropagation();openJob(job)}}>Ver →</Btn>
+        </div>
+      </div>
+    );
+  };
+
+  /* ── HOME ─────────────────────────────────────────────────────── */
+  const renderHome=()=>(
+    <div>
+      {/* Hero */}
+      <div style={{background:"linear-gradient(135deg,#0D1B2A 0%,var(--blue-700) 45%,var(--blue-500) 100%)",borderRadius:20,padding:"44px 36px",marginBottom:28,position:"relative",overflow:"hidden"}}>
+        <div style={{position:"absolute",top:-40,right:-40,width:240,height:240,background:"rgba(255,255,255,.04)",borderRadius:"50%"}}/>
+        <div style={{position:"absolute",bottom:-60,right:60,width:180,height:180,background:"rgba(255,255,255,.03)",borderRadius:"50%"}}/>
+        <div style={{position:"relative",zIndex:1}}>
+          <div style={{display:"inline-flex",alignItems:"center",gap:6,background:"rgba(255,255,255,.12)",border:"1px solid rgba(255,255,255,.2)",borderRadius:20,padding:"5px 14px",fontSize:12,fontWeight:600,color:"rgba(255,255,255,.9)",marginBottom:18}}>
+            🌾 Comunidad Infoconectados · Rufino, Santa Fe
+          </div>
+          <div style={{fontFamily:"'Sora',sans-serif",fontWeight:800,fontSize:28,color:"#fff",lineHeight:1.2,marginBottom:10}}>
+            Conectamos <span style={{color:"#FFD60A"}}>oficios</span> con<br/>oportunidades en Rufino
+          </div>
+          <div style={{color:"rgba(255,255,255,.75)",fontSize:14,marginBottom:24,lineHeight:1.6,maxWidth:480}}>
+            La bolsa de trabajo comunitaria y gratuita que lleva la realidad del trabajo local al mundo digital.
+          </div>
+          <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
+            <Btn variant="white" onClick={()=>go("jobs")}>Ver empleos →</Btn>
+            <Btn variant="outline" style={{borderColor:"rgba(255,255,255,.4)",color:"#fff"}} onClick={()=>go("register")}>Registrar mi oficio</Btn>
+            <Btn variant="outline" style={{borderColor:"rgba(255,255,255,.4)",color:"#fff"}} onClick={()=>go("post")}>Publicar aviso</Btn>
+          </div>
+        </div>
+      </div>
+
+      {/* KPIs */}
+      <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:12,marginBottom:28}}>
+        <KpiCard val={stats.total}      label="Avisos activos"   sub="↑ +8 esta semana"/>
+        <KpiCard val={stats.applicants} label="Perfiles"         sub="↑ +3 nuevos hoy" color="var(--green)"/>
+        <KpiCard val={stats.featured}   label="Destacados"       color="var(--amber)"/>
+        <KpiCard val={stats.views}      label="Visualizaciones"  sub="↑ +24% este mes" color="var(--purple)"/>
+      </div>
+
+      {/* Destacados */}
+      {featured.length>0&&(
+        <div style={{marginBottom:28}}>
+          <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:14}}>
+            <div style={{fontFamily:"'Sora',sans-serif",fontWeight:800,fontSize:17}}>⭐ Avisos Destacados</div>
+            <button style={{background:"none",border:"none",color:"var(--blue-500)",fontWeight:600,fontSize:13,cursor:"pointer"}} onClick={()=>go("jobs")}>Ver todos →</button>
+          </div>
+          <div style={{display:"flex",gap:14,overflowX:"auto",paddingBottom:8}}>
+            {featured.map(job=>(
+              <div key={job.id} onClick={()=>openJob(job)}
+                style={{minWidth:220,background:"linear-gradient(135deg,var(--blue-700),var(--blue-500))",borderRadius:14,padding:"18px 16px",color:"#fff",cursor:"pointer",flexShrink:0,boxShadow:"var(--shadow-blue)",transition:"transform .2s"}}
+                onMouseEnter={e=>e.currentTarget.style.transform="translateY(-3px)"}
+                onMouseLeave={e=>e.currentTarget.style.transform="translateY(0)"}>
+                <div style={{background:"rgba(255,255,255,.15)",borderRadius:6,padding:"3px 8px",fontSize:11,fontWeight:700,display:"inline-block",marginBottom:8}}>⭐ DESTACADO</div>
+                <div style={{fontFamily:"'Sora',sans-serif",fontWeight:700,fontSize:15,marginBottom:4,lineHeight:1.3}}>{job.title}</div>
+                <div style={{fontSize:12,opacity:.75}}>📍 {job.location} · {job.category}</div>
+                <div style={{fontSize:12,opacity:.65,marginTop:6,lineHeight:1.4}}>{job.description.substring(0,75)}…</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Últimos avisos */}
+      <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:14}}>
+        <div style={{fontFamily:"'Sora',sans-serif",fontWeight:800,fontSize:17}}>📋 Últimos avisos</div>
+        <button style={{background:"none",border:"none",color:"var(--blue-500)",fontWeight:600,fontSize:13,cursor:"pointer"}} onClick={()=>go("jobs")}>Ver todos →</button>
+      </div>
+      <div style={{display:"grid",gap:12}}>{jobs.filter(j=>j.active).slice(0,4).map(j=><JobCard key={j.id} job={j}/>)}</div>
+
+      {/* CTA */}
+      <div style={{background:"var(--blue-50)",border:"1px solid var(--blue-100)",borderRadius:16,padding:"28px 24px",marginTop:24,textAlign:"center"}}>
+        <div style={{fontSize:38,marginBottom:10}}>👷‍♀️</div>
+        <div style={{fontFamily:"'Sora',sans-serif",fontWeight:800,fontSize:17,marginBottom:6}}>¿Buscás trabajo en Rufino?</div>
+        <div style={{color:"var(--gray-400)",fontSize:14,marginBottom:18,lineHeight:1.6}}>Registrá tu oficio o experiencia y conectate con oportunidades locales.</div>
+        <Btn variant="primary" onClick={()=>go("register")}>Registrarme gratis</Btn>
+      </div>
+    </div>
+  );
+
+  /* ── JOBS ─────────────────────────────────────────────────────── */
+  const renderJobs=()=>(
+    <div>
+      <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:16,flexWrap:"wrap",gap:10}}>
+        <div>
+          <div style={{fontFamily:"'Sora',sans-serif",fontWeight:800,fontSize:20}}>📋 Todos los avisos</div>
+          <div style={{color:"var(--gray-400)",fontSize:13,marginTop:3}}>{filtered.length} resultado{filtered.length!==1?"s":""}</div>
+        </div>
+        <Btn variant="primary" size="sm" onClick={()=>go("post")}>+ Publicar aviso</Btn>
+      </div>
+
+      {/* Buscador */}
+      <div style={{background:"#fff",borderRadius:14,padding:"16px 18px",boxShadow:"var(--shadow-sm)",border:"1px solid var(--gray-100)",marginBottom:16}}>
+        <div style={{display:"flex",gap:10,flexWrap:"wrap",alignItems:"center",marginBottom:12}}>
+          <input
+            value={search} onChange={e=>setSearch(e.target.value)}
+            placeholder="🔍 Buscar por puesto, categoría o descripción..."
+            style={{flex:1,minWidth:180,...inputStyle(false)}}
+          />
+          {(search||fCat!=="Todas"||fType!=="Todos"||fSalary!=="Todos"||fExp!=="Todos"||fFeatured)&&(
+            <Btn variant="ghost" size="sm" onClick={()=>{setSearch("");setFCat("Todas");setFType("Todos");setFSalary("Todos");setFExp("Todos");setFFeatured(false)}}>✕ Limpiar</Btn>
+          )}
+        </div>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(140px,1fr))",gap:8}}>
+          <select value={fCat} onChange={e=>setFCat(e.target.value)} style={{...inputStyle(false),cursor:"pointer",marginBottom:0}}>
+            {CATEGORIES.map(c=><option key={c}>{c}</option>)}
+          </select>
+          <select value={fType} onChange={e=>setFType(e.target.value)} style={{...inputStyle(false),cursor:"pointer",marginBottom:0}}>
+            <option value="Todos">Tipo de empleo</option>
+            {Object.entries(JOB_TYPES).map(([k,v])=><option key={k} value={k}>{v}</option>)}
+          </select>
+          <select value={fSalary} onChange={e=>setFSalary(e.target.value)} style={{...inputStyle(false),cursor:"pointer",marginBottom:0}}>
+            <option value="Todos">Sueldo estimado</option>
+            {SALARY_RANGES.map(s=><option key={s}>{s}</option>)}
+          </select>
+          <select value={fExp} onChange={e=>setFExp(e.target.value)} style={{...inputStyle(false),cursor:"pointer",marginBottom:0}}>
+            <option value="Todos">Experiencia</option>
+            {EXPERIENCE.map(e=><option key={e}>{e}</option>)}
+          </select>
+        </div>
+        <div style={{marginTop:10,display:"flex",alignItems:"center",gap:8,cursor:"pointer"}} onClick={()=>setFFeatured(!fFeatured)}>
+          <div style={{width:18,height:18,borderRadius:5,border:`2px solid ${fFeatured?"var(--blue-600)":"var(--gray-200)"}`,background:fFeatured?"var(--blue-600)":"#fff",display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:11,transition:"all .15s"}}>{fFeatured?"✓":""}</div>
+          <span style={{fontSize:13,fontWeight:500,color:"var(--gray-600)"}}>Solo avisos destacados ⭐</span>
+        </div>
+      </div>
+
+      {filtered.length===0
+        ? <div style={{textAlign:"center",padding:"56px 20px",color:"var(--gray-400)"}}>
+            <div style={{fontSize:48,marginBottom:12}}>🔍</div>
+            <div style={{fontFamily:"'Sora',sans-serif",fontWeight:700,fontSize:16,marginBottom:6}}>Sin resultados</div>
+            <div style={{fontSize:13}}>Probá con otros filtros o buscá por otra palabra.</div>
+            <Btn variant="secondary" size="sm" style={{marginTop:14}} onClick={()=>{setSearch("");setFCat("Todas");setFType("Todos");setFSalary("Todos");setFExp("Todos");setFFeatured(false)}}>Limpiar filtros</Btn>
+          </div>
+        : <div style={{display:"grid",gap:12}}>{filtered.map(j=><JobCard key={j.id} job={j}/>)}</div>
+      }
+    </div>
+  );
+
+  /* ── DETAIL ───────────────────────────────────────────────────── */
+  const renderDetail=()=>{
+    if(!selJob)return null;
+    return(
+      <div>
+        <button style={{display:"flex",alignItems:"center",gap:6,background:"none",border:"none",color:"var(--blue-500)",fontWeight:600,fontSize:14,cursor:"pointer",marginBottom:18}} onClick={()=>go("jobs")}>← Volver a avisos</button>
+        <div style={{background:"#fff",borderRadius:20,padding:"28px 26px",boxShadow:"var(--shadow-md)",border:"1px solid var(--gray-100)"}}>
+          <div style={{display:"flex",flexWrap:"wrap",gap:6,marginBottom:12}}>
+            {selJob.featured&&<span className="badge" style={{background:"var(--amber-bg)",color:"var(--amber)",fontWeight:700}}>⭐ Destacado</span>}
+            {selJob.urgent&&<span className="badge badge-red">🔴 Urgente</span>}
+            <CatBadge cat={selJob.category}/>
+            <span className="badge badge-gray">{JOB_TYPES[selJob.type]}</span>
+          </div>
+          <div style={{fontFamily:"'Sora',sans-serif",fontWeight:800,fontSize:22,marginBottom:10,lineHeight:1.25}}>{selJob.title}</div>
+          <div style={{display:"flex",flexWrap:"wrap",gap:16,fontSize:13,color:"var(--gray-400)",marginBottom:20}}>
+            <span>📍 {selJob.location}</span>
+            <span>📅 {selJob.date}</span>
+            <span>👁 {selJob.views} visualizaciones</span>
+            <span>💰 {selJob.salary}</span>
+            <span>🎓 Experiencia: {selJob.experience}</span>
+          </div>
+          <div style={{marginBottom:20}}>
+            <div style={{fontSize:11,fontWeight:700,color:"var(--gray-400)",textTransform:"uppercase",letterSpacing:.5,marginBottom:8}}>Descripción del puesto</div>
+            <div style={{fontSize:15,color:"var(--gray-700)",lineHeight:1.7}}>{selJob.description}</div>
+          </div>
+          <div style={{background:"var(--blue-50)",border:"1px solid var(--blue-100)",borderRadius:12,padding:"16px 18px",marginBottom:24}}>
+            <div style={{fontSize:11,fontWeight:700,color:"var(--blue-600)",textTransform:"uppercase",letterSpacing:.5,marginBottom:6}}>Contacto</div>
+            <div style={{fontWeight:700,fontSize:16,color:"var(--gray-900)",marginBottom:4}}>📞 {selJob.contact}</div>
+            {selJob.whatsapp&&<div style={{fontSize:13,color:"var(--gray-400)"}}>WhatsApp: +54 {selJob.whatsapp}</div>}
+          </div>
+          <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
+            {selJob.whatsapp&&(
+              <Btn variant="success" onClick={()=>window.open(`https://wa.me/54${selJob.whatsapp}?text=Hola! Vi tu aviso "${selJob.title}" en la Bolsa de Trabajo Rufino.`)}>
+                💬 Contactar por WhatsApp
+              </Btn>
+            )}
+            <Btn variant="primary" onClick={()=>{navigator.clipboard?.writeText(selJob.contact);notify("📋 Contacto copiado al portapapeles.")}}>
+              📋 Copiar contacto
+            </Btn>
+            <Btn variant="ghost" onClick={()=>go("jobs")}>← Volver</Btn>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  /* ── REGISTER ─────────────────────────────────────────────────── */
+  const renderRegister=()=>(
+    <div>
+      <div style={{fontFamily:"'Sora',sans-serif",fontWeight:800,fontSize:20,marginBottom:4}}>👷 Registrá tu oficio</div>
+      <div style={{color:"var(--gray-400)",fontSize:13,marginBottom:20}}>Formá parte de la comunidad laboral de Rufino. Es gratis.</div>
+      <div style={{background:"#fff",borderRadius:20,padding:"28px 24px",boxShadow:"var(--shadow-md)",border:"1px solid var(--gray-100)"}}>
+        <Field label="Nombre completo" required error={errors.name}>
+          <input value={regForm.name} onChange={e=>{setReg(f=>({...f,name:e.target.value}));setErrors(er=>({...er,name:""}))} } placeholder="Ej: María González" style={inputStyle(errors.name)}/>
+        </Field>
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:14}}>
+          <Field label="Categoría" required>
+            <select value={regForm.category} onChange={e=>setReg(f=>({...f,category:e.target.value}))} style={{...inputStyle(false),cursor:"pointer"}}>
+              {CATEGORIES.slice(1).map(c=><option key={c}>{c}</option>)}
+            </select>
+          </Field>
+          <Field label="Disponibilidad">
+            <select value={regForm.availability} onChange={e=>setReg(f=>({...f,availability:e.target.value}))} style={{...inputStyle(false),cursor:"pointer"}}>
+              {["Inmediata","Dentro de 15 días","Dentro de 30 días","Solo fines de semana","No disponible ahora"].map(o=><option key={o}>{o}</option>)}
+            </select>
+          </Field>
+        </div>
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:14}}>
+          <Field label="Teléfono / WhatsApp" required error={errors.phone}>
+            <input value={regForm.phone} onChange={e=>{setReg(f=>({...f,phone:e.target.value}));setErrors(er=>({...er,phone:""}))}} placeholder="3382-xxxxxx" style={inputStyle(errors.phone)}/>
+          </Field>
+          <Field label="Email" error={errors.email}>
+            <input value={regForm.email} onChange={e=>{setReg(f=>({...f,email:e.target.value}));setErrors(er=>({...er,email:""}))}} placeholder="tu@correo.com" style={inputStyle(errors.email)}/>
+          </Field>
+        </div>
+        <Field label="Oficio / Experiencia" required error={errors.skills}>
+          <textarea value={regForm.skills} onChange={e=>{setReg(f=>({...f,skills:e.target.value}));setErrors(er=>({...er,skills:""}))}}
+            placeholder="Contanos a qué te dedicás, tu experiencia, herramientas que manejás..." rows={4}
+            style={{...inputStyle(errors.skills),resize:"vertical",minHeight:90}}/>
+        </Field>
+        <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:20,cursor:"pointer"}} onClick={()=>setReg(f=>({...f,hasCV:!f.hasCV}))}>
+          <div style={{width:18,height:18,borderRadius:5,border:`2px solid ${regForm.hasCV?"var(--blue-600)":"var(--gray-200)"}`,background:regForm.hasCV?"var(--blue-600)":"#fff",display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:11,transition:"all .15s"}}>{regForm.hasCV?"✓":""}</div>
+          <span style={{fontSize:13,fontWeight:500,color:"var(--gray-600)"}}>Tengo CV disponible para enviar</span>
+        </div>
+        <Btn variant="primary" onClick={handleReg} style={{width:"100%"}}>✅ Registrarme en la comunidad</Btn>
+      </div>
+    </div>
+  );
+
+  /* ── POST ─────────────────────────────────────────────────────── */
+  const renderPost=()=>(
+    <div>
+      <div style={{fontFamily:"'Sora',sans-serif",fontWeight:800,fontSize:20,marginBottom:4}}>📢 Publicar aviso</div>
+      <div style={{color:"var(--gray-400)",fontSize:13,marginBottom:20}}>Publicá gratis una búsqueda laboral para la comunidad de Rufino.</div>
+      <div style={{background:"#fff",borderRadius:20,padding:"28px 24px",boxShadow:"var(--shadow-md)",border:"1px solid var(--gray-100)"}}>
+        <Field label="Título del puesto" required error={errors.title}>
+          <input value={postForm.title} onChange={e=>{setPost(f=>({...f,title:e.target.value}));setErrors(er=>({...er,title:""}))}}
+            placeholder="Ej: Albañil con experiencia, Cocinero/a, Auxiliar administrativo..." style={inputStyle(errors.title)}/>
+        </Field>
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:14}}>
+          <Field label="Categoría" required>
+            <select value={postForm.category} onChange={e=>setPost(f=>({...f,category:e.target.value}))} style={{...inputStyle(false),cursor:"pointer"}}>
+              {CATEGORIES.slice(1).map(c=><option key={c}>{c}</option>)}
+            </select>
+          </Field>
+          <Field label="Tipo de empleo" required>
+            <select value={postForm.type} onChange={e=>setPost(f=>({...f,type:e.target.value}))} style={{...inputStyle(false),cursor:"pointer"}}>
+              {Object.entries(JOB_TYPES).map(([k,v])=><option key={k} value={k}>{v}</option>)}
+            </select>
+          </Field>
+        </div>
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:14}}>
+          <Field label="Ubicación" required error={errors.location}>
+            <input value={postForm.location} onChange={e=>{setPost(f=>({...f,location:e.target.value}));setErrors(er=>({...er,location:""}))}}
+              placeholder="Ej: Rufino Centro, Ruta 8 Km 420..." style={inputStyle(errors.location)}/>
+          </Field>
+          <Field label="Sueldo estimado">
+            <select value={postForm.salary} onChange={e=>setPost(f=>({...f,salary:e.target.value}))} style={{...inputStyle(false),cursor:"pointer"}}>
+              {SALARY_RANGES.map(s=><option key={s}>{s}</option>)}
+            </select>
+          </Field>
+        </div>
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:14}}>
+          <Field label="Experiencia requerida">
+            <select value={postForm.experience} onChange={e=>setPost(f=>({...f,experience:e.target.value}))} style={{...inputStyle(false),cursor:"pointer"}}>
+              {EXPERIENCE.map(e=><option key={e}>{e}</option>)}
+            </select>
+          </Field>
+          <Field label="WhatsApp de contacto">
+            <input value={postForm.whatsapp} onChange={e=>setPost(f=>({...f,whatsapp:e.target.value}))}
+              placeholder="3382xxxxxx (sin +54)" style={inputStyle(false)}/>
+          </Field>
+        </div>
+
+        {/* Descripción con IA */}
+        <div>
+          <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:6}}>
+            <label style={{fontSize:13,fontWeight:600,color:"var(--gray-700)"}}>Descripción <span style={{color:"var(--red)"}}>*</span></label>
+            <Btn variant="secondary" size="sm" onClick={getAiSuggestion} disabled={aiLoading} style={{gap:6}}>
+              {aiLoading?"⏳ Generando…":"✨ Sugerir con IA"}
+            </Btn>
+          </div>
+          <textarea value={postForm.description} onChange={e=>{setPost(f=>({...f,description:e.target.value}));setErrors(er=>({...er,description:""}))}}
+            placeholder="Describí las tareas, requisitos, condiciones, beneficios..." rows={4}
+            style={{...inputStyle(errors.description),resize:"vertical",minHeight:100,width:"100%",marginBottom:0}}/>
+          {errors.description&&<div className="error-msg">{errors.description}</div>}
+          <div style={{fontSize:11,color:"var(--gray-300)",marginTop:4,marginBottom:16}}>
+            {postForm.description.length} caracteres {postForm.description.length<20&&postForm.description.length>0?"(mínimo 20)":""}
+          </div>
+        </div>
+
+        <Field label="Datos de contacto" required error={errors.contact}>
+          <input value={postForm.contact} onChange={e=>{setPost(f=>({...f,contact:e.target.value}));setErrors(er=>({...er,contact:""}))}}
+            placeholder="Teléfono, email o nombre de referencia" style={inputStyle(errors.contact)}/>
+        </Field>
+
+        {/* Opciones extra */}
+        <div style={{background:"var(--gray-50)",borderRadius:12,padding:"14px 16px",marginBottom:20,display:"flex",gap:20,flexWrap:"wrap"}}>
+          <div style={{display:"flex",alignItems:"center",gap:8,cursor:"pointer"}} onClick={()=>setPost(f=>({...f,urgent:!f.urgent}))}>
+            <div style={{width:18,height:18,borderRadius:5,border:`2px solid ${postForm.urgent?"var(--red)":"var(--gray-200)"}`,background:postForm.urgent?"var(--red)":"#fff",display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:11,transition:"all .15s"}}>{postForm.urgent?"✓":""}</div>
+            <span style={{fontSize:13,fontWeight:500,color:"var(--gray-600)"}}>🔴 Búsqueda urgente</span>
+          </div>
+          {adminMode&&(
+            <div style={{display:"flex",alignItems:"center",gap:8,cursor:"pointer"}} onClick={()=>setPost(f=>({...f,featured:!f.featured}))}>
+              <div style={{width:18,height:18,borderRadius:5,border:`2px solid ${postForm.featured?"var(--amber)":"var(--gray-200)"}`,background:postForm.featured?"var(--amber)":"#fff",display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:11,transition:"all .15s"}}>{postForm.featured?"✓":""}</div>
+              <span style={{fontSize:13,fontWeight:500,color:"var(--gray-600)"}}>⭐ Destacar este aviso (admin)</span>
+            </div>
+          )}
+        </div>
+
+        <Btn variant="primary" onClick={handlePost} style={{width:"100%"}}>📢 Publicar aviso</Btn>
+      </div>
+    </div>
+  );
+
+  /* ── DASHBOARD ────────────────────────────────────────────────── */
+  const renderDashboard=()=>{
+    const maxCat=Math.max(...stats.byCategory.map(x=>x.n),1);
+    const topViews=[...jobs].filter(j=>j.active).sort((a,b)=>(b.views||0)-(a.views||0)).slice(0,5);
+    return(
+      <div>
+        <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:20,flexWrap:"wrap",gap:10}}>
+          <div style={{fontFamily:"'Sora',sans-serif",fontWeight:800,fontSize:20}}>📊 Dashboard</div>
+          <div style={{display:"flex",gap:8,alignItems:"center"}}>
+            {adminMode&&<span className="badge badge-blue" style={{fontWeight:700}}>👑 Administrador</span>}
+            {!adminMode&&<Btn variant="outline" size="sm" onClick={()=>setAdminDlg(true)}>🔐 Acceso admin</Btn>}
+          </div>
+        </div>
+
+        {/* Tabs */}
+        <div style={{display:"flex",gap:4,background:"#fff",borderRadius:12,padding:4,marginBottom:20,boxShadow:"var(--shadow-sm)",border:"1px solid var(--gray-100)"}}>
+          {[["stats","📊 Estadísticas"],["jobs","📋 Avisos"],["applicants","👷 Perfiles"]].map(([k,l])=>(
+            <button key={k} onClick={()=>setDashTab(k)}
+              style={{flex:1,padding:"10px 8px",borderRadius:9,border:"none",cursor:"pointer",fontWeight:dashTab===k?700:400,fontSize:13,background:dashTab===k?"var(--blue-600)":"transparent",color:dashTab===k?"#fff":"var(--gray-400)",transition:"all .2s"}}>{l}</button>
+          ))}
+        </div>
+
+        {dashTab==="stats"&&(
+          <div>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:12,marginBottom:16}}>
+              <KpiCard val={stats.total}      label="Avisos activos"   sub="↑ +8 esta semana"/>
+              <KpiCard val={stats.applicants} label="Perfiles"         color="var(--green)"/>
+              <KpiCard val={stats.featured}   label="Destacados"       color="var(--amber)"/>
+              <KpiCard val={stats.views}      label="Visualizaciones"  color="var(--purple)"/>
+            </div>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:14,marginBottom:14}}>
+              {/* Barras por categoría */}
+              <div style={{background:"#fff",borderRadius:14,padding:20,boxShadow:"var(--shadow-sm)",border:"1px solid var(--gray-100)"}}>
+                <div style={{fontFamily:"'Sora',sans-serif",fontWeight:700,fontSize:14,marginBottom:14}}>Avisos por categoría</div>
+                {stats.byCategory.map(({c,n})=>(
+                  <div key={c} style={{display:"flex",alignItems:"center",gap:10,marginBottom:10}}>
+                    <div style={{fontSize:12,color:"var(--gray-400)",minWidth:90,textAlign:"right"}}>{c}</div>
+                    <div style={{flex:1,height:8,background:"var(--gray-100)",borderRadius:4,overflow:"hidden"}}>
+                      <div style={{height:"100%",width:Math.round(n/maxCat*100)+"%",background:"linear-gradient(90deg,var(--blue-600),var(--blue-400))",borderRadius:4,transition:"width .8s ease"}}/>
+                    </div>
+                    <div style={{fontSize:12,fontWeight:700,color:"var(--blue-600)",minWidth:16}}>{n}</div>
+                  </div>
+                ))}
+              </div>
+              {/* Top por vistas */}
+              <div style={{background:"#fff",borderRadius:14,padding:20,boxShadow:"var(--shadow-sm)",border:"1px solid var(--gray-100)"}}>
+                <div style={{fontFamily:"'Sora',sans-serif",fontWeight:700,fontSize:14,marginBottom:14}}>Top avisos por vistas</div>
+                {topViews.map((j,i)=>(
+                  <div key={j.id} onClick={()=>openJob(j)}
+                    style={{display:"flex",alignItems:"center",gap:10,marginBottom:10,cursor:"pointer",padding:"8px 10px",borderRadius:8,transition:"background .15s"}}
+                    onMouseEnter={e=>e.currentTarget.style.background="var(--blue-50)"}
+                    onMouseLeave={e=>e.currentTarget.style.background="transparent"}>
+                    <span style={{fontFamily:"'Sora',sans-serif",fontWeight:800,color:"var(--blue-600)",minWidth:22,fontSize:14}}>#{i+1}</span>
+                    <span style={{flex:1,fontSize:13,fontWeight:600,lineHeight:1.3}}>{j.title}</span>
+                    <span style={{fontSize:12,color:"var(--gray-400)"}}>👁 {j.views||0}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            {/* Últimos registros */}
+            <div style={{background:"#fff",borderRadius:14,padding:20,boxShadow:"var(--shadow-sm)",border:"1px solid var(--gray-100)"}}>
+              <div style={{fontFamily:"'Sora',sans-serif",fontWeight:700,fontSize:14,marginBottom:14}}>Registros recientes</div>
+              {applicants.slice(0,4).map(a=>(
+                <div key={a.id} style={{display:"flex",alignItems:"center",gap:12,padding:"10px 0",borderBottom:"1px solid var(--gray-100)"}}>
+                  <div style={{width:36,height:36,borderRadius:"50%",background:"var(--blue-50)",color:"var(--blue-600)",display:"flex",alignItems:"center",justifyContent:"center",fontFamily:"'Sora',sans-serif",fontWeight:800,fontSize:13,flexShrink:0}}>
+                    {a.name.split(" ").map(n=>n[0]).join("").slice(0,2).toUpperCase()}
+                  </div>
+                  <div style={{flex:1}}>
+                    <div style={{fontWeight:600,fontSize:13}}>{a.name}</div>
+                    <div style={{fontSize:11,color:"var(--gray-400)"}}>{a.category} · {a.date}</div>
+                  </div>
+                  <span className={`badge badge-${CAT_COLOR[a.category]||"gray"}`}>{a.availability}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {dashTab==="jobs"&&(
+          <div style={{background:"#fff",borderRadius:14,padding:20,boxShadow:"var(--shadow-sm)",border:"1px solid var(--gray-100)"}}>
+            <div style={{overflowX:"auto"}}>
+              <table style={{width:"100%",borderCollapse:"collapse",fontSize:13}}>
+                <thead>
+                  <tr>{["Título","Categoría","Tipo","Sueldo","Fecha","👁","⭐",adminMode?"Acciones":""].filter(Boolean).map(h=>(
+                    <th key={h} style={{padding:"10px 12px",background:"var(--gray-50)",color:"var(--gray-400)",fontWeight:600,textAlign:"left",borderBottom:"1px solid var(--gray-100)",whiteSpace:"nowrap"}}>{h}</th>
+                  ))}</tr>
+                </thead>
+                <tbody>{jobs.filter(j=>j.active).map(j=>(
+                  <tr key={j.id} style={{transition:"background .12s"}}
+                    onMouseEnter={e=>e.currentTarget.style.background="var(--blue-50)"}
+                    onMouseLeave={e=>e.currentTarget.style.background="transparent"}>
+                    <td style={{padding:"11px 12px",fontWeight:600,cursor:"pointer",color:"var(--blue-600)"}} onClick={()=>openJob(j)}>{j.title}</td>
+                    <td style={{padding:"11px 12px"}}><CatBadge cat={j.category}/></td>
+                    <td style={{padding:"11px 12px",color:"var(--gray-500)"}}>{JOB_TYPES[j.type]}</td>
+                    <td style={{padding:"11px 12px",color:"var(--gray-500)",fontSize:12}}>{j.salary}</td>
+                    <td style={{padding:"11px 12px",color:"var(--gray-400)",fontSize:12}}>{j.date}</td>
+                    <td style={{padding:"11px 12px",color:"var(--gray-400)"}}>{j.views||0}</td>
+                    <td style={{padding:"11px 12px"}}>{j.featured?"⭐":"–"}</td>
+                    {adminMode&&<td style={{padding:"11px 12px"}}>
+                      <div style={{display:"flex",gap:6}}>
+                        <Btn variant="success" size="sm" onClick={()=>handleToggleFeat(j.id)}>{j.featured?"Quitar ⭐":"Destacar"}</Btn>
+                        <Btn variant="danger" size="sm" onClick={()=>handleDeleteJob(j.id)}>Eliminar</Btn>
+                      </div>
+                    </td>}
+                  </tr>
+                ))}</tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
+        {dashTab==="applicants"&&(
+          <div style={{background:"#fff",borderRadius:14,padding:20,boxShadow:"var(--shadow-sm)",border:"1px solid var(--gray-100)"}}>
+            <div style={{overflowX:"auto"}}>
+              <table style={{width:"100%",borderCollapse:"collapse",fontSize:13}}>
+                <thead>
+                  <tr>{["Nombre","Categoría","Oficio / Habilidades","Teléfono","Disponibilidad","Fecha"].map(h=>(
+                    <th key={h} style={{padding:"10px 12px",background:"var(--gray-50)",color:"var(--gray-400)",fontWeight:600,textAlign:"left",borderBottom:"1px solid var(--gray-100)",whiteSpace:"nowrap"}}>{h}</th>
+                  ))}</tr>
+                </thead>
+                <tbody>{applicants.map(a=>(
+                  <tr key={a.id} style={{transition:"background .12s"}}
+                    onMouseEnter={e=>e.currentTarget.style.background="var(--gray-50)"}
+                    onMouseLeave={e=>e.currentTarget.style.background="transparent"}>
+                    <td style={{padding:"11px 12px",fontWeight:600}}>{a.name}</td>
+                    <td style={{padding:"11px 12px"}}><CatBadge cat={a.category}/></td>
+                    <td style={{padding:"11px 12px",color:"var(--gray-500)",maxWidth:200}}>{a.skills}</td>
+                    <td style={{padding:"11px 12px",color:"var(--blue-600)",fontWeight:500}}>{a.phone}</td>
+                    <td style={{padding:"11px 12px"}}><span className="badge badge-green">{a.availability}</span></td>
+                    <td style={{padding:"11px 12px",color:"var(--gray-400)",fontSize:12}}>{a.date}</td>
+                  </tr>
+                ))}</tbody>
+              </table>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  /* ── RENDER ───────────────────────────────────────────────────── */
+  return(
+    <div style={{fontFamily:"'Inter',sans-serif",background:"#F2F5FB",minHeight:"100vh",color:"var(--gray-900)"}}>
+
+      {/* Mobile Nav Overlay */}
+      <div className={`mobile-nav${mobileOpen?" open":""}`}>
+        <div className="mobile-nav-header">
+          <div style={{display:"flex",alignItems:"center",gap:10}}>
+            <div style={{width:36,height:36,background:"var(--blue-600)",borderRadius:10,display:"flex",alignItems:"center",justifyContent:"center",fontSize:18}}>🤝</div>
+            <div>
+              <div style={{fontFamily:"'Sora',sans-serif",fontWeight:700,fontSize:14,color:"#fff"}}>Bolsa de Trabajo</div>
+              <div style={{fontSize:11,color:"rgba(255,255,255,.5)"}}>Rufino · crecemos en comunidad</div>
+            </div>
+          </div>
+          <button style={{background:"rgba(255,255,255,.08)",border:"none",borderRadius:8,width:36,height:36,color:"#fff",fontSize:20,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}} onClick={()=>setMobileOpen(false)}>×</button>
+        </div>
+        <div className="mobile-nav-links">
+          {NAV.map(({v,l,icon})=>(
+            <button key={v} className={`mobile-nav-link${view===v?" active":""}`} onClick={()=>go(v)}>
+              {icon}<span>{l}</span>
+            </button>
+          ))}
+        </div>
+        <div className="mobile-nav-footer">
+          <div style={{fontSize:12,color:"rgba(255,255,255,.4)",textAlign:"center"}}>bolsa.infoconectados.com · bolsadetrabajo.fp@gmail.com</div>
+        </div>
+      </div>
+      {mobileOpen&&<div style={{position:"fixed",inset:0,zIndex:998}} onClick={()=>setMobileOpen(false)}/>}
+
+      {/* Header */}
+      <header style={{background:"linear-gradient(135deg,#0D1B2A 0%,var(--blue-700) 55%,var(--blue-500) 100%)",padding:"0 20px",boxShadow:"0 4px 20px rgba(0,66,168,.35)",position:"sticky",top:0,zIndex:100}}>
+        <div style={{maxWidth:960,margin:"0 auto",display:"flex",alignItems:"center",justifyContent:"space-between",height:62}}>
+          <div style={{display:"flex",alignItems:"center",gap:10,cursor:"pointer"}} onClick={()=>go("home")}>
+            <div style={{width:36,height:36,background:"rgba(255,255,255,.15)",borderRadius:10,display:"flex",alignItems:"center",justifyContent:"center",fontSize:18}}>🤝</div>
+            <div>
+              <div style={{fontFamily:"'Sora',sans-serif",fontWeight:700,fontSize:15,color:"#fff",lineHeight:1.1}}>Bolsa de Trabajo</div>
+              <div style={{fontSize:10,color:"rgba(255,255,255,.6)",fontWeight:400}}>Rufino · crecemos en comunidad</div>
+            </div>
+          </div>
+
+          {/* Desktop nav */}
+          <nav style={{display:"flex",gap:2}}>
+            {NAV.map(({v,l})=>(
+              <button key={v} onClick={()=>go(v)}
+                style={{background:view===v?"rgba(255,255,255,.2)":"transparent",color:"#fff",border:"none",borderRadius:8,padding:"7px 12px",cursor:"pointer",fontSize:12,fontWeight:view===v?700:400,transition:"all .18s"}}
+                className="desktop-nav-btn">{l}</button>
+            ))}
+          </nav>
+
+          {/* Hamburger */}
+          <button className={`hamburger${mobileOpen?" open":""}`} onClick={()=>setMobileOpen(!mobileOpen)} aria-label="Menú">
+            <span/><span/><span/>
+          </button>
+        </div>
+      </header>
+
+      {/* Toast */}
+      {toast&&<Toast msg={toast.msg} type={toast.type} onDone={()=>setToast(null)}/>}
+
+      {/* Modal admin */}
+      {showAdminDlg&&(
+        <div className="overlay" onClick={e=>e.target===e.currentTarget&&setAdminDlg(false)}>
+          <div style={{background:"#fff",borderRadius:20,padding:"32px 28px",width:340,boxShadow:"var(--shadow-lg)",animation:"scaleIn .2s ease"}}>
+            <div style={{fontFamily:"'Sora',sans-serif",fontWeight:800,fontSize:18,marginBottom:4}}>🔐 Acceso administrador</div>
+            <div style={{fontSize:13,color:"var(--gray-400)",marginBottom:20}}>Ingresá la contraseña para acceder al panel de gestión.</div>
+            <input type="password" placeholder="Contraseña" value={adminPass}
+              onChange={e=>setAdminPass(e.target.value)}
+              onKeyDown={e=>e.key==="Enter"&&handleAdminLogin()}
+              style={{...inputStyle(false),marginBottom:14}}/>
+            <div style={{display:"flex",gap:8}}>
+              <Btn variant="primary" onClick={handleAdminLogin} style={{flex:1}}>Ingresar</Btn>
+              <Btn variant="ghost" onClick={()=>setAdminDlg(false)} style={{flex:1}}>Cancelar</Btn>
+            </div>
+            <div style={{fontSize:11,color:"var(--gray-300)",marginTop:12,textAlign:"center"}}>Demo: rufino2026</div>
+          </div>
+        </div>
+      )}
+
+      {/* Main content */}
+      <main style={{maxWidth:960,margin:"0 auto",padding:"24px 16px 64px"}}>
+        {view==="home"      && renderHome()}
+        {view==="jobs"      && renderJobs()}
+        {view==="detail"    && renderDetail()}
+        {view==="register"  && renderRegister()}
+        {view==="post"      && renderPost()}
+        {view==="dashboard" && renderDashboard()}
+      </main>
+
+      {/* Footer */}
+      <footer style={{background:"var(--gray-900)",color:"rgba(255,255,255,.4)",textAlign:"center",padding:"20px 16px",fontSize:12}}>
+        <div style={{marginBottom:6}}>
+          🤝 <span style={{color:"rgba(255,255,255,.7)",fontWeight:500}}>Bolsa de Trabajo Rufino</span> · Comunidad gratuita · <a href="mailto:bolsadetrabajo.fp@gmail.com" style={{color:"var(--blue-400)"}}>bolsadetrabajo.fp@gmail.com</a>
+        </div>
+        <div>bolsa.infoconectados.com · Una iniciativa de <a href="https://infoconectados.com" style={{color:"var(--blue-400)"}}>Infoconectados</a></div>
+      </footer>
+
+      {/* Media queries via JS (workaround para archivo único) */}
+      <style>{`
+        @media(max-width:720px){
+          .desktop-nav-btn{display:none!important}
+          .hamburger{display:flex!important}
+        }
+        @media(min-width:721px){
+          .hamburger{display:none!important}
+        }
+      `}</style>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+</script>
+</body>
+</html>
