@@ -1,0 +1,215 @@
+<?php
+/**
+ * El Rufino — Child Theme functions.php v2.0.0
+ * Design System v1.1 · Abril 2026
+ * Tema hijo para Newsup. Si el tema padre cambia, actualizar Template en style.css.
+ */
+
+if ( ! defined( 'ABSPATH' ) ) exit;
+
+// ── Enqueue parent + child styles ──
+add_action( 'wp_enqueue_scripts', 'er_theme_enqueue' );
+function er_theme_enqueue() {
+    // Parent theme
+    wp_enqueue_style(
+        'parent-style',
+        get_template_directory_uri() . '/style.css',
+        [],
+        wp_get_theme( get_template() )->get('Version')
+    );
+    // Child theme (overrides)
+    wp_enqueue_style(
+        'child-style',
+        get_stylesheet_uri(),
+        ['parent-style'],
+        wp_get_theme()->get('Version')
+    );
+    // Google Fonts — solo Source Serif 4 (Playfair Display carga desde archivos locales)
+    wp_enqueue_style(
+        'er-fonts',
+        'https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap',
+        [],
+        null
+    );
+}
+
+// ── Theme supports ──
+add_action( 'after_setup_theme', 'er_theme_setup' );
+function er_theme_setup() {
+    add_theme_support( 'post-thumbnails' );
+    add_theme_support( 'title-tag' );
+    add_theme_support( 'html5', ['search-form','comment-form','comment-list','gallery','caption'] );
+    add_theme_support( 'custom-logo', [
+        'height'      => 80,
+        'width'       => 300,
+        'flex-height' => true,
+        'flex-width'  => true,
+    ]);
+    add_theme_support( 'customize-selective-refresh-widgets' );
+
+    // Gutenberg — paleta del Design System
+    add_theme_support( 'editor-color-palette', [
+        [ 'name' => 'Rojo El Rufino', 'slug' => 'er-rojo',  'color' => '#c0271b' ],
+        [ 'name' => 'Negro',          'slug' => 'er-negro', 'color' => '#1a1a1a' ],
+        [ 'name' => 'Crema',          'slug' => 'er-crema', 'color' => '#f5f0e8' ],
+        [ 'name' => 'P02 Campo',      'slug' => 'er-p02',   'color' => '#4a7c59' ],
+        [ 'name' => 'P03 Barrio',     'slug' => 'er-p03',   'color' => '#2d5f8a' ],
+        [ 'name' => 'P04 Generación', 'slug' => 'er-p04',   'color' => '#7b4fa6' ],
+        [ 'name' => 'P06 Datos',      'slug' => 'er-p06',   'color' => '#c8600a' ],
+    ]);
+    add_theme_support( 'disable-custom-gradients' );
+
+    // Image sizes
+    add_image_size( 'er-featured',   780, 440, true );
+    add_image_size( 'er-card',       400, 250, true );
+    add_image_size( 'er-thumbnail',  160, 100, true );
+    add_image_size( 'er-wide',      1200, 500, true );
+
+    // Navigation menus
+    register_nav_menus([
+        'primary'   => 'Menú principal',
+        'secondary' => 'Menú secundario',
+        'footer'    => 'Menú footer',
+    ]);
+}
+
+// ── Disable XML-RPC (security) ──
+add_filter( 'xmlrpc_enabled', '__return_false' );
+
+// ── Remove unnecessary head tags ──
+remove_action( 'wp_head', 'rsd_link' );
+remove_action( 'wp_head', 'wlwmanifest_link' );
+remove_action( 'wp_head', 'wp_generator' );
+remove_action( 'wp_head', 'wp_shortlink_wp_head' );
+remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
+remove_action( 'wp_print_styles', 'print_emoji_styles' );
+
+// ── Masthead crema — DS v1.1 ──
+add_action( 'wp_body_open', 'er_render_masthead', 5 );
+function er_render_masthead() {
+    $wa = get_option( 'er_whatsapp_canal', 'https://whatsapp.com/channel/elrufino' );
+    $fecha = date_i18n( 'l j \d\e F \d\e Y' );
+    echo '<div class="er-topbar">
+        <span>' . esc_html( $fecha ) . '</span>
+        <span class="er-topbar-loc">Rufino · Santa Fe · Argentina</span>
+    </div>
+    <div class="er-masthead">
+        <a href="' . esc_url( home_url('/') ) . '" class="er-masthead-logo">
+            <div class="er-logo-r"><span>R</span></div>
+            <div class="er-logo-texto">
+                <span class="er-logo-nombre">El Rufino</span>
+                <span class="er-logo-claim">Lo que pasa y lo que significa</span>
+            </div>
+        </a>
+        <a href="' . esc_url( $wa ) . '" class="er-btn-wa" target="_blank" rel="noopener">📲 WhatsApp</a>
+    </div>';
+}
+
+// ── Ticker negro con label rojo — DS v1.1 ──
+add_action( 'wp_body_open', 'er_render_ticker', 10 );
+function er_render_ticker() {
+    $q = new WP_Query([
+        'posts_per_page' => 6,
+        'post_status'    => 'publish',
+        'no_found_rows'  => true,
+    ]);
+    if ( ! $q->have_posts() ) return;
+    $items = '';
+    while ( $q->have_posts() ) {
+        $q->the_post();
+        $items .= '<span class="er-ticker-item">'
+                . '<span class="er-ticker-dot"></span>'
+                . esc_html( get_the_title() )
+                . '</span>';
+    }
+    wp_reset_postdata();
+    echo '<div class="er-nav-divider"></div>
+    <div class="er-ticker">
+        <div class="er-ticker-label">Último momento</div>
+        <div class="er-ticker-track">
+            <div class="er-ticker-inner">' . $items . $items . '</div>
+        </div>
+    </div>';
+}
+
+// ── Shortcode er_wa_subscribe — DS v1.1 ──
+// Uso: [er_wa_subscribe texto="..." link="https://..." btn="Unirme"]
+add_shortcode( 'er_wa_subscribe', 'er_wa_subscribe_shortcode' );
+function er_wa_subscribe_shortcode( $atts ) {
+    $atts = shortcode_atts([
+        'texto' => 'Recibí las noticias de Rufino directo en tu celular.',
+        'link'  => get_option( 'er_whatsapp_canal', '#' ),
+        'btn'   => 'Unirme al canal',
+    ], $atts );
+    return '<div class="er-wa-banner">
+        <div class="er-wa-texto">' . esc_html( $atts['texto'] ) . '</div>
+        <a href="' . esc_url( $atts['link'] ) . '" class="er-btn-wa" target="_blank" rel="noopener">
+            📲 ' . esc_html( $atts['btn'] ) . '
+        </a>
+    </div>';
+}
+
+// ── Shortcode er_seguimiento — DS v1.1 ──
+// Uso: [er_seguimiento estado="pendiente"]
+add_shortcode( 'er_seguimiento', 'er_seguimiento_shortcode' );
+function er_seguimiento_shortcode( $atts ) {
+    $atts   = shortcode_atts(['estado' => 'en seguimiento'], $atts);
+    $clases = [
+        'cumplida'       => 'es-cumplida',
+        'incumplida'     => 'es-incumplida',
+        'en proceso'     => 'es-en-curso',
+        'en seguimiento' => 'es-seguimiento',
+        'pendiente'      => 'es-pendiente',
+    ];
+    $cls = $clases[ strtolower( $atts['estado'] ) ] ?? 'es-pendiente';
+    return '<span class="er-p05-estado ' . esc_attr( $cls ) . '">'
+         . esc_html( $atts['estado'] ) . '</span>';
+}
+
+// ── Color de pilar según categoría ──
+function er_get_pilar_color( $post_id = null ) {
+    $cats = get_the_category( $post_id );
+    if ( ! $cats ) return '#c0271b';
+    $slug   = $cats[0]->slug;
+    $colores = [
+        'rufino-real'       => '#c0271b',
+        'el-campo-habla'    => '#4a7c59',
+        'barrio-a-barrio'   => '#2d5f8a',
+        'generacion-rufino' => '#7b4fa6',
+        'poder-y-gestion'   => '#1a1a1a',
+        'rufino-en-datos'   => '#c8600a',
+    ];
+    return $colores[ $slug ] ?? '#c0271b';
+}
+
+// ── Two-cap rule reminder in editor ──
+add_action( 'admin_footer-post.php', 'er_editor_reminder' );
+add_action( 'admin_footer-post-new.php', 'er_editor_reminder' );
+function er_editor_reminder() { ?>
+    <script>
+    (function(){
+        var bar = document.createElement('div');
+        bar.innerHTML = '<strong>REGLA DE 2 CAPAS:</strong> ¿La nota tiene (1) lo que pasó + (2) lo que significa? Sin segunda capa, no se publica.';
+        bar.style.cssText = 'position:fixed;bottom:0;left:160px;right:0;background:#c0271b;color:#fff;padding:8px 20px;font-size:12px;z-index:9999;text-align:center';
+        document.body.appendChild(bar);
+    })();
+    </script>
+<?php }
+
+// ── Security headers ──
+add_action( 'send_headers', 'er_security_headers' );
+function er_security_headers() {
+    header( 'X-Content-Type-Options: nosniff' );
+    header( 'X-Frame-Options: SAMEORIGIN' );
+    header( 'Referrer-Policy: strict-origin-when-cross-origin' );
+}
+
+// ── Custom excerpt ──
+add_filter( 'excerpt_length', function() { return 30; } );
+add_filter( 'excerpt_more',   function() { return '...'; } );
+
+// ── Suppress PHP notices en frontend ──
+if ( ! WP_DEBUG ) {
+    error_reporting( E_ERROR | E_PARSE );
+    @ini_set( 'display_errors', 0 );
+}
