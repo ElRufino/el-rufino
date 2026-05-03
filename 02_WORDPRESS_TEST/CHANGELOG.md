@@ -1,48 +1,50 @@
-# Changelog — El Rufino Panel
+## [2026-05-03] — Child theme v2.1.4 · single.php · Facebook App
 
-Todas las versiones del plugin WordPress del Panel IA de El Rufino.
+### Agregado
+- `single.php` — template nota individual completo:
+  - "Por [nombre]" con avatar circular (override Gravatar con favicon)
+  - Fecha en español: "3 de mayo de 2026"
+  - Tiempo de lectura automático (palabras / 200)
+  - Controles A− / A+ para tamaño de fuente
+  - Botón Escuchar / Pausar (Web Speech API, voz es-AR)
+  - Compartir: Facebook, X, WhatsApp, Telegram
+  - Meta boxes "Pie de foto" y "Fuente / Crédito" en editor WP
+  - Facebook Comments (App ID: 1314916506819026)
+  - "Notas relacionadas" (reemplaza "Related Post")
+  - Tags con estilo visual
 
----
+### Modificado
+- `functions.php`:
+  - Meta boxes pie de foto y fuente (`_er_pie_foto`, `_er_fuente_foto`)
+  - Override avatar con favicon del child theme
+  - Filtro fecha español portada (`the_time`, `get_the_time`)
+  - Filtro `date_i18n` para nombres de mes
+  - Traducción strings Newsup vía `gettext`
+- `style.css`:
+  - Ocultar sección "You missed" (`.missed-section`)
+  - `text-align: left` forzado en `.entry-content`
+  - `text-transform: none` en `.mg-blog-date` (fecha portada)
+  - Estilos completos nota individual (`.er-single-*`, `.er-article-*`)
+  - Estilos controles de lectura, share inline, tags, relacionadas
+  - Estilos Facebook Comments section
 
-## [8.1.2] — 2026-04-13
+### Facebook App
+- App creada en developers.facebook.com
+- Nombre: El Rufino
+- App ID: 1314916506819026
+- Dominio registrado: prueba.infoconectados.com
+- Estado: En desarrollo (activar cuando salga a producción)
 
-### Fixed
-- **Chat IA / "Sin respuesta":** `callClaude()` enviaba solo `action` y `nonce` al proxy PHP. El payload JSON de Claude no llegaba porque `admin-ajax.php` recibe `application/x-www-form-urlencoded` y el PHP leía `php://input` (vacío en ese caso). Solución: payload enviado como campo POST `payload` (JSON string), PHP lo lee con `$_POST['payload']`.
-- **API Key — campo no se desactiva:** Al guardar la key no había feedback de estado. El input quedaba habilitado y sin indicar si había una key activa en el servidor.
+### Notas demo
+- 10 notas con cuerpo completo generadas y cargadas en WordPress
+- Archivo fuente: `02_WORDPRESS_TEST/el-rufino_notas-demo_completas.md`
 
-### Added
-- `er_apikey_status` — nuevo AJAX endpoint. Al montar el Dashboard verifica si hay key configurada y devuelve versión enmascarada (`sk-ant-ap...a3f2`).
-- `er_delete_apikey` — nuevo AJAX endpoint. Elimina la key desde la UI sin tocar el servidor.
-- UI de API key con 3 estados: `Verificando...` → `✓ Activa: sk-ant-...` con botones Cambiar/Eliminar → formulario de ingreso.
-- `er_save_apikey` ahora devuelve la máscara en la respuesta para actualizar la UI sin recargar.
+### Plugin
+- `el-rufino-panel.php`: modelo corregido de `claude-sonnet-4-20250514` → `claude-sonnet-4-6`
+- API key configurada (sin créditos activos — pendiente carga)
 
-### Changed
-- Proxy PHP: timeout aumentado de 60 a 90 segundos.
-- Proxy PHP: manejo de errores mejorado — devuelve el mensaje de error real de la API de Anthropic.
-- Badge "OpenRouter integrado" → "Claude API" (el proxy siempre apuntó a api.anthropic.com).
-- `max_tokens` en `callClaude()`: 1000 → 1500.
-
----
-
-## [8.1.1] — 2026-04-12
-
-### Added
-- Agente 12: Crisis — protocolo tragedia, fake news, desmentida
-- Agentes 6A (TikTok) y 6B (Reels) separados con prompts diferenciados
-- Roadmap con semáforos de estado en Pantalla 4
-
----
-
-## [8.1.0] — 2026-04-12
-
-### Added
-- 4 pantallas: Dashboard · Producción · Inteligencia · Seguimiento
-- 12 agentes con prompts operativos
-- 48 notas demo (8 × 6 pilares) basadas en noticias reales de Rufino marzo-abril 2026
-- Base de datos `wp_er_promesas` con CRUD completo via AJAX
-- Importador de notas demo como borradores WordPress
-- Checklist Fase 2 persistente
-- Métricas Mes 0
-- Kanban editorial (drag & drop)
-- Plantillas WhatsApp con preview
-- Contexto IA exportable (bloque de transferencia rápida)
+### Pendiente próxima sesión
+- `home.php` — layout portada (hero + grillas por pilar + sidebar)
+- Formato fecha portada: "mayo 3" → "3 de mayo de 2026"
+- Subir `favicon-512.png` a `assets/` del tema en servidor
+- Activar Facebook App cuando pase a producción
