@@ -133,6 +133,7 @@ reorganizacion_*.log
 #  _TEMP\ es trabajo volátil
 # ─────────────────────────────────────────────────────────────────────────────
 _ARCHIVO/
+_RELEASES/
 _TEMP/
 _uploads/
 _borrador/
@@ -191,7 +192,7 @@ credenciales.txt
 #    → contenido editorial publicado (eso vive en WordPress)
 # ─────────────────────────────────────────────────────────────────────────────
 
-# Binarios � no trackear en git
+# Binarios � no trackear en git
 *.zip
 *.jpg
 *.jpeg

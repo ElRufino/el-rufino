@@ -1,0 +1,13 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\.ps1]
+@="Microsoft.PowerShellScript.1"
+
+[HKEY_CLASSES_ROOT\Microsoft.PowerShellScript.1\Shell]
+@="Open"
+
+[HKEY_CLASSES_ROOT\Microsoft.PowerShellScript.1\Shell\Open]
+@="Ejecutar con PowerShell"
+
+[HKEY_CLASSES_ROOT\Microsoft.PowerShellScript.1\Shell\Open\Command]
+@="\"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe\" -ExecutionPolicy Bypass -NoExit -File \"%1\""
