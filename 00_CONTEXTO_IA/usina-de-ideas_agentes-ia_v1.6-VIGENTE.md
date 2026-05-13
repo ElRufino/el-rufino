@@ -1,7 +1,7 @@
 # El Rufino — Sistema de Agentes IA
 ## Documento de instrucciones para agentes externos
-### Versión 1.5 · 18 de abril de 2026
-### Cambios v1.5: referencias a v1.5 actualizadas · Cuenta 9 (rufino.paspatria) como punto de entrada IA · 9 proyectos USINA DE IDEAS referenciados · flujo de despacho IA incorporado
+### Versión 1.6 · 12 de mayo de 2026
+### Cambios v1.6: plugin actualizado a v8.6.0 · 5 pantallas (Dashboard / Produccion / Inteligencia / Seguimiento / Asistente) · categorías P01-P06 marcadas como completadas · entorno de trabajo actualizado a elrufino.com.ar (producción activa)
 
 ---
 
@@ -14,7 +14,7 @@ Para activar un agente:
 2. Abrí Claude desde la **Cuenta 9** (rufino.paspatria · acceso Claude)
 3. Pegá el bloque de transferencia rápida + el prompt con el contexto activo del medio
 4. El agente responde con código, texto o instrucciones según su rol
-5. Verificá el resultado desde el panel v8.1.2 (prueba.infoconectados.com)
+5. Verificá el resultado desde el panel v8.6.0 (elrufino.com.ar)
 
 ---
 
@@ -36,12 +36,12 @@ Para activar un agente:
 
 ---
 
-## ESTADO ACTUAL DEL PROYECTO (v1.5)
+## ESTADO ACTUAL DEL PROYECTO (v1.6)
 
 **Fase:** Fase 2 — Producto mínimo · 40% completado
-**Plugin:** v8.1.2 "El Rufino — Panel" · 4 pantallas
-**Entorno test:** prueba.infoconectados.com (activo)
-**Entorno producción:** elrufino.com.ar (Hostinger · WordPress · DNS delegado)
+**Plugin:** v8.6.0 "El Rufino — Panel IA" · 5 pantallas
+**Entorno producción:** elrufino.com.ar (Hostinger · WordPress · DNS delegado · activo)
+**Entorno test:** prueba.infoconectados.com
 **Dominio objetivo:** elrufino.ar (pendiente registro NIC Argentina)
 **Repo git:** consolidado en EL_RUFINO\ · 27 commits · sincronizado origin/main
 **Cuentas Google:** 9 · rufino.paspatria = Cuenta 9 · operador IA
@@ -49,22 +49,25 @@ Para activar un agente:
 **Checklist Fase 2:**
 - [x] Logo/favicon/OG subidos
 - [x] 20 notas demo publicadas
-- [ ] 6 categorías P01-P06
+- [x] 6 categorías P01-P06 creadas
 - [ ] Schema NewsMediaOrganization
 - [ ] 500 suscriptores WhatsApp
+- [ ] Child theme Newsup configurado con paleta B
+- [ ] elrufino.ar registrado en NIC Argentina
 
 ---
 
-## ARQUITECTURA DEL PANEL v8.1.2
+## ARQUITECTURA DEL PANEL v8.6.0
 
-### Pantallas (4)
+### Pantallas (5)
 
 | # | Pantalla | Contenido |
 |---|---|---|
-| 1 | BASE | Dashboard · stats · checklist Fase 2 · accesos directos |
+| 1 | Dashboard | Panel general · stats · checklist Fase 2 · accesos directos |
 | 2 | Producción | 4 tools de producción de contenido |
 | 3 | Inteligencia | 12 agentes IA integrados |
-| 4 | Seguimiento | Kanban editorial · registro de promesas |
+| 4 | Seguimiento | Kanban editorial · registro de promesas · exportar CSV |
+| 5 | Asistente | Asistente de noticia · YouTube + imagen + transcripción automática via captions |
 
 ---
 
@@ -202,7 +205,7 @@ Reglas del calendario:
 - Mínimo 1 nota larga por semana · Resumen WA todos los días 7:30 AM
 - Sin segunda capa = no va al calendario
 
-Usá el Kanban de la pantalla Seguimiento del panel v8.1.2 para trackear.
+Usá el Kanban de la pantalla Seguimiento del panel v8.6.0 para trackear.
 ```
 
 ---
@@ -294,7 +297,7 @@ Entregá también: miniatura sugerida y mejor horario de publicación.
 **Cuenta recomendada:** Cuenta 8 (Operaciones) via Cuenta 9
 
 ### Instrucción de uso:
-Antes de copiar el prompt, exportá el registro de promesas desde la pantalla Seguimiento del panel v8.1.2 y pegalo en el campo [REGISTRO].
+Antes de copiar el prompt, exportá el registro de promesas desde la pantalla Seguimiento del panel v8.6.0 y pegalo en el campo [REGISTRO].
 
 ### Prompt del agente:
 ```
@@ -304,7 +307,7 @@ Contexto del medio:
 [PEGAR CONTEXTO DESDE usina-de-ideas_repositorio-ia_v1.5-VIGENTE.md]
 
 Registro de promesas:
-[PEGAR REGISTRO DESDE PANTALLA SEGUIMIENTO DEL PANEL v8.1.2]
+[PEGAR REGISTRO DESDE PANTALLA SEGUIMIENTO DEL PANEL v8.6.0]
 
 Redactá:
 
@@ -344,8 +347,8 @@ Stack actual:
 - Hosting: Hostinger
 - WordPress: última versión estable
 - Tema padre: Newsup
-- Plugin custom: v8.1.2 "El Rufino — Panel" (4 pantallas)
-- Dominio producción: elrufino.com.ar
+- Plugin custom: v8.6.0 "El Rufino — Panel IA" (5 pantallas)
+- Dominio producción: elrufino.com.ar (activo)
 - Entorno test: prueba.infoconectados.com
 
 Tu tarea:
@@ -545,13 +548,13 @@ Cuando un agente entrega su resultado:
 
 ---
 
-## CHECKPOINT — Estado actual del proyecto (v1.5)
+## CHECKPOINT — Estado actual del proyecto (v1.6)
 
 **Fase:** Fase 2 — Producto mínimo · 40% completado
-**Prioridad inmediata:** Crear categorías P01-P06 + Schema NewsMediaOrganization
-**Próxima acción:** Ejecutar Agente 2 (categorías) y Agente 1 (SEO) via Cuenta 9
+**Prioridad inmediata:** Schema NewsMediaOrganization · child theme paleta B
+**Próxima acción:** Agente 1 (SEO) via Cuenta 9
 **Dominio objetivo:** elrufino.ar (pendiente registro en NIC Argentina)
-**Plugin:** v8.1.2 activo en prueba.infoconectados.com · pendiente actualizar en producción
+**Plugin:** v8.6.0 activo en elrufino.com.ar
 **Repo git:** consolidado en EL_RUFINO\ · 27 commits · sincronizado origin/main
 **Cuentas:** 9 · rufino.paspatria = Cuenta 9 · operador IA
 
@@ -562,14 +565,14 @@ Cuando un agente entrega su resultado:
 | Eje | Estado | Nota |
 |---|---|---|
 | Identidad (Fase 1) | VERDE | Cerrada definitivamente |
-| Plugin v8.1.2 | VERDE | Activo en prueba.infoconectados.com |
+| Plugin v8.6.0 | VERDE | Activo en elrufino.com.ar |
 | Dominio .com.ar | VERDE | Activo · delegado · Hostinger |
 | Logo/favicon/OG | VERDE | Subidos y confirmados |
 | Notas demo | VERDE | 20 notas publicadas |
+| Categorías P01-P06 | VERDE | Creadas en WordPress |
 | Repo git | VERDE | Consolidado en EL_RUFINO\ · 27 commits · sincronizado origin/main |
 | Cuenta 9 IA | VERDE | rufino.paspatria · operador IA · acceso Claude |
 | Dominio .ar | ROJO | Pendiente registro NIC |
-| Categorías P01-P06 | ROJO | Sin crear |
 | Schema NewsMediaOrganization | ROJO | Pendiente Rank Math |
 | Canal WhatsApp | ROJO | 0/500 suscriptores |
 | Child theme Newsup | AMARILLO | Disponible en 02_WORDPRESS_TEST\ · falta instalar |
@@ -581,5 +584,5 @@ Cuando un agente entrega su resultado:
 
 *Documento vivo. Actualizar al tomar cada decisión relevante.*
 *Firma institucional: PROYECTO EL RUFINO · Repositorio organizativo: USINA DE IDEAS*
-*Versión 1.5 · 18 de abril de 2026*
-*Sincronizado con: usina-de-ideas_repositorio-ia_v1.5-VIGENTE.md*
+*Versión 1.6 · 12 de mayo de 2026*
+*Sincronizado con: usina-de-ideas_prompt-maestro_v1.6-VIGENTE.md*

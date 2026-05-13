@@ -66,7 +66,7 @@ $wa_url = get_option('er_whatsapp_canal', 'https://whatsapp.com/channel/elrufino
 
     <div class="er-footer-bottom">
       <span>© <?php echo date('Y'); ?> El Rufino · Rufino, Santa Fe, Argentina</span>
-      <span>elrufino.ar</span>
+      <span>elrufino.com.ar</span>
     </div>
   </div>
 </footer>
