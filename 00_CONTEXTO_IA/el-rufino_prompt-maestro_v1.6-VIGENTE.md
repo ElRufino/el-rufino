@@ -1,10 +1,3 @@
-# ARCHIVO MOVIDO — 2026-05-13
-## Este archivo fue renombrado como parte de la normalizacion del sistema.
-## Usar: el-rufino_prompt-maestro_v1.6-VIGENTE.md
-## Motivo: prefijo corregido de usina-de-ideas_ a el-rufino_ segun estandar v1.2
-
----
-
 # PROMPT MAESTRO — EL RUFINO
 ## Agente de IA · Contexto de transferencia
 ### Version 1.6 · 22 de abril de 2026
@@ -41,8 +34,8 @@ CHECKLIST_PENDIENTE = 6 categorias P01-P06 · Schema NewsMediaOrganization · 50
 EXPANSION_REGIONAL = horizonte futuro · NO fase activa (corredor RN33 pausado)
 ROLES = funcionales · no cargos rigidos
 NOMBRES = Fabian Longo (El Diferente) · Adriana Gimenez (Voces otra mirada)
-ARCHIVO_CONTEXTO = 00_CONTEXTO_IA/usina-de-ideas_repositorio-ia_v1.5-VIGENTE.md
-ARCHIVO_AGENTES = 00_CONTEXTO_IA/usina-de-ideas_agentes-ia_v1.5-VIGENTE.md
+ARCHIVO_CONTEXTO = 00_CONTEXTO_IA/el-rufino_repositorio-ia_v1.6-VIGENTE.md
+ARCHIVO_AGENTES = 00_CONTEXTO_IA/el-rufino_agentes-ia_v1.6-VIGENTE.md
 DECISIONES = NO reabrir las listadas sin indicacion explicita del usuario
 REPOSITORIO_ORGANIZATIVO = USINA DE IDEAS · F:\HERRAMIENTAS DE IA\PROYECTOS\USINA_DE_IDEAS\
 PROYECTOS_USINA = EL_RUFINO · GESTION_COMERCIAL · SISMUIF · SOCIEDAD_ITALIANA · RADIOTV · DIGESTO · PJ · INFOCONECTADOS · LA_COMUNIDAD_ORGANIZADA
@@ -275,8 +268,8 @@ Cualquier area solicita tarea IA → Cuenta 9 abre Claude → pega bloque de tra
 1. Siempre pegar el bloque de transferencia rapida al inicio de cada conversacion nueva
 2. No pedir a la IA que reconstruya contexto: darselo directamente
 3. Versionar este documento cada vez que se toma una decision nueva
-4. Los agentes operativos estan en usina-de-ideas_agentes-ia_v1.5-VIGENTE.md: referenciarlos por numero
-5. El repositorio detallado completo esta en usina-de-ideas_repositorio-ia_v1.5-VIGENTE.md
+4. Los agentes operativos estan en el-rufino_agentes-ia_v1.6-VIGENTE.md: referenciarlos por numero
+5. El repositorio detallado completo esta en el-rufino_repositorio-ia_v1.6-VIGENTE.md
 6. Cuenta 9 (rufino.paspatria) es el punto de entrada al sistema IA para todas las areas
 
 ---
@@ -304,9 +297,9 @@ F:\HERRAMIENTAS DE IA\
 ├── PROYECTOS\
 │   ├── EL_RUFINO\                          proyecto editorial
 │   │   ├── 00_CONTEXTO_IA\                 fuente unica de verdad para IAs
-│   │   │   ├── usina-de-ideas_agentes-ia_v1.5-VIGENTE.md
-│   │   │   ├── usina-de-ideas_prompt-maestro_v1.6-VIGENTE.md   este archivo
-│   │   │   └── usina-de-ideas_repositorio-ia_v1.5-VIGENTE.md
+│   │   │   ├── el-rufino_agentes-ia_v1.6-VIGENTE.md
+│   │   │   ├── el-rufino_prompt-maestro_v1.6-VIGENTE.md   este archivo
+│   │   │   └── el-rufino_repositorio-ia_v1.6-VIGENTE.md
 │   │   ├── 01_DOCUMENTOS_VIGENTES\
 │   │   ├── 02_WORDPRESS_TEST\
 │   │   ├── 03_IDENTIDAD_MARCA\

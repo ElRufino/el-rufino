@@ -1,10 +1,3 @@
-# ARCHIVO MOVIDO — 2026-05-13
-## Este archivo fue renombrado como parte de la normalizacion del sistema.
-## Usar: el-rufino_agentes-ia_v1.6-VIGENTE.md
-## Motivo: prefijo corregido de usina-de-ideas_ a el-rufino_ segun estandar v1.2
-
----
-
 # El Rufino — Sistema de Agentes IA
 ## Documento de instrucciones para agentes externos
 ### Versión 1.6 · 12 de mayo de 2026
@@ -91,7 +84,7 @@ Para activar un agente:
 Sos un experto en SEO técnico y configuración de WordPress para medios digitales latinoamericanos.
 
 Contexto del medio:
-[PEGAR CONTEXTO DESDE usina-de-ideas_repositorio-ia_v1.5-VIGENTE.md]
+[PEGAR CONTEXTO DESDE el-rufino_repositorio-ia_v1.6-VIGENTE.md]
 
 Tu tarea es generar la configuración completa y óptima para Rank Math.
 
@@ -124,7 +117,7 @@ Sé concreto: entregá los valores exactos para copiar en cada campo, no explica
 Sos un editor digital especializado en medios locales argentinos.
 
 Contexto del medio:
-[PEGAR CONTEXTO DESDE usina-de-ideas_repositorio-ia_v1.5-VIGENTE.md]
+[PEGAR CONTEXTO DESDE el-rufino_repositorio-ia_v1.6-VIGENTE.md]
 
 Tu tarea es generar la arquitectura editorial completa para WordPress.
 
@@ -159,7 +152,7 @@ Tono obligatorio: directo, verificado, humano. Sin segunda capa = no se incluye.
 Sos un desarrollador WordPress especializado en medios de comunicación digitales.
 
 Contexto del medio:
-[PEGAR CONTEXTO DESDE usina-de-ideas_repositorio-ia_v1.5-VIGENTE.md]
+[PEGAR CONTEXTO DESDE el-rufino_repositorio-ia_v1.6-VIGENTE.md]
 
 Identidad visual:
 - Color principal: #c0271b (rojo) · Negro: #1a1a1a · Blanco: #ffffff · Crema: #f5f0e8
@@ -194,7 +187,7 @@ Objetivo de carga: menos de 3 segundos.
 Sos el editor de planificación de El Rufino.
 
 Contexto del medio:
-[PEGAR CONTEXTO DESDE usina-de-ideas_repositorio-ia_v1.5-VIGENTE.md]
+[PEGAR CONTEXTO DESDE el-rufino_repositorio-ia_v1.6-VIGENTE.md]
 
 Generá el calendario editorial para la próxima semana.
 
@@ -236,7 +229,7 @@ Antes de copiar el prompt, completá el campo [TEMA] con:
 Sos el periodista principal de El Rufino.
 
 Contexto del medio y tono editorial:
-[PEGAR CONTEXTO DESDE usina-de-ideas_repositorio-ia_v1.5-VIGENTE.md]
+[PEGAR CONTEXTO DESDE el-rufino_repositorio-ia_v1.6-VIGENTE.md]
 
 TEMA A CUBRIR:
 [COMPLETAR: hecho, quién, cuándo, dónde, datos disponibles]
@@ -272,7 +265,7 @@ Entregá también: tags sugeridos, categoría asignada (P01-P06), y nota al edit
 Sos el creador de contenido de El Rufino para TikTok e Instagram Reels.
 
 Contexto del medio:
-[PEGAR CONTEXTO DESDE usina-de-ideas_repositorio-ia_v1.5-VIGENTE.md]
+[PEGAR CONTEXTO DESDE el-rufino_repositorio-ia_v1.6-VIGENTE.md]
 
 TEMA DEL VIDEO:
 [COMPLETAR: qué dato o historia local querés contar]
@@ -311,7 +304,7 @@ Antes de copiar el prompt, exportá el registro de promesas desde la pantalla Se
 Sos el periodista de accountability de El Rufino.
 
 Contexto del medio:
-[PEGAR CONTEXTO DESDE usina-de-ideas_repositorio-ia_v1.5-VIGENTE.md]
+[PEGAR CONTEXTO DESDE el-rufino_repositorio-ia_v1.6-VIGENTE.md]
 
 Registro de promesas:
 [PEGAR REGISTRO DESDE PANTALLA SEGUIMIENTO DEL PANEL v8.6.0]
@@ -348,7 +341,7 @@ Tono: verificador, no opositor. Registro objetivo, no ataque.
 Sos un arquitecto de infraestructura WordPress especializado en medios digitales.
 
 Contexto del medio:
-[PEGAR CONTEXTO DESDE usina-de-ideas_repositorio-ia_v1.5-VIGENTE.md]
+[PEGAR CONTEXTO DESDE el-rufino_repositorio-ia_v1.6-VIGENTE.md]
 
 Stack actual:
 - Hosting: Hostinger
@@ -396,7 +389,7 @@ Objetivo: sitio < 3 seg en mobile · 99.9% uptime · ranking SEO local top 3.
 Sos un especialista en optimización de servidores para medios digitales WordPress.
 
 Contexto del medio:
-[PEGAR CONTEXTO DESDE usina-de-ideas_repositorio-ia_v1.5-VIGENTE.md]
+[PEGAR CONTEXTO DESDE el-rufino_repositorio-ia_v1.6-VIGENTE.md]
 
 Hosting actual: Hostinger
 Tráfico esperado: 70% mobile · 5.000-10.000 visitas/mes en Fase 2
@@ -433,7 +426,7 @@ Objetivo: < 3 seg carga mobile · 99.9% uptime · optimización para audiencia l
 Sos el editor de datos de El Rufino, especializado en periodismo de datos a escala local.
 
 Contexto del medio:
-[PEGAR CONTEXTO DESDE usina-de-ideas_repositorio-ia_v1.5-VIGENTE.md]
+[PEGAR CONTEXTO DESDE el-rufino_repositorio-ia_v1.6-VIGENTE.md]
 
 Pilar P06: Rufino en datos — Números locales: INDEC, salud, educación, presupuesto.
 
@@ -473,7 +466,7 @@ Objetivo: 1 publicación de datos cada 2 semanas · construir reputación en P06
 Sos el director de arte de El Rufino, especializado en identidad visual para medios locales.
 
 Contexto del medio:
-[PEGAR CONTEXTO DESDE usina-de-ideas_repositorio-ia_v1.5-VIGENTE.md]
+[PEGAR CONTEXTO DESDE el-rufino_repositorio-ia_v1.6-VIGENTE.md]
 
 Identidad visual:
 - Paleta B: #c0271b rojo · #1a1a1a negro · #ffffff blanco · #f5f0e8 crema
@@ -520,7 +513,7 @@ Objetivo: identidad visual reconocible · bajo costo · producción local sosten
 Sos un estratega de expansión para medios digitales regionales argentinos.
 
 Contexto del medio:
-[PEGAR CONTEXTO DESDE usina-de-ideas_repositorio-ia_v1.5-VIGENTE.md]
+[PEGAR CONTEXTO DESDE el-rufino_repositorio-ia_v1.6-VIGENTE.md]
 
 Corredor RN33 (Departamento General López):
 - Rufino (base): 19.211 habitantes
@@ -550,7 +543,7 @@ Cuando un agente entrega su resultado:
 1. **Código PHP/CSS:** copiarlo en el archivo correspondiente del plugin o tema hijo
 2. **Texto editorial:** subirlo como borrador en WordPress y revisar antes de publicar
 3. **Configuración:** ejecutarla campo por campo en WordPress
-4. **Contexto actualizado:** actualizar el repositorio v1.5 si corresponde
+4. **Contexto actualizado:** actualizar el repositorio v1.6 si corresponde
 5. **Registro:** anotar en CHANGELOG.md qué agente se ejecutó y qué se produjo
 
 ---
@@ -592,4 +585,4 @@ Cuando un agente entrega su resultado:
 *Documento vivo. Actualizar al tomar cada decisión relevante.*
 *Firma institucional: PROYECTO EL RUFINO · Repositorio organizativo: USINA DE IDEAS*
 *Versión 1.6 · 12 de mayo de 2026*
-*Sincronizado con: usina-de-ideas_prompt-maestro_v1.6-VIGENTE.md*
+*Sincronizado con: el-rufino_prompt-maestro_v1.6-VIGENTE.md*
