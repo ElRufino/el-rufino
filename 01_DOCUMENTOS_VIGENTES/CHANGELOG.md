@@ -8,6 +8,48 @@ Cambios de producto (plugin, WordPress) registrados en `_DOCS\CHANGELOG.md`.
 
 ---
 
+## [Sin liberar] - 2026-05-21
+
+### Theme child — single.php: layout del cuerpo de nota
+
+- `er-article-body` div: agregado `style="padding:0 40px;max-width:720px;margin:0 auto;box-sizing:border-box;"`
+- Archivo: `_ACTIVO\theme\el-rufino-theme-v2.3.4\el-rufino-theme\single.php`
+- Subido por FTP a `wp-content/themes/el-rufino-theme/single.php` — verificado en producción
+- Resultado: cuerpo de nota centrado, ancho máximo 720 px, padding lateral 40 px
+
+**Agente:** Claude Code · sesión 2026-05-21
+**Estado:** EJECUTADO
+
+---
+
+## [Sin liberar] - 2026-05-20
+
+### Archivado archivos usina-de-ideas_ en 00_CONTEXTO_IA
+
+- `usina-de-ideas_prompt-maestro_v1.6-VIGENTE.md` → `_ARCHIVO\usina-de-ideas_prompt-maestro_v1.6_2026-05-20.md`
+- `usina-de-ideas_repositorio-ia_v1.6-VIGENTE.md` → `_ARCHIVO\usina-de-ideas_repositorio-ia_v1.6_2026-05-20.md`
+- `usina-de-ideas_agentes-ia_v1.6-VIGENTE.md` → `_ARCHIVO\usina-de-ideas_agentes-ia_v1.6_2026-05-20.md`
+- Sufijo -VIGENTE eliminado en nombre destino (convención existente)
+- Archivos no borrados — solo movidos
+
+**Agente:** Claude Code · sesión 2026-05-20
+**Estado:** EJECUTADO
+
+---
+
+## [Sin liberar] - 2026-05-14
+
+### Actualizacion theme — style.css
+
+- `style.css` → `Version: 2.0.0-gf` corregido a `Version: 2.3.4`
+- Archivo: `_ACTIVO\theme\el-rufino-theme-v2.3.4\el-rufino-theme\style.css`
+- Tarea: alinear numero de version con nombre de carpeta del theme
+
+**Agente:** Claude Cowork · sesion 2026-05-14
+**Estado:** EJECUTADO
+
+---
+
 ## [Sin liberar] - 2026-05-13
 
 ### Normalizacion del sistema — Bloques 1-3

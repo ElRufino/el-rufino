@@ -79,7 +79,7 @@ get_header(); ?>
         <?php endif; ?>
 
         <!-- CUERPO -->
-        <div class="er-article-body" id="er-article-body">
+        <div class="er-article-body" id="er-article-body" style="padding:0 40px;max-width:720px;margin:0 auto;box-sizing:border-box;">
           <?php the_content(); ?>
         </div>
 
