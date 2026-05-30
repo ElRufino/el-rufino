@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comunicación Popular Adaptada · El Rufino</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rojo: #c0271b;
+    --rojo-oscuro: #8f1d13;
+    --rojo-suave: rgba(192,39,27,0.12);
+    --negro: #1a1a1a;
+    --blanco: #ffffff;
+    --crema: #f5f0e8;
+    --gris-oscuro: #242424;
+    --gris-medio: #2e2e2e;
+    --gris-texto: #999999;
+    --borde: rgba(255,255,255,0.08);
+    --borde-rojo: rgba(192,39,27,0.3);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--negro);
+    color: var(--crema);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--gris-oscuro);
+    border-bottom: 3px solid var(--rojo);
+    padding: 3rem 4rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 39px,
+      rgba(192,39,27,0.04) 39px,
+      rgba(192,39,27,0.04) 40px
+    );
+    pointer-events: none;
+  }
+
+  .header-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--rojo);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    font-weight: 900;
+    color: var(--blanco);
+    line-height: 1.1;
+    margin-bottom: 0.6rem;
+    max-width: 800px;
+  }
+
+  .header h1 em {
+    font-style: italic;
+    color: var(--crema);
+  }
+
+  .header-sub {
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.95rem;
+    color: var(--gris-texto);
+    font-style: italic;
+    max-width: 600px;
+    line-height: 1.5;
+  }
+
+  .header-badges {
+    display: flex;
+    gap: 0.6rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid;
+    border-radius: 2px;
+  }
+
+  .badge-rojo { border-color: var(--rojo); color: var(--rojo); }
+  .badge-gris { border-color: rgba(255,255,255,0.2); color: var(--gris-texto); }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--gris-medio);
+    border-bottom: 1px solid var(--borde);
+    padding: 0 4rem;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  nav a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--gris-texto);
+    text-decoration: none;
+    padding: 0.9rem 1.1rem;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  nav a:hover { color: var(--crema); border-bottom-color: var(--rojo); }
+
+  /* ── MAIN ── */
+  main { max-width: 860px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+
+  section { margin-bottom: 4rem; }
+
+  .section-tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--rojo);
+    margin-bottom: 0.6rem;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: var(--blanco);
+    line-height: 1.25;
+    margin-bottom: 1.2rem;
+  }
+
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--crema);
+    margin-top: 2rem;
+    margin-bottom: 0.7rem;
+  }
+
+  p { color: #d4cfc5; margin-bottom: 1rem; }
+
+  strong { color: var(--crema); }
+
+  /* ── PRINCIPIO CARD ── */
+  .principio {
+    display: grid;
+    grid-template-columns: 4px 1fr;
+    gap: 0 1.4rem;
+    background: var(--gris-oscuro);
+    border: 1px solid var(--borde);
+    margin-bottom: 1.4rem;
+    padding: 1.4rem 1.6rem;
+    position: relative;
+  }
+
+  .principio::before {
+    content: '';
+    background: var(--rojo);
+    grid-row: 1 / -1;
+    width: 4px;
+    margin: -1.4rem 0 -1.4rem -1.6rem;
+  }
+
+  .principio-origen {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--rojo);
+    margin-bottom: 0.3rem;
+  }
+
+  .principio-titulo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--blanco);
+    margin-bottom: 0.5rem;
+  }
+
+  .principio p { font-size: 0.91rem; margin-bottom: 0.5rem; }
+
+  .principio-rufino {
+    background: var(--rojo-suave);
+    border-left: 2px solid var(--rojo);
+    padding: 0.6rem 0.9rem;
+    margin-top: 0.6rem;
+    font-size: 0.85rem;
+    color: #e8c5c3;
+    font-style: italic;
+  }
+
+  .principio-rufino strong {
+    font-style: normal;
+    color: var(--blanco);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+
+  /* ── CITA ── */
+  .cita {
+    background: var(--gris-medio);
+    border-left: 3px solid var(--rojo);
+    padding: 1.2rem 1.6rem;
+    margin: 1.8rem 0;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--crema);
+    line-height: 1.5;
+  }
+
+  .cita cite {
+    display: block;
+    font-style: normal;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gris-texto);
+    margin-top: 0.6rem;
+  }
+
+  /* ── TABLA COMPARATIVA ── */
+  .tabla-comp {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: 0.88rem;
+  }
+
+  .tabla-comp th {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.7rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--borde-rojo);
+  }
+
+  .tabla-comp th:first-child { color: var(--gris-texto); background: var(--gris-medio); }
+  .tabla-comp th:last-child { color: var(--rojo); background: rgba(192,39,27,0.08); }
+
+  .tabla-comp td {
+    padding: 0.65rem 1rem;
+    border-bottom: 1px solid var(--borde);
+    vertical-align: top;
+    color: #d4cfc5;
+  }
+
+  .tabla-comp td:first-child {
+    background: var(--gris-medio);
+    color: var(--gris-texto);
+    font-size: 0.82rem;
+  }
+
+  .tabla-comp td:last-child { background: rgba(192,39,27,0.04); }
+
+  .tabla-comp tr:last-child td { border-bottom: none; }
+
+  /* ── ALERTA ── */
+  .alerta {
+    background: rgba(192,39,27,0.08);
+    border: 1px solid var(--borde-rojo);
+    padding: 1rem 1.3rem;
+    margin: 1.5rem 0;
+    font-size: 0.88rem;
+    color: #e8d0ce;
+  }
+
+  .alerta strong {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--rojo);
+    margin-bottom: 0.4rem;
+  }
+
+  /* ── CHECKLIST ── */
+  .checklist {
+    list-style: none;
+    margin: 1rem 0;
+  }
+
+  .checklist li {
+    display: flex;
+    gap: 0.8rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--borde);
+    font-size: 0.9rem;
+    color: #d4cfc5;
+    align-items: flex-start;
+  }
+
+  .checklist li:last-child { border-bottom: none; }
+
+  .checklist li::before {
+    content: '□';
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--rojo);
+    flex-shrink: 0;
+    font-size: 0.85rem;
+    margin-top: 0.1rem;
+  }
+
+  /* ── MANUAL TAG ── */
+  .manual-tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: rgba(192,39,27,0.15);
+    color: var(--rojo);
+    padding: 0.1rem 0.4rem;
+    border-radius: 2px;
+    vertical-align: middle;
+    margin-left: 0.3rem;
+  }
+
+  /* ── DIVISOR ── */
+  .divisor {
+    border: none;
+    border-top: 1px solid var(--borde);
+    margin: 3rem 0;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--gris-oscuro);
+    border-top: 1px solid var(--borde);
+    padding: 2rem 4rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--gris-texto);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    letter-spacing: 0.04em;
+  }
+
+  footer span { display: block; }
+
+  @media (max-width: 640px) {
+    .header, nav { padding-left: 1.2rem; padding-right: 1.2rem; }
+    main { padding: 2rem 1.2rem; }
+    footer { padding: 1.5rem 1.2rem; }
+    h2 { font-size: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-meta">El Rufino · Guía editorial interna · v1.0 · Mayo 2026</div>
+  <h1>Comunicación popular<br><em>adaptada al periodismo digital</em></h1>
+  <div class="header-sub">Principios extraídos de los 8 manuales ALER · Adaptados al periodismo escrito local de El Rufino, Rufino, Santa Fe</div>
+  <div class="header-badges">
+    <span class="badge badge-rojo">Fuente: ALER — Manuales de Capacitación en Radio Popular (2009)</span>
+    <span class="badge badge-gris">8 manuales · 412 páginas procesadas</span>
+    <span class="badge badge-gris">Uso interno · No publicar</span>
+  </div>
+</header>
+
+<nav>
+  <a href="#contexto">Contexto</a>
+  <a href="#noticia">La noticia</a>
+  <a href="#entrevista">La entrevista</a>
+  <a href="#lenguaje">El lenguaje</a>
+  <a href="#agenda">Agenda local</a>
+  <a href="#tono">El tono</a>
+  <a href="#adaptacion">Radio → Web</a>
+  <a href="#checklist">Checklist</a>
+</nav>
+
+<main>
+
+  <!-- CONTEXTO -->
+  <section id="contexto">
+    <span class="section-tag">Por qué estos manuales</span>
+    <h2>De la radio popular al periodismo de proximidad</h2>
+
+    <p>Los <strong>Manuales de Capacitación en Radio Popular</strong> de ALER (Asociación Latinoamericana de Educación y Comunicación Popular) fueron producidos en 2009 para emisoras comunitarias latinoamericanas. Su filosofía de fondo es la misma que sostiene a El Rufino: la información no es neutral, el lenguaje tiene poder político, y los medios locales tienen una responsabilidad que los grandes medios no pueden asumir.</p>
+
+    <div class="cita">
+      "Los hechos de la realidad son la materia prima de la noticia, como lo es la harina del pan. No podemos apartarnos de allí."
+      <cite>Manual 4 — El noticiero popular</cite>
+    </div>
+
+    <p>Este documento no adapta técnicas de radio. Adapta la <strong>filosofía editorial</strong> que atraviesa los 8 manuales: qué es noticia, para quién, cómo se escribe, con qué tono, desde qué lugar. Esas preguntas son igualmente urgentes en un medio digital local en 2026.</p>
+
+    <div class="alerta">
+      <strong>Regla de uso</strong>
+      Este documento es una guía de criterios, no un manual de estilo. Los criterios aplican junto con —y no en lugar de— las dos capas editoriales obligatorias de El Rufino: qué pasó y qué significa.
+    </div>
+  </section>
+
+  <hr class="divisor">
+
+  <!-- LA NOTICIA -->
+  <section id="noticia">
+    <span class="section-tag">Manual 2 + Manual 4</span>
+    <h2>La noticia como acto político</h2>
+
+    <p>Los manuales plantean algo que parece obvio pero que la práctica cotidiana erosiona: <strong>construir noticias es siempre tomar decisiones políticas</strong>. Qué se cubre, a quién se le da voz, desde qué ángulo se encuadra un hecho. No existe la neutralidad; existe la transparencia.</p>
+
+    <div class="principio">
+      <div>
+        <div class="principio-origen">Manual 2 — La noticia popular</div>
+        <div class="principio-titulo">Construir nuevos sentidos, no reproducir consensos</div>
+        <p>Los medios masivos fabrican consenso: vuelven natural una postura que representa un interés particular. El medio popular hace lo contrario: visibiliza a los actores que buscan cambios, construye nuevos marcos de comprensión de la realidad.</p>
+        <div class="principio-rufino">
+          <strong>→ El Rufino</strong>
+          La segunda capa editorial ("qué significa") es exactamente esto: no reproducir el comunicado de prensa o la declaración oficial como si fuera la realidad, sino construir un sentido desde el interés de los vecinos de Rufino.
+        </div>
+      </div>
+    </div>
+
+    <div class="principio">
+      <div>
+        <div class="principio-origen">Manual 2 — La noticia popular</div>
+        <div class="principio-titulo">Los medios locales como actor clave para organizaciones sociales</div>
+        <p>Las organizaciones sociales —sindicatos, cooperativas, clubes, grupos vecinales, sociedades de fomento, partidos— realizan su trabajo sin tener medios propios o con alcance relativo. El medio local puede ser su voz, siempre que lo haga con agudeza: evitar publicar información que genere conflictos entre organizaciones que luchan por los mismos derechos.</p>
+        <div class="principio-rufino">
+          <strong>→ El Rufino</strong>
+          Rufino tiene una densa trama de organizaciones: Sociedad Rural, cooperativas agropecuarias, LALCEC, clubes, sindicatos docentes. Cubrir sus acciones es cubrir la vida comunitaria real. No son "fuentes complementarias": son protagonistas.
+        </div>
+      </div>
+    </div>
+
+    <div class="principio">
+      <div>
+        <div class="principio-origen">Manual 4 — El noticiero popular</div>
+        <div class="principio-titulo">Sin hechos no hay noticias. Sin noticias no hay periodismo.</div>
+        <p>El hecho es la materia prima. Los análisis, los contextos, las interpretaciones —todo eso viene después. Pero primero hay que anclar en hechos verificables. Esta es la diferencia entre un medio y una opinión publicada.</p>
+        <div class="principio-rufino">
+          <strong>→ El Rufino</strong>
+          La capa "qué pasó" no es un mero resumen: es la verificación del hecho. Antes de construir significado hay que tener el hecho sólido. Cruzar con boletín oficial, ordenanzas, documentos de gestión.
+        </div>
+      </div>
+    </div>
+
+    <div class="principio">
+      <div>
+        <div class="principio-origen">Manual 4 — El noticiero popular</div>
+        <div class="principio-titulo">Hablar de luchas, no de miserias</div>
+        <p>Los medios masivos cubren a los sectores populares desde sus problemas, sus carencias, sus fracasos. El medio popular cubre sus luchas, sus logros y sus dificultades sin la mirada despreciativa de los grandes grupos mediáticos. De sus avances, no solo de sus heridas.</p>
+        <div class="principio-rufino">
+          <strong>→ El Rufino</strong>
+          Una nota sobre desocupación en Rufino no es solo un número: es quiénes están organizándose, qué reclaman, qué alternativas están construyendo. La miseria como espectáculo no es periodismo popular.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divisor">
+
+  <!-- LA ENTREVISTA -->
+  <section id="entrevista">
+    <span class="section-tag">Manual 1</span>
+    <h2>La entrevista: escuchar antes de preguntar</h2>
+
+    <div class="cita">
+      "En comunicación es tan importante hablar como escuchar. Tener los oídos bien abiertos. Saber qué está pasando del otro lado: indagar, investigar, es la tarea fundamental del comunicador."
+      <cite>Manual 1 — La entrevista</cite>
+    </div>
+
+    <div class="principio">
+      <div>
+        <div class="principio-origen">Manual 1 — La entrevista</div>
+        <div class="principio-titulo">Preparar antes de preguntar</div>
+        <p>El entrevistador improvisado —el que no sabe a quién entrevista, que nunca prepara las preguntas, que cree que la conversación fluirá sola— es uno de los perfiles que los manuales caracterizan con humor pero con precisión. La preparación no ahoga la espontaneidad: la hace posible.</p>
+        <div class="principio-rufino">
+          <strong>→ El Rufino</strong>
+          Antes de contactar una fuente: conocer su rol institucional, leer sus declaraciones anteriores, identificar qué sabe ella que nadie más puede decir. La fuente "de relleno" que solo confirma lo que ya se sabe es una fuente desperdiciada.
+        </div>
+      </div>
+    </div>
+
+    <div class="principio">
+      <div>
+        <div class="principio-origen">Manual 1 — La entrevista</div>
+        <div class="principio-titulo">Preguntas abiertas sobre preguntas cerradas</div>
+        <p>Las preguntas cerradas (sí/no) dan datos. Las preguntas abiertas dan elementos para el análisis. La combinación es recomendable, pero siempre aprovechando las abiertas para entender el fondo, no solo la superficie.</p>
+        <div class="principio-rufino">
+          <strong>→ El Rufino</strong>
+          "¿Está a favor de la terminal?" (cerrada) vs. "¿Qué impacto tiene para el barrio este proyecto?" (abierta). La primera confirma una posición. La segunda construye contenido.
+        </div>
+      </div>
+    </div>
+
+    <div class="principio">
+      <div>
+        <div class="principio-origen">Manual 1 — La entrevista</div>
+        <div class="principio-titulo">Valorar la palabra de las personas comunes</div>
+        <p>Los medios populares cometían el error de ponerse por delante de la palabra de los protagonistas. El comunicador hablaba en nombre de la gente en lugar de dar el micrófono a la gente. Dar espacio a la voz de ciudadanos corrientes no es relleno: es el corazón del periodismo de proximidad.</p>
+        <div class="principio-rufino">
+          <strong>→ El Rufino</strong>
+          Una nota sobre la terminal de ómnibus que solo tiene la voz del intendente y del funcionario provincial está incompleta. La voz del pasajero que espera en la ruta, del almacenero del barrio, del taxista: esas voces construyen el significado real.
+        </div>
+      </div>
+    </div>
+
+    <h3>Perfiles a evitar en la recolección de testimonios</h3>
+    <p>Los manuales describen tipos de entrevistadores que generan problemas. Adaptados a trabajo periodístico escrito:</p>
+
+    <div class="principio">
+      <div>
+        <div class="principio-titulo">El que nunca prepara</div>
+        <p>Llega a la nota sin datos, sin contexto, sin preguntas definidas. Confía en que la fuente va a contar todo sola. Resultado: notas superficiales que solo reproducen lo que la fuente quería decir.</p>
+      </div>
+    </div>
+
+    <div class="principio">
+      <div>
+        <div class="principio-titulo">El que no escucha</div>
+        <p>Tiene su cuestionario fijo y lo sigue aunque la fuente esté diciendo algo más interesante. Pierde la punta del hilo que podría cambiar el ángulo de la nota.</p>
+      </div>
+    </div>
+
+    <div class="principio">
+      <div>
+        <div class="principio-titulo">El que llena el silencio</div>
+        <p>Le incomoda el silencio del entrevistado y contesta él mismo sus preguntas, sugiriendo respuestas. La fuente termina confirmando lo que el periodista ya pensaba, sin agregar nada nuevo.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divisor">
+
+  <!-- EL LENGUAJE -->
+  <section id="lenguaje">
+    <span class="section-tag">Manual 6</span>
+    <h2>El lenguaje: escribir como se habla</h2>
+
+    <p>El manual 6 ("El lenguaje popular") es quizás el más directamente aplicable al periodismo digital. Su tesis central: <strong>el lenguaje de los profesionales está cargado de sustantivos abstractos y adjetivos; el lenguaje popular usa verbos y sustantivos concretos</strong>. Y comunica mejor.</p>
+
+    <div class="cita">
+      "La palabra humana tiene forma de río: siempre encuentra un cauce por donde seguir su rumbo. No hay silencio que la calle, no hay mano que tape su boca."
+      <cite>Eduardo Galeano, citado en Manual 6 — El lenguaje popular</cite>
+    </div>
+
+    <h3>La diferencia medible entre lenguaje popular y lenguaje técnico</h3>
+    <p>El manual presenta una comparación empírica entre cómo describe la misma situación una vecina y cómo la describe un periodista profesional:</p>
+
+    <table class="tabla-comp">
+      <tr>
+        <th>Lenguaje profesional (típico)</th>
+        <th>Lenguaje popular (objetivo)</th>
+      </tr>
+      <tr>
+        <td>13 verbos</td>
+        <td>23 verbos</td>
+      </tr>
+      <tr>
+        <td>5 sustantivos concretos</td>
+        <td>21 sustantivos concretos</td>
+      </tr>
+      <tr>
+        <td>18 sustantivos abstractos</td>
+        <td>2 sustantivos abstractos</td>
+      </tr>
+      <tr>
+        <td>4 adjetivos</td>
+        <td>2 adjetivos</td>
+      </tr>
+    </table>
+
+    <p>La conclusión práctica: <strong>más verbos, más sustantivos concretos, menos abstractos, menos adjetivos</strong>. El texto que describe acciones concretas comunica mejor que el texto que nombra conceptos.</p>
+
+    <div class="principio">
+      <div>
+        <div class="principio-origen">Manual 6 — El lenguaje popular</div>
+        <div class="principio-titulo">Frases cortas. Sujeto, verbo, complemento.</div>
+        <p>No más de 20 palabras por frase. Eliminar comas en exceso. Pocas subordinadas —y siempre después de la frase principal, no antes. Sin guiones ni paréntesis: si hay que explicar algo, va en frase aparte. Orden lógico siempre: sujeto → verbo → complementos.</p>
+        <div class="principio-rufino">
+          <strong>→ El Rufino</strong>
+          "Para que no se le escapen las gallinas, Tita dejó la puerta cerrada" → "Tita cerró la puerta para que no se le escapen las gallinas." El sujeto actúa; el lector lo sigue.
+        </div>
+      </div>
+    </div>
+
+    <div class="principio">
+      <div>
+        <div class="principio-origen">Manual 6 — El lenguaje popular</div>
+        <div class="principio-titulo">Lenguaje concreto: lo que se puede imaginar o dibujar</div>
+        <p>Si una palabra no puede representarse con una imagen, es un sustantivo abstracto. "Gestión", "marco normativo", "articulación interinstitucional" no se pueden dibujar. "La municipalidad firmó un convenio con la empresa" sí se puede.</p>
+        <div class="principio-rufino">
+          <strong>→ El Rufino</strong>
+          Reemplazar "en el marco del proceso de adjudicación de obras de infraestructura vial" por "el gobierno provincial eligió a la empresa que construirá la terminal". Mismo hecho, distinta comprensión.
+        </div>
+      </div>
+    </div>
+
+    <h3>Tabla de sustituciones frecuentes</h3>
+    <table class="tabla-comp">
+      <tr>
+        <th>Lenguaje técnico / burocrático</th>
+        <th>Versión El Rufino</th>
+      </tr>
+      <tr>
+        <td>En el marco del convenio suscripto</td>
+        <td>Después de firmar el acuerdo</td>
+      </tr>
+      <tr>
+        <td>Se procedió a la adjudicación</td>
+        <td>Le dieron la obra a / eligieron a</td>
+      </tr>
+      <tr>
+        <td>Manifestó su beneplácito</td>
+        <td>Dijo que le parece bien / celebró</td>
+      </tr>
+      <tr>
+        <td>Articulación interinstitucional</td>
+        <td>Trabajo conjunto entre organismos</td>
+      </tr>
+      <tr>
+        <td>El monto total asciende a</td>
+        <td>El costo total es de</td>
+      </tr>
+      <tr>
+        <td>Destinatarios del beneficio</td>
+        <td>Vecinos que van a recibir / familias que van a cobrar</td>
+      </tr>
+      <tr>
+        <td>Instancia de participación ciudadana</td>
+        <td>Reunión abierta / audiencia pública</td>
+      </tr>
+      <tr>
+        <td>Proceso licitatorio</td>
+        <td>Concurso para elegir la empresa</td>
+      </tr>
+    </table>
+  </section>
+
+  <hr class="divisor">
+
+  <!-- AGENDA LOCAL -->
+  <section id="agenda">
+    <span class="section-tag">Manual 4</span>
+    <h2>La agenda local: lo cercano primero</h2>
+
+    <div class="cita">
+      "Lo cercano generalmente interesa más que lo lejano, ya que resulta más familiar. Y además estamos allí, en medio del pueblo. Llegamos a pie."
+      <cite>Manual 4 — El noticiero popular</cite>
+    </div>
+
+    <div class="principio">
+      <div>
+        <div class="principio-origen">Manual 4 — El noticiero popular</div>
+        <div class="principio-titulo">El panorama local es la ventaja competitiva</div>
+        <p>Los medios masivos no envían corresponsales a Rufino salvo que haya una muerte, un escándalo o una catástrofe. El medio local tiene presencia permanente, puede cubrir lo cotidiano, lo que construye comunidad, lo que sucede antes de que se vuelva drama.</p>
+        <div class="principio-rufino">
+          <strong>→ El Rufino</strong>
+          Una nota sobre el estado del hospital local, el funcionamiento del transporte interurbano, los cortes de luz recurrentes en un barrio: eso es lo que ningún otro medio cubre y lo que los rufinenses necesitan saber.
+        </div>
+      </div>
+    </div>
+
+    <div class="principio">
+      <div>
+        <div class="principio-origen">Manual 4 — El noticiero popular</div>
+        <div class="principio-titulo">De la realidad local a la realidad regional y nacional</div>
+        <p>La cobertura local no es parroquialismo. Es el punto de partida para conectar lo que pasa en Rufino con lo que pasa en la provincia, el país, el continente. "¿Es tan diferente lo que le pasa a otros pueblos de lo que nos pasa a nosotros?"</p>
+        <div class="principio-rufino">
+          <strong>→ El Rufino</strong>
+          Una licitación de obras en Rufino no es solo una nota local: es también una nota sobre cómo funciona el sistema de obra pública provincial, qué es la UTE, qué implica que una empresa de Santa Fe construya en el interior. La capa "qué significa" siempre puede crecer hacia afuera.
+        </div>
+      </div>
+    </div>
+
+    <div class="principio">
+      <div>
+        <div class="principio-origen">Manual 4 — El noticiero popular</div>
+        <div class="principio-titulo">Fortalecer organizaciones, no fragmentarlas</div>
+        <p>Un medio popular tiene que tener cuidado con publicar información que genere conflictos entre organizaciones y sectores sociales que luchan por los mismos derechos. Las diferencias internas existen y son reales, pero la cobertura que solo amplifica fricciones termina beneficiando a quienes quieren que todo se mantenga como está.</p>
+        <div class="principio-rufino">
+          <strong>→ El Rufino</strong>
+          La disputa entre Lattanzi y Carballeira por las 25 viviendas es una nota política legítima. Pero el ángulo no es alimentar el conflicto por el conflicto: es explicar qué está en juego políticamente de cara a 2027 y qué significa para los vecinos que van a vivir en esas casas.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divisor">
+
+  <!-- EL TONO -->
+  <section id="tono">
+    <span class="section-tag">Manual 5</span>
+    <h2>El tono: la risa como herramienta política</h2>
+
+    <div class="cita">
+      "En estos más de 500 años, los colonizadores se llevaron muchos tesoros de nuestras tierras. Pero no lograron llevarse la picardía y las ganas de vivir."
+      <cite>Manual 5 — La risa</cite>
+    </div>
+
+    <div class="principio">
+      <div>
+        <div class="principio-origen">Manual 5 — La risa</div>
+        <div class="principio-titulo">El humor no es falta de seriedad</div>
+        <p>Los manuales dedican un fascículo entero a la risa porque la comunicación popular latinoamericana tiene una tradición de humor como herramienta política. La ironía, el chiste, la picardía bien usados pueden decir en una línea lo que un análisis serio necesita tres párrafos para explicar.</p>
+        <div class="principio-rufino">
+          <strong>→ El Rufino</strong>
+          El periodismo contextual no implica solemnidad. Una nota puede ser rigurosa en los hechos y tener ligereza en el tono. El humor inteligente —no el ridículo de personas— es una señal de confianza con el lector.
+        </div>
+      </div>
+    </div>
+
+    <div class="principio">
+      <div>
+        <div class="principio-origen">Manual 5 — La risa</div>
+        <div class="principio-titulo">La alegría como postura editorial</div>
+        <p>Un medio que solo informa de problemas, conflictos y carencias construye una imagen de la comunidad como lugar de sufrimiento. La comunicación popular reivindica la alegría, la creatividad, los logros colectivos como parte de la realidad que merece cobertura.</p>
+        <div class="principio-rufino">
+          <strong>→ El Rufino</strong>
+          El pilar P05 (cultura y comunidad) no es un "relleno" entre notas políticas: es parte de la identidad de Rufino que merece cobertura con el mismo rigor y entusiasmo. Los festejos, las hazañas deportivas, los emprendedores locales son noticias reales.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divisor">
+
+  <!-- ADAPTACIÓN RADIO → WEB -->
+  <section id="adaptacion">
+    <span class="section-tag">Adaptación</span>
+    <h2>De la radio al texto digital: qué cambia y qué no</h2>
+
+    <p>Estos manuales fueron escritos para radio. El Rufino es periodismo digital escrito. Algunas instrucciones se traducen directamente; otras requieren adaptación; unas pocas no aplican.</p>
+
+    <table class="tabla-comp">
+      <tr>
+        <th>Principio ALER (radio)</th>
+        <th>Aplicación El Rufino (web)</th>
+      </tr>
+      <tr>
+        <td>Frases cortas para escuchar (máx. 20 palabras)</td>
+        <td>Aplica igual: frases cortas mejoran lectura en pantalla</td>
+      </tr>
+      <tr>
+        <td>Orden sujeto-verbo-complemento</td>
+        <td>Aplica igual: el lector digital escanea, no lee lineal</td>
+      </tr>
+      <tr>
+        <td>Sin paréntesis ni guiones en el aire</td>
+        <td>Adaptar: en texto se pueden usar intertítulos para clarificar sin interrumpir el hilo</td>
+      </tr>
+      <tr>
+        <td>Lenguaje concreto, más verbos que sustantivos</td>
+        <td>Aplica igual: idéntico problema en el periodismo digital</td>
+      </tr>
+      <tr>
+        <td>La voz del protagonista en primer plano</td>
+        <td>Aplica: la cita textual del vecino/fuente tiene el mismo efecto que la voz en radio</td>
+      </tr>
+      <tr>
+        <td>El locutor habla "a" la audiencia, no "para" ella</td>
+        <td>Aplica: escribir para una persona real de Rufino, no para un lector genérico</td>
+      </tr>
+      <tr>
+        <td>Ritmo y musicalidad del texto oral</td>
+        <td>Parcial: en texto, el "ritmo" se logra con variedad de longitud de párrafos y frases</td>
+      </tr>
+      <tr>
+        <td>Repetición de información clave (el oyente no puede volver atrás)</td>
+        <td>No aplica igual: el lector web puede releer; usar hipervínculos en vez de repetición</td>
+      </tr>
+    </table>
+
+    <h3>Lo que el periodismo digital tiene que la radio no tiene</h3>
+
+    <div class="principio">
+      <div>
+        <div class="principio-titulo">El titular hace el trabajo que en radio hace la primera frase</div>
+        <p>En radio, si la primera frase no captura al oyente, lo pierde. En web, el titular y el copete cumplen esa función. Deben responder las dos capas: qué pasó (hecho) y por qué importa (significado). No basta con ser descriptivo: tiene que ser interpretativo.</p>
+      </div>
+    </div>
+
+    <div class="principio">
+      <div>
+        <div class="principio-titulo">Los intertítulos como navegación</div>
+        <p>El lector digital escanea antes de leer. Los intertítulos no son decoración: son un segundo texto paralelo que le dice al lector de qué va la nota sin que tenga que leerla entera. Cada intertítulo debe poder leerse como una afirmación completa y significativa.</p>
+      </div>
+    </div>
+
+    <div class="principio">
+      <div>
+        <div class="principio-titulo">La verificación documental como diferenciador</div>
+        <p>La radio popular puede dar una noticia en el momento en que ocurre. El periodismo digital que hace contexto tiene que agregar lo que la radio no puede: los documentos, las ordenanzas, los datos verificados. Eso es lo que transforma "lo que pasó" en "lo que significa".</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divisor">
+
+  <!-- CHECKLIST -->
+  <section id="checklist">
+    <span class="section-tag">Uso operativo</span>
+    <h2>Checklist de producción · Nota a nota</h2>
+
+    <p>Para aplicar antes de publicar cualquier nota en El Rufino. Combina los principios ALER con las reglas editoriales propias.</p>
+
+    <h3>Verificación del hecho (capa 1)</h3>
+    <ul class="checklist">
+      <li>¿Tengo el hecho verificado con fuente primaria (documento oficial, declaración directa, presencia en el lugar)?</li>
+      <li>¿Identifiqué quién toma la decisión real (distinción provincia/municipio/organismo)?</li>
+      <li>¿Crucé con boletín oficial, ordenanza o informe de gestión cuando corresponde?</li>
+      <li>¿Todas las cifras tienen fuente nombrada?</li>
+    </ul>
+
+    <h3>Construcción del significado (capa 2)</h3>
+    <ul class="checklist">
+      <li>¿La nota explica por qué esto importa a los vecinos de Rufino?</li>
+      <li>¿Hay al menos una voz que no sea oficial (vecino, organización, afectado directo)?</li>
+      <li>¿El ángulo editorial es claro y no es simplemente la repetición del comunicado?</li>
+      <li>¿Hay conexión con el contexto provincial/nacional cuando es relevante?</li>
+    </ul>
+
+    <h3>Lenguaje y tono</h3>
+    <ul class="checklist">
+      <li>¿Las frases tienen menos de 20-25 palabras en promedio?</li>
+      <li>¿Reemplacé los sustantivos abstractos burocráticos por verbos y sustantivos concretos?</li>
+      <li>¿El titular responde las dos capas o solo describe el hecho?</li>
+      <li>¿Los intertítulos son afirmaciones significativas (no solo subtítulos descriptivos)?</li>
+      <li>¿El tono es cercano a los vecinos de Rufino, no a lectores genéricos?</li>
+    </ul>
+
+    <h3>Ética y responsabilidad</h3>
+    <ul class="checklist">
+      <li>¿Identifiqué si la nota puede dañar a organizaciones o sectores que luchan por los mismos derechos?</li>
+      <li>¿Di espacio a la voz de las personas directamente afectadas, no solo a los actores institucionales?</li>
+      <li>¿Si hay conflicto político (ej. Lattanzi vs. Carballeira), el ángulo está en qué significa para los vecinos y no en alimentar el drama en sí?</li>
+    </ul>
+
+    <div class="alerta">
+      <strong>Regla absoluta que no figura en el checklist porque nunca puede faltar</strong>
+      Toda nota tiene las dos capas: qué pasó y qué significa. Sin las dos capas, no se publica.
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <span>el-rufino_comunicacion-popular-adaptada_v1-0-VIGENTE.html</span>
+  <span>Fuente: ALER, "Manuales de Capacitación en Radio Popular" (2009) · 8 manuales · Adaptado para El Rufino</span>
+  <span>F:\HERRAMIENTAS DE IA\PROYECTOS\USINA_DE_IDEAS\</span>
+</footer>
+
+</body>
+</html>
