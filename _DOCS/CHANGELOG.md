@@ -2,6 +2,29 @@
 
 ---
 
+## [v1.4] — 21 de junio de 2026
+
+### Integración de assets de comunicación desde Design System v1.1
+
+Incorporados a `03_IDENTIDAD_MARCA\` los siguientes archivos originados en `EL_RUFINO_DESIGN_SYSTEM_v1.1\` (material generado el 08/05/2026, no integrado al proyecto principal hasta esta fecha):
+
+**Assets copiados:**
+- `colors_and_type.css` — tokens CSS completos de marca (colores primitivos, semánticos, tipografía, espaciado)
+- `mediakit-elrufino.html` — media kit del portal
+- `el-rufino_comunicacion-popular-adaptada_v1-0-VIGENTE.html` — guía de comunicación popular adaptada
+- `facebook-cover-820x312.png` — cobertura Facebook
+- `portada-facebook-elrufino.png` — portada Facebook
+- `whatsapp-cover-1920x1020.png` — cobertura WhatsApp
+- `fonts/` — familia Playfair Display completa (14 archivos .ttf)
+
+**No copiados** (ya existían idénticos en `03_IDENTIDAD_MARCA\`): logos, favicons y OGs (7 archivos, bytes idénticos confirmados).
+
+**Skill activa:** `EL_RUFINO_DESIGN_SYSTEM_v1.1\` renombrada desde `El Rufino — Design System v1.1\` (normalización USINA — sin espacios ni em-dash). Estructura interna intacta — sigue activa como skill para agentes IA.
+
+**Agente:** Claude (Cowork) · **Auditoría previa:** `USINA_DE_IDEAS\00_CONTEXTO_IA\auditoria_2026-06-21.md`
+
+---
+
 ## [v1.3] — 14 de abril de 2026
 
 ### Sesión: Auditoría técnica completa + actualización de repositorio

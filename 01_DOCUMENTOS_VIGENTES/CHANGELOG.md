@@ -102,3 +102,15 @@ Cambios de producto (plugin, WordPress) registrados en `_DOCS\CHANGELOG.md`.
 **Ultima actualizacion:** 2026-05-13 (Bloques 1-3 ejecutados y confirmados)
 **Script ejecucion:** normalizar_archivo_2026-05-13.ps1 -- 13 movidos · 3 ya en destino · 0 errores
 **Mantenido por:** Agente normalizacion USINA
+
+---
+
+## [Sin liberar] - 2026-06-21
+
+### Corrección nomenclatura — PJ → PARTIDO_JUSTICIALISTA
+
+- `el-rufino_prompt-maestro_v1.7-VIGENTE.md` → `v1.8-VIGENTE.md` · reemplazado "PJ" por "PARTIDO_JUSTICIALISTA" (líneas 42, 221 y árbol de directorios)
+- `el-rufino_repositorio-ia_v1.7-VIGENTE.md` → `v1.8-VIGENTE.md` · reemplazado "PJ" (líneas 42 y 133)
+- `el-rufino_repositorio-ia_v1.6-VIGENTE.md` → renombrado a `v1.6.md` (desafectado de VIGENTE: existían dos archivos VIGENTE simultáneos para el mismo doc)
+
+**Agente:** Claude (Cowork) · **Auditoría origen:** `USINA_DE_IDEAS\00_CONTEXTO_IA\auditoria_2026-06-21.md`

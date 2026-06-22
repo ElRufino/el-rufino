@@ -24,6 +24,13 @@ function er_theme_enqueue() {
         ['parent-style'],
         wp_get_theme()->get('Version')
     );
+    // Eliminar la carga duplicada que Newsup hace del child stylesheet.
+    // Newsup encola el CSS del hijo con su propio handle y versión (7.0),
+    // lo que genera una segunda carga que puede pisar nuestros estilos
+    // si el browser tiene cacheada la versión vieja.
+    wp_dequeue_style( 'newsup-child' );
+    wp_dequeue_style( 'newsup-style-child' );
+    wp_dequeue_style( 'newsup-child-style' );
     // Google Fonts — solo Source Serif 4 (Playfair Display carga desde archivos locales)
     wp_enqueue_style(
         'er-fonts',

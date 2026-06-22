@@ -5,7 +5,7 @@ Description:  Tema hijo para El Rufino — medio digital local de Rufino, Santa 
 Author:       El Rufino
 Author URI:   https://elrufino.ar
 Template:     newsup
-Version:      2.0.0-gf
+Version:      2.3.4
 Text Domain:  el-rufino-theme
 Tags:         news, blog, custom-colors, custom-logo, featured-images, responsive-layout
 */
@@ -246,7 +246,7 @@ body {
   white-space: nowrap;
 }
 
-.er-ticker-track { overflow: hidden; flex: 1; }
+.er-ticker-track { overflow: hidden; flex: 1; min-width: 0; }
 
 .er-ticker-inner {
   display: flex;
@@ -487,8 +487,8 @@ header .mg-menu-full,
    SINGLE — Nota individual v2.1.0
    ============================================================ */
 
-.er-single-wrap { max-width: 1200px; margin: 0 auto; padding: 24px 20px; }
-.er-single-main { max-width: 740px; margin: 0 auto; }
+body .er-single-wrap { max-width: 1200px; margin: 0 auto; padding: 24px 40px; }
+.er-single-main { max-width: 720px; margin: 0 auto; padding: 0 40px !important; }
 
 /* Categoría badge */
 .er-article-cat { margin-bottom: 14px; }
@@ -616,9 +616,9 @@ header .mg-menu-full,
 }
 .er-article-body p { margin-bottom: 1.4em; }
 
-/* LO QUE SIGNIFICA — separador visual */
-.er-article-body strong:first-child,
-.er-article-body b {
+/* LO QUE SIGNIFICA — separador visual (solo dentro del shortcode) */
+.er-lo-que-significa > strong:first-child,
+.er-lo-que-significa > b:first-child {
   display: block;
   font-family: var(--er-font-ui);
   font-size: 10px;
@@ -713,6 +713,8 @@ header .mg-menu-full,
 
 /* Responsive single */
 @media (max-width: 600px) {
+  body .er-single-wrap { padding: 16px 24px; }
+  .er-single-main { padding: 0 24px !important; }
   .er-related-grid { grid-template-columns: 1fr; }
   .er-share-inline { margin-left: 0; }
   .er-read-controls { gap: 6px; }
@@ -986,3 +988,41 @@ body.home #main { background: var(--er-bg-base) !important; color: var(--er-negr
 .site-footer,
 footer.site-footer,
 #colophon { display: none !important; }
+
+/* ============================================================
+   PARCHE v2.3.4 — Márgenes single + fix selector bold + fix overflow
+   ============================================================ */
+
+/*
+ * [1] max-width: 720px (era 740px). padding: 0 20px en todos los viewports.
+ *     Centrado en desktop, full-width con 20px de padding en mobile.
+ *
+ * [2] Fix selector strong/b en cuerpo de nota.
+ *     El selector anterior `.er-article-body b` era demasiado amplio:
+ *     convertía TODO texto en negrita en una etiqueta uppercase con
+ *     display:block, rompiendo el flujo del artículo.
+ *     Ahora solo aplica dentro de .er-lo-que-significa > :first-child.
+ *
+ * [3] Mobile <600px: padding lateral explícito de 20px en .er-single-main.
+ *     .er-single-wrap queda sin padding lateral para evitar doble margen.
+ *
+ * [4] Fix texto cortado en margen derecho.
+ *     Causa raíz: er-ticker-inner tiene white-space:nowrap (~1600px).
+ *     Sin min-width:0 en er-ticker-track (flex item), el flexbox no puede
+ *     encoger el track debajo del contenido intrínseco del inner →
+ *     er-ticker fuerza el body a ser más ancho que el viewport →
+ *     todo el contenido de la página aparece cortado a la derecha.
+ *     Fix: min-width:0 en er-ticker-track + overflow-x:clip en html
+ *     + max-width:100% en media embebida dentro del artículo.
+ */
+
+/* Contener overflow horizontal en toda la página */
+html { overflow-x: clip; }
+
+/* Contenido multimedia del artículo no debe desbordar */
+.er-article-body img,
+.er-article-body iframe,
+.er-article-body figure,
+.er-article-body table,
+.er-article-body video,
+.er-article-body pre { max-width: 100%; }
