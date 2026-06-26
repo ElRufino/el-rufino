@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Rufino — Informe de Memoria · v4.0 · Abril 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+:root{--rojo:#c0271b;--rojo-dark:#961e15;--rojo-m:rgba(192,39,27,0.08);--negro:#1a1a1a;--blanco:#fff;--crema:#f5f0e8;--crema-d:#e8dfd0;--gris:#7a7a7a;--gris-c:#ede8e0;--verde:#2d6a4f;--verde-bg:rgba(45,106,79,0.09);--amarillo:#c77800;--amarillo-bg:rgba(199,120,0,0.08);--azul:#3d4f8a;--azul-bg:rgba(61,79,138,0.08);--violeta:#5c4d8a;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{background:var(--crema);color:var(--negro);font-family:'Source Serif 4',Georgia,serif;font-size:16px;line-height:1.75;}
+
+/* NAV */
+.nav{position:fixed;left:0;top:0;bottom:0;width:228px;background:var(--negro);z-index:100;overflow-y:auto;padding:26px 0;}
+.nav-logo{font-family:'Playfair Display',serif;font-size:17px;font-weight:900;color:var(--rojo);padding:0 20px 18px;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:12px;line-height:1.2;}
+.nav-logo span{display:block;font-size:8px;font-family:'JetBrains Mono',monospace;color:rgba(255,255,255,0.28);letter-spacing:0.18em;margin-top:5px;text-transform:uppercase;}
+.nav-sec{padding:14px 20px 3px;font-family:'JetBrains Mono',monospace;font-size:7.5px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.2);}
+.nav a{display:flex;align-items:center;gap:8px;padding:6px 20px;color:rgba(255,255,255,0.45);text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:10px;transition:all .15s;border-left:2px solid transparent;}
+.nav a:hover{color:#fff;border-left-color:var(--rojo);background:rgba(255,255,255,0.04);}
+
+/* MAIN */
+.main{margin-left:228px;}
+
+/* MASTHEAD */
+.mast{background:var(--rojo);color:#fff;position:relative;overflow:hidden;}
+.mast::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-52deg,transparent,transparent 44px,rgba(0,0,0,0.05) 44px,rgba(0,0,0,0.05) 45px);pointer-events:none;}
+.mast-in{position:relative;max-width:980px;margin:0 auto;padding:60px 48px 52px;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.3em;text-transform:uppercase;opacity:.55;margin-bottom:10px;}
+.mast h1{font-family:'Playfair Display',serif;font-size:clamp(42px,6vw,74px);font-weight:900;line-height:.93;letter-spacing:-2px;}
+.mast h1 em{font-style:italic;}
+.mast-sub{font-family:'Source Serif 4',serif;font-size:17px;font-style:italic;opacity:.82;margin-top:14px;max-width:620px;line-height:1.55;}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:26px;}
+.b{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.08em;padding:5px 11px;border-radius:2px;}
+.b.new{background:rgba(255,255,255,.22);border-color:rgba(255,255,255,.5);font-weight:700;}
+.b.gold{background:rgba(255,200,0,.18);border-color:rgba(255,200,0,.35);color:#ffe87a;}
+.ver-note{margin-top:18px;font-family:'JetBrains Mono',monospace;font-size:9px;opacity:.38;letter-spacing:.05em;}
+
+/* SECTIONS */
+section{max-width:980px;margin:0 auto;padding:60px 48px;border-bottom:1px solid var(--gris-c);}
+.eyebrow-s{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--rojo);margin-bottom:10px;}
+section h2{font-family:'Playfair Display',serif;font-size:clamp(26px,3.8vw,40px);font-weight:900;line-height:1.1;letter-spacing:-.5px;margin-bottom:14px;}
+.lead{font-size:17px;color:#444;font-style:italic;max-width:720px;margin-bottom:36px;line-height:1.6;}
+section h3{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin-top:44px;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid var(--gris-c);}
+section h4{font-family:'Source Serif 4',serif;font-size:14px;font-weight:600;margin-bottom:8px;}
+section p{font-size:14.5px;line-height:1.7;color:#333;margin-bottom:10px;}
+
+/* ALERTS */
+.al{border-radius:2px;padding:14px 18px;font-size:13.5px;margin:16px 0;line-height:1.65;border-left:3px solid;}
+.al.w{background:var(--amarillo-bg);border-color:var(--amarillo);}
+.al.ok{background:var(--verde-bg);border-color:var(--verde);}
+.al.inf{background:var(--rojo-m);border-color:var(--rojo);}
+.al.p{background:var(--azul-bg);border-color:var(--azul);}
+.al.myth{background:linear-gradient(135deg,rgba(92,77,138,.07),rgba(61,79,138,.05));border-color:var(--violeta);}
+.al strong{display:block;margin-bottom:4px;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;}
+
+/* GRIDS */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:18px 0;}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:18px 0;}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:18px 0;}
+
+/* CARDS */
+.card{background:#fff;border:1px solid var(--gris-c);padding:20px;border-radius:2px;}
+.card.acc{background:var(--crema);border-color:var(--crema-d);}
+.card.dk{background:var(--negro);color:#fff;}
+.card.rb{border-top:3px solid var(--rojo);}
+.card.gb{border-top:3px solid var(--verde);}
+.card.ab{border-top:3px solid var(--azul);}
+.card.yb{border-top:3px solid var(--amarillo);}
+.card p{font-size:13.5px;line-height:1.6;color:#444;margin-bottom:0;}
+.card h4{margin-bottom:10px;}
+.card ul{list-style:none;padding:0;}
+.card ul li{padding:5px 0;border-bottom:1px solid var(--gris-c);font-size:13px;line-height:1.5;}
+.card ul li:last-child{border-bottom:none;}
+
+/* SEMAFOROS */
+.sem-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:20px 0;}
+.sem-item{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;background:#fff;border:1px solid var(--gris-c);border-radius:2px;}
+.dot{width:12px;height:12px;border-radius:50%;margin-top:4px;flex-shrink:0;}
+.dot.v{background:var(--verde);box-shadow:0 0 0 3px var(--verde-bg);}
+.dot.y{background:var(--amarillo);box-shadow:0 0 0 3px var(--amarillo-bg);}
+.dot.r{background:#b71c1c;box-shadow:0 0 0 3px rgba(183,28,28,.1);}
+.dot.p{background:var(--azul);box-shadow:0 0 0 3px var(--azul-bg);}
+.sem-label{font-size:12.5px;font-weight:600;line-height:1.3;}
+.sem-note{font-size:11px;color:var(--gris);margin-top:2px;font-family:'JetBrains Mono',monospace;}
+
+/* TIMELINE */
+.tl{position:relative;padding-left:32px;margin:24px 0;}
+.tl::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:2px;background:var(--gris-c);}
+.tl-i{position:relative;margin-bottom:28px;}
+.tl-i::before{content:'';position:absolute;left:-28px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--rojo);border:2px solid var(--crema);z-index:1;}
+.tl-i.v::before{background:var(--verde);}
+.tl-i.y::before{background:var(--amarillo);}
+.tl-i.a::before{background:var(--azul);}
+.tl-date{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.08em;color:var(--rojo);margin-bottom:4px;text-transform:uppercase;}
+.tl-i.v .tl-date{color:var(--verde);}
+.tl-i.y .tl-date{color:var(--amarillo);}
+.tl-i.a .tl-date{color:var(--azul);}
+.tl-t{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;margin-bottom:4px;}
+.tl-b{font-size:13.5px;color:#444;line-height:1.6;}
+
+/* TABLE */
+table{width:100%;border-collapse:collapse;font-size:13px;margin:16px 0;}
+th{background:var(--negro);color:#fff;padding:10px 13px;text-align:left;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;font-weight:500;}
+td{padding:9px 13px;border-bottom:1px solid var(--gris-c);vertical-align:top;line-height:1.5;}
+tr:hover td{background:rgba(192,39,27,.025);}
+tr:last-child td{border-bottom:none;}
+
+/* MODEL BADGES */
+.mb{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:9px;padding:2px 8px;border-radius:2px;font-weight:700;letter-spacing:.06em;}
+.opus{background:#1a1a1a;color:#fff;}
+.sonn{background:var(--rojo);color:#fff;}
+.haik{background:var(--amarillo);color:#fff;}
+.code{background:var(--azul);color:#fff;}
+.gemi{background:var(--verde);color:#fff;}
+.gpt{background:var(--violeta);color:#fff;}
+.myth{background:linear-gradient(135deg,var(--violeta),var(--azul));color:#fff;}
+.otro{background:#888;color:#fff;}
+
+/* CHARTS */
+.cw{background:#fff;border:1px solid var(--gris-c);padding:24px;border-radius:2px;margin:16px 0;}
+.cw h4{margin-bottom:16px;font-size:11px;font-family:'JetBrains Mono',monospace;letter-spacing:.06em;color:var(--gris);text-transform:uppercase;}
+.cc{position:relative;height:260px;}
+.cc.tall{height:340px;}
+.cc.pie{height:300px;}
+.cc.short{height:200px;}
+
+/* STATS */
+.sbox{background:#fff;border:1px solid var(--gris-c);padding:20px;text-align:center;border-radius:2px;}
+.snum{font-family:'Playfair Display',serif;font-size:38px;font-weight:900;color:var(--rojo);line-height:1;margin-bottom:4px;}
+.slbl{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;color:var(--gris);text-transform:uppercase;}
+
+/* PROGRESS */
+.pr{margin-bottom:14px;}
+.pr-lbl{display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;margin-bottom:5px;}
+.pr-track{height:8px;background:var(--gris-c);border-radius:2px;overflow:hidden;}
+.pr-fill{height:100%;border-radius:2px;}
+
+/* PROC STEPS */
+.step{display:flex;gap:16px;margin-bottom:18px;align-items:flex-start;}
+.step-n{flex-shrink:0;width:32px;height:32px;background:var(--rojo);color:#fff;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;border-radius:2px;}
+.step-b h4{font-size:14px;margin-bottom:4px;}
+.step-b p{font-size:13px;color:#555;line-height:1.55;margin-bottom:0;}
+
+/* CUENTA CARDS */
+.cc2{background:#fff;border:1px solid var(--gris-c);border-radius:2px;overflow:hidden;}
+.cc2-h{padding:12px 16px;color:#fff;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;}
+.cc2-b{padding:14px 16px;}
+.cc2-b p{font-size:12.5px;color:#444;line-height:1.5;margin-bottom:6px;}
+.tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:8.5px;padding:2px 7px;border-radius:2px;margin:2px;background:var(--crema);border:1px solid var(--crema-d);color:var(--negro);}
+.tag.r{background:var(--rojo-m);border-color:rgba(192,39,27,.2);color:var(--rojo-dark);}
+.tag.g{background:var(--verde-bg);border-color:rgba(45,106,79,.2);color:var(--verde);}
+
+/* FLOW */
+.flow{display:flex;align-items:stretch;margin:18px 0;flex-wrap:wrap;}
+.fl-s{background:#fff;border:1px solid var(--gris-c);padding:10px 14px;font-size:11px;font-family:'JetBrains Mono',monospace;text-align:center;flex:1;min-width:80px;display:flex;align-items:center;justify-content:center;}
+.fl-s.dk{background:var(--negro);color:#fff;}
+.fl-s.rd{background:var(--rojo);color:#fff;}
+.fl-arr{width:20px;text-align:center;font-size:14px;color:var(--gris);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+
+/* FOOTER */
+.footer{background:var(--negro);color:rgba(255,255,255,.35);text-align:center;padding:28px 48px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.07em;line-height:1.8;}
+
+@media(max-width:768px){.nav{display:none;}.main{margin-left:0;}section{padding:36px 20px;}.g2,.g3,.g4,.sem-grid{grid-template-columns:1fr;}.flow{flex-direction:column;}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-logo">EL RUFINO<span>Informe de memoria · v4.0</span></div>
+  <div class="nav-sec">Contexto</div>
+  <a href="#resumen">📊 Resumen ejecutivo</a>
+  <a href="#evolucion">📅 Evolución del proyecto</a>
+  <a href="#logros">✅ Qué construimos</a>
+  <div class="nav-sec">Modelos IA</div>
+  <a href="#modelos">🤖 Modelos por etapa</a>
+  <a href="#herramientas">🌐 Ecosistema IA</a>
+  <a href="#mythos">✨ Mythos — el modelo soñado</a>
+  <div class="nav-sec">Claude.ai</div>
+  <a href="#uso">💬 Análisis de sesiones</a>
+  <a href="#productividad">⏰ Productividad y horarios</a>
+  <a href="#generado">📝 Inventario generado</a>
+  <div class="nav-sec">Organización</div>
+  <a href="#manual">📋 Manual de procedimientos</a>
+  <a href="#nube">☁️ Organización en la nube</a>
+  <a href="#cuentas">👥 Las 8 cuentas</a>
+  <a href="#seguridad">🔒 Seguridad y 2FA</a>
+  <div class="nav-sec">Estado</div>
+  <a href="#semaforos">🚦 Semáforos actualizados</a>
+  <a href="#proximos">🎯 Próximos 45 días</a>
+</nav>
+
+<div class="main">
+
+<!-- MASTHEAD -->
+<div class="mast">
+  <div class="mast-in">
+    <div class="eyebrow">Proyecto El Rufino · Rufino, Santa Fe · Argentina · 19.211 hab.</div>
+    <h1>Informe de<br><em>Memoria</em></h1>
+    <div class="mast-sub">"Lo que hicimos, cómo lo hicimos y cómo hacerlo mejor." — Complementa v3.0, no lo reemplaza. Documento base de conocimiento acumulado.</div>
+    <div class="badges">
+      <span class="b new">v4.0 · Abril 2026</span>
+      <span class="b gold">Plugin v8.1.2</span>
+      <span class="b">12 agentes IA</span>
+      <span class="b">4 pantallas</span>
+      <span class="b">8 cuentas</span>
+      <span class="b">Fase 2 · 40%</span>
+      <span class="b">20 notas publicadas</span>
+      <span class="b">elrufino.com.ar ✓</span>
+    </div>
+    <div class="ver-note">Actualiza desde v3.0 · Plugin v7.0.5 → v8.1.2 · Logo/favicon/OG subidos · Claude API integrada</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+  01 · RESUMEN EJECUTIVO
+══════════════════════════════ -->
+<section id="resumen">
+  <div class="eyebrow-s">01 · Resumen ejecutivo</div>
+  <h2>De la idea al medio en funcionamiento</h2>
+  <p class="lead">El Rufino nació como hipótesis: Rufino necesitaba un medio con identidad, contexto y seguimiento reales. Lo que sigue documenta cómo esa hipótesis se convirtió en arquitectura — editorial, técnica y organizacional.</p>
+
+  <div class="g4">
+    <div class="sbox"><div class="snum">8</div><div class="slbl">Versiones del plugin</div></div>
+    <div class="sbox"><div class="snum">20</div><div class="slbl">Notas publicadas</div></div>
+    <div class="sbox"><div class="snum">12</div><div class="slbl">Agentes IA activos</div></div>
+    <div class="sbox"><div class="snum">40%</div><div class="slbl">Fase 2 completada</div></div>
+  </div>
+
+  <div class="g2" style="margin-top:24px;">
+    <div class="card acc rb"><h4>🏁 Dónde empezamos</h4><p>Una ciudad sin medio digital propio con identidad editorial. Ocho páginas de Facebook compitiendo por velocidad. Nadie construyendo contexto, archivo ni seguimiento. Una brecha real y documentable.</p></div>
+    <div class="card acc gb"><h4>📍 Dónde estamos hoy</h4><p>Identidad cerrada (Fase 1 ✓). Dominio activo en Hostinger. Plugin v8.1.2 con Kanban, importador demo y Claude API integrada. 20 notas publicadas. Logo, favicon y OG subidos.</p></div>
+  </div>
+
+  <h3>Progreso por eje</h3>
+  <div class="pr"><div class="pr-lbl"><span>🟢 Identidad y marca</span><span>100%</span></div><div class="pr-track"><div class="pr-fill" style="width:100%;background:var(--verde);"></div></div></div>
+  <div class="pr"><div class="pr-lbl"><span>🟢 Infraestructura técnica (plugin + hosting)</span><span>90%</span></div><div class="pr-track"><div class="pr-fill" style="width:90%;background:var(--verde);"></div></div></div>
+  <div class="pr"><div class="pr-lbl"><span>🟡 Contenido inicial (notas publicadas)</span><span>60%</span></div><div class="pr-track"><div class="pr-fill" style="width:60%;background:var(--amarillo);"></div></div></div>
+  <div class="pr"><div class="pr-lbl"><span>🟡 Configuración WordPress (categorías, SEO, child theme)</span><span>40%</span></div><div class="pr-track"><div class="pr-fill" style="width:40%;background:var(--amarillo);"></div></div></div>
+  <div class="pr"><div class="pr-lbl"><span>🔴 Distribución (WhatsApp, redes, audiencia)</span><span>15%</span></div><div class="pr-track"><div class="pr-fill" style="width:15%;background:var(--rojo);"></div></div></div>
+  <div class="pr"><div class="pr-lbl"><span>⚫ Monetización</span><span>0%</span></div><div class="pr-track"><div class="pr-fill" style="width:1%;background:#ccc;"></div></div></div>
+
+  <div class="al inf" style="margin-top:24px;"><strong>Nota metodológica</strong>Claude no tiene acceso a métricas reales de sesiones ni tokens. Los datos de uso son estimaciones basadas en volumen documentado. Para números exactos: claude.ai → Settings → Usage.</div>
+</section>
+
+<!-- ══════════════════════════════
+  02 · EVOLUCIÓN
+══════════════════════════════ -->
+<section id="evolucion">
+  <div class="eyebrow-s">02 · Historia del proyecto</div>
+  <h2>Cómo evolucionó todo</h2>
+  <p class="lead">Desde la primera conversación sobre el vacío editorial en Rufino hasta el plugin v8.1.2 con Claude API integrada. Cada etapa tuvo su lógica, sus aprendizajes y sus errores documentados.</p>
+
+  <div class="tl">
+    <div class="tl-i a"><div class="tl-date">Etapa 0 · Fines 2025</div><div class="tl-t">La hipótesis</div><div class="tl-b">Primeras conversaciones con Claude sobre el vacío editorial en Rufino. Definición de la propuesta de valor: contexto + seguimiento como diferenciadores reales. El nombre "El Rufino" y el claim "Lo que pasa y lo que significa" surgen en estas sesiones iniciales.</div></div>
+    <div class="tl-i v"><div class="tl-date">Fase 1 · Ene–Feb 2026 — COMPLETADA ✓</div><div class="tl-t">Identidad cerrada</div><div class="tl-b">Paleta B (#c0271b, #1a1a1a, #ffffff, #f5f0e8), tipografías (Playfair Display + Source Serif 4), marco simbólico Variante B. Análisis de competidores: Sucesos, FM Rufino, La Tribuna del Sur. Los 6 pilares P01–P06 y la regla madre de las dos capas. Dossier fundacional v1–v3 generado.</div></div>
+    <div class="tl-i"><div class="tl-date">Feb–Mar 2026 · Plugin v1.x–v5.x</div><div class="tl-t">Entorno de pruebas (infoconectados.com.ar)</div><div class="tl-b">Primeras versiones del plugin. Iteraciones sobre módulos, base de datos, AJAX handlers. Simulación de GitHub API en v1–v2, conexión real desde v3. Aprendizajes clave: PowerShell ISE solo soporta ASCII, fine-grained tokens con permisos exactos, exposición accidental de token → revocado y regenerado inmediatamente.</div></div>
+    <div class="tl-i"><div class="tl-date">Marzo 2026 · Plugin v6.x–v7.0.5</div><div class="tl-t">Migración a Hostinger — dominio definitivo</div><div class="tl-b">Registro de elrufino.com.ar (NIC EX-2026-36480557). DNS delegado. Plugin v7.0.5: 14 módulos, 11 agentes, tabla wp_er_promesas activa con CRUD completo. Repositorio GitHub reorganizado en 6 carpetas. Documentación 00_CONTEXTO_IA v1.2 vigente. infoconectados.com.ar pasa a obsoleto.</div></div>
+    <div class="tl-i v"><div class="tl-date">Abril 2026 · Plugin v8.1.2 — Actual</div><div class="tl-t">Salto arquitectónico — Producto mínimo en ejecución (40%)</div><div class="tl-b">Rediseño en 4 pantallas: BASE / Producción / Inteligencia / Seguimiento. 12 agentes. Kanban editorial incorporado. Importador de demo content. <strong>Claude API integrada directamente en el panel</strong>. Logo, favicon y OG image subidos. 20 notas publicadas. Entorno de test activo: prueba.infoconectados.com.</div></div>
+    <div class="tl-i a"><div class="tl-date">Próximo · Fase 2 completa</div><div class="tl-t">Lo que falta para el lanzamiento real</div><div class="tl-b">6 categorías P01–P06 en WP. Schema NewsMediaOrganization. Child theme Newsup con paleta B. Canal WhatsApp broadcast configurado. elrufino.ar registrado en NIC Argentina. Primera promesa registrada y visible públicamente.</div></div>
+  </div>
+
+  <div class="cw">
+    <h4>Versiones del plugin — evolución de módulos y agentes</h4>
+    <div class="cc"><canvas id="cPlugin"></canvas></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+  03 · LOGROS
+══════════════════════════════ -->
+<section id="logros">
+  <div class="eyebrow-s">03 · Inventario de logros</div>
+  <h2>Qué se construyó en concreto</h2>
+  <p class="lead">Una mirada honesta a los entregables reales: lo que existe, lo que funciona, lo que está pendiente.</p>
+
+  <div class="g3">
+    <div class="card gb"><h4>✅ Identidad editorial</h4><ul><li>Nombre, claim y posicionamiento cerrado</li><li>Paleta B (4 colores definidos)</li><li>Tipografías institucionales</li><li>Marco simbólico Variante B</li><li>6 pilares editoriales P01–P06</li><li>Regla madre: 2 capas siempre</li><li>Análisis de 6 competidores locales</li></ul></div>
+    <div class="card gb"><h4>✅ Infraestructura técnica</h4><ul><li>elrufino.com.ar activo en Hostinger</li><li>WordPress instalado y operativo</li><li>Plugin v8.1.2 con Claude API</li><li>DB wp_er_promesas CRUD completo</li><li>GitHub org ElRufino + repositorio</li><li>Logo / favicon / OG image subidos</li><li>Kanban + importador demo activos</li></ul></div>
+    <div class="card yb"><h4>🔄 Contenido y configuración</h4><ul><li>20 notas publicadas</li><li>Calendario editorial tipo definido</li><li>12 agentes IA con prompts</li><li style="color:var(--gris);">❌ Categorías P01–P06 pendientes</li><li style="color:var(--gris);">❌ Schema SEO pendiente</li><li style="color:var(--gris);">❌ Child theme pendiente</li><li style="color:var(--gris);">❌ Canal WhatsApp pendiente</li></ul></div>
+  </div>
+
+  <div class="cw">
+    <h4>Radar de completitud por área — Fase 2</h4>
+    <div class="cc tall"><canvas id="cRadar"></canvas></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+  04 · MODELOS POR ETAPA
+══════════════════════════════ -->
+<section id="modelos">
+  <div class="eyebrow-s">04 · Modelos IA</div>
+  <h2>Qué modelo usar en cada etapa</h2>
+  <p class="lead">No todos los modelos son igual de eficientes para cada tarea. Esto documenta la distribución óptima — no necesariamente lo que se usó siempre.</p>
+
+  <div class="al inf"><strong>Uso real vs. uso óptimo</strong>En la mayoría de sesiones se usó Claude Sonnet (última versión). En las últimas sesiones se incorporaron otros modelos. Esta sección define la estrategia correcta para proyectos futuros.</div>
+
+  <div class="g2">
+    <div class="cw"><h4>Distribución recomendada por modelo</h4><div class="cc pie"><canvas id="cModPie"></canvas></div></div>
+    <div class="cw"><h4>Costo relativo vs. calidad de output</h4><div class="cc pie"><canvas id="cCostoQ"></canvas></div></div>
+  </div>
+
+  <h3>Guía práctica por tipo de tarea</h3>
+  <table>
+    <thead><tr><th>Tarea</th><th>Modelo ideal</th><th>Por qué</th><th>Alternativa</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Estrategia editorial y conceptual</strong><br><span style="font-size:11.5px;color:var(--gris)">Identidad, pilares, posicionamiento, decisiones de largo plazo</span></td><td><span class="mb opus">Opus 4.6</span></td><td>Razonamiento profundo, síntesis compleja, visión de largo plazo. Vale el costo.</td><td><span class="mb sonn">Sonnet 4.6</span></td></tr>
+      <tr><td><strong>Código de plugin WordPress</strong><br><span style="font-size:11.5px;color:var(--gris)">PHP, AJAX, base de datos, panel HTML/CSS/JS</span></td><td><span class="mb sonn">Sonnet 4.6</span></td><td>Excelente relación calidad/costo. Contexto amplio, ideal para plugins de 3000+ líneas.</td><td><span class="mb code">Claude Code</span></td></tr>
+      <tr><td><strong>CSS / HTML / JavaScript</strong><br><span style="font-size:11.5px;color:var(--gris)">Tema hijo, dossiers HTML, componentes visuales</span></td><td><span class="mb sonn">Sonnet 4.6</span></td><td>Rápido y preciso. Los informes de memoria (como este) son resultado de ese trabajo.</td><td><span class="mb haik">Haiku 4.5</span></td></tr>
+      <tr><td><strong>Redacción periodística</strong><br><span style="font-size:11.5px;color:var(--gris)">Notas, titulares, guiones TikTok, resúmenes WhatsApp</span></td><td><span class="mb sonn">Sonnet 4.6</span></td><td>Tono editorial consistente. Aplica la regla de dos capas naturalmente con el prompt correcto.</td><td><span class="mb haik">Haiku 4.5</span></td></tr>
+      <tr><td><strong>Documentación de contexto IA</strong><br><span style="font-size:11.5px;color:var(--gris)">Prompt maestro, repositorio, README, agentes</span></td><td><span class="mb sonn">Sonnet 4.6</span></td><td>Documentar código y decisiones no requiere Opus. Sonnet es suficiente y más veloz.</td><td><span class="mb haik">Haiku 4.5</span></td></tr>
+      <tr><td><strong>Iteraciones rápidas y variantes</strong><br><span style="font-size:11.5px;color:var(--gris)">Títulos alternativos, ajustes menores, pruebas de tono</span></td><td><span class="mb haik">Haiku 4.5</span></td><td>Velocidad máxima, costo mínimo. Para tareas donde la dirección ya está definida.</td><td><span class="mb sonn">Sonnet 4.6</span></td></tr>
+      <tr><td><strong>Generación de imágenes</strong><br><span style="font-size:11.5px;color:var(--gris)">Logo, OG image, placas editoriales, thumbnails</span></td><td><span class="mb gemi">Gemini Imagen 3</span></td><td>Generación de imágenes de alta calidad. Combinar con prompts del Agente 11.</td><td><span class="mb otro">Midjourney</span></td></tr>
+      <tr><td><strong>Scripts PowerShell / GitHub API</strong><br><span style="font-size:11.5px;color:var(--gris)">Upload de contexto, sincronización, ASCII-only</span></td><td><span class="mb sonn">Sonnet 4.6</span></td><td>Conoce bien el patrón Invoke-RestMethod + base64. Recordar: ASCII-only en ISE.</td><td><span class="mb code">Claude Code</span></td></tr>
+      <tr><td><strong>Análisis de datos (INDEC, presupuesto)</strong><br><span style="font-size:11.5px;color:var(--gris)">Pilar P06 — Rufino en datos</span></td><td><span class="mb sonn">Sonnet 4.6</span> + <span class="mb gpt">GPT-4o</span></td><td>Claude para la narrativa periodística, GPT-4o para tablas numéricas extensas.</td><td><span class="mb gemi">Gemini</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="cw" style="margin-top:28px;">
+    <h4>Mapa de modelos por fase — distribución estimada de uso (%)</h4>
+    <div class="cc tall"><canvas id="cFases"></canvas></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+  05 · ECOSISTEMA IA
+══════════════════════════════ -->
+<section id="herramientas">
+  <div class="eyebrow-s">05 · Ecosistema de herramientas</div>
+  <h2>El conjunto que hizo posible el proyecto</h2>
+  <p class="lead">El Rufino no se construyó solo con Claude. Este mapa documenta todas las herramientas IA y de soporte que entraron en juego, cuándo y para qué.</p>
+
+  <div class="g3">
+    <div class="card ab"><h4>🧠 Claude (Anthropic)</h4><p><strong>Motor central · 90%+ del trabajo</strong></p><p>Estrategia editorial, código del plugin, documentación, dossiers HTML, prompts de agentes, scripts PowerShell, contexto IA. Ahora integrado vía API en el panel v8.</p><div style="margin-top:10px"><span class="tag">claude.ai</span><span class="tag">API v8 integrada</span><span class="tag">Sonnet + Haiku</span></div></div>
+    <div class="card gb"><h4>🖼️ Gemini / Imagen (Google)</h4><p><strong>Generación de imágenes</strong></p><p>Agente 11 genera prompts optimizados. Logo, placas editoriales, OG images, thumbnails de TikTok. Alta calidad para identidad visual.</p><div style="margin-top:10px"><span class="tag">Imagen 3</span><span class="tag">Agente 11</span></div></div>
+    <div class="card yb"><h4>🔮 GPT-4o (OpenAI)</h4><p><strong>Uso complementario</strong></p><p>Análisis de tablas numéricas extensas, versiones alternativas cuando se quiere un segundo punto de vista. Pilar P06.</p><div style="margin-top:10px"><span class="tag">Tablas INDEC</span><span class="tag">Segunda opinión</span></div></div>
+    <div class="card rb"><h4>⚙️ GitHub</h4><p><strong>Repositorio de contexto y código</strong></p><p>Org ElRufino, repositorio el-rufino-contexto. 6 carpetas. API fine-grained tokens. Fuente única de verdad entre sesiones IA.</p><div style="margin-top:10px"><span class="tag">00_CONTEXTO_IA</span><span class="tag">API REST</span><span class="tag">PowerShell</span></div></div>
+    <div class="card rb"><h4>📁 Google Drive</h4><p><strong>Almacenamiento y colaboración</strong></p><p>Documentos de trabajo, identidad visual, borradores. Compartido entre las 8 cuentas. Cuenta principal es la propietaria del storage.</p><div style="margin-top:10px"><span class="tag">Compartido x8</span><span class="tag">Cuenta principal</span></div></div>
+    <div class="card acc"><h4>🎨 Midjourney</h4><p><strong>Alternativa de imagen premium</strong></p><p>Para piezas donde se necesita mayor control estético que Gemini. Identidad visual de alta fidelidad cuando el estándar editorial lo requiere.</p><div style="margin-top:10px"><span class="tag">Alternativa Gemini</span><span class="tag">Identidad visual</span></div></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+  06 · MYTHOS
+══════════════════════════════ -->
+<section id="mythos">
+  <div class="eyebrow-s">06 · Wishlist · El modelo que quisiera</div>
+  <h2>Ojalá existiera Mythos</h2>
+  <p class="lead">A veces hay una distancia entre las herramientas disponibles y las que el proyecto necesitaría. Documentar esa brecha no es queja — es hoja de ruta para aprovechar lo que vaya llegando.</p>
+
+  <div class="al myth">
+    <strong>✨ Mythos — El modelo ideal para El Rufino</strong>
+    Un modelo que combinara la profundidad estratégica de Opus con la velocidad de Haiku, memoria persistente real del historial del proyecto sin necesidad de pastear contexto, comprensión profunda del periodismo local latinoamericano y la realidad territorial argentina, capacidad de generar imágenes con tipografía controlada en el mismo workflow, y publicación directa a WordPress vía API. Un asistente verdaderamente integrado al flujo editorial — no una herramienta a la que hay que "alimentar" en cada sesión desde cero.
+  </div>
+
+  <div class="g3">
+    <div class="card"><h4>🧠 Lo que falta hoy</h4><ul><li>Memoria real entre sesiones</li><li>Historial del proyecto sin pastear contexto</li><li>Edición directa de WordPress</li><li>Imagen + texto en un solo workflow</li><li>Comprensión del territorio local argentino</li><li>Contexto persistente entre dispositivos</li></ul></div>
+    <div class="card"><h4>🔧 Cómo lo compensamos hoy</h4><ul><li>Prompt maestro en 00_CONTEXTO_IA/</li><li>Plugin v8.1.2 con Claude API integrada</li><li>GitHub como memoria persistente real</li><li>Agente 11 genera prompts para Gemini/MJ</li><li>Workflow manual de subida a WP</li><li>Memory de claude.ai (incompleta)</li></ul></div>
+    <div class="card"><h4>🔮 Qué se viene que se acerca</h4><ul><li>Claude Projects con memoria mejorada</li><li>Claude con herramientas web nativas</li><li>Modelos multimodales de mayor precisión</li><li>MCP servers para WordPress + Claude</li><li>Agentes autónomos con contexto persistente</li><li>API de publicación directa</li></ul></div>
+  </div>
+
+  <p style="margin-top:16px;font-style:italic;color:var(--gris);font-size:13.5px;">Mientras tanto: la combinación de Sonnet + prompt maestro bien construido + plugin v8.1.2 con Claude API integrada es la mejor aproximación disponible. La arquitectura del plugin ya anticipó este camino.</p>
+</section>
+
+<!-- ══════════════════════════════
+  07 · USO CLAUDE.AI
+══════════════════════════════ -->
+<section id="uso">
+  <div class="eyebrow-s">07 · Claude.ai · Análisis de uso</div>
+  <h2>Cómo y cuánto usamos Claude</h2>
+  <p class="lead">Sin acceso a los logs reales de la plataforma, esta sección reconstruye el uso estimado basándose en el volumen y complejidad del trabajo documentado a lo largo del proyecto.</p>
+
+  <div class="al w"><strong>Datos estimados — no son métricas reales</strong>Los valores son estimaciones basadas en el trabajo documentado. Para los números exactos: claude.ai → Settings → Usage. Los chats del proyecto están en el Project "El Rufino". Algunos chats generales (sin proyecto asignado) pueden no estar contabilizados.</div>
+
+  <div class="g4">
+    <div class="sbox"><div class="snum">~60</div><div class="slbl">Sesiones estimadas</div></div>
+    <div class="sbox"><div class="snum">~2M</div><div class="slbl">Tokens aprox.</div></div>
+    <div class="sbox"><div class="snum">~40</div><div class="slbl">Sesiones en el Proyecto</div></div>
+    <div class="sbox"><div class="snum">~20</div><div class="slbl">Sesiones generales</div></div>
+  </div>
+
+  <div class="cw" style="margin-top:24px;">
+    <h4>Distribución estimada de sesiones por tipo de trabajo</h4>
+    <div class="cc pie"><canvas id="cSesiones"></canvas></div>
+  </div>
+
+  <h3>Inventario de lo generado sesión a sesión</h3>
+  <table>
+    <thead><tr><th>Categoría</th><th>Ejemplos concretos</th><th>Vol. estimado</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Código WordPress</strong></td><td>Plugin PHP v1→v8, AJAX handlers, SQL, panel HTML+CSS+JS, funciones WP</td><td>~8.000 líneas</td></tr>
+      <tr><td><strong>Documentación de contexto</strong></td><td>Prompt maestro, repositorio IA, agentes IA, changelog, README, guías</td><td>~15.000 palabras</td></tr>
+      <tr><td><strong>Dossiers HTML</strong></td><td>Informe de memoria v1, v2, v3, v4 (este), dossier fundacional v1–v3</td><td>~5 docs grandes</td></tr>
+      <tr><td><strong>Estrategia editorial</strong></td><td>Pilares P01–P06, calendarios, criterios, protocolo promesas, protocolos policiales</td><td>~8.000 palabras</td></tr>
+      <tr><td><strong>Scripts PowerShell / GitHub API</strong></td><td>Upload a GitHub vía API, batch de archivos, ASCII-only, gestión de tokens</td><td>~15 scripts</td></tr>
+      <tr><td><strong>Contenido periodístico</strong></td><td>20 notas publicadas, titulares, bajadas, guiones TikTok, resúmenes WhatsApp</td><td>~30.000 palabras</td></tr>
+      <tr><td><strong>Prompts de agentes (12)</strong></td><td>Prompts completos para los 12 agentes del plugin, adaptables por ciudad</td><td>~6.000 palabras</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ══════════════════════════════
+  08 · PRODUCTIVIDAD
+══════════════════════════════ -->
+<section id="productividad">
+  <div class="eyebrow-s">08 · Productividad</div>
+  <h2>Cuándo fuimos más productivos</h2>
+  <p class="lead">Sin logs de horarios reales, esta sección identifica patrones basándose en la naturaleza del trabajo y lo que funciona en proyectos de este tipo. Ajustar según la experiencia propia.</p>
+
+  <div class="g2">
+    <div class="cw"><h4>Franjas horarias — productividad estimada</h4><div class="cc"><canvas id="cHorarios"></canvas></div></div>
+    <div class="cw"><h4>Duración típica por tipo de sesión (min)</h4><div class="cc"><canvas id="cDuracion"></canvas></div></div>
+  </div>
+
+  <div class="g3" style="margin-top:16px;">
+    <div class="card gb"><h4>🌅 Mañana (8–12 hs)</h4><p>Ideal para trabajo estratégico y redacción. Mente despejada para decisiones de identidad, arquitectura editorial y revisión de documentación.</p></div>
+    <div class="card ab"><h4>🌇 Tarde (15–19 hs)</h4><p>Óptimas para código. Las sesiones más largas y productivas de plugin (v6, v7, v8) ocurrieron en este bloque. Alta energía para depuración.</p></div>
+    <div class="card yb"><h4>🌙 Noche (20–23 hs)</h4><p>Buen momento para documentación y dossiers. Menor energía para decisiones críticas — evitar cerrar temas importantes después de las 22 hs.</p></div>
+  </div>
+
+  <div class="al p" style="margin-top:24px;"><strong>Recomendación de productividad</strong>Las sesiones más largas de código (plugin v7, v8) se hicieron en bloques de 3–4 horas sin interrupciones. Para código complejo: bloques largos, contexto cargado al inicio, guardar en GitHub antes de cerrar. Para contenido: sesiones más cortas de 60–90 minutos son más eficientes.</div>
+</section>
+
+<!-- ══════════════════════════════
+  09 · MANUAL DE PROCEDIMIENTOS
+══════════════════════════════ -->
+<section id="manual">
+  <div class="eyebrow-s">09 · Manual de procedimientos</div>
+  <h2>Cómo trabajar mejor con IA</h2>
+  <p class="lead">Protocolo construido desde la experiencia real del proyecto. Cada regla tiene una razón concreta detrás — y en general un error cometido que la originó.</p>
+
+  <h3>Protocolo de inicio de sesión</h3>
+  <div class="step"><div class="step-n">1</div><div class="step-b"><h4>Cargar solo 00_CONTEXTO_IA/ al inicio</h4><p>La carpeta de contexto es la fuente única de verdad. Cargar archivos binarios o carpetas pesadas (03_IDENTIDAD_MARCA) consume contexto sin aportar información útil. Máximo 3 archivos por sesión: prompt maestro + repositorio + el archivo específico de la tarea.</p></div></div>
+  <div class="step"><div class="step-n">2</div><div class="step-b"><h4>Declarar el objetivo de la sesión en el primer mensaje</h4><p>No arrancar con "hola" ni preguntas generales. Ir directo: "Sesión de hoy: configurar child theme Newsup con paleta B. Plugin v8.1.2 activo. Necesito style.css y functions.php." Esto ahorra 3–5 intercambios de contextualización.</p></div></div>
+  <div class="step"><div class="step-n">3</div><div class="step-b"><h4>Elegir el modelo correcto antes de empezar</h4><p>Estrategia → Opus. Código y redacción → Sonnet. Variantes rápidas → Haiku. Usar el modelo equivocado no es solo más caro: puede ser más lento para tareas que no lo requieren. Haiku genera variantes 3x más rápido que Sonnet para titulares simples.</p></div></div>
+  <div class="step"><div class="step-n">4</div><div class="step-b"><h4>Hacer checkpoints cada 30–40 mensajes</h4><p>Las conversaciones largas degradan la calidad porque el modelo pierde el hilo del contexto inicial. Cada 30–40 mensajes: guardar en GitHub, abrir sesión nueva con el contexto actualizado. No esperar a que la sesión "se rompa".</p></div></div>
+  <div class="step"><div class="step-n">5</div><div class="step-b"><h4>Versionar y guardar en GitHub antes de cerrar</h4><p>Nunca cerrar sin subir lo producido. El protocolo PowerShell para upload está en 00_CONTEXTO_IA/. ASCII-only, ejecutar Set-ExecutionPolicy primero, hacer GET para obtener SHA antes de PUT en archivos existentes.</p></div></div>
+  <div class="step"><div class="step-n">6</div><div class="step-b"><h4>Actualizar el prompt maestro con cada decisión nueva</h4><p>Toda decisión que cambie el estado va al prompt maestro ANTES de terminar la sesión. Si se cierra sin actualizar, el contexto de la próxima sesión será incorrecto — esto causó retrabajo real en el proyecto.</p></div></div>
+
+  <h3>Reglas de ahorro de recursos</h3>
+  <div class="g2">
+    <div class="card rb"><h4>❌ Qué no hacer</h4><ul><li>Cargar archivos binarios al contexto</li><li>Pedir al modelo que "recuerde" sin cargar contexto</li><li>Usar Opus para código rutinario</li><li>Sesiones de 100+ mensajes sin checkpoint</li><li>Repetir el contexto desde cero en sesiones nuevas sin usar el archivo de contexto</li><li>Solicitar variantes de lo mismo en el mismo mensaje</li><li>Exponer tokens de GitHub en el chat</li></ul></div>
+    <div class="card gb"><h4>✅ Qué sí hacer</h4><ul><li>Un objetivo claro por sesión</li><li>Contexto mínimo necesario, no el máximo posible</li><li>Separar sesiones de código de sesiones de estrategia</li><li>Haiku para primeras iteraciones, Sonnet para el definitivo</li><li>Prompts estructurados: contexto → tarea → restricciones → entrega esperada</li><li>GitHub como memoria entre sesiones</li><li>Documentar errores conocidos para no repetirlos</li></ul></div>
+  </div>
+
+  <h3>Flujos de trabajo tipo</h3>
+  <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gris);margin-bottom:8px;margin-top:20px;">SESIÓN DE CÓDIGO (plugin, scripts)</p>
+  <div class="flow">
+    <div class="fl-s dk">Cargar contexto técnico</div><div class="fl-arr">→</div>
+    <div class="fl-s">Declarar archivo objetivo</div><div class="fl-arr">→</div>
+    <div class="fl-s rd">Generar código</div><div class="fl-arr">→</div>
+    <div class="fl-s">Testear en WP</div><div class="fl-arr">→</div>
+    <div class="fl-s">Bugfixear</div><div class="fl-arr">→</div>
+    <div class="fl-s dk">Subir a GitHub</div>
+  </div>
+  <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gris);margin-bottom:8px;margin-top:20px;">SESIÓN EDITORIAL (nota, TikTok, WhatsApp)</p>
+  <div class="flow">
+    <div class="fl-s dk">Cargar prompt agente</div><div class="fl-arr">→</div>
+    <div class="fl-s">Completar [TEMA]</div><div class="fl-arr">→</div>
+    <div class="fl-s rd">Agente redacta</div><div class="fl-arr">→</div>
+    <div class="fl-s">Revisión editorial</div><div class="fl-arr">→</div>
+    <div class="fl-s dk">Publicar en WP</div>
+  </div>
+  <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gris);margin-bottom:8px;margin-top:20px;">SESIÓN DE ESTRATEGIA (decisiones grandes)</p>
+  <div class="flow">
+    <div class="fl-s dk">Opus · Cargar sección relevante</div><div class="fl-arr">→</div>
+    <div class="fl-s rd">Plantear pregunta estratégica</div><div class="fl-arr">→</div>
+    <div class="fl-s">Iterar con alternativas</div><div class="fl-arr">→</div>
+    <div class="fl-s dk">Cerrar · Actualizar prompt maestro</div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+  10 · ORGANIZACIÓN EN LA NUBE
+══════════════════════════════ -->
+<section id="nube">
+  <div class="eyebrow-s">10 · Organización en la nube</div>
+  <h2>La arquitectura de trabajo colaborativo</h2>
+  <p class="lead">El proyecto incorpora 8 cuentas. Cada una tiene roles definidos, acceso compartido al repositorio GitHub y al Drive. Acá se documenta cómo organizarlas para que funcionen sin fricciones.</p>
+
+  <div class="g3">
+    <div class="sbox"><div class="snum">8</div><div class="slbl">Cuentas totales</div></div>
+    <div class="sbox"><div class="snum">1</div><div class="slbl">Cuenta principal (owner)</div></div>
+    <div class="sbox"><div class="snum">2</div><div class="slbl">Recursos compartidos</div></div>
+  </div>
+
+  <h3>Arquitectura de accesos</h3>
+  <div class="g2">
+    <div class="card ab"><h4>📁 GitHub — org ElRufino / el-rufino-contexto</h4><p><strong>Acceso:</strong> Las 8 cuentas tienen acceso de lectura a 00_CONTEXTO_IA/. La cuenta principal (owner) es la única con write completo al repositorio.</p><p style="margin-top:8px"><strong>Flujo:</strong> Solo el owner sube actualizaciones de documentación. Los colaboradores solo leen el contexto.</p><div style="margin-top:10px"><span class="tag g">Owner: 1 cuenta</span><span class="tag">Lectura: 7 cuentas</span><span class="tag r">Write: solo owner</span></div></div>
+    <div class="card gb"><h4>📂 Google Drive — Proyecto El Rufino</h4><p><strong>Acceso:</strong> Las 8 cuentas tienen acceso a la carpeta compartida. La cuenta con mayor almacenamiento es la propietaria del Drive.</p><p style="margin-top:8px"><strong>Nota:</strong> Los archivos de trabajo viven en Drive. El contexto IA oficial vive en GitHub. No mezclar las fuentes de verdad.</p><div style="margin-top:10px"><span class="tag g">Owner: cuenta principal</span><span class="tag">Colaborador: 7 cuentas</span></div></div>
+  </div>
+
+  <h3>Estructura de carpetas en Drive</h3>
+  <table>
+    <thead><tr><th>Carpeta</th><th>Contenido</th><th>Acceso</th></tr></thead>
+    <tbody>
+      <tr><td><strong>📁 00_CONTEXTO_IA</strong></td><td>Espejo del repositorio GitHub (backups). Fuente de verdad oficial = GitHub.</td><td>Todas</td></tr>
+      <tr><td><strong>📁 01_DOCUMENTOS_VIGENTES</strong></td><td>Estrategia, planes, decisiones cerradas, informe de memoria actual</td><td>Todas</td></tr>
+      <tr><td><strong>📁 02_CONTENIDO_EDITORIAL</strong></td><td>Borradores de notas, calendarios, guiones TikTok, resúmenes WhatsApp</td><td>Roles editoriales</td></tr>
+      <tr><td><strong>📁 03_IDENTIDAD_MARCA</strong></td><td>Logos finales, paleta, tipografías, OG images, favicon (archivos terminados)</td><td>Todas</td></tr>
+      <tr><td><strong>📁 04_CODIGO_PLUGIN</strong></td><td>Versiones del plugin (.zip), child theme, scripts PowerShell</td><td>Rol técnico</td></tr>
+      <tr><td><strong>📁 05_MATERIAL_HISTORICO</strong></td><td>Versiones obsoletas, dossiers anteriores, experimentos descartados</td><td>Owner + técnico</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ══════════════════════════════
+  11 · LAS 8 CUENTAS
+══════════════════════════════ -->
+<section id="cuentas">
+  <div class="eyebrow-s">11 · Las 8 cuentas</div>
+  <h2>Roles y responsabilidades</h2>
+  <p class="lead">Cada cuenta cumple funciones específicas. Los roles son funcionales — no implican cargos rígidos. Una persona puede operar desde múltiples cuentas según la tarea del día.</p>
+
+  <div class="al inf"><strong>Principio de roles funcionales</strong>No asignar cargos fijos — asignar responsabilidades concretas. El proyecto puede funcionar con cualquier combinación activa de cuentas.</div>
+
+  <div class="g2" style="margin-top:20px;">
+    <div class="cc2"><div class="cc2-h" style="background:var(--negro);">⭐ C1 — Principal / Owner</div><div class="cc2-b"><p><strong>Rol:</strong> Propietaria de todo. GitHub org owner, Drive owner, WP admin principal, cuenta Hostinger.</p><p>Actualizaciones de plugin, cambios de hosting, facturación, decisiones estratégicas, upload oficial a GitHub.</p><div><span class="tag r">GitHub: Owner</span><span class="tag r">Drive: Owner</span><span class="tag r">WP: Admin</span><span class="tag r">Hostinger: Owner</span></div></div></div>
+
+    <div class="cc2"><div class="cc2-h" style="background:var(--azul);">🔧 C2 — Técnico / Desarrollo</div><div class="cc2-b"><p><strong>Rol:</strong> Desarrollo del plugin, child theme, scripts PowerShell, configuración técnica de WP.</p><p>Plugin en producción, Rank Math, child theme Newsup, SEO técnico, mantenimiento del servidor.</p><div><span class="tag">GitHub: Write (04)</span><span class="tag g">Drive: Colaborador</span><span class="tag">WP: Admin</span></div></div></div>
+
+    <div class="cc2"><div class="cc2-h" style="background:var(--rojo);">✍️ C3 — Editor/a principal</div><div class="cc2-b"><p><strong>Rol:</strong> Coordinación editorial, revisión de notas, aplicación de la regla de dos capas, supervisión del calendario.</p><p>Aprobar publicaciones, mantener tono del medio, supervisar seguimiento de promesas (módulo 9).</p><div><span class="tag">GitHub: Lectura</span><span class="tag g">Drive: Editor</span><span class="tag">WP: Editor</span></div></div></div>
+
+    <div class="cc2"><div class="cc2-h" style="background:#5c5c5c;">📰 C4 — Redactor/a · Periodismo</div><div class="cc2-b"><p><strong>Rol:</strong> Producción de notas (P01, P05, P06). Uso de Agentes 4, 5 y 7 para generar contenido y seguimiento.</p><p>Mínimo 3 notas semanales. Registrar promesas en el panel. Actualizar estado de seguimientos.</p><div><span class="tag">GitHub: Lectura</span><span class="tag g">Drive: Editor</span><span class="tag">WP: Author</span></div></div></div>
+
+    <div class="cc2"><div class="cc2-h" style="background:var(--verde);">🌾 C5 — Corresponsal / Campo</div><div class="cc2-b"><p><strong>Rol:</strong> Pilares P02 (El campo habla) y P03 (Barrio a barrio). Cobertura territorial, fuentes locales, datos de productores.</p><p>Entrevistas de campo, seguimiento de obras de barrio. Candidatos: Fabián Longo o Adriana Giménez.</p><div><span class="tag">GitHub: Lectura</span><span class="tag g">Drive: Editor</span><span class="tag">WP: Author</span></div></div></div>
+
+    <div class="cc2"><div class="cc2-h" style="background:#b05a00;">📱 C6 — Redes / TikTok</div><div class="cc2-b"><p><strong>Rol:</strong> Pilar P04 (Generación Rufino). TikTok, Instagram Reels, guiones de video, canal WhatsApp broadcast.</p><p>3–4 videos semanales. Resumen WhatsApp 7:30 AM. Agente 6 para guiones.</p><div><span class="tag">GitHub: Lectura</span><span class="tag g">Drive: Editor</span><span class="tag">WP: Author</span></div></div></div>
+
+    <div class="cc2"><div class="cc2-h" style="background:#2d4f6a;">📊 C7 — Datos / SEO</div><div class="cc2-b"><p><strong>Rol:</strong> Pilar P06 (Rufino en datos). INDEC, presupuesto municipal, datos de salud y educación. SEO y métricas.</p><p>Infografías de datos locales. Schema NewsMediaOrganization. Análisis de tráfico. Agente 10.</p><div><span class="tag">GitHub: Lectura</span><span class="tag g">Drive: Editor</span><span class="tag">WP: Author</span></div></div></div>
+
+    <div class="cc2"><div class="cc2-h" style="background:#3d3d3d;">🤝 C8 — Colaborador/a externo</div><div class="cc2-b"><p><strong>Rol:</strong> Colaboraciones puntuales, coberturas especiales, aportes desde otras ciudades del corredor RN33 (horizonte futuro).</p><p>Acceso muy limitado. Publicaciones requieren aprobación del editor principal (C3).</p><div><span class="tag">GitHub: Lectura</span><span class="tag">Drive: Lectura</span><span class="tag">WP: Contributor</span></div></div></div>
+  </div>
+
+  <div class="cw" style="margin-top:24px;">
+    <h4>Niveles de acceso por cuenta — GitHub / Drive / WordPress</h4>
+    <div class="cc short"><canvas id="cCuentas"></canvas></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+  12 · SEGURIDAD
+══════════════════════════════ -->
+<section id="seguridad">
+  <div class="eyebrow-s">12 · Seguridad y 2FA</div>
+  <h2>Cómo proteger el proyecto</h2>
+  <p class="lead">El proyecto tuvo un incidente real de exposición de token. Esta sección convierte esa experiencia en protocolo concreto y no negociable.</p>
+
+  <div class="al w"><strong>Incidente documentado — Token GitHub expuesto en chat</strong>Durante una sesión, un token de GitHub fue expuesto en texto plano. Fue revocado y regenerado inmediatamente. Lección: los tokens van en variables de entorno en scripts — nunca en el chat con la IA.</div>
+
+  <h3>¿Dónde implementar 2FA?</h3>
+  <div class="g2">
+    <div class="card gb"><h4>✅ 2FA obligatorio</h4><ul><li><strong>GitHub org ElRufino</strong> — todas las cuentas con write</li><li><strong>Google (cuenta principal)</strong> — propietaria del Drive y storage</li><li><strong>Hostinger</strong> — acceso al hosting de producción</li><li><strong>WordPress admin</strong> — cuentas con rol Admin (C1 y C2)</li><li><strong>NIC Argentina</strong> — cuenta registrante del dominio</li></ul></div>
+    <div class="card yb"><h4>🟡 2FA recomendado</h4><ul><li>Cuentas de Claude.ai de colaboradores</li><li>Email corporativo del proyecto</li><li>Cuentas de redes sociales (FB, IG, TikTok)</li><li>Google Drive de cuentas colaboradoras</li><li>Cuenta de Gemini para generación de imágenes</li></ul></div>
+  </div>
+
+  <h3>Protocolo de tokens GitHub</h3>
+  <div class="step"><div class="step-n">1</div><div class="step-b"><h4>Fine-grained tokens siempre</h4><p>No usar tokens clásicos con scope <code>repo</code> completo. Fine-grained: "Contents: Read and write" + "Metadata: Read-only". Alcance mínimo necesario.</p></div></div>
+  <div class="step"><div class="step-n">2</div><div class="step-b"><h4>Nunca pegar el token en el chat con la IA</h4><p>Si por error se expone: GitHub → Settings → Developer settings → Personal access tokens → Revocar. El historial del chat no puede borrarse del lado del servidor.</p></div></div>
+  <div class="step"><div class="step-n">3</div><div class="step-b"><h4>Rotar tokens cada 90 días</h4><p>Configurar fecha de expiración en 90 días. Anotar la fecha de vencimiento en el CHANGELOG del repositorio.</p></div></div>
+  <div class="step"><div class="step-n">4</div><div class="step-b"><h4>Un token por función</h4><p>Token para upload de contexto. Token separado para la Claude API del plugin. Si uno se compromete, el otro sigue funcionando.</p></div></div>
+
+  <div class="g2" style="margin-top:8px;">
+    <div class="card dk"><h4>🔑 Checklist de seguridad</h4><ul style="color:rgba(255,255,255,.75)"><li>☐ 2FA en GitHub (cuenta C1 owner)</li><li>☐ 2FA en Hostinger</li><li>☐ 2FA en Google (cuenta principal)</li><li>☐ 2FA en NIC Argentina</li><li>☐ Tokens con fecha de expiración</li><li>☐ Tokens separados por función</li><li>☐ Protocolo de revocación documentado</li><li>☐ WP admin solo vía HTTPS</li></ul></div>
+    <div class="card acc"><h4>📋 Roles WP por cuenta</h4><ul><li><strong>C1:</strong> Administrator</li><li><strong>C2:</strong> Administrator</li><li><strong>C3:</strong> Editor</li><li><strong>C4:</strong> Author</li><li><strong>C5:</strong> Author</li><li><strong>C6:</strong> Author</li><li><strong>C7:</strong> Author</li><li><strong>C8:</strong> Contributor</li></ul></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+  13 · SEMÁFOROS
+══════════════════════════════ -->
+<section id="semaforos">
+  <div class="eyebrow-s">13 · Estado actual</div>
+  <h2>Semáforos — Abril 2026</h2>
+  <p class="lead">Estado real del proyecto al 14 de abril de 2026. Actualización completa desde v3.0, reflejando el plugin v8.1.2 y el avance de Fase 2.</p>
+
+  <div class="sem-grid">
+    <div class="sem-item"><div class="dot v"></div><div><div class="sem-label">Identidad y marca (Fase 1)</div><div class="sem-note">COMPLETADA DEFINITIVAMENTE · No reabrir</div></div></div>
+    <div class="sem-item"><div class="dot v"></div><div><div class="sem-label">Plugin v8.1.2</div><div class="sem-note">Activo en prueba.infoconectados.com · 4 pantallas · 12 agentes · Claude API</div></div></div>
+    <div class="sem-item"><div class="dot v"></div><div><div class="sem-label">Dominio elrufino.com.ar</div><div class="sem-note">Activo · DNS delegado · Hostinger · vence 06/04/2027</div></div></div>
+    <div class="sem-item"><div class="dot v"></div><div><div class="sem-label">Contenido inicial</div><div class="sem-note">20 notas publicadas · Logo / favicon / OG image subidos</div></div></div>
+    <div class="sem-item"><div class="dot y"></div><div><div class="sem-label">Child theme Newsup</div><div class="sem-note">Tema padre identificado · child theme pendiente de configurar</div></div></div>
+    <div class="sem-item"><div class="dot y"></div><div><div class="sem-label">SEO / Rank Math</div><div class="sem-note">Schema NewsMediaOrganization pendiente · Agente 1 listo para ejecutar</div></div></div>
+    <div class="sem-item"><div class="dot y"></div><div><div class="sem-label">Organización 8 cuentas</div><div class="sem-note">Roles definidos en este informe · implementación pendiente · 2FA pendiente</div></div></div>
+    <div class="sem-item"><div class="dot r"></div><div><div class="sem-label">Categorías P01–P06 en WordPress</div><div class="sem-note">Sin crear · Agente 2 puede generarlas en una sesión</div></div></div>
+    <div class="sem-item"><div class="dot r"></div><div><div class="sem-label">Canal WhatsApp broadcast</div><div class="sem-note">Sin configurar · KPI mes 6: 500 suscriptores · Agente 12 listo</div></div></div>
+    <div class="sem-item"><div class="dot r"></div><div><div class="sem-label">Dominio elrufino.ar</div><div class="sem-note">Pendiente registro NIC Argentina</div></div></div>
+    <div class="sem-item"><div class="dot p"></div><div><div class="sem-label">Monetización</div><div class="sem-note">Esperar hábito de audiencia · Fase 3</div></div></div>
+    <div class="sem-item"><div class="dot p"></div><div><div class="sem-label">Expansión regional RN33</div><div class="sem-note">Horizonte futuro · Módulo Themes Región ya preparado en el plugin</div></div></div>
+  </div>
+
+  <div class="g2" style="margin-top:8px;">
+    <div class="cw"><h4>Distribución de estado (12 ejes)</h4><div class="cc pie"><canvas id="cSemaforos"></canvas></div></div>
+    <div class="cw"><h4>Evolución de ejes en verde — v3 vs. v4</h4><div class="cc pie"><canvas id="cEvo"></canvas></div></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+  14 · PRÓXIMOS PASOS
+══════════════════════════════ -->
+<section id="proximos">
+  <div class="eyebrow-s">14 · Hoja de ruta</div>
+  <h2>Los próximos 45 días</h2>
+  <p class="lead">Lo que queda para cerrar Fase 2 y dar el salto al lanzamiento real. Ordenado por impacto y dependencias técnicas.</p>
+
+  <table>
+    <thead><tr><th>#</th><th>Tarea</th><th>Agente / Herramienta</th><th>Bloquea</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><strong>Crear categorías P01–P06 en WordPress</strong></td><td>Agente 2 del plugin</td><td>Publicación organizada</td></tr>
+      <tr><td>2</td><td><strong>Configurar child theme Newsup con paleta B</strong></td><td>Agente 3 del plugin</td><td>Identidad visual en producción</td></tr>
+      <tr><td>3</td><td><strong>Instalar y configurar Rank Math + Schema</strong></td><td>Agente 1 del plugin</td><td>SEO y búsquedas locales</td></tr>
+      <tr><td>4</td><td><strong>Registrar elrufino.ar en NIC Argentina</strong></td><td>nic.ar (manual)</td><td>Dominio de marca definitivo</td></tr>
+      <tr><td>5</td><td><strong>Configurar canal WhatsApp broadcast</strong></td><td>Agente 12 del plugin</td><td>Distribución directa y sin algoritmo</td></tr>
+      <tr><td>6</td><td><strong>Implementar 2FA en GitHub, Hostinger y Drive</strong></td><td>Configuración manual</td><td>Seguridad del proyecto</td></tr>
+      <tr><td>7</td><td><strong>Asignar las 8 cuentas con roles WP definidos</strong></td><td>WP Admin</td><td>Trabajo colaborativo organizado</td></tr>
+      <tr><td>8</td><td><strong>Primera promesa registrada y visible en el sitio</strong></td><td>Módulo 9 / Agente 7</td><td>Diferenciador editorial clave</td></tr>
+      <tr><td>9</td><td><strong>Actualizar documentación de contexto a v1.3</strong></td><td>Esta sesión → GitHub</td><td>Contexto correcto en sesiones futuras</td></tr>
+      <tr><td>10</td><td><strong>Primer resumen WhatsApp publicado 7:30 AM</strong></td><td>Agente 12</td><td>Inicio del hábito de audiencia</td></tr>
+    </tbody>
+  </table>
+
+  <div class="al ok" style="margin-top:20px;"><strong>Estado general</strong>El proyecto está en el punto de inflexión más importante: la infraestructura técnica y la identidad están cerradas. Lo que queda es configuración, no construcción. El salto de Fase 2 completa a lanzamiento real puede medirse en semanas.</div>
+</section>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div>EL RUFINO · Informe de Memoria v4.0 · 14 de Abril 2026</div>
+  <div>"Lo que pasa y lo que significa"</div>
+  <div style="margin-top:8px;opacity:.55;">Complementa v3.0 · No reemplaza · Plugin v8.1.2 · Fase 2 · 40% · 8 cuentas · 12 agentes</div>
+</div>
+
+</div><!-- /main -->
+
+<script>
+const C={r:'#c0271b',n:'#1a1a1a',c:'#f5f0e8',v:'#2d6a4f',y:'#c77800',a:'#3d4f8a',g:'#7a7a7a',vi:'#5c4d8a',
+rc:'rgba(192,39,27,.15)',vc:'rgba(45,106,79,.15)',ac:'rgba(61,79,138,.15)',yc:'rgba(199,120,0,.15)'};
+const def={responsive:true,maintainAspectRatio:false,
+  plugins:{legend:{labels:{font:{family:"'JetBrains Mono',monospace",size:9},color:'#555',boxWidth:12}}}};
+const ax={y:{beginAtZero:true,ticks:{font:{family:"'JetBrains Mono',monospace",size:8}},grid:{color:'rgba(0,0,0,0.05)'}},
+  x:{ticks:{font:{family:"'JetBrains Mono',monospace",size:8}},grid:{display:false}}};
+
+// Plugin evolution
+new Chart(document.getElementById('cPlugin'),{type:'bar',
+  data:{labels:['v1','v2','v3','v4','v5','v6','v7.0.5','v8.1.2'],
+    datasets:[{label:'Módulos/Pantallas',data:[2,3,5,7,9,11,14,4],backgroundColor:[C.rc,C.rc,C.ac,C.ac,C.ac,C.vc,C.vc,C.r],borderColor:[C.r,C.r,C.a,C.a,C.a,C.v,C.v,C.r],borderWidth:1.5},
+    {label:'Agentes integrados',data:[0,0,3,5,7,9,11,12],backgroundColor:[C.yc,C.yc,C.yc,C.yc,C.yc,C.yc,C.yc,C.y],borderColor:C.y,borderWidth:1.5}]},
+  options:{...def,scales:ax}});
+
+// Radar
+new Chart(document.getElementById('cRadar'),{type:'radar',
+  data:{labels:['Identidad','Infraestructura','Plugin','Contenido','WP Config','Distribución','SEO','Comunidad'],
+    datasets:[{label:'Completitud actual (%)',data:[100,90,85,60,40,15,30,5],fill:true,
+      backgroundColor:'rgba(192,39,27,.12)',borderColor:C.r,pointBackgroundColor:C.r,pointBorderColor:'#fff'}]},
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{labels:{font:{family:"'JetBrains Mono',monospace",size:9},color:'#555'}}},
+    scales:{r:{beginAtZero:true,max:100,ticks:{stepSize:20,font:{family:"'JetBrains Mono',monospace",size:8},backdropColor:'transparent'},
+      grid:{color:'rgba(0,0,0,0.08)'},pointLabels:{font:{family:"'JetBrains Mono',monospace",size:9},color:'#333'}}}}});
+
+// Models pie
+new Chart(document.getElementById('cModPie'),{type:'doughnut',
+  data:{labels:['Sonnet 4.6','Haiku 4.5','Opus 4.6','Gemini/Imagen','GPT-4o','Claude Code'],
+    datasets:[{data:[50,20,15,8,5,2],backgroundColor:[C.r,C.y,C.n,C.v,C.vi,C.a],borderWidth:2,borderColor:C.c}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{family:"'JetBrains Mono',monospace",size:9},padding:10}}}}});
+
+// Costo calidad
+new Chart(document.getElementById('cCostoQ'),{type:'bar',
+  data:{labels:['Opus\nEstrategia','Sonnet\nCódigo','Sonnet\nRedacción','Haiku\nVariantes','Gemini\nImágenes'],
+    datasets:[{label:'Costo relativo',data:[100,40,40,10,25],backgroundColor:C.rc,borderColor:C.r,borderWidth:1.5},
+    {label:'Calidad del output',data:[95,90,88,72,85],backgroundColor:C.vc,borderColor:C.v,borderWidth:1.5}]},
+  options:{...def,scales:ax}});
+
+// Fases y modelos
+new Chart(document.getElementById('cFases'),{type:'bar',
+  data:{labels:['Concepción (2025)','Identidad F1 (Ene-Feb)','Plugin v1-v5 (Feb-Mar)','Plugin v6-v8 (Mar-Abr)','Contenido (Abr)','Escala (Futuro)'],
+    datasets:[{label:'Opus',data:[30,60,5,10,5,20],backgroundColor:C.n},
+    {label:'Sonnet',data:[60,35,85,80,70,55],backgroundColor:C.r},
+    {label:'Haiku',data:[5,0,5,5,20,20],backgroundColor:C.y},
+    {label:'Otras IAs',data:[5,5,5,5,5,5],backgroundColor:C.g}]},
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{labels:{font:{family:"'JetBrains Mono',monospace",size:9},color:'#555',boxWidth:10}}},
+    scales:{x:{stacked:true,max:100,ticks:{font:{family:"'JetBrains Mono',monospace",size:8}},grid:{color:'rgba(0,0,0,.04)'}},
+      y:{stacked:true,ticks:{font:{family:"'JetBrains Mono',monospace",size:8}},grid:{display:false}}},indexAxis:'y'}});
+
+// Sesiones tipo
+new Chart(document.getElementById('cSesiones'),{type:'doughnut',
+  data:{labels:['Código / Plugin','Documentación','Redacción editorial','Estrategia','Scripts / GitHub','Dossiers HTML'],
+    datasets:[{data:[35,22,18,12,8,5],backgroundColor:[C.a,C.n,C.r,C.vi,C.y,C.v],borderWidth:2,borderColor:C.c}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{family:"'JetBrains Mono',monospace",size:9},padding:10}}}}});
+
+// Horarios
+new Chart(document.getElementById('cHorarios'),{type:'bar',
+  data:{labels:['6-8h','8-10h','10-12h','12-14h','14-16h','16-18h','18-20h','20-22h','22-24h'],
+    datasets:[{label:'Productividad estimada',data:[20,75,85,55,70,90,80,65,40],
+      backgroundColor:['rgba(199,120,0,.3)','rgba(45,106,79,.4)','rgba(45,106,79,.6)','rgba(199,120,0,.3)','rgba(61,79,138,.4)','rgba(192,39,27,.7)','rgba(192,39,27,.5)','rgba(61,79,138,.3)','rgba(122,122,122,.25)'],
+      borderColor:[C.y,C.v,C.v,C.y,C.a,C.r,C.r,C.a,C.g],borderWidth:1.5}]},
+  options:{...def,scales:ax}});
+
+// Duración
+new Chart(document.getElementById('cDuracion'),{type:'bar',
+  data:{labels:['Código','Estrategia','Editorial','Docs','Scripts'],
+    datasets:[{label:'Duración típica (minutos)',data:[180,90,60,45,30],
+      backgroundColor:[C.ac,C.rc,C.vc,C.yc,'rgba(122,122,122,.15)'],
+      borderColor:[C.a,C.r,C.v,C.y,C.g],borderWidth:1.5}]},
+  options:{...def,scales:ax}});
+
+// Cuentas
+new Chart(document.getElementById('cCuentas'),{type:'bar',
+  data:{labels:['C1 Owner','C2 Técnico','C3 Editor','C4 Redactor','C5 Campo','C6 Redes','C7 Datos','C8 Externo'],
+    datasets:[{label:'GitHub',data:[4,3,1,1,1,1,1,1],backgroundColor:C.n,borderWidth:0},
+    {label:'Drive',data:[4,3,3,3,3,3,3,2],backgroundColor:C.a,borderWidth:0},
+    {label:'WordPress',data:[4,4,3,2,2,2,2,1],backgroundColor:C.r,borderWidth:0}]},
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{labels:{font:{family:"'JetBrains Mono',monospace",size:9},boxWidth:10}}},
+    scales:{x:{ticks:{font:{family:"'JetBrains Mono',monospace",size:8}},grid:{display:false}},
+      y:{beginAtZero:true,max:5,ticks:{font:{family:"'JetBrains Mono',monospace",size:8},callback:v=>['','Lectura','Colaborador','Editor','Write','Owner'][v]||v},grid:{color:'rgba(0,0,0,.05)'}}}}});
+
+// Semáforos
+new Chart(document.getElementById('cSemaforos'),{type:'doughnut',
+  data:{labels:['Verde — Completado (4)','Amarillo — En proceso (3)','Rojo — Pendiente (3)','Pausa — Horizonte (2)'],
+    datasets:[{data:[4,3,3,2],backgroundColor:[C.v,C.y,C.r,C.a],borderWidth:2,borderColor:C.c}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{family:"'JetBrains Mono',monospace",size:9},padding:10}}}}});
+
+// Evolución v3 vs v4
+new Chart(document.getElementById('cEvo'),{type:'bar',
+  data:{labels:['Ejes en Verde','Ejes en Amarillo','Ejes en Rojo','Ejes en Pausa'],
+    datasets:[{label:'v3.0 (hace 2 semanas)',data:[2,4,4,2],backgroundColor:C.rc,borderColor:C.r,borderWidth:1.5},
+    {label:'v4.0 (hoy)',data:[4,3,3,2],backgroundColor:C.vc,borderColor:C.v,borderWidth:1.5}]},
+  options:{...def,scales:ax}});
+</script>
+</body>
+</html>

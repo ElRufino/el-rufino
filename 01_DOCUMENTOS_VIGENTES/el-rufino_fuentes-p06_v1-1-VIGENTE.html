@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Rufino — Fuentes P06 + Nota modelo + Estructura CEPA v1.1</title>
+<style>
+  :root {
+    --rojo: #c0271b;
+    --negro: #1a1a1a;
+    --blanco: #ffffff;
+    --crema: #f5f0e8;
+    --gris-claro: #e8e3da;
+    --gris-texto: #4a4a4a;
+    --gris-muted: #7a7a7a;
+    --borde: #d4cfc6;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    background: var(--crema);
+    color: var(--negro);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+  .masthead {
+    background: var(--rojo);
+    color: var(--blanco);
+    padding: 1.2rem 2rem;
+    border-bottom: 3px solid var(--negro);
+  }
+  .masthead h1 {
+    font-size: 1.4rem;
+    font-weight: normal;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .masthead .subtitle {
+    font-family: 'Arial', sans-serif;
+    font-size: 0.78rem;
+    opacity: 0.85;
+    margin-top: 2px;
+    letter-spacing: 0.06em;
+  }
+  .nav-tabs {
+    background: var(--negro);
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+  }
+  .nav-tabs button {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.6);
+    padding: 0.75rem 1.5rem;
+    font-family: 'Arial', sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .nav-tabs button.active {
+    color: var(--blanco);
+    border-bottom-color: var(--rojo);
+  }
+  .nav-tabs button:hover:not(.active) {
+    color: rgba(255,255,255,0.85);
+  }
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* — Sección 1: Mapa de fuentes — */
+  .section-label {
+    font-family: 'Arial', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--rojo);
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+  }
+  .section-title {
+    font-size: 1.5rem;
+    font-weight: normal;
+    margin-bottom: 0.4rem;
+    line-height: 1.3;
+  }
+  .section-desc {
+    font-family: 'Arial', sans-serif;
+    font-size: 0.85rem;
+    color: var(--gris-muted);
+    margin-bottom: 2rem;
+    border-left: 2px solid var(--rojo);
+    padding-left: 0.8rem;
+  }
+  .source-card {
+    background: var(--blanco);
+    border: 1px solid var(--borde);
+    border-left: 3px solid var(--rojo);
+    margin-bottom: 1.2rem;
+    padding: 1.2rem 1.5rem;
+  }
+  .source-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.8rem;
+  }
+  .source-name {
+    font-size: 1rem;
+    font-weight: bold;
+    font-family: 'Arial', sans-serif;
+  }
+  .source-url {
+    font-family: 'Arial', sans-serif;
+    font-size: 0.75rem;
+    color: var(--gris-muted);
+    margin-top: 1px;
+  }
+  .badge {
+    font-family: 'Arial', sans-serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 2px;
+    white-space: nowrap;
+    font-weight: bold;
+  }
+  .badge-directo { background: #d4edda; color: #1a5c2a; }
+  .badge-contexto { background: #fff3cd; color: #7a5000; }
+  .badge-rn33 { background: #fce8e8; color: #7a1c1c; }
+  .dataset-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.6rem;
+    margin-top: 0.6rem;
+  }
+  .dataset-item {
+    background: var(--crema);
+    padding: 0.5rem 0.7rem;
+    font-family: 'Arial', sans-serif;
+    font-size: 0.78rem;
+  }
+  .dataset-item .pilar {
+    font-size: 0.68rem;
+    color: var(--rojo);
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .dataset-item .freq {
+    color: var(--gris-muted);
+    font-size: 0.7rem;
+    margin-top: 1px;
+  }
+  .nota-reemplaza {
+    background: var(--negro);
+    color: var(--blanco);
+    font-family: 'Arial', sans-serif;
+    font-size: 0.78rem;
+    padding: 0.8rem 1.2rem;
+    margin-top: 2rem;
+    border-left: 3px solid var(--rojo);
+  }
+  .nota-reemplaza strong { color: #ffc0b5; }
+
+  /* — Sección 2: Nota modelo — */
+  .nota-container {
+    background: var(--blanco);
+    border: 1px solid var(--borde);
+    padding: 2rem;
+    margin-bottom: 2rem;
+  }
+  .nota-meta {
+    font-family: 'Arial', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--rojo);
+    margin-bottom: 0.8rem;
+    font-weight: bold;
+  }
+  .nota-titulo {
+    font-size: 1.6rem;
+    font-weight: normal;
+    line-height: 1.25;
+    margin-bottom: 0.8rem;
+    border-bottom: 2px solid var(--negro);
+    padding-bottom: 0.8rem;
+  }
+  .nota-bajada {
+    font-size: 1rem;
+    color: var(--gris-texto);
+    font-style: italic;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+  }
+  .capa-label {
+    font-family: 'Arial', sans-serif;
+    font-size: 0.68rem;
+    font-weight: bold;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    display: inline-block;
+    padding: 2px 7px;
+    margin-bottom: 0.5rem;
+  }
+  .capa-1-label { background: var(--negro); color: var(--blanco); }
+  .capa-2-label { background: var(--rojo); color: var(--blanco); }
+  .nota-cuerpo p {
+    margin-bottom: 1rem;
+  }
+  .dato-destacado {
+    background: var(--crema);
+    border-left: 3px solid var(--rojo);
+    padding: 0.8rem 1rem;
+    margin: 1.2rem 0;
+    font-family: 'Arial', sans-serif;
+    font-size: 0.85rem;
+  }
+  .dato-destacado strong {
+    display: block;
+    font-size: 1.6rem;
+    color: var(--rojo);
+    line-height: 1;
+    margin-bottom: 2px;
+  }
+  .fuente-nota {
+    font-family: 'Arial', sans-serif;
+    font-size: 0.7rem;
+    color: var(--gris-muted);
+    margin-top: 0.2rem;
+  }
+  .datos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.8rem;
+    margin: 1.2rem 0;
+  }
+  .dato-card {
+    background: var(--crema);
+    padding: 0.8rem;
+    text-align: center;
+    border: 1px solid var(--borde);
+  }
+  .dato-num {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: var(--rojo);
+    display: block;
+    font-family: 'Arial', sans-serif;
+  }
+  .dato-label {
+    font-family: 'Arial', sans-serif;
+    font-size: 0.72rem;
+    color: var(--gris-muted);
+    line-height: 1.3;
+    margin-top: 2px;
+  }
+  .nota-editor {
+    background: var(--negro);
+    color: var(--blanco);
+    padding: 1rem 1.2rem;
+    font-family: 'Arial', sans-serif;
+    font-size: 0.78rem;
+    line-height: 1.5;
+    margin-top: 1.5rem;
+  }
+  .nota-editor .titulo-editor {
+    color: var(--rojo);
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.68rem;
+    margin-bottom: 0.4rem;
+  }
+
+  /* — Sección 3: Estructura CEPA — */
+  .estructura-comparativa {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+  @media (max-width: 600px) {
+    .estructura-comparativa { grid-template-columns: 1fr; }
+  }
+  .columna-cepa {
+    background: #f0ede8;
+    border: 1px solid var(--borde);
+    padding: 1.2rem;
+  }
+  .columna-rufino {
+    background: var(--blanco);
+    border: 1px solid var(--borde);
+    border-left: 3px solid var(--rojo);
+    padding: 1.2rem;
+  }
+  .col-titulo {
+    font-family: 'Arial', sans-serif;
+    font-size: 0.72rem;
+    font-weight: bold;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .col-titulo.cepa { color: var(--gris-muted); }
+  .col-titulo.rufino { color: var(--rojo); }
+  .estructura-item {
+    margin-bottom: 0.9rem;
+    padding-bottom: 0.9rem;
+    border-bottom: 1px solid var(--borde);
+  }
+  .estructura-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+  .item-numero {
+    font-family: 'Arial', sans-serif;
+    font-size: 0.68rem;
+    font-weight: bold;
+    color: var(--gris-muted);
+    margin-bottom: 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .item-titulo {
+    font-family: 'Arial', sans-serif;
+    font-size: 0.85rem;
+    font-weight: bold;
+    margin-bottom: 2px;
+  }
+  .item-contenido {
+    font-family: 'Arial', sans-serif;
+    font-size: 0.78rem;
+    color: var(--gris-texto);
+    line-height: 1.4;
+  }
+  .item-contenido em {
+    color: var(--rojo);
+    font-style: normal;
+    font-weight: bold;
+  }
+  .principio-box {
+    background: var(--crema);
+    border: 1px solid var(--borde);
+    border-left: 3px solid var(--negro);
+    padding: 1rem 1.2rem;
+    margin-bottom: 1rem;
+  }
+  .principio-titulo {
+    font-family: 'Arial', sans-serif;
+    font-size: 0.78rem;
+    font-weight: bold;
+    margin-bottom: 0.3rem;
+  }
+  .principio-texto {
+    font-family: 'Arial', sans-serif;
+    font-size: 0.78rem;
+    color: var(--gris-texto);
+    line-height: 1.5;
+  }
+  .warning-box {
+    background: #fff8e6;
+    border: 1px solid #e8d090;
+    border-left: 3px solid #c8a800;
+    padding: 0.8rem 1rem;
+    font-family: 'Arial', sans-serif;
+    font-size: 0.78rem;
+    color: #5a4800;
+    margin-top: 1rem;
+  }
+  hr.divider {
+    border: none;
+    border-top: 1px solid var(--borde);
+    margin: 2rem 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <h1>El Rufino — Sistema de fuentes P06</h1>
+  <div class="subtitle">Mapa de fuentes · Nota modelo · Estructura metodológica · v1.1 · Mayo 2026 · +3 fuentes: INDEC EPH · IDE Agro · MAGYP Monitor</div>
+</div>
+
+<div class="nav-tabs">
+  <button class="active" onclick="showTab('fuentes', this)">1. Fuentes para P06</button>
+  <button onclick="showTab('nota', this)">2. Nota modelo P02/P06</button>
+  <button onclick="showTab('cepa', this)">3. Estructura metodológica</button>
+</div>
+
+<!-- ═══════════════════════════════════════
+     TAB 1: MAPA DE FUENTES
+     ═══════════════════════════════════════ -->
+<div id="tab-fuentes" class="tab-panel active">
+<div class="container">
+  <div class="section-label">Pilares P02 + P06 · Corredor RN33</div>
+  <h2 class="section-title">Mapa de fuentes para periodismo de datos local</h2>
+  <p class="section-desc">Fuentes públicas con datos aprovechables para Rufino y el corredor RN33 (Departamento General López). Organizadas por pertinencia directa al territorio.</p>
+
+  <!-- IPEC -->
+  <div class="source-card">
+    <div class="source-header">
+      <div>
+        <div class="source-name">IPEC — Instituto Provincial de Estadística y Censos</div>
+        <div class="source-url">estadisticasantafe.gob.ar</div>
+      </div>
+      <span class="badge badge-directo">Fuente primaria</span>
+    </div>
+    <div class="dataset-grid">
+      <div class="dataset-item">
+        <div>Complejo exportador sojero</div>
+        <div class="pilar">P02 + P06</div>
+        <div class="freq">Semestral · PDF descargable</div>
+      </div>
+      <div class="dataset-item">
+        <div>Exportaciones con origen en Santa Fe</div>
+        <div class="pilar">P02 + P06</div>
+        <div class="freq">Trimestral</div>
+      </div>
+      <div class="dataset-item">
+        <div>IPC Santa Fe — variación mensual</div>
+        <div class="pilar">P01 + P06</div>
+        <div class="freq">Mensual · home del sitio</div>
+      </div>
+      <div class="dataset-item">
+        <div>EPH — mercado de trabajo Gran Rosario</div>
+        <div class="pilar">P06</div>
+        <div class="freq">Trimestral (proxy zona)</div>
+      </div>
+      <div class="dataset-item">
+        <div>Sistema educativo provincial</div>
+        <div class="pilar">P04 + P06</div>
+        <div class="freq">Anual</div>
+      </div>
+      <div class="dataset-item">
+        <div>Censo 2022 — por departamento</div>
+        <div class="pilar">P01 + P03 + P06</div>
+        <div class="freq">Datos fijos</div>
+      </div>
+      <div class="dataset-item">
+        <div>Censos Agropecuarios (2018)</div>
+        <div class="pilar">P02 + P06</div>
+        <div class="freq">Datos fijos</div>
+      </div>
+      <div class="dataset-item">
+        <div>IMAE — actividad económica SF</div>
+        <div class="pilar">P05 + P06</div>
+        <div class="freq">Mensual</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MATE -->
+  <div class="source-card">
+    <div class="source-header">
+      <div>
+        <div class="source-name">MATE — Mirador de la Actualidad del Trabajo y la Economía</div>
+        <div class="source-url">mateconomia.com.ar · Rosario, Santa Fe</div>
+      </div>
+      <span class="badge badge-contexto">Capa 2 (significado)</span>
+    </div>
+    <div class="dataset-grid">
+      <div class="dataset-item">
+        <div>InfoMate — coyuntura económica mensual</div>
+        <div class="pilar">P02 + P05 + P06</div>
+        <div class="freq">Mensual · descarga gratuita</div>
+      </div>
+      <div class="dataset-item">
+        <div>Análisis retenciones soja</div>
+        <div class="pilar">P02</div>
+        <div class="freq">Por evento · muy relevante RN33</div>
+      </div>
+      <div class="dataset-item">
+        <div>Economía de Pullaro / Santa Fe</div>
+        <div class="pilar">P05 + P06</div>
+        <div class="freq">Especiales · contexto provincial</div>
+      </div>
+      <div class="dataset-item">
+        <div>Dato por mandato — comparación presidencial</div>
+        <div class="pilar">P05</div>
+        <div class="freq">Periódico · salarios y poder adquisitivo</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CEPA -->
+  <div class="source-card">
+    <div class="source-header">
+      <div>
+        <div class="source-name">CEPA — Centro de Economía Política Argentina</div>
+        <div class="source-url">centrocepa.wordpress.com</div>
+      </div>
+      <span class="badge badge-contexto">Contexto nacional</span>
+    </div>
+    <div class="dataset-grid">
+      <div class="dataset-item">
+        <div>Informes sectoriales agropecuarios</div>
+        <div class="pilar">P02</div>
+        <div class="freq">Frecuencia variable</div>
+      </div>
+      <div class="dataset-item">
+        <div>Retenciones y cadena agroexportadora</div>
+        <div class="pilar">P02 + P05</div>
+        <div class="freq">Por evento</div>
+      </div>
+      <div class="dataset-item">
+        <div>Precios internacionales vs precio campo</div>
+        <div class="pilar">P02 + P06</div>
+        <div class="freq">Datos con impacto directo en RN33</div>
+      </div>
+    </div>
+    <div class="warning-box">
+      El PDF compartido (vitivinícola, mayo 2026) <strong>no aplica</strong> a Rufino. Sí son aprovechables los informes sectoriales de CEPA sobre soja, cereales y agroexportación — misma metodología, datos pertinentes.
+    </div>
+  </div>
+
+  <!-- Bolsa y INTA -->
+  <div class="source-card">
+    <div class="source-header">
+      <div>
+        <div class="source-name">Bolsa de Cereales de Buenos Aires + INTA</div>
+        <div class="source-url">bolsadecereales.com · inta.gob.ar</div>
+      </div>
+      <span class="badge badge-rn33">Campo RN33</span>
+    </div>
+    <div class="dataset-grid">
+      <div class="dataset-item">
+        <div>Precios pizarra soja / maíz / trigo</div>
+        <div class="pilar">P02</div>
+        <div class="freq">Diario</div>
+      </div>
+      <div class="dataset-item">
+        <div>Perspectivas de cosecha por zona</div>
+        <div class="pilar">P02</div>
+        <div class="freq">Semanal / campaña</div>
+      </div>
+      <div class="dataset-item">
+        <div>Clima y precipitaciones General López</div>
+        <div class="pilar">P02</div>
+        <div class="freq">INTA Rufino / Venado Tuerto</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gobierno provincial / Vialidad -->
+  <div class="source-card">
+    <div class="source-header">
+      <div>
+        <div class="source-name">Vialidad Nacional + Ministerio de Obras Públicas</div>
+        <div class="source-url">vialidad.gob.ar · argentina.gob.ar</div>
+      </div>
+      <span class="badge badge-rn33">Eje RN33 / RN7</span>
+    </div>
+    <div class="dataset-grid">
+      <div class="dataset-item">
+        <div>Estado de obras RN33 / RN7</div>
+        <div class="pilar">P03 + P05</div>
+        <div class="freq">Por licitación</div>
+      </div>
+      <div class="dataset-item">
+        <div>Conteos de tránsito pesado</div>
+        <div class="pilar">P02 + P06</div>
+        <div class="freq">Anual</div>
+      </div>
+      <div class="dataset-item">
+        <div>Inversión vial por provincia</div>
+        <div class="pilar">P05</div>
+        <div class="freq">Por decreto / licitación</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INDEC EPH microdatos -->
+  <div class="source-card">
+    <div class="source-header">
+      <div>
+        <div class="source-name">INDEC — EPH Microdatos</div>
+        <div class="source-url">indec.gob.ar/indec/web/Institucional-Indec-BasesDeDatos · Sección: Mercado laboral</div>
+      </div>
+      <span class="badge badge-contexto">Proxy regional</span>
+    </div>
+    <div class="dataset-grid">
+      <div class="dataset-item">
+        <div>EPH microdatos — empleo e ingresos</div>
+        <div class="pilar">P06</div>
+        <div class="freq">Trimestral · hasta 4to trim 2025</div>
+      </div>
+      <div class="dataset-item">
+        <div>Tasas de desempleo e informalidad</div>
+        <div class="pilar">P06</div>
+        <div class="freq">Gran Rosario como proxy zona sur SF</div>
+      </div>
+    </div>
+    <div class="warning-box">
+      La EPH no cubre Rufino directamente — solo aglomerados urbanos. Gran Rosario es el proxy más cercano. Nunca presentar como "dato de Rufino"; siempre aclarar "datos del sur santafesino" o "referencia regional".
+    </div>
+  </div>
+
+  <!-- IDE Agro -->
+  <div class="source-card">
+    <div class="source-header">
+      <div>
+        <div class="source-name">IDE Agro — Geoportal MAGYP</div>
+        <div class="source-url">geoportal.magyp.gob.ar · Rufino: código BAHRA 82042220 · Dpto. General López</div>
+      </div>
+      <span class="badge badge-rn33">Fuente cartográfica RN33</span>
+    </div>
+    <div class="dataset-grid">
+      <div class="dataset-item">
+        <div>Centros de acopio — Rufino y zona</div>
+        <div class="pilar">P02 + P06</div>
+        <div class="freq">Actualización variable · capa activable</div>
+      </div>
+      <div class="dataset-item">
+        <div>Infraestructura agropecuaria local</div>
+        <div class="pilar">P02 + P03</div>
+        <div class="freq">Silos, plantas, elevadores</div>
+      </div>
+      <div class="dataset-item">
+        <div>Frigoríficos y mataderos</div>
+        <div class="pilar">P02</div>
+        <div class="freq">Actividad ganadera del corredor</div>
+      </div>
+      <div class="dataset-item">
+        <div>Delegaciones Agro — jurisdicción Rufino</div>
+        <div class="pilar">P05</div>
+        <div class="freq">Referencia institucional</div>
+      </div>
+    </div>
+    <div class="warning-box" style="background:#e8f4e8; border-color: #6a9e6a; color: #2a5a2a;">
+      Fuente prioritaria para geolocalización local. Activar capa "Centros acopio" con Rufino centrado. Coordenadas: -34.2619, -62.7111. Base de datos para el mapa Leaflet P03 (pendiente de implementación en plugin).
+    </div>
+  </div>
+
+  <!-- MAGYP Monitor mensual -->
+  <div class="source-card">
+    <div class="source-header">
+      <div>
+        <div class="source-name">MAGYP — Monitor Mensual de Estimaciones Agrícolas</div>
+        <div class="source-url">magyp.gob.ar/sitio/areas/estimaciones/monitor/</div>
+      </div>
+      <span class="badge badge-rn33">Campo RN33 — tiempo real</span>
+    </div>
+    <div class="dataset-grid">
+      <div class="dataset-item">
+        <div>Superficie sembrada — Soja / Maíz / Trigo</div>
+        <div class="pilar">P02 + P06</div>
+        <div class="freq">Semanal durante campaña</div>
+      </div>
+      <div class="dataset-item">
+        <div>Estimaciones de producción por zona</div>
+        <div class="pilar">P02</div>
+        <div class="freq">Mensual · General López = zona núcleo sojera</div>
+      </div>
+      <div class="dataset-item">
+        <div>Series históricas por cultivo</div>
+        <div class="pilar">P06</div>
+        <div class="freq">Descargable · comparación interanual</div>
+      </div>
+      <div class="dataset-item">
+        <div>Mapa de cultivos interactivo</div>
+        <div class="pilar">P02 + P06</div>
+        <div class="freq">Visual · uso directo en notas</div>
+      </div>
+    </div>
+  </div>
+
+
+    <strong>Criterio para reemplazar el PDF vitivinícola:</strong> cualquier informe sectorial de CEPA, MATE o IPEC sobre soja, cereales, logística agropecuaria o economía del trabajo en Santa Fe tiene pertinencia directa para el corredor RN33. El modelo analítico del informe vitivinícola (volumen / valor / precio promedio / destinos / participación provincial) es la estructura reutilizable — el tema cambia, la metodología se replica.
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     TAB 2: NOTA MODELO
+     ═══════════════════════════════════════ -->
+<div id="tab-nota" class="tab-panel">
+<div class="container">
+  <div class="section-label">Borrador · P02 El campo habla + P06 Rufino en datos</div>
+  <h2 class="section-title">Nota con datos reales IPEC 2025</h2>
+  <p class="section-desc">Datos fuente: IPEC "Complejo exportador de soja. El rol de Santa Fe en la dinámica exportadora. Año 2025." Abril 2026. · Ángulo: Rufino / corredor RN33 como parte de la cadena.</p>
+
+  <div class="nota-container">
+    <div class="nota-meta">P02 · El campo habla — P06 · Rufino en datos · Mayo 2026</div>
+
+    <h1 class="nota-titulo">Santa Fe exportó más soja que nunca en 2025, pero cobró menos por tonelada: qué significa eso para el productor del sur</h1>
+
+    <p class="nota-bajada">La provincia concentra casi la mitad de las exportaciones sojeras del país — 10.400 millones de dólares — y el 85% de lo que sale del país pasa por puertos santafesinos. Los números del campo son récord en volumen. El problema está en el precio.</p>
+
+    <hr style="border: none; border-top: 1px solid var(--borde); margin: 1.2rem 0;">
+
+    <div class="nota-cuerpo">
+      <div class="capa-label capa-1-label">Capa 1 — Lo que pasó</div>
+
+      <div class="datos-grid">
+        <div class="dato-card">
+          <span class="dato-num">U$S 10.416 M</span>
+          <span class="dato-label">exportado en complejo soja desde Santa Fe en 2025</span>
+        </div>
+        <div class="dato-card">
+          <span class="dato-num">48,6%</span>
+          <span class="dato-label">del total nacional que le corresponde a la provincia</span>
+        </div>
+        <div class="dato-card">
+          <span class="dato-num">23,5 M</span>
+          <span class="dato-label">toneladas exportadas, un 10,9% más que en 2024</span>
+        </div>
+        <div class="dato-card">
+          <span class="dato-num">85,6%</span>
+          <span class="dato-label">de las exportaciones sojeras del país sale por puertos santafesinos</span>
+        </div>
+      </div>
+
+      <p>Según el informe del IPEC publicado en abril de 2026, Santa Fe exportó el año pasado más de 23 millones de toneladas de productos del complejo soja — un 10,9% más que en 2024. En valor, los envíos crecieron apenas 1,6%. La diferencia entre esos dos números cuenta la historia real del campo.</p>
+
+      <div class="dato-destacado">
+        <strong>-8,4%</strong>
+        Caída del precio promedio por tonelada exportada desde Santa Fe en 2025 respecto al año anterior.
+        <div class="fuente-nota">Fuente: IPEC con base en INDEC, Cuadro 3.</div>
+      </div>
+
+      <p>India desplazó a China como principal destino. La India concentró el 58,6% de los envíos santafesinos del complejo — U$S 2.178 millones — fundamentalmente aceites y grasas. China, segundo destino, compró mayoritariamente poroto sin procesar: 22,4% del total nacional de ese rubro con origen en Santa Fe.</p>
+
+      <p>Los puertos del Gran Rosario — San Lorenzo con el 67,2% del valor nacional y Rosario con el 18,4% — son el desemboque de toda la cadena. El poroto que se produce en General López, en la zona de influencia de Rufino y del corredor de la RN33, llega ahí antes de cruzar el Atlántico.</p>
+
+      <hr class="divider">
+
+      <div class="capa-label capa-2-label">Capa 2 — Lo que significa</div>
+
+      <p>El productor de la zona de Rufino tuvo en 2025 un año de mayor volumen y menor ingreso por tonelada. La lógica es la misma que la del informe vitivinícola: más cantidad en el mercado global tiende a bajar el precio unitario. Y cuando el precio promedio cae 8,4%, el campo trabaja más para cobrar lo mismo.</p>
+
+      <p>Hay una distinción que importa entender: el 86% de lo que exporta Santa Fe en soja son harinas, pellets y aceites — manufacturas, no poroto crudo. Eso es valor agregado que se transforma en los complejos industriales del Gran Rosario, no en General López. El corredor de la RN33 provee la materia prima; la industria de la hidrovía se queda con el mayor valor del proceso.</p>
+
+      <div class="dato-destacado">
+        <strong>168,2%</strong>
+        Aumento en las cantidades de poroto exportado como producto primario en 2025 vs 2024 — la materia prima sin procesar creció mucho más que las manufacturas.
+        <div class="fuente-nota">Fuente: IPEC, Cuadro 3. Productos primarios.</div>
+      </div>
+
+      <p>El biodiésel — producto industrial de mayor valor agregado de la cadena, con mayor participación santafesina (67,1% del total nacional) — cayó 15,2% en valor y 21% en volumen. Es el segmento que más perdió. Y eso tiene consecuencias para la cadena de transformación, que en parte opera en zonas aledañas al corredor productivo del sudoeste santafesino.</p>
+
+      <p>La pregunta que el número no responde pero que El Rufino puede construir: ¿cuánto de ese 10.416 millones de dólares exportados desde Santa Fe queda en el departamento General López? La respuesta requiere datos de distribución del ingreso por zona, que el IPEC no desagrega a ese nivel — pero que se puede aproximar desde el Censo Agropecuario y datos del INTA local.</p>
+    </div>
+
+    <div class="nota-editor">
+      <div class="titulo-editor">Nota al editor — seguimiento</div>
+      Fuente primaria verificada: IPEC, informe semestral, datos enero-diciembre 2025, publicado abril 2026. URL pública. · Próxima publicación del informe: segundo semestre 2026. · Para localizar el dato a Rufino: cruzar con Censo Agropecuario 2018 (superficie implantada General López) + datos de acopio local (silos, cooperativas). · MATE puede proveer el ángulo salario/retenciones como contexto de la Capa 2. · Tags sugeridos: soja, campo, exportaciones, economía, Santa Fe, General López. · Categoría: P02 + P06. · Tiempo estimado de producción: 3-4 hs (requiere tablas propias del informe IPEC para armar visualizaciones).
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     TAB 3: ESTRUCTURA CEPA
+     ═══════════════════════════════════════ -->
+<div id="tab-cepa" class="tab-panel">
+<div class="container">
+  <div class="section-label">Referencia metodológica · Informe sectorial adaptado</div>
+  <h2 class="section-title">La estructura del informe CEPA, aplicada a El Rufino</h2>
+  <p class="section-desc">El informe vitivinícola de CEPA (mayo 2026) es inapropiado como fuente de datos para Rufino, pero su arquitectura es reutilizable para cualquier nota sectorial local. Así se ve la traslación.</p>
+
+  <div class="principio-box">
+    <div class="principio-titulo">Principio base del periodismo de datos sectorial</div>
+    <div class="principio-texto">Todo informe sectorial serio responde las mismas preguntas en este orden: ¿cuánto se produjo/exportó? → ¿a qué precio? → ¿hacia dónde? → ¿quién lo hace? → ¿qué tendencia marca? El CEPA vitivinícola hace exactamente eso para el vino. El mismo esquema aplicado a soja, con datos IPEC y ángulo Rufino, es la nota P02/P06 de El Rufino.</div>
+  </div>
+
+  <div class="estructura-comparativa">
+    <div class="columna-cepa">
+      <div class="col-titulo cepa">Informe CEPA — vitivinícola</div>
+
+      <div class="estructura-item">
+        <div class="item-numero">Bloque 1</div>
+        <div class="item-titulo">Dato del período</div>
+        <div class="item-contenido">Exportaciones de vino abril 2026: +21,9% en volumen respecto a igual mes 2025.</div>
+      </div>
+
+      <div class="estructura-item">
+        <div class="item-numero">Bloque 2</div>
+        <div class="item-titulo">Desglose por tipo</div>
+        <div class="item-contenido">Granel vs. fraccionado. Blancos vs. tintos. Varietales vs. sin mención varietal.</div>
+      </div>
+
+      <div class="estructura-item">
+        <div class="item-numero">Bloque 3</div>
+        <div class="item-titulo">Precio promedio implícito</div>
+        <div class="item-contenido">Volumen sube 21,9%, valor sube 4,8%. Precio promedio cae 13%. Ahí está el dato real.</div>
+      </div>
+
+      <div class="estructura-item">
+        <div class="item-numero">Bloque 4</div>
+        <div class="item-titulo">Destinos</div>
+        <div class="item-contenido">Reino Unido, EE.UU., Brasil, Canadá. Alemania y España para granel barato.</div>
+      </div>
+
+      <div class="estructura-item">
+        <div class="item-numero">Bloque 5</div>
+        <div class="item-titulo">Concentración territorial</div>
+        <div class="item-contenido">Mendoza = 94% del total nacional. Alta concentración = mayor vulnerabilidad.</div>
+      </div>
+
+      <div class="estructura-item">
+        <div class="item-numero">Bloque 6</div>
+        <div class="item-titulo">Tendencia y diagnóstico</div>
+        <div class="item-contenido">Comoditización del perfil exportador: más volumen, menos valor por unidad.</div>
+      </div>
+    </div>
+
+    <div class="columna-rufino">
+      <div class="col-titulo rufino">El Rufino — complejo sojero</div>
+
+      <div class="estructura-item">
+        <div class="item-numero">Bloque 1</div>
+        <div class="item-titulo">Dato del período</div>
+        <div class="item-contenido"><em>U$S 10.416,7 millones</em> exportados desde Santa Fe en 2025. +1,6% en valor, +10,9% en volumen.</div>
+      </div>
+
+      <div class="estructura-item">
+        <div class="item-numero">Bloque 2</div>
+        <div class="item-titulo">Desglose por tipo</div>
+        <div class="item-contenido">Poroto crudo (PP) vs. harinas/pellets (MOA) vs. biodiésel/glicerol (MOI). <em>MOA = 86% del valor total.</em></div>
+      </div>
+
+      <div class="estructura-item">
+        <div class="item-numero">Bloque 3</div>
+        <div class="item-titulo">Precio promedio implícito</div>
+        <div class="item-contenido">Volumen +10,9%, valor +1,6%. <em>Precio promedio -8,4%.</em> El campo exporta más y cobra menos por tonelada.</div>
+      </div>
+
+      <div class="estructura-item">
+        <div class="item-numero">Bloque 4</div>
+        <div class="item-titulo">Destinos</div>
+        <div class="item-contenido"><em>India 58,6%</em> (aceites), China 23,7% (poroto), Vietnam 58,8% (harinas). El sur global consume lo que produce el sur santafesino.</div>
+      </div>
+
+      <div class="estructura-item">
+        <div class="item-numero">Bloque 5</div>
+        <div class="item-titulo">Concentración territorial</div>
+        <div class="item-contenido"><em>85,6% sale por puertos SF.</em> San Lorenzo 67,2%, Rosario 18,4%. La RN33 conecta a Rufino con ese flujo.</div>
+      </div>
+
+      <div class="estructura-item">
+        <div class="item-numero">Bloque 6</div>
+        <div class="item-titulo">Tendencia y diagnóstico (Capa 2)</div>
+        <div class="item-contenido"><em>Más volumen, menos plata por tonelada.</em> El corredor aporta materia prima; el valor se agrega en la hidrovía. Biodiésel cae -15,2%: la industria retrocede.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="principio-box">
+    <div class="principio-titulo">Cómo usar MATE como fuente complementaria de la Capa 2</div>
+    <div class="principio-texto">MATE provee el ángulo del trabajador y la distribución: cuánto del precio de la soja llega al productor chico vs. al pool, qué pasa con las retenciones en términos de ingreso fiscal provincial, cómo afecta la caída del precio promedio al salario rural. Son datos para construir la Capa 2 (qué significa) sobre el esqueleto de datos IPEC/CEPA. El InfoMate mensual es gratuito y descargable.</div>
+  </div>
+
+  <div class="principio-box">
+    <div class="principio-titulo">El patrón reutilizable para cualquier tema del corredor</div>
+    <div class="principio-texto">
+      <strong>1. Dato duro de fuente pública</strong> (IPEC, INDEC, Bolsa) → Capa 1.<br>
+      <strong>2. Separar volumen de valor</strong>: siempre buscar precio promedio implícito (valor ÷ cantidad).<br>
+      <strong>3. Localizar el dato</strong>: de Santa Fe → a General López → a Rufino (por zona, por producción estimada).<br>
+      <strong>4. Ángulo distributivo</strong> (MATE / CEPA): quién se queda con qué parte de ese valor → Capa 2.<br>
+      <strong>5. Pregunta abierta al lector</strong>: qué sigue, qué no sabe todavía El Rufino.
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script>
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tabs button').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Rufino — Guía de Lenguaje No Sexista v1.0</title>
+<style>
+  :root {
+    --rojo: #c0271b;
+    --negro: #1a1a1a;
+    --blanco: #ffffff;
+    --crema: #f5f0e8;
+    --gris-claro: #e8e3da;
+    --gris-texto: #4a4a4a;
+    --gris-muted: #7a7a7a;
+    --borde: #d4cfc6;
+    --verde: #2d6a4f;
+    --amarillo: #b5830a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    background: var(--crema);
+    color: var(--negro);
+    line-height: 1.75;
+    font-size: 15px;
+  }
+  .masthead {
+    background: var(--rojo);
+    color: var(--blanco);
+    padding: 1.2rem 2rem;
+    border-bottom: 4px solid var(--negro);
+  }
+  .masthead-inner {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .masthead h1 {
+    font-size: 1.5rem;
+    font-weight: normal;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .masthead .subtitulo {
+    font-size: 0.85rem;
+    opacity: 0.85;
+    margin-top: 0.2rem;
+    font-style: italic;
+  }
+  .nav-doc {
+    background: var(--negro);
+    padding: 0.6rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-doc ul {
+    max-width: 960px;
+    margin: 0 auto;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 1.2rem;
+  }
+  .nav-doc a {
+    color: #ccc;
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-family: 'Georgia', serif;
+    transition: color 0.2s;
+  }
+  .nav-doc a:hover { color: var(--rojo); }
+  .contenido {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  .intro-box {
+    background: var(--blanco);
+    border-left: 4px solid var(--rojo);
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 2rem;
+    border-radius: 0 4px 4px 0;
+  }
+  .intro-box p { color: var(--gris-texto); margin-bottom: 0.5rem; }
+  .intro-box p:last-child { margin-bottom: 0; }
+  .seccion {
+    margin-bottom: 3rem;
+  }
+  .seccion-titulo {
+    font-size: 1.15rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--rojo);
+    border-bottom: 2px solid var(--rojo);
+    padding-bottom: 0.4rem;
+    margin-bottom: 1.2rem;
+  }
+  .seccion-subtitulo {
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 1.2rem 0 0.6rem;
+    color: var(--negro);
+  }
+  /* Glosario */
+  .termino {
+    background: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: 4px;
+    padding: 1rem 1.2rem;
+    margin-bottom: 0.8rem;
+  }
+  .termino-header {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 0.4rem;
+    flex-wrap: wrap;
+  }
+  .termino-nombre {
+    font-weight: bold;
+    font-size: 1rem;
+  }
+  .tag {
+    font-size: 0.72rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 2px;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+  .tag-genero { background: #fde8e8; color: var(--rojo); }
+  .tag-violencia { background: #fef3cd; color: #7a4f00; }
+  .tag-lenguaje { background: #e8f5e9; color: var(--verde); }
+  .tag-identidad { background: #e8eaf6; color: #3949ab; }
+  .termino-def {
+    color: var(--gris-texto);
+    font-size: 0.92rem;
+    line-height: 1.65;
+    margin-bottom: 0.5rem;
+  }
+  .nota-rufino {
+    background: #fff8e1;
+    border-left: 3px solid var(--amarillo);
+    padding: 0.5rem 0.8rem;
+    font-size: 0.85rem;
+    color: #5a3e00;
+    margin-top: 0.5rem;
+    border-radius: 0 3px 3px 0;
+  }
+  .nota-rufino::before {
+    content: "El Rufino — ";
+    font-weight: bold;
+  }
+  /* Tabla sustitución */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    background: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+  }
+  th {
+    background: var(--negro);
+    color: var(--blanco);
+    padding: 0.6rem 1rem;
+    text-align: left;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  td {
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid var(--gris-claro);
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: var(--crema); }
+  .incorrecto { color: #b00; text-decoration: line-through; }
+  .correcto { color: var(--verde); font-weight: bold; }
+  /* Reglas */
+  .regla-card {
+    background: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: 4px;
+    padding: 1rem 1.2rem;
+    margin-bottom: 0.8rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  .regla-num {
+    background: var(--rojo);
+    color: var(--blanco);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: bold;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .regla-texto strong { display: block; margin-bottom: 0.2rem; }
+  .regla-texto p { font-size: 0.9rem; color: var(--gris-texto); }
+  /* Protocolo cobertura */
+  .proto-item {
+    background: var(--blanco);
+    border-left: 4px solid var(--verde);
+    padding: 0.8rem 1.2rem;
+    margin-bottom: 0.6rem;
+    border-radius: 0 4px 4px 0;
+    font-size: 0.9rem;
+    color: var(--gris-texto);
+  }
+  .proto-item.alerta {
+    border-left-color: var(--rojo);
+    background: #fff5f5;
+  }
+  .proto-item strong { color: var(--negro); }
+  /* Checklist */
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--gris-claro);
+    font-size: 0.9rem;
+    color: var(--gris-texto);
+  }
+  .check-item:last-child { border-bottom: none; }
+  .check-box {
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--borde);
+    border-radius: 2px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    background: var(--blanco);
+  }
+  .firma {
+    text-align: center;
+    padding: 2rem;
+    border-top: 2px solid var(--borde);
+    margin-top: 3rem;
+    color: var(--gris-muted);
+    font-size: 0.8rem;
+    font-style: italic;
+  }
+  .firma strong { color: var(--negro); display: block; margin-bottom: 0.3rem; }
+  @media (max-width: 640px) {
+    .contenido { padding: 1rem; }
+    .nav-doc ul { gap: 0.3rem 0.8rem; }
+    .regla-card { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="masthead-inner">
+    <h1>El Rufino — Guía de Lenguaje No Sexista</h1>
+    <div class="subtitulo">Herramienta editorial interna · v1.0 · Mayo 2026 · Basada en Guía ONU Mujeres Argentina</div>
+  </div>
+</div>
+
+<nav class="nav-doc">
+  <ul>
+    <li><a href="#intro">Introducción</a></li>
+    <li><a href="#glosario">Glosario</a></li>
+    <li><a href="#sustitucion">Sustitución</a></li>
+    <li><a href="#reglas">Reglas</a></li>
+    <li><a href="#protocolo">Protocolo</a></li>
+    <li><a href="#checklist">Checklist</a></li>
+  </ul>
+</nav>
+
+<div class="contenido">
+
+  <div class="intro-box" id="intro">
+    <p>Este documento adapta los criterios de la <strong>Guía de Lenguaje No Sexista de ONU Mujeres Argentina</strong> al contexto editorial de El Rufino. No es un manual de estilo genérico: es una herramienta operativa para usar antes de publicar cualquier nota que involucre género, violencia o identidad.</p>
+    <p>Regla madre: el lenguaje no es neutral. Cada elección de palabra construye o destruye significado. En un medio local donde todos se conocen, las palabras tienen consecuencias directas sobre personas reales.</p>
+  </div>
+
+  <!-- GLOSARIO -->
+  <section class="seccion" id="glosario">
+    <h2 class="seccion-titulo">Glosario operativo</h2>
+
+    <div class="termino">
+      <div class="termino-header">
+        <span class="termino-nombre">Femicidio</span>
+        <span class="tag tag-violencia">Violencia</span>
+      </div>
+      <div class="termino-def">Asesinato de una mujer por razones de género. En Argentina, el Código Penal lo tipifica como agravante del homicidio (art. 80 inc. 11). Es un crimen, no una tragedia ni un accidente.</div>
+      <div class="nota-rufino">Usar siempre "femicidio", nunca "crimen pasional", "tragedia familiar" o "violencia doméstica que terminó en muerte". Identificar al agresor en el titular cuando hay determinación judicial.</div>
+    </div>
+
+    <div class="termino">
+      <div class="termino-header">
+        <span class="termino-nombre">Violencia de género</span>
+        <span class="tag tag-violencia">Violencia</span>
+      </div>
+      <div class="termino-def">Cualquier acto perjudicial basado en diferencias sociales entre sexos: física, sexual, psicológica, económica, simbólica. Término paraguas que incluye todas las formas de violencia hacia mujeres y disidencias por su condición de género.</div>
+      <div class="nota-rufino">No intercambiar con "violencia doméstica" — son categorías distintas. La doméstica ocurre en el ámbito del hogar; la de género puede ocurrir en cualquier espacio.</div>
+    </div>
+
+    <div class="termino">
+      <div class="termino-header">
+        <span class="termino-nombre">Violencia doméstica</span>
+        <span class="tag tag-violencia">Violencia</span>
+      </div>
+      <div class="termino-def">Violencia que ocurre en la esfera privada entre personas vinculadas por sangre, intimidad o ley. Incluye formas físicas, psicológicas, sexuales y económicas. Es un subconjunto de la violencia de género.</div>
+      <div class="nota-rufino">Especificar siempre si la violencia ocurrió en el ámbito doméstico o en el espacio público. Afecta el encuadre legal y la cobertura periodística.</div>
+    </div>
+
+    <div class="termino">
+      <div class="termino-header">
+        <span class="termino-nombre">Violencia psicológica / emocional</span>
+        <span class="tag tag-violencia">Violencia</span>
+      </div>
+      <div class="termino-def">Control del tiempo, movimiento y contactos sociales de la víctima. Incluye insultos, humillaciones, aislamiento e intimidación. No requiere contacto físico para ser grave ni noticiable.</div>
+      <div class="nota-rufino">Validar como noticia cuando hay denuncia formal o intervención judicial, incluso sin lesiones visibles. No exigir "prueba física" para tomar en serio el hecho.</div>
+    </div>
+
+    <div class="termino">
+      <div class="termino-header">
+        <span class="termino-nombre">Perspectiva de género</span>
+        <span class="tag tag-genero">Género</span>
+      </div>
+      <div class="termino-def">Enfoque analítico que examina cómo las relaciones de poder entre géneros afectan situaciones, políticas y coberturas. No es sinónimo de "hablar de mujeres" — es una forma de leer la realidad.</div>
+      <div class="nota-rufino">Aplicable a coberturas de presupuesto, obra pública, salud, educación. Preguntar: ¿cómo afecta esto de manera diferencial a mujeres, varones, y disidencias en Rufino?</div>
+    </div>
+
+    <div class="termino">
+      <div class="termino-header">
+        <span class="termino-nombre">Igualdad de género</span>
+        <span class="tag tag-genero">Género</span>
+      </div>
+      <div class="termino-def">Los derechos, responsabilidades y oportunidades no dependen del sexo con el que se nació. Implica que los intereses y necesidades de todos los géneros deben ser igualmente considerados.</div>
+      <div class="nota-rufino">Distinguir de equidad (trato diferenciado para lograr igualdad real). No usar como sinónimos.</div>
+    </div>
+
+    <div class="termino">
+      <div class="termino-header">
+        <span class="termino-nombre">Estereotipos de género</span>
+        <span class="tag tag-lenguaje">Lenguaje</span>
+      </div>
+      <div class="termino-def">Generalizaciones simplistas sobre roles, atributos o conductas de varones y mujeres que refuerzan jerarquías. Son el mecanismo por el que el lenguaje discrimina sin intención explícita.</div>
+      <div class="nota-rufino">Revisar adjetivos en las notas: ¿se describe a una mujer funcionaria por su apariencia cuando no se haría lo mismo con un varón? ¿Se llama "histérica" a una vecina que reclama?</div>
+    </div>
+
+    <div class="termino">
+      <div class="termino-header">
+        <span class="termino-nombre">Empoderamiento</span>
+        <span class="tag tag-genero">Género</span>
+      </div>
+      <div class="termino-def">Proceso por el cual las personas adquieren control sobre sus propias vidas, desarrollan autoconfianza y participan activamente en decisiones que las afectan. No es sinónimo de "éxito individual".</div>
+      <div class="nota-rufino">Usar con precisión. No aplicar como etiqueta decorativa a cualquier nota sobre mujeres. Evaluar si el contexto justifica el término.</div>
+    </div>
+
+    <div class="termino">
+      <div class="termino-header">
+        <span class="termino-nombre">Identidad de género</span>
+        <span class="tag tag-identidad">Identidad</span>
+      </div>
+      <div class="termino-def">Vivencia interna e individual del género tal como cada persona la siente, independientemente del sexo asignado al nacer. Puede o no coincidir con el sexo biológico.</div>
+      <div class="nota-rufino">Respetar el nombre y pronombre autopercibido de la persona. En Argentina, la Ley 26.743 garantiza el derecho a la identidad de género. No es tema de debate: es un derecho.</div>
+    </div>
+
+    <div class="termino">
+      <div class="termino-header">
+        <span class="termino-nombre">Lenguaje inclusivo</span>
+        <span class="tag tag-lenguaje">Lenguaje</span>
+      </div>
+      <div class="termino-def">Conjunto de estrategias lingüísticas para visibilizar a todos los géneros y evitar la invisibilización o discriminación a través del lenguaje.</div>
+      <div class="nota-rufino">El Rufino adopta una postura pragmática: usar desdoblamientos (los/las vecinos/as) o sustantivos colectivos (la ciudadanía, el vecindario) antes que la "e" genérica. Priorizar la claridad sin excluir.</div>
+    </div>
+
+    <div class="termino">
+      <div class="termino-header">
+        <span class="termino-nombre">Víctima / sobreviviente</span>
+        <span class="tag tag-violencia">Violencia</span>
+      </div>
+      <div class="termino-def">Dos términos con implicancias distintas. "Víctima" describe la situación de quien sufrió un delito. "Sobreviviente" reconoce la agencia y resistencia de esa persona.</div>
+      <div class="nota-rufino">En coberturas de violencia, consultar con la persona o sus referentes cuál término prefieren. Nunca usar "víctima fatal" como eufemismo — si alguien murió, decirlo con claridad.</div>
+    </div>
+
+  </section>
+
+  <!-- TABLA SUSTITUCIÓN -->
+  <section class="seccion" id="sustitucion">
+    <h2 class="seccion-titulo">Tabla de sustitución de lenguaje</h2>
+    <p style="color:var(--gris-texto); margin-bottom:1rem; font-size:0.9rem;">Expresiones a evitar y sus alternativas recomendadas para El Rufino.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Evitar</th>
+          <th>Usar</th>
+          <th>Por qué</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="incorrecto">crimen pasional</span></td>
+          <td><span class="correcto">femicidio</span></td>
+          <td>Normaliza la violencia como consecuencia del amor</td>
+        </tr>
+        <tr>
+          <td><span class="incorrecto">tragedia familiar</span></td>
+          <td><span class="correcto">femicidio / homicidio en contexto de violencia de género</span></td>
+          <td>Borra la responsabilidad del agresor</td>
+        </tr>
+        <tr>
+          <td><span class="incorrecto">lo mató en un ataque de celos</span></td>
+          <td><span class="correcto">la mató, fue imputado por femicidio</span></td>
+          <td>Los celos no justifican ni explican el crimen</td>
+        </tr>
+        <tr>
+          <td><span class="incorrecto">la víctima fatal</span></td>
+          <td><span class="correcto">murió / fue asesinada</span></td>
+          <td>Eufemismo que oscurece la violencia</td>
+        </tr>
+        <tr>
+          <td><span class="incorrecto">denuncia que la golpeó</span></td>
+          <td><span class="correcto">denunció que la golpeó</span></td>
+          <td>El uso del subjuntivo no desacredita la denuncia</td>
+        </tr>
+        <tr>
+          <td><span class="incorrecto">los alumnos</span></td>
+          <td><span class="correcto">el alumnado / los alumnos y las alumnas</span></td>
+          <td>El masculino genérico invisibiliza</td>
+        </tr>
+        <tr>
+          <td><span class="incorrecto">el hombre y la mujer</span></td>
+          <td><span class="correcto">las personas / varones y mujeres</span></td>
+          <td>Coloca al varón como referente universal</td>
+        </tr>
+        <tr>
+          <td><span class="incorrecto">histérica / exagerada</span></td>
+          <td><span class="correcto">describir la situación con hechos concretos</span></td>
+          <td>Adjetivos que desacreditan por género</td>
+        </tr>
+        <tr>
+          <td><span class="incorrecto">la concejala lució un vestido azul</span></td>
+          <td><span class="correcto">la concejala presentó el proyecto</span></td>
+          <td>Describir apariencia física cuando no es relevante</td>
+        </tr>
+        <tr>
+          <td><span class="incorrecto">travesti / transgénero (como insulto)</span></td>
+          <td><span class="correcto">persona trans / usar nombre autopercibido</span></td>
+          <td>Derecho a la identidad — Ley 26.743</td>
+        </tr>
+        <tr>
+          <td><span class="incorrecto">mujer golpeada</span></td>
+          <td><span class="correcto">mujer en situación de violencia</span></td>
+          <td>No reduce a la persona a su condición de víctima</td>
+        </tr>
+        <tr>
+          <td><span class="incorrecto">se suicidó tras ser violada</span></td>
+          <td><span class="correcto">murió / falleció [evitar detalles innecesarios]</span></td>
+          <td>Riesgo de contagio y re-victimización</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- REGLAS EDITORIALES -->
+  <section class="seccion" id="reglas">
+    <h2 class="seccion-titulo">Reglas editoriales El Rufino</h2>
+
+    <div class="regla-card">
+      <div class="regla-num">1</div>
+      <div class="regla-texto">
+        <strong>Nombrar al agresor, no solo a la víctima</strong>
+        <p>El titular debe identificar quién ejerció la violencia cuando hay imputación o condena. "Mujer golpeada" borra al responsable. "Vecino imputado por golpear a su pareja" lo nombra.</p>
+      </div>
+    </div>
+
+    <div class="regla-card">
+      <div class="regla-num">2</div>
+      <div class="regla-texto">
+        <strong>Verificar antes de publicar datos de víctimas</strong>
+        <p>Nombre completo, foto, dirección y datos de familiares de víctimas de violencia de género nunca se publican sin consentimiento explícito. Consultar con referentes legales o de género si hay duda.</p>
+      </div>
+    </div>
+
+    <div class="regla-card">
+      <div class="regla-num">3</div>
+      <div class="regla-texto">
+        <strong>No reproducir el relato del agresor como verdad</strong>
+        <p>"Dijo que la mató porque lo engañó" reproduce su justificación. Reportar los hechos: "fue imputado por femicidio; ante la fiscal declaró que...". El contexto importa.</p>
+      </div>
+    </div>
+
+    <div class="regla-card">
+      <div class="regla-num">4</div>
+      <div class="regla-texto">
+        <strong>No fotografiar a víctimas sin consentimiento</strong>
+        <p>Imágenes de mujeres en situación de violencia, humilladas o lesionadas no se publican. Si hay foto de archivo, evaluar si suma información o solo impacto emocional.</p>
+      </div>
+    </div>
+
+    <div class="regla-card">
+      <div class="regla-num">5</div>
+      <div class="regla-texto">
+        <strong>Incluir recursos al final de la nota</strong>
+        <p>Toda nota sobre violencia de género debe cerrar con la línea 144 (violencia de género) y el 137 (abuso sexual). Es una obligación editorial, no opcional.</p>
+      </div>
+    </div>
+
+    <div class="regla-card">
+      <div class="regla-num">6</div>
+      <div class="regla-texto">
+        <strong>La denuncia no es prueba, pero tampoco es mentira</strong>
+        <p>Reportar que alguien hizo una denuncia es un hecho verificable. Usar: "denunció", "según la denuncia", "la fiscalía investiga". No escribir "acusó falsamente" ni "supuesta víctima" sin resolución judicial.</p>
+      </div>
+    </div>
+
+    <div class="regla-card">
+      <div class="regla-num">7</div>
+      <div class="regla-texto">
+        <strong>Aplicar perspectiva de género también en otras coberturas</strong>
+        <p>Una nota sobre el presupuesto municipal puede preguntarse: ¿cuánto va a guarderías, a centros de salud para mujeres, a programas de violencia? El género cruza todos los pilares editoriales.</p>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- PROTOCOLO COBERTURA -->
+  <section class="seccion" id="protocolo">
+    <h2 class="seccion-titulo">Protocolo de cobertura — violencia de género</h2>
+
+    <h3 class="seccion-subtitulo">Antes de publicar</h3>
+    <div class="proto-item"><strong>¿Tenemos confirmación policial o judicial?</strong> No publicar solo con versión de redes sociales o rumores.</div>
+    <div class="proto-item"><strong>¿Identificamos al agresor o solo a la víctima?</strong> Si tenemos imputación, nombrar al agresor en el titular.</div>
+    <div class="proto-item"><strong>¿La foto es necesaria?</strong> Si muestra a la víctima en situación de vulnerabilidad, no publicar.</div>
+    <div class="proto-item"><strong>¿El lenguaje es preciso?</strong> Revisar con la tabla de sustitución. Sin eufemismos.</div>
+    <div class="proto-item"><strong>¿Incluimos los recursos?</strong> Línea 144 y 137 al final de la nota, siempre.</div>
+
+    <h3 class="seccion-subtitulo">Lo que nunca hacemos</h3>
+    <div class="proto-item alerta"><strong>No publicar domicilio ni datos de localización de la víctima.</strong> Puede ponerla en riesgo.</div>
+    <div class="proto-item alerta"><strong>No entrevistar a la víctima en el lugar del hecho.</strong> Esperar que esté en lugar seguro y con acompañamiento.</div>
+    <div class="proto-item alerta"><strong>No usar imágenes del agresor como "monstruo" ni de la víctima como "ángel".</strong> Ambas deforman la realidad.</div>
+    <div class="proto-item alerta"><strong>No reproducir conversaciones privadas (WhatsApp, mensajes) sin evaluación legal previa.</strong></div>
+    <div class="proto-item alerta"><strong>No escribir sobre suicidio vinculado a violencia con detalles del método.</strong> Seguir protocolo Ministerio de Salud.</div>
+
+    <h3 class="seccion-subtitulo">Recursos a incluir en la nota</h3>
+    <div class="proto-item" style="background:#f0fff4;">
+      <strong>Línea 144</strong> — Atención, contención y asesoramiento en situaciones de violencia por razones de género. Gratuita, las 24 horas, todo el país.
+    </div>
+    <div class="proto-item" style="background:#f0fff4;">
+      <strong>Línea 137</strong> — Atención a víctimas de violencia familiar y sexual. Gratuita, las 24 horas.
+    </div>
+    <div class="proto-item" style="background:#f0fff4;">
+      <strong>Comisaría de la Mujer Rufino</strong> — Incluir dirección y teléfono local cuando se disponga.
+    </div>
+  </section>
+
+  <!-- CHECKLIST -->
+  <section class="seccion" id="checklist">
+    <h2 class="seccion-titulo">Checklist antes de publicar</h2>
+    <p style="color:var(--gris-texto); margin-bottom:1rem; font-size:0.9rem;">Para notas que involucren género, violencia o identidad. Marcar mentalmente antes de publicar.</p>
+
+    <div style="background:var(--blanco); border:1px solid var(--borde); border-radius:4px; padding:1rem 1.2rem;">
+      <div class="check-item"><div class="check-box"></div><span>El titular nombra la acción y al responsable, no solo a la víctima</span></div>
+      <div class="check-item"><div class="check-box"></div><span>No se usan eufemismos ("crimen pasional", "tragedia", "violencia doméstica" para femicidio)</span></div>
+      <div class="check-item"><div class="check-box"></div><span>No se reproducen justificaciones del agresor como explicación del hecho</span></div>
+      <div class="check-item"><div class="check-box"></div><span>Los datos personales de la víctima fueron evaluados (¿son necesarios? ¿hay consentimiento?)</span></div>
+      <div class="check-item"><div class="check-box"></div><span>La foto fue evaluada (¿muestra vulnerabilidad innecesaria? ¿es pertinente?)</span></div>
+      <div class="check-item"><div class="check-box"></div><span>Se usan sustantivos colectivos o desdoblamientos en lugar de masculino genérico</span></div>
+      <div class="check-item"><div class="check-box"></div><span>Se respeta el nombre y pronombre autopercibido si la nota involucra identidad de género</span></div>
+      <div class="check-item"><div class="check-box"></div><span>La nota tiene información verificada (policial, judicial o fuente directa identificada)</span></div>
+      <div class="check-item"><div class="check-box"></div><span>Se incluyen los recursos al final (144 / 137 / referencia local)</span></div>
+      <div class="check-item"><div class="check-box"></div><span>Se aplicó la regla de dos capas: qué pasó + qué significa en contexto de género local</span></div>
+    </div>
+  </section>
+
+</div>
+
+<div class="firma">
+  <strong>EL RUFINO — Herramienta editorial interna</strong>
+  Guía de Lenguaje No Sexista · v1.0 · Mayo 2026<br>
+  Basada en Guía de Lenguaje No Sexista ONU Mujeres Argentina<br>
+  Proyecto El Rufino · Rufino, Santa Fe, Argentina
+</div>
+
+</body>
+</html>

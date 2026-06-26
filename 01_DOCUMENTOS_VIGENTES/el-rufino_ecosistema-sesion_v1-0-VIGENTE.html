@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Rufino — Ecosistema · Síntesis de sesión · Mayo 2026</title>
+<style>
+:root {
+  --rojo: #c0271b;
+  --negro: #1a1a1a;
+  --blanco: #ffffff;
+  --crema: #f5f0e8;
+  --borde: #d4cfc6;
+  --gris: #7a7a7a;
+  --gris-claro: #e8e3da;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  background: var(--crema);
+  color: var(--negro);
+  font-size: 15px;
+  line-height: 1.7;
+}
+.masthead {
+  background: var(--rojo);
+  color: var(--blanco);
+  padding: 2rem 2.5rem 1.5rem;
+  border-bottom: 4px solid var(--negro);
+  position: relative;
+}
+.masthead-claim {
+  font-family: 'Arial', sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.8;
+  margin-bottom: 0.4rem;
+}
+.masthead h1 {
+  font-size: 2.2rem;
+  font-weight: normal;
+  line-height: 1.15;
+  margin-bottom: 0.6rem;
+}
+.masthead-meta {
+  font-family: 'Arial', sans-serif;
+  font-size: 0.75rem;
+  opacity: 0.75;
+  letter-spacing: 0.04em;
+}
+.nav {
+  background: var(--negro);
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  border-bottom: 2px solid var(--rojo);
+}
+.nav button {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.55);
+  padding: 0.8rem 1.4rem;
+  font-family: 'Arial', sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: color 0.15s;
+}
+.nav button.active { color: var(--blanco); border-bottom-color: var(--rojo); }
+.nav button:hover:not(.active) { color: rgba(255,255,255,0.85); }
+.tab { display: none; }
+.tab.active { display: block; }
+.container { max-width: 920px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+.section-tag {
+  font-family: 'Arial', sans-serif;
+  font-size: 0.68rem;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--rojo);
+  margin-bottom: 0.4rem;
+}
+.section-title {
+  font-size: 1.6rem;
+  font-weight: normal;
+  margin-bottom: 0.5rem;
+  line-height: 1.25;
+}
+.section-intro {
+  font-family: 'Arial', sans-serif;
+  font-size: 0.85rem;
+  color: var(--gris);
+  border-left: 2px solid var(--rojo);
+  padding-left: 0.8rem;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+hr.div { border: none; border-top: 1px solid var(--borde); margin: 1.8rem 0; }
+
+/* ECOSISTEMA */
+.eco-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.eco-card {
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  padding: 1.2rem 1.4rem;
+}
+.eco-card.anchor { border-left: 4px solid var(--rojo); }
+.eco-card.digital { border-left: 4px solid var(--negro); }
+.eco-card.data { border-left: 4px solid #8a7a6a; }
+.eco-card.concept { border-left: 4px solid #5a8a6a; }
+.eco-nombre {
+  font-family: 'Arial', sans-serif;
+  font-size: 0.72rem;
+  font-weight: bold;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
+}
+.eco-nombre.rojo { color: var(--rojo); }
+.eco-nombre.negro { color: var(--negro); }
+.eco-nombre.cafe { color: #6a5a4a; }
+.eco-nombre.verde { color: #3a6a4a; }
+.eco-titulo {
+  font-size: 1.05rem;
+  margin-bottom: 0.4rem;
+  font-weight: normal;
+}
+.eco-desc {
+  font-family: 'Arial', sans-serif;
+  font-size: 0.78rem;
+  color: var(--gris);
+  line-height: 1.5;
+  margin-bottom: 0.6rem;
+}
+.eco-estado {
+  font-family: 'Arial', sans-serif;
+  font-size: 0.68rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 2px 7px;
+  display: inline-block;
+}
+.eco-estado.verde { background: #d4edda; color: #1a5c2a; }
+.eco-estado.amarillo { background: #fff3cd; color: #7a5000; }
+.eco-estado.rojo-badge { background: #fce8e8; color: #7a1c1c; }
+
+.nexo-box {
+  background: var(--negro);
+  color: var(--blanco);
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 2rem;
+  border-left: 4px solid var(--rojo);
+}
+.nexo-box p {
+  font-family: 'Arial', sans-serif;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+.nexo-box strong { color: #ffb5ad; }
+
+/* ACTIVOS */
+.activo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.8rem;
+  margin-bottom: 1.5rem;
+}
+.activo-item {
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  padding: 0.9rem 1rem;
+}
+.activo-tipo {
+  font-family: 'Arial', sans-serif;
+  font-size: 0.65rem;
+  font-weight: bold;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--rojo);
+  margin-bottom: 3px;
+}
+.activo-nombre {
+  font-family: 'Arial', sans-serif;
+  font-size: 0.85rem;
+  font-weight: bold;
+  margin-bottom: 3px;
+}
+.activo-detalle {
+  font-family: 'Arial', sans-serif;
+  font-size: 0.75rem;
+  color: var(--gris);
+  line-height: 1.4;
+}
+
+/* ESPACIO FÍSICO */
+.espacio-hero {
+  background: var(--negro);
+  color: var(--blanco);
+  padding: 1.5rem 1.8rem;
+  margin-bottom: 1.2rem;
+}
+.espacio-hero h2 {
+  font-size: 1.4rem;
+  font-weight: normal;
+  margin-bottom: 0.5rem;
+}
+.espacio-hero p {
+  font-family: 'Arial', sans-serif;
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.6;
+}
+.sala-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.8rem;
+  margin-bottom: 1.5rem;
+}
+.sala-card {
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  border-top: 3px solid var(--rojo);
+  padding: 1rem 1.1rem;
+}
+.sala-nombre {
+  font-family: 'Arial', sans-serif;
+  font-size: 0.78rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.4rem;
+}
+.sala-uso {
+  font-family: 'Arial', sans-serif;
+  font-size: 0.78rem;
+  color: var(--gris);
+  line-height: 1.5;
+}
+.uso-probado {
+  background: var(--crema);
+  border: 1px solid var(--borde);
+  border-left: 3px solid var(--negro);
+  padding: 1rem 1.2rem;
+  margin-bottom: 1.2rem;
+}
+.uso-probado h4 {
+  font-family: 'Arial', sans-serif;
+  font-size: 0.72rem;
+  font-weight: bold;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--rojo);
+  margin-bottom: 0.5rem;
+}
+.uso-item {
+  font-family: 'Arial', sans-serif;
+  font-size: 0.8rem;
+  color: var(--negro);
+  padding: 3px 0;
+  border-bottom: 1px solid var(--borde);
+}
+.uso-item:last-child { border-bottom: none; }
+
+/* ACTORES */
+.actor-card {
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  padding: 1.2rem 1.4rem;
+  margin-bottom: 0.8rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+.actor-inicial {
+  width: 48px;
+  height: 48px;
+  background: var(--rojo);
+  color: var(--blanco);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Arial', sans-serif;
+  font-size: 1.1rem;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+.actor-nombre {
+  font-family: 'Arial', sans-serif;
+  font-size: 0.95rem;
+  font-weight: bold;
+  margin-bottom: 2px;
+}
+.actor-rol {
+  font-family: 'Arial', sans-serif;
+  font-size: 0.72rem;
+  color: var(--rojo);
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.4rem;
+}
+.actor-desc {
+  font-family: 'Arial', sans-serif;
+  font-size: 0.78rem;
+  color: var(--gris);
+  line-height: 1.5;
+}
+.actor-vinculo {
+  font-family: 'Arial', sans-serif;
+  font-size: 0.72rem;
+  margin-top: 0.4rem;
+  color: var(--negro);
+}
+.actor-vinculo span {
+  background: var(--gris-claro);
+  padding: 1px 6px;
+  margin-right: 4px;
+  font-size: 0.68rem;
+}
+
+/* FUENTES */
+.fuente-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Arial', sans-serif;
+  font-size: 0.78rem;
+  margin-bottom: 1.5rem;
+}
+.fuente-tabla th {
+  background: var(--negro);
+  color: var(--blanco);
+  padding: 0.5rem 0.7rem;
+  text-align: left;
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.fuente-tabla td {
+  padding: 0.5rem 0.7rem;
+  border-bottom: 1px solid var(--borde);
+  vertical-align: top;
+  line-height: 1.4;
+}
+.fuente-tabla tr:nth-child(even) td { background: rgba(245,240,232,0.5); }
+.badge-pilar {
+  font-size: 0.65rem;
+  font-weight: bold;
+  padding: 1px 5px;
+  background: var(--gris-claro);
+  color: var(--negro);
+  margin-right: 2px;
+  display: inline-block;
+}
+.badge-tipo {
+  font-size: 0.65rem;
+  font-weight: bold;
+  padding: 1px 5px;
+  display: inline-block;
+}
+.badge-tipo.primaria { background: #d4edda; color: #1a5c2a; }
+.badge-tipo.contexto { background: #fff3cd; color: #7a5000; }
+.badge-tipo.propia { background: #fce8e8; color: #7a1c1c; }
+
+/* BASE DE DATOS LOCAL */
+.bd-categoria {
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  margin-bottom: 0.6rem;
+  overflow: hidden;
+}
+.bd-cat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.7rem 1rem;
+  background: var(--gris-claro);
+  cursor: pointer;
+}
+.bd-cat-nombre {
+  font-family: 'Arial', sans-serif;
+  font-size: 0.82rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.bd-cat-meta {
+  font-family: 'Arial', sans-serif;
+  font-size: 0.7rem;
+  color: var(--gris);
+}
+.bd-cat-body {
+  padding: 0.8rem 1rem;
+  display: none;
+}
+.bd-cat-body.open { display: block; }
+.bd-campos {
+  font-family: 'Arial', sans-serif;
+  font-size: 0.75rem;
+  color: var(--gris);
+  margin-bottom: 0.4rem;
+}
+.bd-seed {
+  font-family: 'Arial', sans-serif;
+  font-size: 0.72rem;
+  color: var(--negro);
+}
+.bd-seed strong { color: var(--rojo); }
+
+/* PRÓXIMOS PASOS */
+.paso-item {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  align-items: flex-start;
+}
+.paso-num {
+  width: 32px;
+  height: 32px;
+  background: var(--rojo);
+  color: var(--blanco);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Arial', sans-serif;
+  font-size: 0.8rem;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+.paso-contenido { flex: 1; }
+.paso-titulo {
+  font-family: 'Arial', sans-serif;
+  font-size: 0.85rem;
+  font-weight: bold;
+  margin-bottom: 2px;
+}
+.paso-desc {
+  font-family: 'Arial', sans-serif;
+  font-size: 0.78rem;
+  color: var(--gris);
+  line-height: 1.5;
+}
+.paso-urgencia {
+  font-family: 'Arial', sans-serif;
+  font-size: 0.65rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 1px 6px;
+  margin-top: 3px;
+  display: inline-block;
+}
+.paso-urgencia.inmediato { background: #fce8e8; color: #7a1c1c; }
+.paso-urgencia.proximo { background: #fff3cd; color: #7a5000; }
+.paso-urgencia.futuro { background: #d4edda; color: #1a5c2a; }
+
+footer {
+  background: var(--negro);
+  color: rgba(255,255,255,0.5);
+  text-align: center;
+  padding: 1.2rem;
+  font-family: 'Arial', sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+}
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="masthead-claim">El Rufino · Documento de síntesis</div>
+  <h1>El ecosistema<br>que está tomando forma</h1>
+  <div class="masthead-meta">Sesión 20 de mayo de 2026 · v1.0-VIGENTE · Rufino, Santa Fe</div>
+</div>
+
+<div class="nav">
+  <button class="active" onclick="show('ecosistema',this)">Ecosistema</button>
+  <button onclick="show('activos',this)">Lo que existe</button>
+  <button onclick="show('espacio',this)">Espacio físico</button>
+  <button onclick="show('actores',this)">Actores</button>
+  <button onclick="show('fuentes',this)">Fuentes</button>
+  <button onclick="show('base',this)">Base de datos local</button>
+  <button onclick="show('pasos',this)">Próximos pasos</button>
+</div>
+
+
+<!-- ══════════════════════════════════
+     TAB: ECOSISTEMA
+     ══════════════════════════════════ -->
+<div id="tab-ecosistema" class="tab active">
+<div class="container">
+  <div class="section-tag">Arquitectura general</div>
+  <h2 class="section-title">Cinco piezas. Un solo territorio.</h2>
+  <p class="section-intro">No es un medio digital. Es infraestructura territorial — un sistema donde cada componente tiene sentido propio y juntos forman algo que Rufino no tiene.</p>
+
+  <div class="eco-grid">
+    <div class="eco-card anchor">
+      <div class="eco-nombre rojo">Periodismo</div>
+      <div class="eco-titulo">El Rufino</div>
+      <div class="eco-desc">Medio digital local. "Lo que pasa y lo que significa." Toda nota con dos capas: el hecho + el contexto que falta. Pilares P01-P06. elrufino.com.ar</div>
+      <span class="eco-estado amarillo">Fase 2 · 40%</span>
+    </div>
+    <div class="eco-card digital">
+      <div class="eco-nombre negro">Plataforma comunitaria</div>
+      <div class="eco-titulo">Infoconectados</div>
+      <div class="eco-desc">Hub digital de Rufino. Feria de anuncios, bolsa de trabajo, beneficios para miembros, noticias sin algoritmos, radio local. infoconectados.com</div>
+      <span class="eco-estado amarillo">Activo · en desarrollo</span>
+    </div>
+    <div class="eco-card data">
+      <div class="eco-nombre cafe">Datos e infraestructura</div>
+      <div class="eco-titulo">Mapa Maestro</div>
+      <div class="eco-desc">Base GIS territorial de Rufino. 32 puntos verificados: escuelas, instituciones, locales de votación. Estructura para escalar a comercios, salud, cultura y barrios.</div>
+      <span class="eco-estado amarillo">v1.0 · 32 puntos</span>
+    </div>
+    <div class="eco-card concept">
+      <div class="eco-nombre verde">Marco conceptual</div>
+      <div class="eco-titulo">La Comunidad Organizada</div>
+      <div class="eco-desc">Infraestructura digital de articulación social. Basada en el modelo peronista: persona → organización → comunidad. Infoconectados como traducción operativa.</div>
+      <span class="eco-estado amarillo">Conceptual · en definición</span>
+    </div>
+    <div class="eco-card anchor">
+      <div class="eco-nombre rojo">Espacio físico</div>
+      <div class="eco-titulo">Sociedad Italiana — Ex Teatro Marconi</div>
+      <div class="eco-desc">Sala Fiorito Barolat + hall + sala grande. Ancla territorial. Historia cultural probada. Espacio para suscriptores: cultura, gastronomía, café, lectura.</div>
+      <span class="eco-estado verde">Existe · uso previo CECSI</span>
+    </div>
+  </div>
+
+  <div class="nexo-box">
+    <p>La pregunta que define si esto es infraestructura o solo comunicación: <strong>si El Rufino desaparece mañana, ¿se pierde un canal o se pierde la capacidad de coordinación del territorio?</strong> La respuesta debe ser lo segundo. Hoy no lo es todavía. El camino de esta sesión apunta en esa dirección.</p>
+  </div>
+
+  <hr class="div">
+  <div class="section-tag">Lógica de integración</div>
+  <p style="font-family:'Arial',sans-serif;font-size:0.85rem;color:var(--gris);line-height:1.7;margin-bottom:1rem;">El <strong style="color:var(--negro)">Mapa Maestro</strong> es la infraestructura compartida de los tres proyectos. <strong style="color:var(--negro)">El Rufino</strong> lo usa para periodismo contextual (P03, P06). <strong style="color:var(--negro)">Infoconectados</strong> lo usa para la plataforma comunitaria. <strong style="color:var(--negro)">La Comunidad Organizada</strong> lo usa como herramienta de gestión territorial.</p>
+  <p style="font-family:'Arial',sans-serif;font-size:0.85rem;color:var(--gris);line-height:1.7;">La <strong style="color:var(--negro)">Sociedad Italiana</strong> es el ancla física de todo. La <strong style="color:var(--negro)">base de datos local</strong> — farmacias, comercios, cultura, servicios — es el conocimiento propio que ningún otro medio local tiene ni puede tener fácilmente.</p>
+</div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     TAB: LO QUE EXISTE
+     ══════════════════════════════════ -->
+<div id="tab-activos" class="tab">
+<div class="container">
+  <div class="section-tag">Inventario de activos</div>
+  <h2 class="section-title">Lo que ya existe y no siempre estaba claro</h2>
+  <p class="section-intro">Muchos de estos activos estaban dispersos o no articulados. Esta sesión los conectó por primera vez en un mapa coherente.</p>
+
+  <div class="section-tag" style="margin-top:1.5rem">Digital y técnico</div>
+  <div class="activo-grid" style="margin-top:0.5rem">
+    <div class="activo-item">
+      <div class="activo-tipo">WordPress · Producción</div>
+      <div class="activo-nombre">elrufino.com.ar</div>
+      <div class="activo-detalle">Hostinger · Plugin v8.6.0 · 5 pantallas · 20 notas publicadas</div>
+    </div>
+    <div class="activo-item">
+      <div class="activo-tipo">WordPress · Comunidad</div>
+      <div class="activo-nombre">infoconectados.com</div>
+      <div class="activo-detalle">Feria, noticias, bolsa trabajo, beneficios, radio local · activo</div>
+    </div>
+    <div class="activo-item">
+      <div class="activo-tipo">GIS · Base territorial</div>
+      <div class="activo-nombre">Mapa Maestro v1.0</div>
+      <div class="activo-detalle">32 puntos: 17 escuelas, 7 instituciones, 8 locales votación · sin lat/lng</div>
+    </div>
+    <div class="activo-item">
+      <div class="activo-tipo">Sistema · Monitoreo</div>
+      <div class="activo-nombre">07_MONITOREO</div>
+      <div class="activo-detalle">Fuentes fijas, registros, huecos detectados · metodología Borgna</div>
+    </div>
+    <div class="activo-item">
+      <div class="activo-tipo">Documento · Fuentes P06</div>
+      <div class="activo-nombre">Mapa de fuentes v1.1</div>
+      <div class="activo-detalle">IPEC · MATE · CEPA · IDE Agro · MAGYP · farmaciasrufino.com</div>
+    </div>
+    <div class="activo-item">
+      <div class="activo-tipo">Plugin · Panel IA</div>
+      <div class="activo-nombre">v8.6.0 activo</div>
+      <div class="activo-detalle">5 pantallas · 12 agentes · Kanban · Promesas CSV · Asistente</div>
+    </div>
+  </div>
+
+  <hr class="div">
+  <div class="section-tag">Fuentes de datos locales ya identificadas</div>
+  <div class="activo-grid" style="margin-top:0.5rem">
+    <div class="activo-item">
+      <div class="activo-tipo">Farmacias · Turnos</div>
+      <div class="activo-nombre">farmaciasrufino.com</div>
+      <div class="activo-detalle">13 farmacias · turno en tiempo real · calendario mensual · semana siguiente</div>
+    </div>
+    <div class="activo-item">
+      <div class="activo-tipo">Cartografía · Infraestructura agro</div>
+      <div class="activo-nombre">IDE Agro Geoportal</div>
+      <div class="activo-detalle">Centros acopio, frigoríficos, delegaciones · Rufino código BAHRA 82042220</div>
+    </div>
+    <div class="activo-item">
+      <div class="activo-tipo">Campaña agrícola</div>
+      <div class="activo-nombre">MAGYP Monitor mensual</div>
+      <div class="activo-detalle">Soja, maíz, trigo, girasol · superficie sembrada · estimaciones semanales</div>
+    </div>
+    <div class="activo-item">
+      <div class="activo-tipo">Comercio exterior · Soja</div>
+      <div class="activo-nombre">IPEC Complejo Sojero</div>
+      <div class="activo-detalle">U$S 10.416M exportados desde SF en 2025 · datos verificados · semestral</div>
+    </div>
+    <div class="activo-item">
+      <div class="activo-tipo">Patrimonio histórico</div>
+      <div class="activo-nombre">Museo de Rufino</div>
+      <div class="activo-detalle">300 fotos 1910-1935 digitalizadas · blog dormido desde 2020 · 4 plataformas</div>
+    </div>
+    <div class="activo-item">
+      <div class="activo-tipo">Google Maps</div>
+      <div class="activo-nombre">Seed local</div>
+      <div class="activo-detalle">Restaurantes, hoteles, farmacias, cajeros, museos, transporte · datos parciales</div>
+    </div>
+  </div>
+
+  <hr class="div">
+  <div class="section-tag">Capital institucional y territorial</div>
+  <div class="activo-grid" style="margin-top:0.5rem">
+    <div class="activo-item">
+      <div class="activo-tipo">Espacio físico</div>
+      <div class="activo-nombre">Sociedad Italiana</div>
+      <div class="activo-detalle">Ex Teatro Marconi · Sala Fiorito Barolat · historia de uso cultural probada</div>
+    </div>
+    <div class="activo-item">
+      <div class="activo-tipo">Referente territorial</div>
+      <div class="activo-nombre">Adriana Giménez</div>
+      <div class="activo-detalle">Voces otra mirada · Multisectorial Paren de Fumigarnos · ya vinculada al espacio</div>
+    </div>
+    <div class="activo-item">
+      <div class="activo-tipo">Marco metodológico</div>
+      <div class="activo-nombre">TIPULA 2008</div>
+      <div class="activo-detalle">Metodología de mapeo participativo · valida la metodología del Mapa Maestro</div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     TAB: ESPACIO FÍSICO
+     ══════════════════════════════════ -->
+<div id="tab-espacio" class="tab">
+<div class="container">
+  <div class="section-tag">Ancla territorial</div>
+  <h2 class="section-title">Sociedad Italiana de Rufino<br><span style="font-style:italic;font-size:1.1rem">Ex Teatro Marconi</span></h2>
+
+  <div class="espacio-hero">
+    <h2>El lugar donde el ecosistema toma cuerpo</h2>
+    <p>No es un espacio que hay que construir. Es un espacio con historia, infraestructura y conexiones comunitarias que ya existen. CECSI lo activó entre 2020 y 2021. La tarea es darle continuidad con un proyecto más robusto.</p>
+  </div>
+
+  <div class="sala-grid">
+    <div class="sala-card">
+      <div class="sala-nombre">Sala grande · Ex Teatro Marconi</div>
+      <div class="sala-uso">Espacio principal. Columnas altas, piso amplio, escenario con cortinas, escalera a nivel superior. Capacidad 100+ personas. Para eventos, exposiciones, foros.</div>
+    </div>
+    <div class="sala-card">
+      <div class="sala-nombre">Sala Fiorito Barolat</div>
+      <div class="sala-uso">Sala chica con paredes rojas. Intimista. Ya usada para música en vivo con público. Para actividades culturales de menor escala, presentaciones, reuniones.</div>
+    </div>
+    <div class="sala-card">
+      <div class="sala-nombre">Hall de entrada</div>
+      <div class="sala-uso">Frente a calle principal. Para exhibiciones exteriores, muestras fotográficas, presencia institucional visible desde la vereda.</div>
+    </div>
+    <div class="sala-card">
+      <div class="sala-nombre">Área de barra / servicio</div>
+      <div class="sala-uso">Espacio para gastronomía. Concepto "Leemos más": café + libros + encuentro. Para suscriptores de El Rufino y público general en eventos.</div>
+    </div>
+  </div>
+
+  <div class="uso-probado">
+    <h4>Usos probados por CECSI (2020-2021)</h4>
+    <div class="uso-item">Exposición fotográfica callejera — "Multisectorial Paren de Fumigarnos"</div>
+    <div class="uso-item">Música en vivo — bandas locales, público sentado</div>
+    <div class="uso-item">Gastronomía — picadas y tapas en formato evento (enero 2021)</div>
+    <div class="uso-item">Eventos político-sociales con organizaciones (CTEP, ANSAFE, movimientos)</div>
+    <div class="uso-item">Intervenciones artísticas en vereda</div>
+  </div>
+
+  <div class="nexo-box">
+    <p>La pregunta que define la relación: <strong>¿cuál es el acuerdo con la Sociedad Italiana?</strong> ¿Convenio de uso, cesión, integración institucional? La respuesta determina si El Rufino es un inquilino cultural o un co-protagonista con arraigo institucional.</p>
+  </div>
+
+  <hr class="div">
+  <div class="section-tag">Concepto de uso para suscriptores</div>
+  <p style="font-family:'Arial',sans-serif;font-size:0.85rem;color:var(--gris);line-height:1.7;margin-top:0.5rem">El suscriptor de El Rufino no solo recibe información — tiene acceso a un espacio físico donde la información cobra vida. Actividades culturales, gastronomía, café con libros (conexión con "Leemos más, Libros y Café" que ya existe en Rufino), debates, presentaciones. Eso convierte la suscripción de consumo informativo en pertenencia comunitaria.</p>
+</div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     TAB: ACTORES
+     ══════════════════════════════════ -->
+<div id="tab-actores" class="tab">
+<div class="container">
+  <div class="section-tag">Personas ya conectadas al ecosistema</div>
+  <h2 class="section-title">Actores que no hay que convencer</h2>
+  <p class="section-intro">Todos tienen vínculo previo con el espacio, la idea o el territorio. El trabajo es articular lo que ya existe, no construir desde cero.</p>
+
+  <div class="actor-card">
+    <div class="actor-inicial">AG</div>
+    <div>
+      <div class="actor-nombre">Adriana Giménez</div>
+      <div class="actor-rol">Referente territorial · Voz comunitaria</div>
+      <div class="actor-desc">Conductora de "Voces, otra mirada". Referente de la Multisectorial "Paren de Fumigarnos" en Rufino. Ya estuvo en el espacio de la Sociedad Italiana en las exposiciones de CECSI. No es una fuente ni una colaboradora eventual — es una puerta de entrada a organizaciones sociales que son exactamente la comunidad que el proyecto busca representar.</div>
+      <div class="actor-vinculo">
+        <span>Sociedad Italiana</span>
+        <span>Paren de Fumigarnos</span>
+        <span>Radio</span>
+        <span>P02 · P03</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="actor-card">
+    <div class="actor-inicial">FL</div>
+    <div>
+      <div class="actor-nombre">Fabián Longo</div>
+      <div class="actor-rol">Memoria de oficio · El Diferente</div>
+      <div class="actor-desc">Referente vinculado a El Diferente (edición papel). Memoria periodística local. Conocimiento del ecosistema de medios, de la política y de la historia reciente de Rufino. Representa la continuidad del periodismo local con experiencia en soporte físico.</div>
+      <div class="actor-vinculo">
+        <span>El Diferente</span>
+        <span>Periodismo papel</span>
+        <span>P01 · P05</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="actor-card">
+    <div class="actor-inicial" style="background:var(--negro)">MR</div>
+    <div>
+      <div class="actor-nombre">Museo y Archivo Histórico Municipal</div>
+      <div class="actor-rol">Fuente de archivo · Aliado editorial potencial</div>
+      <div class="actor-desc">Tienen: 300 fotos históricas digitalizadas (1910-1935), documentos sobre historia local desde la fundación, blog y 4 redes sociales. No tienen: canal activo (dormido desde abril 2020). El Rufino puede ser el amplificador digital de su archivo. Ellos proveen el contenido; El Rufino provee la audiencia y el contexto.</div>
+      <div class="actor-vinculo">
+        <span>Municipalidad · Cultura</span>
+        <span>Archivo fotográfico</span>
+        <span>P01 · P04 · P06</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="actor-card">
+    <div class="actor-inicial" style="background:#5a8a6a">SI</div>
+    <div>
+      <div class="actor-nombre">Sociedad Italiana de Rufino</div>
+      <div class="actor-rol">Institución ancla · Espacio físico</div>
+      <div class="actor-desc">Institución cultural con historia y espacio propio. El acuerdo con la Sociedad Italiana determina el grado de arraigo institucional de todo el ecosistema. Ya hay vínculo previo a través de CECSI. La formalización de ese vínculo es una tarea pendiente prioritaria.</div>
+      <div class="actor-vinculo">
+        <span>Ex Teatro Marconi</span>
+        <span>Sala Fiorito Barolat</span>
+        <span>Historia · Espacio · Legitimidad</span>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     TAB: FUENTES
+     ══════════════════════════════════ -->
+<div id="tab-fuentes" class="tab">
+<div class="container">
+  <div class="section-tag">Sistema de fuentes · P02 + P06 + Corredor RN33</div>
+  <h2 class="section-title">De dónde sale la información</h2>
+  <p class="section-intro">Tres tipos de fuente: datos externos verificables, contexto analítico, y datos propios que El Rufino construye y posee.</p>
+
+  <table class="fuente-tabla">
+    <thead>
+      <tr>
+        <th>Fuente</th>
+        <th>Tipo</th>
+        <th>Datos clave</th>
+        <th>Pilar</th>
+        <th>Frecuencia</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>IPEC Santa Fe</strong><br><small>estadisticasantafe.gob.ar</small></td>
+        <td><span class="badge-tipo primaria">Primaria</span></td>
+        <td>Complejo sojero, IPC, EPH, exportaciones, censo 2022</td>
+        <td><span class="badge-pilar">P02</span><span class="badge-pilar">P06</span></td>
+        <td>Semestral / mensual</td>
+      </tr>
+      <tr>
+        <td><strong>MAGYP Monitor</strong><br><small>magyp.gob.ar/estimaciones</small></td>
+        <td><span class="badge-tipo primaria">Primaria</span></td>
+        <td>Superficie sembrada, producción soja/maíz/trigo/girasol</td>
+        <td><span class="badge-pilar">P02</span><span class="badge-pilar">P06</span></td>
+        <td>Semanal / mensual</td>
+      </tr>
+      <tr>
+        <td><strong>IDE Agro Geoportal</strong><br><small>geoportal.magyp.gob.ar</small></td>
+        <td><span class="badge-tipo primaria">Primaria</span></td>
+        <td>Centros acopio, infraestructura agro, frigoríficos</td>
+        <td><span class="badge-pilar">P02</span><span class="badge-pilar">P03</span></td>
+        <td>Variable · base para Leaflet</td>
+      </tr>
+      <tr>
+        <td><strong>CEPA</strong><br><small>centrocepa.wordpress.com</small></td>
+        <td><span class="badge-tipo contexto">Contexto</span></td>
+        <td>Informes sectoriales, retenciones, cadena agroexportadora</td>
+        <td><span class="badge-pilar">P02</span><span class="badge-pilar">P05</span></td>
+        <td>Por evento</td>
+      </tr>
+      <tr>
+        <td><strong>MATE</strong><br><small>mateconomia.com.ar</small></td>
+        <td><span class="badge-tipo contexto">Contexto</span></td>
+        <td>Salarios, retenciones, economía Santa Fe, InfoMate mensual</td>
+        <td><span class="badge-pilar">P02</span><span class="badge-pilar">P06</span></td>
+        <td>Mensual</td>
+      </tr>
+      <tr>
+        <td><strong>Bolsa de Cereales BCR</strong><br><small>bcr.com.ar</small></td>
+        <td><span class="badge-tipo primaria">Primaria</span></td>
+        <td>Precios pizarra diarios, perspectivas cosecha zona sur SF</td>
+        <td><span class="badge-pilar">P02</span></td>
+        <td>Diario</td>
+      </tr>
+      <tr>
+        <td><strong>INDEC · EPH microdatos</strong><br><small>indec.gob.ar</small></td>
+        <td><span class="badge-tipo contexto">Proxy regional</span></td>
+        <td>Empleo e ingresos Gran Rosario como proxy zona sur SF</td>
+        <td><span class="badge-pilar">P06</span></td>
+        <td>Trimestral</td>
+      </tr>
+      <tr>
+        <td><strong>farmaciasrufino.com</strong><br><small>Círculo de Farmacias</small></td>
+        <td><span class="badge-tipo propia">Local</span></td>
+        <td>13 farmacias, turno en tiempo real, calendario mensual</td>
+        <td><span class="badge-pilar">P03</span></td>
+        <td>Diario · microservicio WA</td>
+      </tr>
+      <tr>
+        <td><strong>Museo de Rufino</strong><br><small>museoderufino.blogspot.com</small></td>
+        <td><span class="badge-tipo propia">Local</span></td>
+        <td>Archivo fotográfico 1910-1935, historia local</td>
+        <td><span class="badge-pilar">P01</span><span class="badge-pilar">P04</span></td>
+        <td>Estático · aliado editorial</td>
+      </tr>
+      <tr>
+        <td><strong>Google Maps</strong><br><small>Seed para base local</small></td>
+        <td><span class="badge-tipo contexto">Semilla</span></td>
+        <td>Restaurantes, hoteles, farmacias, cajeros, museos, transporte</td>
+        <td><span class="badge-pilar">P03</span></td>
+        <td>Revisión periódica · no fuente directa</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="nexo-box">
+    <p><strong>Primer microservicio concreto:</strong> farmacia de turno hoy. Alta frecuencia, alta utilidad, dato verificable, distribución por WhatsApp a las 7:30 AM junto al resumen matutino. Es lo que fideliza.</p>
+  </div>
+</div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     TAB: BASE DE DATOS LOCAL
+     ══════════════════════════════════ -->
+<div id="tab-base" class="tab">
+<div class="container">
+  <div class="section-tag">Conocimiento primario · Lo que El Rufino construye y posee</div>
+  <h2 class="section-title">La base de datos local de Rufino</h2>
+  <p class="section-intro">Ninguna API ni fuente oficial tiene esto. El Rufino lo construye en campo, lo verifica con la comunidad y lo mantiene. Es el activo diferencial que ningún otro medio local puede replicar fácilmente.</p>
+
+  <p style="font-family:'Arial',sans-serif;font-size:0.82rem;margin-bottom:1rem;color:var(--gris)">Hacé clic en cada categoría para ver los campos y la fuente seed.</p>
+
+  <div class="bd-categoria">
+    <div class="bd-cat-header" onclick="toggleBd(this)">
+      <div class="bd-cat-nombre">Gastronomía</div>
+      <div class="bd-cat-meta">Restaurantes · delivery · take-away · cafés · bares</div>
+    </div>
+    <div class="bd-cat-body">
+      <div class="bd-campos">Campos: nombre · subcategoría · barrio · dirección · teléfono · horarios · redes · precio referencia · delivery · estado · fecha verificación</div>
+      <div class="bd-seed"><strong>Seed:</strong> Google Maps (Águila Mitch, Tu Cocina, Pizzería San Antonio, El Buen Sabor, Parador Doña Josefa, El Marciano) · verificación campo</div>
+    </div>
+  </div>
+
+  <div class="bd-categoria">
+    <div class="bd-cat-header" onclick="toggleBd(this)">
+      <div class="bd-cat-nombre">Salud</div>
+      <div class="bd-cat-meta">Farmacias · médicos · clínicas · salud mental</div>
+    </div>
+    <div class="bd-cat-body">
+      <div class="bd-campos">Campos: nombre · especialidad · dirección · teléfono · horarios · turno de guardia · cobertura · estado</div>
+      <div class="bd-seed"><strong>Seed activa:</strong> farmaciasrufino.com (13 farmacias, turno en tiempo real) + Google Maps. Es la categoría más completa y verificable.</div>
+    </div>
+  </div>
+
+  <div class="bd-categoria">
+    <div class="bd-cat-header" onclick="toggleBd(this)">
+      <div class="bd-cat-nombre">Alojamiento</div>
+      <div class="bd-cat-meta">Hoteles · hosterías · apart · hospedajes</div>
+    </div>
+    <div class="bd-cat-body">
+      <div class="bd-campos">Campos: nombre · tipo · dirección · precio referencia · amenities · calificación Google · contacto · estado</div>
+      <div class="bd-seed"><strong>Seed:</strong> Google Maps (Quime Quipan 2.7★, Alojamiento Peperina 4.7★, La Posta 4.1★, Hostería Tere, Apart Colón, El Pato)</div>
+    </div>
+  </div>
+
+  <div class="bd-categoria">
+    <div class="bd-cat-header" onclick="toggleBd(this)">
+      <div class="bd-cat-nombre">Cultura y patrimonio</div>
+      <div class="bd-cat-meta">Museos · teatros · espacios culturales · bibliotecas</div>
+    </div>
+    <div class="bd-cat-body">
+      <div class="bd-campos">Campos: nombre · tipo · dirección · horarios · entradas · programa · redes · estado · notas editoriales</div>
+      <div class="bd-seed"><strong>Seed:</strong> Museo Rigonat (autos de época, 5★), Museo y Archivo Histórico Municipal, Sociedad Italiana. <strong>Ángulo editorial:</strong> el Museo Rigonat tiene 5★ y casi nadie lo conoce.</div>
+    </div>
+  </div>
+
+  <div class="bd-categoria">
+    <div class="bd-cat-header" onclick="toggleBd(this)">
+      <div class="bd-cat-nombre">Servicios financieros</div>
+      <div class="bd-cat-meta">Cajeros · bancos · cambio</div>
+    </div>
+    <div class="bd-cat-body">
+      <div class="bd-campos">Campos: nombre · red · dirección · horario · disponibilidad 24hs · estado</div>
+      <div class="bd-seed"><strong>Seed:</strong> Google Maps (BNA Italia 102, Galicia Italia 71, Red Link Yrigoyen, Banco Santa Fe). Red Link tiene 2★ — eso es una nota P03.</div>
+    </div>
+  </div>
+
+  <div class="bd-categoria">
+    <div class="bd-cat-header" onclick="toggleBd(this)">
+      <div class="bd-cat-nombre">Transporte y conectividad</div>
+      <div class="bd-cat-meta">Terminal · remises · taxis · conectividad regional</div>
+    </div>
+    <div class="bd-cat-body">
+      <div class="bd-campos">Campos: nombre · tipo · dirección · destinos · frecuencias · teléfono · estado</div>
+      <div class="bd-seed"><strong>Seed:</strong> Google Maps (Terminal Rufino 3.9★, reseña "muy deterioradas" — eso es P05 esperando). Terminal en construcción (cobertura activa del medio).</div>
+    </div>
+  </div>
+
+  <div class="bd-categoria">
+    <div class="bd-cat-header" onclick="toggleBd(this)">
+      <div class="bd-cat-nombre">Comercios de barrio</div>
+      <div class="bd-cat-meta">Almacenes · panaderías · verdulerías · servicios esenciales</div>
+    </div>
+    <div class="bd-cat-body">
+      <div class="bd-campos">Campos: nombre · rubro · barrio · dirección · horarios · teléfono · estado · notas</div>
+      <div class="bd-seed"><strong>Sin seed digital:</strong> no existe en Google Maps ni en ninguna fuente. El Rufino lo construye desde cero en campo. Es el activo más diferencial — y más valioso.</div>
+    </div>
+  </div>
+
+  <div class="bd-categoria">
+    <div class="bd-cat-header" onclick="toggleBd(this)">
+      <div class="bd-cat-nombre">Servicios personales</div>
+      <div class="bd-cat-meta">Peluquerías · estéticas · servicios técnicos</div>
+    </div>
+    <div class="bd-cat-body">
+      <div class="bd-campos">Campos: nombre · especialidad · barrio · dirección · teléfono · precio referencia · atención por turno · estado</div>
+      <div class="bd-seed"><strong>Sin seed digital:</strong> ídem comercios de barrio. Requiere relevamiento propio. Distribución por barrio = contenido P03.</div>
+    </div>
+  </div>
+
+  <div class="bd-categoria">
+    <div class="bd-cat-header" onclick="toggleBd(this)">
+      <div class="bd-cat-nombre">Entretenimiento y deporte</div>
+      <div class="bd-cat-meta">Clubes · boliches · bares · canchas · gimnasios</div>
+    </div>
+    <div class="bd-cat-body">
+      <div class="bd-campos">Campos: nombre · tipo · dirección · horarios · precio entrada · agenda · redes · estado</div>
+      <div class="bd-seed"><strong>Seed parcial:</strong> Club Matienzo, Los Pampas Rugby (Google Maps). Resto requiere relevamiento.</div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     TAB: PRÓXIMOS PASOS
+     ══════════════════════════════════ -->
+<div id="tab-pasos" class="tab">
+<div class="container">
+  <div class="section-tag">Hoja de ruta · Post sesión 20/05/2026</div>
+  <h2 class="section-title">Lo concreto que sigue</h2>
+  <p class="section-intro">Ordenado por impacto y viabilidad. Lo inmediato son cosas que no requieren infraestructura nueva.</p>
+
+  <div class="paso-item">
+    <div class="paso-num">1</div>
+    <div class="paso-contenido">
+      <div class="paso-titulo">Publicar la primera nota real con dos capas</div>
+      <div class="paso-desc">La nota del complejo sojero está redactada (borrador en el documento de fuentes v1.1). Revisión editorial, foto, y publicación. Es el primer paso editorial real.</div>
+      <span class="paso-urgencia inmediato">Inmediato</span>
+    </div>
+  </div>
+
+  <div class="paso-item">
+    <div class="paso-num">2</div>
+    <div class="paso-contenido">
+      <div class="paso-titulo">Activar el microservicio de farmacia de turno</div>
+      <div class="paso-desc">farmaciasrufino.com ya tiene el dato en tiempo real. Integrar al resumen matutino de WhatsApp de las 7:30 AM. Es el primer servicio de utilidad diaria que fideliza suscriptores.</div>
+      <span class="paso-urgencia inmediato">Inmediato</span>
+    </div>
+  </div>
+
+  <div class="paso-item">
+    <div class="paso-num">3</div>
+    <div class="paso-contenido">
+      <div class="paso-titulo">Agregar lat/lng al Mapa Maestro</div>
+      <div class="paso-desc">Los 32 puntos tienen dirección verificada pero no coordenadas. Georreferenciar por dirección en Google My Maps o manualmente. Sin lat/lng no hay mapa visual.</div>
+      <span class="paso-urgencia inmediato">Inmediato · técnico</span>
+    </div>
+  </div>
+
+  <div class="paso-item">
+    <div class="paso-num">4</div>
+    <div class="paso-contenido">
+      <div class="paso-titulo">Crear las 6 categorías P01-P06 en WordPress</div>
+      <div class="paso-desc">Pendiente desde Fase 2. Sin categorías no hay estructura editorial visible. Bloquea el desarrollo del sitio.</div>
+      <span class="paso-urgencia inmediato">Inmediato · WordPress</span>
+    </div>
+  </div>
+
+  <div class="paso-item">
+    <div class="paso-num">5</div>
+    <div class="paso-contenido">
+      <div class="paso-titulo">Formalizar el acuerdo con la Sociedad Italiana</div>
+      <div class="paso-desc">Definir el vínculo: convenio, cesión, integración. Esto determina el grado de arraigo institucional de todo el ecosistema y la viabilidad del espacio para suscriptores.</div>
+      <span class="paso-urgencia proximo">Próximo · institucional</span>
+    </div>
+  </div>
+
+  <div class="paso-item">
+    <div class="paso-num">6</div>
+    <div class="paso-contenido">
+      <div class="paso-titulo">Contactar al Museo de Rufino</div>
+      <div class="paso-desc">Proponer alianza editorial: El Rufino amplifica el archivo del Museo (300 fotos 1910-1935 + documentos). El Museo provee contenido histórico verificado para P01 y P04.</div>
+      <span class="paso-urgencia proximo">Próximo · editorial</span>
+    </div>
+  </div>
+
+  <div class="paso-item">
+    <div class="paso-num">7</div>
+    <div class="paso-contenido">
+      <div class="paso-titulo">Expandir el Mapa Maestro a farmacias y gastronomía</div>
+      <div class="paso-desc">Usar farmaciasrufino.com (datos completos) y Google Maps como semilla para agregar las primeras categorías comerciales al mapa. Validar en campo.</div>
+      <span class="paso-urgencia proximo">Próximo · datos</span>
+    </div>
+  </div>
+
+  <div class="paso-item">
+    <div class="paso-num">8</div>
+    <div class="paso-contenido">
+      <div class="paso-titulo">Implementar Leaflet P03 en el plugin</div>
+      <div class="paso-desc">Mapa interactivo de barrios con marcadores de servicios. Requiere lat/lng en el Mapa Maestro primero. Implementar vía Claude Code o Cowork, no en sesión de chat.</div>
+      <span class="paso-urgencia futuro">Futuro · Claude Code</span>
+    </div>
+  </div>
+
+  <div class="paso-item">
+    <div class="paso-num">9</div>
+    <div class="paso-contenido">
+      <div class="paso-titulo">Relevar comercios de barrio en campo</div>
+      <div class="paso-desc">La categoría sin seed digital. Requiere trabajo territorial real: recorrer barrios, registrar almacenes, panaderías, peluquerías. Es el activo más diferencial del sistema.</div>
+      <span class="paso-urgencia futuro">Futuro · territorio</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<footer>
+  EL RUFINO · ECOSISTEMA · Documento de síntesis · Sesión 20 de mayo de 2026 · v1.0-VIGENTE<br>
+  Rufino, Santa Fe, Argentina · "Lo que pasa y lo que significa"
+</footer>
+
+<script>
+function show(id, btn) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+function toggleBd(header) {
+  const body = header.nextElementSibling;
+  body.classList.toggle('open');
+}
+</script>
+</body>
+</html>

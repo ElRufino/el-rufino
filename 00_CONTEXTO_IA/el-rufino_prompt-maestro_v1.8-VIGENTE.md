@@ -1,14 +1,7 @@
-# ARCHIVO MOVIDO — 2026-05-13
-## Este archivo fue renombrado como parte de la normalizacion del sistema.
-## Usar: el-rufino_prompt-maestro_v1.6-VIGENTE.md
-## Motivo: prefijo corregido de usina-de-ideas_ a el-rufino_ segun estandar v1.2
-
----
-
 # PROMPT MAESTRO — EL RUFINO
 ## Agente de IA · Contexto de transferencia
-### Version 1.6 · 22 de abril de 2026
-### Cambios v1.6: Plugin actualizado a v8.6.0 · 5 pantallas (Dashboard / Produccion / Inteligencia / Seguimiento / Asistente) · semaforo plugin corregido · decision plugin actualizada en tabla
+### Version 1.8 · 30 de mayo de 2026
+### Cambios v1.8: plugin v8.7.5 con integracion Royal MCP · theme child v2.3.5 · archivos usina-de-ideas eliminados del repo · Schema NewsMediaOrganization confirmado OK · Fase 2 al 80%
 
 ---
 
@@ -29,23 +22,24 @@ VENTAJA = contexto + seguimiento + campo + lectura territorial
 DOMINIO_PRODUCCION = elrufino.com.ar (ACTIVO · DNS delegado · WordPress en Hostinger)
 DOMINIO_PENDIENTE = elrufino.ar (pendiente registro NIC Argentina)
 HOSTING = Hostinger (entorno de produccion definitivo)
-ENTORNO_TEST = prueba.infoconectados.com (activo · panel v8.6.0 instalado)
+ENTORNO_TEST = prueba.infoconectados.com (activo · panel v8.7.5 instalado)
 ENTORNO_OBSOLETO = elrufino.infoconectados.com.ar (ya no usar)
-PLUGIN = v8.6.0 "El Rufino — Panel IA" · 5 pantallas · Importador demo · proxy Claude API · checklist · exportar promesas CSV · Schema NewsMediaOrganization · Asistente de noticia
+PLUGIN = v8.7.5 "El Rufino — Panel IA" · 5 pantallas · Importador demo · proxy Claude API · checklist · exportar promesas CSV · Schema NewsMediaOrganization · Asistente de noticia
 PLUGIN_PANTALLAS = Dashboard / Produccion / Inteligencia / Seguimiento / Asistente
+ROYAL_MCP = v1.4.23 activo · endpoints /er-status /er-promesas · writable options y theme mods habilitados
 TEMA_PADRE = Newsup
-FASE_ACTUAL = Fase 2 · producto minimo · 40% completado
+FASE_ACTUAL = Fase 2 · producto minimo · 80% completado
 FASE_1 = identidad cerrada (COMPLETADA)
-CHECKLIST_OK = Logo/favicon/OG subidos · 20 notas publicadas
-CHECKLIST_PENDIENTE = 6 categorias P01-P06 · Schema NewsMediaOrganization · 500 WA suscriptores
+CHECKLIST_OK = Logo/favicon/OG subidos · 20 notas publicadas · Schema NewsMediaOrganization OK · child theme v2.3.5 activo
+CHECKLIST_PENDIENTE = 500 WA suscriptores · elrufino.ar NIC
 EXPANSION_REGIONAL = horizonte futuro · NO fase activa (corredor RN33 pausado)
 ROLES = funcionales · no cargos rigidos
 NOMBRES = Fabian Longo (El Diferente) · Adriana Gimenez (Voces otra mirada)
-ARCHIVO_CONTEXTO = 00_CONTEXTO_IA/usina-de-ideas_repositorio-ia_v1.5-VIGENTE.md
-ARCHIVO_AGENTES = 00_CONTEXTO_IA/usina-de-ideas_agentes-ia_v1.5-VIGENTE.md
+ARCHIVO_CONTEXTO = 00_CONTEXTO_IA/el-rufino_repositorio-ia_v1.8-VIGENTE.md
+ARCHIVO_AGENTES = 00_CONTEXTO_IA/el-rufino_agentes-ia_v1.8-VIGENTE.md
 DECISIONES = NO reabrir las listadas sin indicacion explicita del usuario
 REPOSITORIO_ORGANIZATIVO = USINA DE IDEAS · F:\HERRAMIENTAS DE IA\PROYECTOS\USINA_DE_IDEAS\
-PROYECTOS_USINA = EL_RUFINO · GESTION_COMERCIAL · SISMUIF · SOCIEDAD_ITALIANA · RADIOTV · DIGESTO · PJ · INFOCONECTADOS · LA_COMUNIDAD_ORGANIZADA
+PROYECTOS_USINA = EL_RUFINO · GESTION_COMERCIAL · SISMUIF · SOCIEDAD_ITALIANA · RADIOTV · DIGESTO · PARTIDO_JUSTICIALISTA · INFOCONECTADOS · LA_COMUNIDAD_ORGANIZADA
 CUENTAS = 9 · rufino.paspatria = Cuenta 9 · operador IA · acceso Claude · todos los agentes
 ```
 
@@ -88,7 +82,7 @@ Rufino es una ciudad de 19.211 habitantes (INDEC, 2022) ubicada en el sudoeste d
 | Dominio de produccion | elrufino.com.ar activo en Hostinger - cerrado |
 | Dominio de marca | elrufino.ar - pendiente registro NIC |
 | Entorno WordPress test | prueba.infoconectados.com con plugin v8.6.0 |
-| Plugin | v8.6.0 · 5 pantallas · cerrado |
+| Plugin | v8.7.5 · 5 pantallas + Royal MCP · cerrado |
 | Expansion regional | Corredor RN33 - horizonte futuro, NO fase activa |
 
 ---
@@ -173,7 +167,7 @@ Rufino es una ciudad de 19.211 habitantes (INDEC, 2022) ubicada en el sudoeste d
 
 **Produccion:** elrufino.com.ar (Hostinger · WordPress · DNS delegado)
 **Test:** prueba.infoconectados.com (panel v8.6.0 activo)
-**Plugin:** v8.6.0 "El Rufino — Panel IA"
+**Plugin:** v8.7.5 "El Rufino — Panel IA"
 
 **Pantallas del plugin (5):**
 - Dashboard — panel general y configuracion base
@@ -191,7 +185,7 @@ Rufino es una ciudad de 19.211 habitantes (INDEC, 2022) ubicada en el sudoeste d
 - [ ] Child theme Newsup configurado con paleta B
 - [ ] elrufino.ar registrado en NIC Argentina
 
-**Fase 2: 40% completado**
+**Fase 2: 80% completado**
 
 ---
 
@@ -224,7 +218,7 @@ Cualquier area solicita tarea IA → Cuenta 9 abre Claude → pega bloque de tra
 | SOCIEDAD_ITALIANA | 6.684 | ACTIVO · pendiente auditoria |
 | RADIOTV | 1.762 | ACTIVO · pendiente auditoria |
 | DIGESTO | 1.751 | ACTIVO · pendiente auditoria |
-| PJ | 197 | ACTIVO · pendiente auditoria |
+| PARTIDO_JUSTICIALISTA | 197 | ACTIVO · pendiente auditoria |
 | INFOCONECTADOS | 63 | ACTIVO · pendiente auditoria |
 | LA_COMUNIDAD_ORGANIZADA | 9 | ACTIVO · pendiente auditoria |
 
@@ -235,7 +229,8 @@ Cualquier area solicita tarea IA → Cuenta 9 abre Claude → pega bloque de tra
 | Eje | Estado | Nota |
 |---|---|---|
 | Identidad (Fase 1) | VERDE | Cerrada definitivamente |
-| Plugin | VERDE | v8.6.0 activo · 5 pantallas |
+| Plugin | VERDE | v8.7.5 activo · 5 pantallas + Royal MCP |
+| Royal MCP | VERDE | v1.4.23 activo · endpoints /er-status /er-promesas |
 | Dominio .com.ar | VERDE | Activo · delegado · Hostinger |
 | Logo/favicon/OG | VERDE | Subidos (confirmado desde panel) |
 | Notas demo | VERDE | 20 notas publicadas |
@@ -243,9 +238,9 @@ Cualquier area solicita tarea IA → Cuenta 9 abre Claude → pega bloque de tra
 | Cuenta 9 IA | VERDE | rufino.paspatria · operador IA · acceso Claude |
 | Dominio .ar | ROJO | Pendiente registro NIC |
 | Categorias P01-P06 | ROJO | Sin crear |
-| Schema NewsMediaOrganization | ROJO | Pendiente Rank Math |
+| Schema NewsMediaOrganization | VERDE | Configurado y activo |
 | Canal WhatsApp | ROJO | 0 de 500 suscriptores objetivo |
-| Child theme Newsup | AMARILLO | Archivo disponible · falta instalar |
+| Child theme Newsup | VERDE | v2.3.5 activo en produccion |
 | Monetizacion | ROJO | Esperar habito y reputacion |
 | Expansion regional RN33 | PAUSA | Horizonte futuro, no fase activa |
 | Proyectos USINA (8 no-EL_RUFINO) | AMARILLO | Detectados · pendiente auditoria individual |
@@ -275,8 +270,8 @@ Cualquier area solicita tarea IA → Cuenta 9 abre Claude → pega bloque de tra
 1. Siempre pegar el bloque de transferencia rapida al inicio de cada conversacion nueva
 2. No pedir a la IA que reconstruya contexto: darselo directamente
 3. Versionar este documento cada vez que se toma una decision nueva
-4. Los agentes operativos estan en usina-de-ideas_agentes-ia_v1.5-VIGENTE.md: referenciarlos por numero
-5. El repositorio detallado completo esta en usina-de-ideas_repositorio-ia_v1.5-VIGENTE.md
+4. Los agentes operativos estan en el-rufino_agentes-ia_v1.6-VIGENTE.md: referenciarlos por numero
+5. El repositorio detallado completo esta en el-rufino_repositorio-ia_v1.6-VIGENTE.md
 6. Cuenta 9 (rufino.paspatria) es el punto de entrada al sistema IA para todas las areas
 
 ---
@@ -285,9 +280,9 @@ Cualquier area solicita tarea IA → Cuenta 9 abre Claude → pega bloque de tra
 
 | Tarea | Estado |
 |---|---|
-| Instalar child theme Newsup con paleta B | Pendiente |
-| Crear 6 categorias P01-P06 en WordPress | Pendiente |
-| Configurar Schema NewsMediaOrganization en Rank Math | Pendiente |
+| Instalar child theme Newsup con paleta B | COMPLETO |
+| Crear 6 categorias P01-P06 en WordPress | COMPLETO |
+| Configurar Schema NewsMediaOrganization en Rank Math | COMPLETO |
 | Registrar elrufino.ar en NIC Argentina | Pendiente |
 | Lanzar canal WhatsApp broadcast | Pendiente |
 | Publicar primera nota con segunda capa real | Siguiente paso editorial |
@@ -304,9 +299,9 @@ F:\HERRAMIENTAS DE IA\
 ├── PROYECTOS\
 │   ├── EL_RUFINO\                          proyecto editorial
 │   │   ├── 00_CONTEXTO_IA\                 fuente unica de verdad para IAs
-│   │   │   ├── usina-de-ideas_agentes-ia_v1.5-VIGENTE.md
-│   │   │   ├── usina-de-ideas_prompt-maestro_v1.6-VIGENTE.md   este archivo
-│   │   │   └── usina-de-ideas_repositorio-ia_v1.5-VIGENTE.md
+│   │   │   ├── el-rufino_agentes-ia_v1.6-VIGENTE.md
+│   │   │   ├── el-rufino_prompt-maestro_v1.6-VIGENTE.md   este archivo
+│   │   │   └── el-rufino_repositorio-ia_v1.6-VIGENTE.md
 │   │   ├── 01_DOCUMENTOS_VIGENTES\
 │   │   ├── 02_WORDPRESS_TEST\
 │   │   ├── 03_IDENTIDAD_MARCA\
@@ -319,7 +314,7 @@ F:\HERRAMIENTAS DE IA\
 │   ├── SOCIEDAD_ITALIANA\                  6.684 items · pendiente auditoria
 │   ├── RADIOTV\                            1.762 items · pendiente auditoria
 │   ├── DIGESTO\                            1.751 items · pendiente auditoria
-│   ├── PJ\                                 197 items · pendiente auditoria
+│   ├── PARTIDO_JUSTICIALISTA\              197 items · pendiente auditoria
 │   ├── INFOCONECTADOS\                     63 items · pendiente auditoria
 │   ├── LA_COMUNIDAD_ORGANIZADA\            9 items · pendiente auditoria
 │   └── USINA_DE_IDEAS\                     repositorio organizativo de herramientas IA
@@ -341,4 +336,5 @@ We Are Social & Hootsuite. (2024). Digital 2024: Argentina. https://datareportal
 
 Documento vivo. Actualizar al tomar cada decision relevante.
 Firma institucional: PROYECTO EL RUFINO · Repositorio organizativo: USINA DE IDEAS
-Version 1.6 · 22 de abril de 2026
+Version 1.8 · 30 de mayo de 2026
+Sincronizado con: el-rufino_repositorio-ia_v1.8-VIGENTE.md · el-rufino_agentes-ia_v1.8-VIGENTE.md

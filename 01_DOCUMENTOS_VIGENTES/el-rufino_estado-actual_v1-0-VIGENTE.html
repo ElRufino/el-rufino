@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Rufino — Estado actual v1.0 — Mayo 2026</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
+:root {
+  --rojo: #c0271b;
+  --negro: #1a1a1a;
+  --blanco: #ffffff;
+  --crema: #f5f0e8;
+  --crema-oscura: #ece7df;
+  --gris-texto: #4a4a4a;
+  --gris-muted: #7a7a7a;
+  --borde: #d4cfc6;
+  --verde: #2a6e3f;
+  --amarillo: #8a6200;
+  --rojo-estado: #8a1c14;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Source Serif 4',Georgia,serif;background:var(--crema);color:var(--negro);line-height:1.7;font-size:15px}
+
+/* MASTHEAD */
+.masthead{background:var(--rojo);padding:14px 32px;display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid var(--negro)}
+.masthead-logo{display:flex;align-items:center;gap:12px}
+.logo-r{width:44px;height:44px;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.3);border-radius:3px;display:flex;align-items:center;justify-content:center}
+.logo-r span{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:#fff;line-height:1}
+.logo-texto{display:flex;flex-direction:column;gap:1px}
+.logo-nombre{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#fff;line-height:1}
+.logo-claim{font-size:9px;color:rgba(255,255,255,.65);letter-spacing:.12em;text-transform:uppercase}
+.masthead-meta{text-align:right}
+.masthead-meta .doc-tipo{font-size:9px;color:rgba(255,255,255,.5);letter-spacing:.1em;text-transform:uppercase;display:block}
+.masthead-meta .doc-version{font-family:'JetBrains Mono',monospace;font-size:13px;color:rgba(255,255,255,.85);font-weight:500}
+
+/* NAV TABS */
+.nav-tabs{background:var(--negro);display:flex;padding:0 32px;overflow-x:auto;position:sticky;top:0;z-index:100}
+.nav-tab{font-family:'Source Serif 4',serif;font-size:12px;color:rgba(255,255,255,.5);padding:10px 16px;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .15s;background:none;border-top:none;border-left:none;border-right:none}
+.nav-tab:hover{color:rgba(255,255,255,.8)}
+.nav-tab.active{color:#fff;border-bottom-color:var(--rojo)}
+
+/* CONTENIDO */
+.container{max-width:900px;margin:0 auto;padding:32px 24px 60px}
+.section{display:none}
+.section.active{display:block}
+
+/* ENCABEZADO DE SECCIÓN */
+.sec-eyebrow{font-family:'Source Serif 4',serif;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--rojo);margin-bottom:6px}
+.sec-titulo{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--negro);margin-bottom:6px;line-height:1.2}
+.sec-sub{font-size:13px;color:var(--gris-muted);margin-bottom:28px;padding-left:12px;border-left:2px solid var(--rojo)}
+
+/* SEMÁFOROS */
+.semaforo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-bottom:28px}
+.sem-item{background:var(--blanco);border:0.5px solid var(--borde);padding:10px 14px;display:flex;align-items:center;gap:10px}
+.sem-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.sem-dot.verde{background:#2a6e3f}
+.sem-dot.amarillo{background:#c8941a}
+.sem-dot.rojo{background:#c0271b}
+.sem-dot.pausa{background:#7a7a7a}
+.sem-label{font-size:11px;font-weight:600;color:var(--negro);flex:1}
+.sem-nota{font-size:10px;color:var(--gris-muted);display:block;margin-top:1px}
+
+/* BLOQUE DE DATOS */
+.data-block{background:var(--blanco);border:0.5px solid var(--borde);border-left:3px solid var(--rojo);padding:16px 20px;margin-bottom:12px}
+.data-block h3{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--negro);margin-bottom:10px}
+.data-row{display:flex;gap:12px;padding:5px 0;border-bottom:0.5px solid var(--crema-oscura);align-items:flex-start}
+.data-row:last-child{border-bottom:none}
+.data-key{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--gris-muted);min-width:180px;flex-shrink:0;padding-top:2px}
+.data-val{font-size:12px;color:var(--negro);line-height:1.5}
+.data-val code{font-family:'JetBrains Mono',monospace;font-size:11px;background:var(--crema-oscura);padding:1px 5px;border-radius:2px;color:var(--rojo)}
+.data-val .tag-ok{background:#d4edda;color:#155724;font-size:10px;font-weight:600;padding:1px 6px;border-radius:2px;margin-left:4px}
+.data-val .tag-pend{background:#fff3cd;color:#856404;font-size:10px;font-weight:600;padding:1px 6px;border-radius:2px;margin-left:4px}
+
+/* TABLA */
+.tabla{width:100%;border-collapse:collapse;margin-bottom:20px;font-size:12px}
+.tabla th{background:var(--negro);color:#fff;padding:8px 12px;text-align:left;font-weight:500;font-size:11px;letter-spacing:.04em}
+.tabla td{padding:7px 12px;border-bottom:0.5px solid var(--crema-oscura);vertical-align:top}
+.tabla tr:nth-child(even) td{background:#faf7f2}
+.tabla .slug{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--gris-muted)}
+.tabla .color-dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:6px;vertical-align:middle}
+
+/* PENDIENTES */
+.pend-item{background:var(--blanco);border:0.5px solid var(--borde);padding:12px 16px;margin-bottom:6px;display:flex;gap:12px;align-items:flex-start}
+.pend-num{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;color:var(--rojo);min-width:24px}
+.pend-body{}
+.pend-titulo{font-size:13px;font-weight:600;color:var(--negro)}
+.pend-nota{font-size:11px;color:var(--gris-muted);margin-top:2px}
+.pend-via{font-size:10px;background:var(--crema-oscura);padding:2px 7px;border-radius:2px;display:inline-block;margin-top:4px;color:var(--gris-texto)}
+
+/* BLOQUE TRANSFERENCIA */
+.transfer-box{background:var(--negro);color:#e8e8e8;padding:20px 24px;border-left:3px solid var(--rojo);font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.8;white-space:pre-wrap;margin-bottom:12px;border-radius:0 4px 4px 0}
+.transfer-key{color:#c0271b}
+.transfer-val{color:#a8d8a8}
+
+/* FOOTER */
+.doc-footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--borde);display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--gris-muted)}
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="masthead-logo">
+    <div class="logo-r"><span>R</span></div>
+    <div class="logo-texto">
+      <span class="logo-nombre">El Rufino</span>
+      <span class="logo-claim">Lo que pasa y lo que significa</span>
+    </div>
+  </div>
+  <div class="masthead-meta">
+    <span class="doc-tipo">Estado actual del proyecto</span>
+    <span class="doc-version">v1.0 · Mayo 2026</span>
+  </div>
+</div>
+
+<div class="nav-tabs">
+  <button class="nav-tab active" onclick="mostrar('semaforos',this)">Semáforos</button>
+  <button class="nav-tab" onclick="mostrar('wordpress',this)">WordPress</button>
+  <button class="nav-tab" onclick="mostrar('editorial',this)">Editorial</button>
+  <button class="nav-tab" onclick="mostrar('infraestructura',this)">Infraestructura</button>
+  <button class="nav-tab" onclick="mostrar('pendientes',this)">Pendientes</button>
+  <button class="nav-tab" onclick="mostrar('transferencia',this)">Bloque IA</button>
+</div>
+
+<div class="container">
+
+<!-- ══ SEMÁFOROS ══ -->
+<div id="sec-semaforos" class="section active">
+  <div class="sec-eyebrow">Fase 2 · Producto mínimo · ~55% completado</div>
+  <h2 class="sec-titulo">Estado del proyecto al 29 de mayo de 2026</h2>
+  <p class="sec-sub">Este documento reemplaza los archivos fundacionales de abril 2026 como referencia vigente del estado real del proyecto. No es fundacional — es operativo.</p>
+
+  <div class="semaforo-grid">
+    <div class="sem-item"><div class="sem-dot verde"></div><div><span class="sem-label">Identidad (Fase 1)</span><span class="sem-nota">Cerrada definitivamente</span></div></div>
+    <div class="sem-item"><div class="sem-dot verde"></div><div><span class="sem-label">Dominio elrufino.com.ar</span><span class="sem-nota">Activo · Hostinger · DNS delegado</span></div></div>
+    <div class="sem-item"><div class="sem-dot verde"></div><div><span class="sem-label">WordPress en producción</span><span class="sem-nota">elrufino.com.ar · v7.0 activo</span></div></div>
+    <div class="sem-item"><div class="sem-dot verde"></div><div><span class="sem-label">Child theme v2.3.5</span><span class="sem-nota">header.php + home.php + footer.php activos</span></div></div>
+    <div class="sem-item"><div class="sem-dot verde"></div><div><span class="sem-label">Masthead rojo #c0271b</span><span class="sem-nota">Decisión tomada e implementada</span></div></div>
+    <div class="sem-item"><div class="sem-dot verde"></div><div><span class="sem-label">Ticker + Navegación</span><span class="sem-nota">6 pilares en nav · ticker animado</span></div></div>
+    <div class="sem-item"><div class="sem-dot verde"></div><div><span class="sem-label">Footer institucional</span><span class="sem-nota">4 columnas · copyright · redes</span></div></div>
+    <div class="sem-item"><div class="sem-dot verde"></div><div><span class="sem-label">Rank Math SEO</span><span class="sem-nota">Org configurada · OG · App ID FB · AR</span></div></div>
+    <div class="sem-item"><div class="sem-dot verde"></div><div><span class="sem-label">Categorías P01–P06</span><span class="sem-nota">6 slugs oficiales creados via MCP</span></div></div>
+    <div class="sem-item"><div class="sem-dot verde"></div><div><span class="sem-label">Royal MCP conectado</span><span class="sem-nota">elrufino.com.ar · Claude.ai · activo</span></div></div>
+    <div class="sem-item"><div class="sem-dot verde"></div><div><span class="sem-label">Plugin v8.7.3</span><span class="sem-nota">5 pantallas · Panel IA activo</span></div></div>
+    <div class="sem-item"><div class="sem-dot verde"></div><div><span class="sem-label">Logo / Favicon / OG</span><span class="sem-nota">Subidos y confirmados en Media Library</span></div></div>
+    <div class="sem-item"><div class="sem-dot amarillo"></div><div><span class="sem-label">home.php P05 fallback</span><span class="sem-nota">Fix pendiente · ver Pendientes</span></div></div>
+    <div class="sem-item"><div class="sem-dot amarillo"></div><div><span class="sem-label">Zona horaria WordPress</span><span class="sem-nota">Requiere allowlist MCP · ver Pendientes</span></div></div>
+    <div class="sem-item"><div class="sem-dot amarillo"></div><div><span class="sem-label">API Anthropic (créditos)</span><span class="sem-nota">Sin créditos activos · generación pausada</span></div></div>
+    <div class="sem-item"><div class="sem-dot rojo"></div><div><span class="sem-label">dominio elrufino.ar</span><span class="sem-nota">Pendiente registro NIC Argentina</span></div></div>
+    <div class="sem-item"><div class="sem-dot rojo"></div><div><span class="sem-label">Canal WhatsApp</span><span class="sem-nota">0 de 500 suscriptores objetivo</span></div></div>
+    <div class="sem-item"><div class="sem-dot rojo"></div><div><span class="sem-label">Monetización</span><span class="sem-nota">Esperar hábito y reputación</span></div></div>
+    <div class="sem-item"><div class="sem-dot pausa"></div><div><span class="sem-label">Expansión regional RN33</span><span class="sem-nota">Horizonte futuro · no fase activa</span></div></div>
+  </div>
+</div>
+
+<!-- ══ WORDPRESS ══ -->
+<div id="sec-wordpress" class="section">
+  <div class="sec-eyebrow">Infraestructura técnica</div>
+  <h2 class="sec-titulo">Estado de WordPress</h2>
+  <p class="sec-sub">Estado real de la instalación en producción al 29 de mayo de 2026. Fuente verificada via Royal MCP.</p>
+
+  <div class="data-block">
+    <h3>Entorno</h3>
+    <div class="data-row"><div class="data-key">URL producción</div><div class="data-val"><code>https://elrufino.com.ar</code></div></div>
+    <div class="data-row"><div class="data-key">Hosting</div><div class="data-val">Hostinger · plan activo · DNS delegado</div></div>
+    <div class="data-row"><div class="data-key">WordPress versión</div><div class="data-val">7.0 <span class="tag-ok">Activo</span></div></div>
+    <div class="data-row"><div class="data-key">Idioma</div><div class="data-val"><code>es_AR</code></div></div>
+    <div class="data-row"><div class="data-key">Zona horaria</div><div class="data-val"><code>America/Argentina/Buenos_Aires</code> <span class="tag-pend">Fix pendiente via MCP allowlist</span></div></div>
+    <div class="data-row"><div class="data-key">Entorno test OBSOLETO</div><div class="data-val">prueba.infoconectados.com — NO USAR</div></div>
+  </div>
+
+  <div class="data-block">
+    <h3>Child theme "El Rufino" v2.3.5</h3>
+    <div class="data-row"><div class="data-key">Tema padre</div><div class="data-val">Newsup</div></div>
+    <div class="data-row"><div class="data-key">header.php</div><div class="data-val">Personalizado · masthead rojo · nav · ticker <span class="tag-ok">Activo</span></div></div>
+    <div class="data-row"><div class="data-key">home.php</div><div class="data-val">Layout héroe + grillas por pilar + sidebar <span class="tag-ok">Activo</span></div></div>
+    <div class="data-row"><div class="data-key">footer.php</div><div class="data-val">Footer institucional 4 columnas <span class="tag-ok">Activo</span></div></div>
+    <div class="data-row"><div class="data-key">functions.php</div><div class="data-val">v2.0.0 · add_action masthead/ticker COMENTADOS</div></div>
+    <div class="data-row"><div class="data-key">style.css</div><div class="data-val">v2.3.5 · masthead + ticker + nav + T3A + footer</div></div>
+  </div>
+
+  <div class="data-block">
+    <h3>Plugin "El Rufino — Panel IA" v8.7.3</h3>
+    <div class="data-row"><div class="data-key">Pantallas</div><div class="data-val">Dashboard · Producción · Inteligencia · Seguimiento · Asistente</div></div>
+    <div class="data-row"><div class="data-key">API Anthropic</div><div class="data-val">Conectada · sin créditos activos · generación pausada</div></div>
+    <div class="data-row"><div class="data-key">Royal MCP</div><div class="data-val"><code>https://elrufino.com.ar/wp-json/royal-mcp/v1/mcp</code> <span class="tag-ok">Conectado</span></div></div>
+  </div>
+
+  <div class="data-block">
+    <h3>Rank Math SEO</h3>
+    <div class="data-row"><div class="data-key">Tipo de organización</div><div class="data-val">Organización · "El Rufino"</div></div>
+    <div class="data-row"><div class="data-key">URL</div><div class="data-val"><code>https://elrufino.com.ar</code></div></div>
+    <div class="data-row"><div class="data-key">Email</div><div class="data-val">medioelrufino@gmail.com</div></div>
+    <div class="data-row"><div class="data-key">Dirección</div><div class="data-val">Rufino · Santa Fe · Argentina · 6100 · AR</div></div>
+    <div class="data-row"><div class="data-key">Facebook App ID</div><div class="data-val"><code>1314916506819026</code></div></div>
+    <div class="data-row"><div class="data-key">Perfil adicional</div><div class="data-val">https://www.facebook.com/ElRufino.ar</div></div>
+    <div class="data-row"><div class="data-key">Schema entradas</div><div class="data-val">Artículo de noticias</div></div>
+  </div>
+</div>
+
+<!-- ══ EDITORIAL ══ -->
+<div id="sec-editorial" class="section">
+  <div class="sec-eyebrow">Sistema editorial</div>
+  <h2 class="sec-titulo">Identidad y pilares editoriales</h2>
+  <p class="sec-sub">Estado definitivo de las decisiones editoriales. No reabrir sin indicación explícita.</p>
+
+  <div class="data-block">
+    <h3>Decisiones cerradas</h3>
+    <div class="data-row"><div class="data-key">Nombre</div><div class="data-val">EL RUFINO</div></div>
+    <div class="data-row"><div class="data-key">Claim</div><div class="data-val">"Lo que pasa y lo que significa"</div></div>
+    <div class="data-row"><div class="data-key">Marco simbólico</div><div class="data-val">Variante B · patriótica/territorial/argentina · guiño peronista sutil</div></div>
+    <div class="data-row"><div class="data-key">Masthead</div><div class="data-val">Rojo <code>#c0271b</code> · logo blanco · confirmado mayo 2026</div></div>
+  </div>
+
+  <div class="data-block">
+    <h3>Paleta B — vigente</h3>
+    <div class="data-row"><div class="data-key">Rojo cívico</div><div class="data-val"><span class="color-dot" style="background:#c0271b"></span><code>#c0271b</code> · Masthead · accentos · etiquetas</div></div>
+    <div class="data-row"><div class="data-key">Negro tinta</div><div class="data-val"><span class="color-dot" style="background:#1a1a1a"></span><code>#1a1a1a</code> · Texto principal · nav · footer</div></div>
+    <div class="data-row"><div class="data-key">Blanco</div><div class="data-val"><span class="color-dot" style="background:#ffffff;border:1px solid #ccc"></span><code>#ffffff</code> · Fondos primarios · cards</div></div>
+    <div class="data-row"><div class="data-key">Crema</div><div class="data-val"><span class="color-dot" style="background:#f5f0e8"></span><code>#f5f0e8</code> · Fondos secundarios · body · sidebar</div></div>
+  </div>
+
+  <div class="data-block">
+    <h3>Tipografía</h3>
+    <div class="data-row"><div class="data-key">Títulos</div><div class="data-val">Playfair Display · serif · periodismo clásico</div></div>
+    <div class="data-row"><div class="data-key">Cuerpo</div><div class="data-val">Source Serif 4 · serif</div></div>
+    <div class="data-row"><div class="data-key">Código / técnico</div><div class="data-val">JetBrains Mono</div></div>
+  </div>
+
+  <h3 style="font-family:'Playfair Display',serif;font-size:16px;margin:24px 0 12px;color:var(--negro)">Pilares editoriales — slugs oficiales</h3>
+  <table class="tabla">
+    <thead><tr><th>#</th><th>Nombre</th><th>Slug WordPress</th><th>Color</th><th>Formatos</th></tr></thead>
+    <tbody>
+      <tr><td>P01</td><td>Rufino real</td><td class="slug">rufino-real</td><td><span class="color-dot" style="background:#c0271b"></span>#c0271b</td><td>Nota · hilo · infografía</td></tr>
+      <tr><td>P02</td><td>El campo habla</td><td class="slug">el-campo-habla</td><td><span class="color-dot" style="background:#2a5f82"></span>#2a5f82</td><td>Entrevista · dato · WA</td></tr>
+      <tr><td>P03</td><td>Barrio a barrio</td><td class="slug">barrio-a-barrio</td><td><span class="color-dot" style="background:#4e7232"></span>#4e7232</td><td>Seguimiento · mapa · vecinos</td></tr>
+      <tr><td>P04</td><td>Generación Rufino</td><td class="slug">generacion-rufino</td><td><span class="color-dot" style="background:#b8760a"></span>#b8760a</td><td>Reels · perfil · TikTok</td></tr>
+      <tr><td>P05</td><td>Poder y gestión</td><td class="slug">seguimiento-promesas</td><td><span class="color-dot" style="background:#7a3d9a"></span>#7a3d9a</td><td>Fact-check · seguimiento · archivo</td></tr>
+      <tr><td>P06</td><td>Rufino en datos</td><td class="slug">contexto-datos</td><td><span class="color-dot" style="background:#1a6b5a"></span>#1a6b5a</td><td>Datos · placas · explicador</td></tr>
+    </tbody>
+  </table>
+
+  <div style="background:#fff8e6;border:0.5px solid #e8d090;border-left:3px solid #c8a800;padding:12px 16px;font-size:12px;color:#5a4800">
+    <strong>Nota sobre categorías duplicadas:</strong> WordPress también tiene <code>poder-y-gestion</code> y <code>rufino-en-datos</code> como slugs alternativos creados en versiones anteriores. Los slugs oficiales son los que figuran en la tabla. Pendiente: reasignar notas y eliminar duplicados.
+  </div>
+</div>
+
+<!-- ══ INFRAESTRUCTURA ══ -->
+<div id="sec-infraestructura" class="section">
+  <div class="sec-eyebrow">Sistema de trabajo</div>
+  <h2 class="sec-titulo">Infraestructura operativa</h2>
+  <p class="sec-sub">Herramientas, cuentas y proyectos activos al 29 de mayo de 2026.</p>
+
+  <div class="data-block">
+    <h3>Cuentas Google</h3>
+    <div class="data-row"><div class="data-key">Cuenta 1 · HUB MAESTRO</div><div class="data-val">cristianobermeller@gmail.com</div></div>
+    <div class="data-row"><div class="data-key">Cuenta 6 · Prensa / multimedia</div><div class="data-val">medioelrufino@gmail.com</div></div>
+    <div class="data-row"><div class="data-key">Cuenta 9 · Operador IA</div><div class="data-val">rufino.paspatria@gmail.com · acceso Claude · todos los agentes</div></div>
+  </div>
+
+  <div class="data-block">
+    <h3>Herramientas IA</h3>
+    <div class="data-row"><div class="data-key">Claude</div><div class="data-val">Principal · Proyecto activo · MCP conectado</div></div>
+    <div class="data-row"><div class="data-key">Gemini</div><div class="data-val">Imágenes</div></div>
+    <div class="data-row"><div class="data-key">GPT-4o</div><div class="data-val">Datos numéricos</div></div>
+    <div class="data-row"><div class="data-key">Royal MCP</div><div class="data-val">Conectado a elrufino.com.ar · lectura/escritura WP sin créditos</div></div>
+  </div>
+
+  <div class="data-block">
+    <h3>Proyectos USINA DE IDEAS</h3>
+    <div class="data-row"><div class="data-key">EL_RUFINO</div><div class="data-val">ACTIVO · documentado v1.0 mayo 2026</div></div>
+    <div class="data-row"><div class="data-key">SISMUIF</div><div class="data-val">ACTIVO · auditado 2026-05-25 · 24.335 ítems</div></div>
+    <div class="data-row"><div class="data-key">SOCIEDAD_ITALIANA</div><div class="data-val">ACTIVO · 1.027 archivos + Estatuto 1952</div></div>
+    <div class="data-row"><div class="data-key">DIGESTO</div><div class="data-val">ACTIVO · módulo en desarrollo</div></div>
+    <div class="data-row"><div class="data-key">Otros (6)</div><div class="data-val">GESTION_COMERCIAL · RADIOTV · PJ · INFOCONECTADOS · LA_COMUNIDAD_ORGANIZADA · ORG_DRIVE_CO</div></div>
+  </div>
+
+  <div class="data-block">
+    <h3>Ruta local de archivos</h3>
+    <div class="data-row"><div class="data-key">Base</div><div class="data-val"><code>F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO\</code></div></div>
+    <div class="data-row"><div class="data-key">Contexto IA</div><div class="data-val"><code>00_CONTEXTO_IA\</code> · fuente única de verdad</div></div>
+    <div class="data-row"><div class="data-key">Documentos vigentes</div><div class="data-val"><code>01_DOCUMENTOS_VIGENTES\</code></div></div>
+    <div class="data-row"><div class="data-key">Identidad marca</div><div class="data-val"><code>03_IDENTIDAD_MARCA\</code> → reorganizar según tarea Cowork</div></div>
+    <div class="data-row"><div class="data-key">Archivo</div><div class="data-val"><code>_ARCHIVO\</code> · versiones históricas con fecha</div></div>
+  </div>
+</div>
+
+<!-- ══ PENDIENTES ══ -->
+<div id="sec-pendientes" class="section">
+  <div class="sec-eyebrow">Fase 2 — acciones abiertas</div>
+  <h2 class="sec-titulo">Pendientes inmediatos</h2>
+  <p class="sec-sub">Ordenados por impacto y facilidad de ejecución. Los que tienen "via MCP" se pueden hacer desde Claude sin tocar archivos.</p>
+
+  <div class="pend-item">
+    <div class="pend-num">01</div>
+    <div class="pend-body">
+      <div class="pend-titulo">Fix home.php — eliminar fallback P05</div>
+      <div class="pend-nota">Sacar la línea: if (empty($p05)) $p05 = er_get_posts('poder-y-gestion', 4); · Impide que notas de gestión aparezcan en "Seguimiento de promesas"</div>
+      <span class="pend-via">Hostinger File Manager · home.php línea ~70</span>
+    </div>
+  </div>
+
+  <div class="pend-item">
+    <div class="pend-num">02</div>
+    <div class="pend-body">
+      <div class="pend-titulo">Agregar add_filter royal_mcp_writable_options al plugin</div>
+      <div class="pend-nota">Desbloquea: zona horaria, er_whatsapp_canal, page_for_posts, posts_per_page via MCP sin tocar archivos</div>
+      <span class="pend-via">Hostinger · el-rufino-panel.php · agregar bloque al final</span>
+    </div>
+  </div>
+
+  <div class="pend-item">
+    <div class="pend-num">03</div>
+    <div class="pend-body">
+      <div class="pend-titulo">Registrar elrufino.ar en NIC Argentina</div>
+      <div class="pend-nota">Dominio de marca principal · $25.500 · nic.ar</div>
+      <span class="pend-via">NIC Argentina · cuenta 1</span>
+    </div>
+  </div>
+
+  <div class="pend-item">
+    <div class="pend-num">04</div>
+    <div class="pend-body">
+      <div class="pend-titulo">Reasignar notas de categorías duplicadas</div>
+      <div class="pend-nota">Mover notas de poder-y-gestion → seguimiento-promesas y rufino-en-datos → contexto-datos. Luego eliminar slugs duplicados.</div>
+      <span class="pend-via">via MCP · wp_get_posts + wp_update_post</span>
+    </div>
+  </div>
+
+  <div class="pend-item">
+    <div class="pend-num">05</div>
+    <div class="pend-body">
+      <div class="pend-titulo">Recargar créditos API Anthropic</div>
+      <div class="pend-nota">Desbloquea la generación IA del plugin v8.7.3 (pantalla Asistente)</div>
+      <span class="pend-via">console.anthropic.com · billing</span>
+    </div>
+  </div>
+
+  <div class="pend-item">
+    <div class="pend-num">06</div>
+    <div class="pend-body">
+      <div class="pend-titulo">Lanzar canal WhatsApp broadcast</div>
+      <div class="pend-nota">0 de 500 suscriptores objetivo · resumen matutino 7:30 AM</div>
+      <span class="pend-via">WhatsApp Business · cuenta medioelrufino@gmail.com</span>
+    </div>
+  </div>
+
+  <div class="pend-item">
+    <div class="pend-num">07</div>
+    <div class="pend-body">
+      <div class="pend-titulo">Actualizar documentos de contexto IA</div>
+      <div class="pend-nota">Los archivos VIGENTE en 00_CONTEXTO_IA siguen en v1.5/1.6 de abril 2026. Actualizar a versión mayo 2026 con el estado real.</div>
+      <span class="pend-via">F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO\00_CONTEXTO_IA\</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ BLOQUE IA ══ -->
+<div id="sec-transferencia" class="section">
+  <div class="sec-eyebrow">Transferencia de contexto</div>
+  <h2 class="sec-titulo">Bloque para nueva instancia IA</h2>
+  <p class="sec-sub">Pegá este bloque al inicio de cualquier conversación nueva para transferir el estado del proyecto sin reexplicar.</p>
+
+  <div class="transfer-box"><span class="transfer-key">PROYECTO</span> = <span class="transfer-val">EL RUFINO</span>
+<span class="transfer-key">CIUDAD</span> = <span class="transfer-val">Rufino, Santa Fe, Argentina · 19.211 hab.</span>
+<span class="transfer-key">CLAIM</span> = <span class="transfer-val">"Lo que pasa y lo que significa"</span>
+<span class="transfer-key">DOMINIO</span> = <span class="transfer-val">elrufino.com.ar (ACTIVO) · elrufino.ar (pendiente NIC)</span>
+<span class="transfer-key">HOSTING</span> = <span class="transfer-val">Hostinger · WordPress 7.0 · DNS delegado</span>
+<span class="transfer-key">ENTORNO_OBSOLETO</span> = <span class="transfer-val">prueba.infoconectados.com — NO USAR</span>
+<span class="transfer-key">THEME</span> = <span class="transfer-val">el-rufino-theme v2.3.5 (hijo de Newsup)</span>
+<span class="transfer-key">MASTHEAD</span> = <span class="transfer-val">ROJO #c0271b — decisión cerrada mayo 2026</span>
+<span class="transfer-key">PLUGIN</span> = <span class="transfer-val">El Rufino Panel IA v8.7.3 · 5 pantallas</span>
+<span class="transfer-key">MCP</span> = <span class="transfer-val">Royal MCP conectado · https://elrufino.com.ar/wp-json/royal-mcp/v1/mcp</span>
+<span class="transfer-key">PALETA</span> = <span class="transfer-val">#c0271b rojo · #1a1a1a negro · #ffffff blanco · #f5f0e8 crema</span>
+<span class="transfer-key">TIPOGRAFIA</span> = <span class="transfer-val">Playfair Display (títulos) + Source Serif 4 (cuerpo)</span>
+<span class="transfer-key">FASE</span> = <span class="transfer-val">Fase 2 · producto mínimo · ~55% completado</span>
+<span class="transfer-key">CATEGORIAS_P01</span> = <span class="transfer-val">rufino-real</span>
+<span class="transfer-key">CATEGORIAS_P02</span> = <span class="transfer-val">el-campo-habla</span>
+<span class="transfer-key">CATEGORIAS_P03</span> = <span class="transfer-val">barrio-a-barrio</span>
+<span class="transfer-key">CATEGORIAS_P04</span> = <span class="transfer-val">generacion-rufino</span>
+<span class="transfer-key">CATEGORIAS_P05</span> = <span class="transfer-val">seguimiento-promesas (nombre visible: Poder y gestión)</span>
+<span class="transfer-key">CATEGORIAS_P06</span> = <span class="transfer-val">contexto-datos (nombre visible: Rufino en datos)</span>
+<span class="transfer-key">RANK_MATH</span> = <span class="transfer-val">Configurado · OG · App ID 1314916506819026 · Schema NewsArticle</span>
+<span class="transfer-key">API_ANTHROPIC</span> = <span class="transfer-val">Sin créditos activos · generación IA pausada</span>
+<span class="transfer-key">PENDIENTE_1</span> = <span class="transfer-val">home.php fix fallback P05 (Hostinger File Manager)</span>
+<span class="transfer-key">PENDIENTE_2</span> = <span class="transfer-val">add_filter royal_mcp_writable_options en plugin</span>
+<span class="transfer-key">PENDIENTE_3</span> = <span class="transfer-val">elrufino.ar registro NIC</span>
+<span class="transfer-key">NO_REABRIR</span> = <span class="transfer-val">Nombre · Claim · Paleta · Masthead rojo · Slugs categorías</span>
+<span class="transfer-key">WHATSAPP</span> = <span class="transfer-val">https://wa.me/5493382511670</span>
+<span class="transfer-key">EMAIL_MEDIA</span> = <span class="transfer-val">medioelrufino@gmail.com</span>
+<span class="transfer-key">CUENTA_IA</span> = <span class="transfer-val">rufino.paspatria@gmail.com (Cuenta 9)</span>
+<span class="transfer-key">RUTA_LOCAL</span> = <span class="transfer-val">F:\HERRAMIENTAS DE IA\PROYECTOS\EL_RUFINO\</span>
+<span class="transfer-key">ESTADO_DOC</span> = <span class="transfer-val">el-rufino_estado-actual_v1-0-VIGENTE.html · Mayo 2026</span></div>
+</div>
+
+</div><!-- .container -->
+
+<script>
+function mostrar(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('sec-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>

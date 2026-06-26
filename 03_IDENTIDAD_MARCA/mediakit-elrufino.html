@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Media Kit — El Rufino</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Serif+4:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rojo: #c0271b;
+    --negro: #1a1a1a;
+    --blanco: #ffffff;
+    --crema: #f5f0e8;
+    --gris: #888888;
+    --gris-claro: #e8e3db;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--crema);
+    color: var(--negro);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* PORTADA */
+  .cover {
+    background: var(--negro);
+    color: var(--blanco);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 48px 64px;
+    position: relative;
+    overflow: hidden;
+    page-break-after: always;
+  }
+
+  .cover::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--rojo);
+  }
+
+  .cover-top {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .r-badge {
+    background: var(--rojo);
+    width: 72px;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+
+  .r-badge span {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--blanco);
+    line-height: 1;
+  }
+
+  .brand-name {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 48px;
+    font-weight: 700;
+    letter-spacing: -1px;
+  }
+
+  .cover-center {
+    text-align: center;
+  }
+
+  .cover-label {
+    font-family: 'Source Serif 4', serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--rojo);
+    margin-bottom: 16px;
+  }
+
+  .cover-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 72px;
+    font-weight: 900;
+    line-height: 1.0;
+    margin-bottom: 24px;
+  }
+
+  .cover-tagline {
+    font-size: 16px;
+    color: #aaa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .cover-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-size: 12px;
+    color: #666;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .cover-bottom strong {
+    color: var(--blanco);
+  }
+
+  /* PÁGINAS INTERIORES */
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 64px;
+    page-break-after: always;
+  }
+
+  .page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid var(--negro);
+    padding-bottom: 16px;
+    margin-bottom: 48px;
+  }
+
+  .page-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 64px;
+    font-weight: 900;
+    color: var(--gris-claro);
+    line-height: 1;
+  }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--rojo);
+    font-weight: 600;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    line-height: 1.2;
+  }
+
+  h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  p {
+    color: #333;
+    margin-bottom: 16px;
+    font-size: 15px;
+  }
+
+  /* GRID PILARES */
+  .pilares-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1px;
+    background: var(--gris-claro);
+    border: 1px solid var(--gris-claro);
+    margin: 32px 0;
+  }
+
+  .pilar {
+    background: var(--blanco);
+    padding: 24px 20px;
+  }
+
+  .pilar-num {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+
+  .pilar-nombre {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .pilar-desc {
+    font-size: 12px;
+    color: var(--gris);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* DATOS */
+  .stats-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2px;
+    margin: 32px 0;
+  }
+
+  .stat {
+    background: var(--negro);
+    color: var(--blanco);
+    padding: 32px 24px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 44px;
+    font-weight: 900;
+    color: var(--rojo);
+    line-height: 1;
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #aaa;
+    margin-top: 8px;
+    display: block;
+  }
+
+  /* FORMATOS */
+  .formatos-list {
+    margin: 24px 0;
+  }
+
+  .formato-item {
+    display: flex;
+    border-bottom: 1px solid var(--gris-claro);
+    padding: 20px 0;
+    gap: 24px;
+  }
+
+  .formato-item:last-child { border-bottom: none; }
+
+  .formato-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--rojo);
+    min-width: 40px;
+    line-height: 1;
+    padding-top: 2px;
+  }
+
+  .formato-content h3 {
+    margin-bottom: 4px;
+    font-size: 17px;
+  }
+
+  .formato-content p {
+    margin: 0;
+    font-size: 13px;
+    color: var(--gris);
+  }
+
+  /* CONTACTO */
+  .contact-block {
+    background: var(--negro);
+    color: var(--blanco);
+    padding: 48px 64px;
+    margin-top: 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .contact-left h2 {
+    color: var(--blanco);
+    margin-bottom: 8px;
+  }
+
+  .contact-left p {
+    color: #aaa;
+    margin: 0;
+    font-size: 13px;
+  }
+
+  .contact-right {
+    text-align: right;
+  }
+
+  .contact-item {
+    margin-bottom: 8px;
+  }
+
+  .contact-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--rojo);
+    display: block;
+  }
+
+  .contact-value {
+    font-size: 15px;
+    color: var(--blanco);
+  }
+
+  /* PIE DE PÁGINA */
+  .footer-bar {
+    background: var(--rojo);
+    padding: 16px 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-bar span {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.8);
+  }
+
+  .footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    color: var(--blanco) !important;
+    font-size: 14px !important;
+  }
+
+  /* SEPARADOR */
+  .rule {
+    height: 2px;
+    background: var(--rojo);
+    margin: 32px 0;
+    width: 48px;
+  }
+
+  @media print {
+    body { background: white; }
+    .cover { min-height: 100vh; }
+  }
+</style>
+</head>
+<body>
+
+<!-- PORTADA -->
+<div class="cover">
+  <div class="cover-top">
+    <div class="r-badge"><span>R</span></div>
+    <div class="brand-name">El Rufino</div>
+  </div>
+
+  <div class="cover-center">
+    <div class="cover-label">Presentación institucional</div>
+    <div class="cover-title">Media<br>Kit</div>
+    <div class="cover-tagline">Lo que pasa · Lo que significa</div>
+  </div>
+
+  <div class="cover-bottom">
+    <span>Rufino · Santa Fe · Argentina</span>
+    <span><strong>elrufino.com.ar</strong></span>
+    <span>2026</span>
+  </div>
+</div>
+
+<!-- SECCIÓN 1: QUIÉNES SOMOS -->
+<div class="page">
+  <div class="page-header">
+    <div class="section-label">01 · El medio</div>
+    <div class="page-num">01</div>
+  </div>
+
+  <h2>Primer medio de periodismo contextual de Rufino</h2>
+  <div class="rule"></div>
+
+  <p>El Rufino nació en 2026 con una propuesta editorial diferente: cada nota tiene dos capas obligatorias. La primera cuenta <em>qué pasó</em>. La segunda explica <em>qué significa</em>. No hay nota sin contexto.</p>
+
+  <p>Cubrimos la ciudad de Rufino y el sur de la provincia de Santa Fe. Política municipal, campo, sociedad, economía local. Con rigor, sin sensacionalismo, sin depender de la pauta oficial.</p>
+
+  <div class="stats-row">
+    <div class="stat">
+      <span class="stat-num">19.211</span>
+      <span class="stat-label">Habitantes · Rufino</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">2</span>
+      <span class="stat-label">Capas editoriales por nota</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">6</span>
+      <span class="stat-label">Pilares de cobertura</span>
+    </div>
+  </div>
+
+  <p>Nuestro lector es el ciudadano activo de Rufino: comerciante, productor agropecuario, empleado público, docente. Alguien que quiere entender la ciudad, no solo saber qué pasó.</p>
+</div>
+
+<!-- SECCIÓN 2: PILARES EDITORIALES -->
+<div class="page">
+  <div class="page-header">
+    <div class="section-label">02 · Editorial</div>
+    <div class="page-num">02</div>
+  </div>
+
+  <h2>Seis pilares de cobertura</h2>
+  <div class="rule"></div>
+
+  <p>La agenda editorial de El Rufino se organiza en seis ejes temáticos permanentes. Cada pilar tiene identidad propia y produce contenido diferenciado.</p>
+
+  <div class="pilares-grid">
+    <div class="pilar">
+      <div class="pilar-num" style="color:#c0271b">P01</div>
+      <div class="pilar-nombre">Rufino Real</div>
+      <div class="pilar-desc">Lo que pasa en la ciudad. Municipio, concejo, servicios, sociedad.</div>
+    </div>
+    <div class="pilar">
+      <div class="pilar-num" style="color:#4a7c59">P02</div>
+      <div class="pilar-nombre">El campo habla</div>
+      <div class="pilar-desc">Agro, campo, soja, trigo. Precios, clima, cosecha, productores.</div>
+    </div>
+    <div class="pilar">
+      <div class="pilar-num" style="color:#2d5f8a">P03</div>
+      <div class="pilar-nombre">Barrio a barrio</div>
+      <div class="pilar-desc">Cobertura hiperlocal. Vecinos, servicios barriales, seguimiento.</div>
+    </div>
+    <div class="pilar">
+      <div class="pilar-num" style="color:#7b4fa6">P04</div>
+      <div class="pilar-nombre">La región</div>
+      <div class="pilar-desc">Sur de Santa Fe. Pueblos vecinos, provincia, conexiones regionales.</div>
+    </div>
+    <div class="pilar">
+      <div class="pilar-num" style="color:#1a1a1a">P05</div>
+      <div class="pilar-nombre">Economía cercana</div>
+      <div class="pilar-desc">Comercio local, empleo, precios, actividad económica de la ciudad.</div>
+    </div>
+    <div class="pilar">
+      <div class="pilar-num" style="color:#c8600a">P06</div>
+      <div class="pilar-nombre">Comunidad</div>
+      <div class="pilar-desc">Deportes, cultura, educación, salud, vida comunitaria.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SECCIÓN 3: FORMATOS PUBLICITARIOS -->
+<div class="page">
+  <div class="page-header">
+    <div class="section-label">03 · Publicidad</div>
+    <div class="page-num">03</div>
+  </div>
+
+  <h2>Formatos disponibles</h2>
+  <div class="rule"></div>
+
+  <p>El Rufino ofrece opciones de comunicación comercial integradas editorialmente. No publicamos formatos intrusivos ni contenido que no respete al lector.</p>
+
+  <div class="formatos-list">
+    <div class="formato-item">
+      <div class="formato-num">01</div>
+      <div class="formato-content">
+        <h3>Nota patrocinada</h3>
+        <p>Contenido periodístico sobre tu empresa, producto o evento. Redactado con estilo El Rufino, identificado como publicidad. Distribución web + Facebook + WhatsApp.</p>
+      </div>
+    </div>
+    <div class="formato-item">
+      <div class="formato-num">02</div>
+      <div class="formato-content">
+        <h3>Banner web</h3>
+        <p>Espacio fijo en el sitio elrufino.com.ar. Formatos: header, sidebar, in-article. Diseño adaptable al dispositivo.</p>
+      </div>
+    </div>
+    <div class="formato-item">
+      <div class="formato-num">03</div>
+      <div class="formato-content">
+        <h3>Difusión en Facebook</h3>
+        <p>Post patrocinado en la página de El Rufino. Alcance orgánico + posibilidad de amplificación paga. Redacción incluida.</p>
+      </div>
+    </div>
+    <div class="formato-item">
+      <div class="formato-num">04</div>
+      <div class="formato-content">
+        <h3>Mención en WhatsApp</h3>
+        <p>Inclusión en el boletín diario de novedades enviado por WhatsApp Business. Audiencia directa y comprometida.</p>
+      </div>
+    </div>
+    <div class="formato-item">
+      <div class="formato-num">05</div>
+      <div class="formato-content">
+        <h3>Cobertura de evento</h3>
+        <p>Presencia periodística en eventos de la empresa o institución. Nota + fotos + difusión en todas las plataformas.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECCIÓN 4: CONTACTO -->
+<div class="page" style="page-break-after: avoid;">
+  <div class="page-header">
+    <div class="section-label">04 · Contacto</div>
+    <div class="page-num">04</div>
+  </div>
+
+  <h2>Trabajemos juntos</h2>
+  <div class="rule"></div>
+
+  <p>Para consultas comerciales, propuestas de cobertura o información sobre tarifas, contactanos directamente. Respondemos en menos de 24 horas.</p>
+
+  <div class="contact-block">
+    <div class="contact-left">
+      <h2>El Rufino</h2>
+      <p>Rufino, Santa Fe, Argentina</p>
+    </div>
+    <div class="contact-right">
+      <div class="contact-item">
+        <span class="contact-label">Web</span>
+        <span class="contact-value">elrufino.com.ar</span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-label">WhatsApp</span>
+        <span class="contact-value">+54 9 338 251-1670</span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-label">Facebook</span>
+        <span class="contact-value">facebook.com/ElRufino.ar</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PIE -->
+<div class="footer-bar">
+  <span class="footer-brand">El Rufino</span>
+  <span>Lo que pasa · Lo que significa</span>
+  <span>elrufino.com.ar · 2026</span>
+</div>
+
+</body>
+</html>
