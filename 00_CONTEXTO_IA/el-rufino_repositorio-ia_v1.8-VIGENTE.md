@@ -37,15 +37,9 @@ NOMBRES = Fabián Longo (El Diferente) · Adriana Giménez (Voces otra mirada)
 NORMAS_CITAS = APA 7ma edición
 DECISIONES = NO reabrir las listadas sin indicación explícita del usuario
 REPOSITORIO_ORGANIZATIVO = USINA DE IDEAS · F:\HERRAMIENTAS DE IA\PROYECTOS\USINA_DE_IDEAS\
-<<<<<<<< HEAD:00_CONTEXTO_IA/el-rufino_repositorio-ia_v1.8-VIGENTE.md
 ARCHIVO_CONTEXTO = 00_CONTEXTO_IA/el-rufino_repositorio-ia_v1.8-VIGENTE.md
 ARCHIVO_AGENTES = 00_CONTEXTO_IA/el-rufino_agentes-ia_v1.8-VIGENTE.md
 PROYECTOS_USINA = EL_RUFINO · GESTION_COMERCIAL · SISMUIF · SOCIEDAD_ITALIANA · RADIOTV · DIGESTO · PARTIDO_JUSTICIALISTA · INFOCONECTADOS · LA_COMUNIDAD_ORGANIZADA
-========
-ARCHIVO_CONTEXTO = 00_CONTEXTO_IA/el-rufino_repositorio-ia_v1.7-VIGENTE.md
-ARCHIVO_AGENTES = 00_CONTEXTO_IA/el-rufino_agentes-ia_v1.7-VIGENTE.md
-PROYECTOS_USINA = EL_RUFINO · GESTION_COMERCIAL · SISMUIF · SOCIEDAD_ITALIANA · RADIOTV · DIGESTO · PJ · INFOCONECTADOS · LA_COMUNIDAD_ORGANIZADA
->>>>>>>> origin/main:00_CONTEXTO_IA/el-rufino_repositorio-ia_v1.7-VIGENTE.md
 CUENTAS = 9 · rufino.paspatria = Cuenta 9 · operador IA · acceso Claude · todos los agentes
 ```
 
@@ -356,9 +350,5 @@ We Are Social & Hootsuite. (2024). *Digital 2024: Argentina*. DataReportal. http
 *Documento vivo. Actualizar al tomar cada decisión relevante.*
 *Firma institucional: PROYECTO EL RUFINO · Repositorio organizativo: USINA DE IDEAS*
 *Versión 1.7 · 30 de mayo de 2026*
-<<<<<<<< HEAD:00_CONTEXTO_IA/el-rufino_repositorio-ia_v1.8-VIGENTE.md
 *Sincronizado con: el-rufino_prompt-maestro_v1.8-VIGENTE.md · el-rufino_agentes-ia_v1.8-VIGENTE.md*
-========
-*Sincronizado con: el-rufino_prompt-maestro_v1.7-VIGENTE.md · el-rufino_agentes-ia_v1.7-VIGENTE.md*
->>>>>>>> origin/main:00_CONTEXTO_IA/el-rufino_repositorio-ia_v1.7-VIGENTE.md
 

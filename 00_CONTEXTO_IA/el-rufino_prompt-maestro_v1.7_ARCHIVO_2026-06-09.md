@@ -1,12 +1,7 @@
 # PROMPT MAESTRO — EL RUFINO
 ## Agente de IA · Contexto de transferencia
-<<<<<<<< HEAD:00_CONTEXTO_IA/el-rufino_prompt-maestro_v1.8-VIGENTE.md
-### Version 1.8 · 30 de mayo de 2026
-### Cambios v1.8: plugin v8.7.5 con integracion Royal MCP · theme child v2.3.5 · archivos usina-de-ideas eliminados del repo · Schema NewsMediaOrganization confirmado OK · Fase 2 al 80%
-========
 ### Version 1.7 · 30 de mayo de 2026
 ### Cambios v1.7: plugin v8.7.5 con integracion Royal MCP · theme child v2.3.5 · archivos usina-de-ideas eliminados del repo · Schema NewsMediaOrganization confirmado OK · Fase 2 al 80%
->>>>>>>> origin/main:00_CONTEXTO_IA/el-rufino_prompt-maestro_v1.7_ARCHIVO_2026-06-09.md
 
 ---
 
@@ -40,13 +35,8 @@ CHECKLIST_PENDIENTE = 500 WA suscriptores · elrufino.ar NIC
 EXPANSION_REGIONAL = horizonte futuro · NO fase activa (corredor RN33 pausado)
 ROLES = funcionales · no cargos rigidos
 NOMBRES = Fabian Longo (El Diferente) · Adriana Gimenez (Voces otra mirada)
-<<<<<<<< HEAD:00_CONTEXTO_IA/el-rufino_prompt-maestro_v1.8-VIGENTE.md
-ARCHIVO_CONTEXTO = 00_CONTEXTO_IA/el-rufino_repositorio-ia_v1.8-VIGENTE.md
-ARCHIVO_AGENTES = 00_CONTEXTO_IA/el-rufino_agentes-ia_v1.8-VIGENTE.md
-========
 ARCHIVO_CONTEXTO = 00_CONTEXTO_IA/el-rufino_repositorio-ia_v1.7-VIGENTE.md
 ARCHIVO_AGENTES = 00_CONTEXTO_IA/el-rufino_agentes-ia_v1.7-VIGENTE.md
->>>>>>>> origin/main:00_CONTEXTO_IA/el-rufino_prompt-maestro_v1.7_ARCHIVO_2026-06-09.md
 DECISIONES = NO reabrir las listadas sin indicacion explicita del usuario
 REPOSITORIO_ORGANIZATIVO = USINA DE IDEAS · F:\HERRAMIENTAS DE IA\PROYECTOS\USINA_DE_IDEAS\
 PROYECTOS_USINA = EL_RUFINO · GESTION_COMERCIAL · SISMUIF · SOCIEDAD_ITALIANA · RADIOTV · DIGESTO · PARTIDO_JUSTICIALISTA · INFOCONECTADOS · LA_COMUNIDAD_ORGANIZADA
@@ -346,10 +336,5 @@ We Are Social & Hootsuite. (2024). Digital 2024: Argentina. https://datareportal
 
 Documento vivo. Actualizar al tomar cada decision relevante.
 Firma institucional: PROYECTO EL RUFINO · Repositorio organizativo: USINA DE IDEAS
-<<<<<<<< HEAD:00_CONTEXTO_IA/el-rufino_prompt-maestro_v1.8-VIGENTE.md
-Version 1.8 · 30 de mayo de 2026
-Sincronizado con: el-rufino_repositorio-ia_v1.8-VIGENTE.md · el-rufino_agentes-ia_v1.8-VIGENTE.md
-========
 Version 1.7 · 30 de mayo de 2026
 Sincronizado con: el-rufino_repositorio-ia_v1.7-VIGENTE.md · el-rufino_agentes-ia_v1.7-VIGENTE.md
->>>>>>>> origin/main:00_CONTEXTO_IA/el-rufino_prompt-maestro_v1.7_ARCHIVO_2026-06-09.md
