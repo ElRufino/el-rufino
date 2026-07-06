@@ -36,6 +36,25 @@ function er_pilar_color( $post_id ) {
 }
 
 /* ------------------------------------------------------------------
+   PILARES EDITORIALES — lista completa con URL
+------------------------------------------------------------------ */
+function er_pilares_todos() {
+    $pilares = array(
+        array( 'slug' => 'rufino-real',          'nombre' => 'Rufino Real',             'color' => '#c0271b' ),
+        array( 'slug' => 'el-campo-habla',        'nombre' => 'El Campo Habla',          'color' => '#2a5f82' ),
+        array( 'slug' => 'barrio-a-barrio',       'nombre' => 'Barrio a Barrio',         'color' => '#4e7232' ),
+        array( 'slug' => 'generacion-rufino',     'nombre' => 'Generación Rufino',       'color' => '#b8760a' ),
+        array( 'slug' => 'poder-y-gestion',       'nombre' => 'Poder y Gestión',         'color' => '#7a3d9a' ),
+        array( 'slug' => 'rufino-en-datos',       'nombre' => 'Rufino en Datos',         'color' => '#1a6b5a' ),
+    );
+    foreach ( $pilares as &$p ) {
+        $term     = get_term_by( 'slug', $p['slug'], 'category' );
+        $p['url'] = $term ? get_category_link( $term->term_id ) : get_home_url();
+    }
+    return $pilares;
+}
+
+/* ------------------------------------------------------------------
    TIEMPO DE LECTURA
 ------------------------------------------------------------------ */
 function er_tiempo_lectura( $post_id ) {
@@ -68,9 +87,21 @@ $q_secundarias = new WP_Query( array(
     'post_status'    => 'publish',
     'post__not_in'   => array( $excluir_id ),
 ) );
+
+/* ------------------------------------------------------------------
+   QUERY LO MÁS LEÍDO: 5 posts por comment_count
+------------------------------------------------------------------ */
+$q_mas_leido = new WP_Query( array(
+    'posts_per_page' => 5,
+    'post_status'    => 'publish',
+    'orderby'        => 'comment_count',
+    'order'          => 'DESC',
+) );
 ?>
 
-<div class="er-home-wrap">
+<div class="er-layout">
+
+  <div class="er-layout-main">
 
   <!-- ============================================================
        SECCIÓN: EDICIÓN DE HOY
@@ -180,6 +211,59 @@ $q_secundarias = new WP_Query( array(
   </div>
   <?php endif; ?>
 
-</div><!-- .er-home-wrap -->
+  </div><!-- .er-layout-main -->
+
+  <!-- ============================================================
+       SIDEBAR
+  ============================================================ -->
+  <aside class="er-sidebar">
+
+    <!-- Widget: Lo más leído -->
+    <div class="er-widget">
+      <h3 class="er-widget-title">Lo más leído</h3>
+      <ul class="er-widget-list">
+        <?php
+        if ( $q_mas_leido->have_posts() ) :
+          while ( $q_mas_leido->have_posts() ) : $q_mas_leido->the_post();
+        ?>
+        <li class="er-widget-item">
+          <a href="<?php the_permalink(); ?>">
+            <p class="er-widget-item-titulo"><?php the_title(); ?></p>
+            <span class="er-widget-item-meta"><?php the_date( 'j M Y' ); ?></span>
+          </a>
+        </li>
+        <?php endwhile; wp_reset_postdata(); endif; ?>
+      </ul>
+    </div>
+
+    <!-- Widget: Pilares editoriales -->
+    <div class="er-widget">
+      <h3 class="er-widget-title">Pilares editoriales</h3>
+      <ul class="er-pilares-list">
+        <?php foreach ( er_pilares_todos() as $pilar ) : ?>
+        <li>
+          <a href="<?php echo esc_url( $pilar['url'] ); ?>" class="er-pilar-link">
+            <span class="er-pilar-dot" style="background:<?php echo esc_attr( $pilar['color'] ); ?>"></span>
+            <?php echo esc_html( $pilar['nombre'] ); ?>
+          </a>
+        </li>
+        <?php endforeach; ?>
+      </ul>
+    </div>
+
+    <!-- Widget: WhatsApp -->
+    <div class="er-widget">
+      <h3 class="er-widget-title">Seguinos</h3>
+      <div class="er-widget-wa">
+        <p class="er-widget-wa-text">Recibí las noticias de Rufino directo en tu WhatsApp.</p>
+        <a href="https://wa.me/5493382511670" class="er-widget-wa-btn" target="_blank" rel="noopener">
+          Unirme al canal &rarr;
+        </a>
+      </div>
+    </div>
+
+  </aside>
+
+</div><!-- .er-layout -->
 
 <?php get_footer(); ?>
