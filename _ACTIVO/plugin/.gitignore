@@ -1,0 +1,33 @@
+# .gitignore — EL RUFINO · Plugin _ACTIVO
+# Repo: solo código PHP del plugin (sin binarios ni releases)
+# Fecha: 2026-05-11
+
+# Releases y comprimidos — van a _RELEASES\, nunca acá
+_RELEASES/
+*.zip
+*.gz
+*.tar
+*.rar
+*.7z
+
+# Variables de entorno y config WordPress
+.env
+.env.*
+wp-config.php
+wp-config-sample.php
+
+# Dependencias
+node_modules/
+vendor/
+
+# Sistema
+Thumbs.db
+desktop.ini
+.DS_Store
+*.tmp
+*.log
+
+# Editor
+.vscode/
+.idea/
+*.code-workspace
