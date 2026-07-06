@@ -115,6 +115,9 @@ $RECYCLE.BIN/
 .vscode/
 *.code-workspace
 
+# Editor: Visual Studio
+.vs/
+
 # Editor: JetBrains
 .idea/
 *.iml
