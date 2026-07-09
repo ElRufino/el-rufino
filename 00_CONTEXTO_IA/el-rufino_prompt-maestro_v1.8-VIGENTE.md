@@ -18,7 +18,7 @@
 | Componente | Estado |
 |---|---|
 | WordPress 7.0 | Producción |
-| Child theme Newsup v2.3.5 (slug: el-rufino-theme) | Activo |
+| Child theme Newsup v2.3.6 (slug: el-rufino-theme) | Activo |
 | Plugin El Rufino Panel IA v8.7.5 | Activo |
 | Royal MCP v1.4.23 | Activo en producción |
 | Rank Math SEO v1.0.271.1 | Activo |
@@ -194,9 +194,20 @@ Layout columna 70/30 con sidebar sticky:
 
 ---
 
-## ESTRUCTURA HOME.PHP
+## ESTRUCTURA HOME.PHP (v2.3.6)
 
-Hero + grillas por pilar + banner WA + sidebar + footer propio
+Layout: `er-layout` CSS Grid `1fr 280px` (dos columnas). Colapsa a 1fr en ≤1023px.
+
+**Columna principal (er-layout-main):**
+- Nota destacada: banner T3A imagen 44% / contenido 56%, altura 148px
+- Grilla secundaria: 3 columnas, imagen 72px, etiqueta pilar, título, fecha + tiempo
+
+**Sidebar (er-sidebar, 280px):**
+- Widget Lo más leído (5 posts por comment_count)
+- Widget Pilares editoriales (6 pilares con dot de color)
+- Widget Seguinos / WhatsApp → wa.me/5493382511670
+
+**Funciones PHP nuevas:** `er_pilares_todos()`, `$q_mas_leido`
 
 ---
 
