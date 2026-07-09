@@ -134,12 +134,15 @@ reorganizacion_*.log
 #  CARPETAS DE ARCHIVO Y TRABAJO TEMPORAL
 #  _ARCHIVO\ tiene valor histórico pero no va al repo público
 #  _TEMP\ es trabajo volátil
+#  SYNC\ es workspace temporal de auditoría/normalización IA (Claude/Codex) —
+#  no es fuente de verdad ni entregable del proyecto (ver SYNC/CLAUDE_PROJECT_PACKAGE.md)
 # ─────────────────────────────────────────────────────────────────────────────
 _ARCHIVO/
 _RELEASES/
 _TEMP/
 _uploads/
 _borrador/
+SYNC/
 
 
 # ─────────────────────────────────────────────────────────────────────────────
