@@ -178,6 +178,7 @@ credenciales.txt
 *.key
 *.pem
 *.p12
+.claude/settings.local.json
 *.pfx
 
 
