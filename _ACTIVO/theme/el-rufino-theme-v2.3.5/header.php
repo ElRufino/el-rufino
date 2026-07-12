@@ -2,7 +2,7 @@
 /**
  * Header — El Rufino Child Theme v2.0.0
  * Topbar, masthead y ticker se renderizan vía wp_body_open()
- * en functions.php (er_render_masthead priority 5, er_render_ticker priority 10)
+ * en functions.php (er_render_masthead priority 1, er_render_ticker priority 2)
  */
 ?><!DOCTYPE html>
 <html <?php language_attributes(); ?>>
@@ -14,15 +14,16 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 <!-- wp_body_open() dispara:
-     priority  5 → er_render_masthead() — topbar crema + masthead crema
-     priority 10 → er_render_ticker()   — separador rojo + ticker negro
+     priority 1 → er_render_masthead() — topbar + masthead
+     priority 2 → er_render_ticker()   — ticker de noticias
 -->
 <nav class="er-nav" style="display:flex;flex-direction:row;flex-wrap:wrap;">
-    <?php wp_nav_menu([
+    <?php wp_nav_menu( [
         'theme_location' => 'primary',
         'container'      => false,
         'menu_class'     => 'er-nav-list',
         'depth'          => 1,
         'fallback_cb'    => false,
-    ]); ?>
+    ] ); ?>
 </nav>
+<main id="main" class="er-main" role="main">
