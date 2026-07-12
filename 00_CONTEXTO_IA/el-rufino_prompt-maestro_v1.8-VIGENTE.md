@@ -1,5 +1,5 @@
 # EL RUFINO — CONTEXTO IA v1.8-VIGENTE
-**Última actualización:** 2026-06-09
+**Última actualización:** 2026-07-12
 **Reemplaza:** v1.7
 
 ---
@@ -265,6 +265,10 @@ rclone:            F:\Downloads\rclone-v1.73.5-windows-amd64\...
 - [ ] Publicar cobertura viviendas (ángulo Lattanzi/Carballecha)
 - [ ] Esperar número de ordenanza para nota MSU Agro/LALCEC
 - [ ] Verificar en ~1 semana indexación de rufino-en-datos en Search Console
+
+### Decisiones de código pendientes (sin fecha límite)
+
+- `header.php` del theme (`_ACTIVO/theme/el-rufino-theme-v2.3.5/header.php`): hay un cambio propuesto (actualización de comentario de prioridades de hooks + apertura de `<main id="main" class="er-main" role="main">`, con cierre ya existente en `footer.php`) que nunca se commiteó ni se descartó formalmente. Working tree coincide con HEAD (sin ese cambio) desde 2026-07-06. Pendiente decisión del usuario: aplicar o descartar.
 
 ---
 
