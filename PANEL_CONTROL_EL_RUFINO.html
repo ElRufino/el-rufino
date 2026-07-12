@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light">
+  <title>El Rufino · Central de control</title>
+  <style>
+    @font-face { font-family: "Playfair Display"; src: url("03_IDENTIDAD_MARCA/fonts/PlayfairDisplay-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+    @font-face { font-family: "Playfair Display"; src: url("03_IDENTIDAD_MARCA/fonts/PlayfairDisplay-Bold.ttf") format("truetype"); font-weight: 700; font-display: swap; }
+    :root { --rojo:#c0271b; --rojo-oscuro:#8d1c14; --negro:#1a1a1a; --crema:#f5f0e8; --crema-2:#ece7df; --blanco:#fff; --borde:#d8d1c6; --gris:#6b6b6b; --verde:#2a7a2a; --ambar:#a76b00; --azul:#2d5f8a; }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin:0; background:var(--crema); color:var(--negro); font:16px/1.45 Georgia, "Times New Roman", serif; }
+    button, input { font:inherit; }
+    .app { display:grid; grid-template-columns:244px minmax(0, 1fr); min-height:100vh; }
+    .sidebar { background:var(--negro); color:#fff; padding:22px 14px; display:flex; flex-direction:column; gap:22px; position:sticky; top:0; height:100vh; }
+    .brand { padding:4px 10px 19px; border-bottom:1px solid #444; }
+    .brand-mark { display:flex; align-items:center; gap:10px; }
+    .mark { width:38px; height:38px; display:grid; place-items:center; background:var(--rojo); border:1px solid rgba(255,255,255,.25); font:700 25px/1 "Playfair Display", Georgia, serif; }
+    .brand h1 { margin:0; font:700 21px/1 "Playfair Display", Georgia, serif; letter-spacing:-.02em; }
+    .brand small, .sidebar-footer { color:#aaa; font-size:11px; letter-spacing:.09em; text-transform:uppercase; }
+    .brand small { display:block; margin:9px 0 0 48px; }
+    .nav-label { margin:0 10px 7px; color:#999; font-size:10px; letter-spacing:.15em; text-transform:uppercase; }
+    .nav { display:grid; gap:3px; }
+    .nav button { display:flex; align-items:center; gap:10px; border:0; border-left:2px solid transparent; background:transparent; color:#dbdbdb; cursor:pointer; padding:9px 10px; text-align:left; font-size:14px; }
+    .nav button:hover, .nav button.active { background:#2a2a2a; border-left-color:var(--rojo); color:#fff; }
+    .nav .dot { width:7px; height:7px; border-radius:50%; background:#777; }
+    .nav button.active .dot { background:var(--rojo); }
+    .sidebar-footer { margin-top:auto; padding:13px 10px 0; border-top:1px solid #444; line-height:1.55; }
+    main { min-width:0; }
+    .topbar { min-height:62px; background:var(--blanco); border-bottom:1px solid var(--borde); display:flex; align-items:center; justify-content:space-between; gap:16px; padding:12px clamp(20px, 4vw, 48px); position:sticky; top:0; z-index:5; }
+    .crumb { color:var(--gris); font-size:13px; }
+    .status { display:inline-flex; align-items:center; gap:7px; color:var(--verde); font-size:12px; font-weight:bold; white-space:nowrap; }
+    .status i { width:8px; height:8px; border-radius:50%; background:var(--verde); box-shadow:0 0 0 4px #e8f4e8; }
+    .content { max-width:1380px; margin:0 auto; padding:clamp(24px, 4vw, 48px); }
+    .view { display:none; animation:appear .18s ease-out; }
+    .view.active { display:block; }
+    @keyframes appear { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:translateY(0); } }
+    .eyebrow { color:var(--rojo); font-size:11px; font-weight:bold; letter-spacing:.14em; text-transform:uppercase; }
+    h2 { margin:7px 0 8px; font:700 clamp(31px, 4vw, 46px)/1.05 "Playfair Display", Georgia, serif; letter-spacing:-.035em; }
+    .intro { max-width:670px; color:#555; margin:0; font-size:17px; }
+    .hero { display:grid; grid-template-columns:minmax(0, 1fr) 295px; gap:26px; align-items:end; margin-bottom:31px; }
+    .search { background:var(--blanco); border:1px solid var(--borde); padding:14px 15px; box-shadow:0 4px 15px rgba(30,20,10,.05); }
+    .search label { display:block; font-size:11px; text-transform:uppercase; letter-spacing:.1em; font-weight:bold; color:var(--gris); margin-bottom:7px; }
+    .search input { width:100%; border:0; outline:0; color:var(--negro); font-size:15px; background:transparent; }
+    .section-title { display:flex; justify-content:space-between; align-items:baseline; gap:10px; margin:31px 0 11px; }
+    .section-title h3 { margin:0; font:700 21px/1.1 "Playfair Display", Georgia, serif; }
+    .section-title span { color:var(--gris); font-size:12px; }
+    .quick-grid, .resource-grid { display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:13px; }
+    .quick { background:var(--blanco); border:1px solid var(--borde); border-top:3px solid var(--accent, var(--rojo)); padding:17px; display:flex; flex-direction:column; min-height:179px; transition:transform .15s, box-shadow .15s; }
+    .quick:hover, .resource:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(30,20,10,.08); }
+    .quick .kicker, .resource .type { color:var(--gris); font-size:10px; letter-spacing:.11em; text-transform:uppercase; font-weight:bold; }
+    .quick h3 { margin:10px 0 7px; font:700 19px/1.08 "Playfair Display", Georgia, serif; }
+    .quick p { margin:0 0 15px; color:#5d5d5d; font-size:13px; }
+    .quick a { color:var(--rojo); font-size:13px; font-weight:bold; text-decoration:none; margin-top:auto; }
+    .metrics { display:grid; grid-template-columns:repeat(3, 1fr); background:var(--blanco); border:1px solid var(--borde); }
+    .metric { padding:16px 18px; border-right:1px solid var(--borde); }
+    .metric:last-child { border:0; }
+    .metric b { display:block; color:var(--rojo); font:700 28px/1 "Playfair Display", Georgia, serif; }
+    .metric span { color:var(--gris); font-size:11px; }
+    .state-card { background:var(--negro); color:#fff; padding:22px; position:relative; overflow:hidden; }
+    .state-card::after { content:"R"; position:absolute; right:-10px; bottom:-33px; color:rgba(255,255,255,.05); font:700 150px/1 "Playfair Display", serif; }
+    .state-card h3 { margin:0 0 12px; font:700 22px/1.1 "Playfair Display", Georgia, serif; }
+    .state-card p { color:#d7d1ca; margin:0 0 16px; font-size:13px; }
+    .state-card a { color:#fff; font-size:12px; font-weight:bold; text-decoration:none; border-bottom:1px solid var(--rojo); padding-bottom:2px; position:relative; }
+    .workspace { display:grid; grid-template-columns:minmax(0, 1.45fr) minmax(260px, .8fr); gap:13px; }
+    .resource { display:flex; background:var(--blanco); border:1px solid var(--borde); padding:16px; gap:14px; transition:transform .15s, box-shadow .15s; }
+    .resource-main { min-width:0; flex:1; }
+    .resource h3 { margin:4px 0 5px; font:700 18px/1.1 "Playfair Display", Georgia, serif; }
+    .resource p { margin:0; color:#5e5e5e; font-size:13px; }
+    .resource code { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:#777; font:10px/1.4 Consolas, monospace; margin-top:10px; }
+    .actions { display:flex; align-items:flex-start; gap:6px; flex-shrink:0; }
+    .button, .copy { appearance:none; display:inline-flex; align-items:center; justify-content:center; min-height:31px; border:1px solid var(--borde); background:#fff; color:var(--negro); padding:5px 9px; text-decoration:none; cursor:pointer; font-size:11px; font-weight:bold; }
+    .button:hover, .copy:hover { border-color:var(--rojo); color:var(--rojo); }
+    .button.primary { background:var(--rojo); border-color:var(--rojo); color:#fff; }
+    .button.primary:hover { background:var(--rojo-oscuro); color:#fff; }
+    .side-list { background:var(--blanco); border:1px solid var(--borde); padding:16px; }
+    .side-list h3 { margin:0 0 12px; font:700 19px/1.1 "Playfair Display", Georgia, serif; }
+    .side-list a { display:flex; justify-content:space-between; gap:10px; color:var(--negro); text-decoration:none; border-top:1px solid var(--crema-2); padding:10px 0; font-size:13px; }
+    .side-list a:first-of-type { border-top:0; }
+    .side-list a:hover { color:var(--rojo); }
+    .side-list small { color:var(--gris); text-align:right; }
+    .notice { display:flex; gap:11px; background:#fff8e9; border:1px solid #ead7a8; padding:13px 15px; color:#765305; font-size:13px; }
+    .notice b { color:#8a6200; }
+    .area-head { display:flex; justify-content:space-between; gap:20px; align-items:end; padding-bottom:18px; border-bottom:2px solid var(--negro); margin-bottom:18px; }
+    .area-head h2 { font-size:38px; }
+    .area-head p { max-width:480px; color:var(--gris); margin:0; font-size:14px; }
+    .empty { display:none; margin-top:18px; padding:20px; background:var(--blanco); border:1px dashed var(--borde); color:var(--gris); text-align:center; }
+    .hidden-by-search { display:none !important; }
+    @media (max-width:1000px) { .quick-grid { grid-template-columns:repeat(2, 1fr); } .workspace { grid-template-columns:1fr; } }
+    @media (max-width:760px) { .app { display:block; } .sidebar { position:static; height:auto; padding:13px; gap:12px; } .brand { padding:0 5px 10px; } .brand small, .sidebar-footer, .nav-label { display:none; } .nav { display:flex; overflow-x:auto; } .nav button { white-space:nowrap; padding:8px 9px; font-size:12px; } .topbar { position:static; } .hero { grid-template-columns:1fr; } .quick-grid, .resource-grid { grid-template-columns:1fr; } .metrics { grid-template-columns:repeat(3, 1fr); } .metric { padding:13px 9px; } .metric b { font-size:22px; } .area-head { display:block; } .area-head p { margin-top:10px; } }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark"><span class="mark">R</span><h1>El Rufino</h1></div>
+        <small>Central de control · 2026</small>
+      </div>
+      <div>
+        <p class="nav-label">Navegación</p>
+        <nav class="nav" aria-label="Secciones del panel">
+          <button class="active" data-view="inicio"><span class="dot"></span>Inicio</button>
+          <button data-view="produccion"><span class="dot"></span>Producción</button>
+          <button data-view="contenido"><span class="dot"></span>Contenido e IA</button>
+          <button data-view="documentacion"><span class="dot"></span>Documentación</button>
+          <button data-view="referencias"><span class="dot"></span>Referencias y archivo</button>
+        </nav>
+      </div>
+      <div class="sidebar-footer">Medio local · Rufino, Santa Fe<br>Lo que pasa y lo que significa</div>
+    </aside>
+
+    <main>
+      <header class="topbar"><span class="crumb" id="crumb">Central / Inicio</span><span class="status"><i></i>Proyecto local disponible</span></header>
+      <div class="content">
+        <section class="view active" id="inicio">
+          <div class="hero">
+            <div><div class="eyebrow">Punto de entrada del proyecto</div><h2>Todo El Rufino,<br>en un solo lugar.</h2><p class="intro">Accedé a los componentes en producción, los documentos vigentes, el sistema editorial y los materiales de referencia sin buscar entre carpetas.</p></div>
+            <div class="search"><label for="global-search">Buscar recurso</label><input id="global-search" type="search" placeholder="Ej. plugin, estado, WordPress…" autocomplete="off"></div>
+          </div>
+
+          <div class="quick-grid searchable">
+            <article class="quick" style="--accent:var(--rojo)"><span class="kicker">Operación</span><h3>Sitio y producción</h3><p>Plugin, tema activo y guía de despliegue del sitio.</p><a href="#" data-target="produccion">Abrir área de producción →</a></article>
+            <article class="quick" style="--accent:var(--azul)"><span class="kicker">Editorial</span><h3>Contenido e IA</h3><p>Prompt maestro, agentes y materiales para producir.</p><a href="#" data-target="contenido">Abrir área editorial →</a></article>
+            <article class="quick" style="--accent:var(--verde)"><span class="kicker">Control</span><h3>Documentos vigentes</h3><p>Estado actual, fuentes, memoria, changelog y plan fundacional.</p><a href="#" data-target="documentacion">Abrir documentos →</a></article>
+          </div>
+
+          <div class="section-title"><h3>Estado del sistema</h3><span>Actualizado con los materiales vigentes</span></div>
+          <div class="workspace">
+            <div class="metrics"><div class="metric"><b>6</b><span>Pilares editoriales</span></div><div class="metric"><b>12</b><span>Agentes IA definidos</span></div><div class="metric"><b>v2.3.6</b><span>Theme en producción</span></div></div>
+            <aside class="state-card"><h3>Núcleo activo</h3><p>El theme fue desplegado el 29 de junio de 2026. El código fuente y su registro de deploy están centralizados en <code>_ACTIVO</code>.</p><a href="00_CONTEXTO_IA/el-rufino_theme-v2.3.6-deploy-VIGENTE.md" target="_blank">Ver registro de deploy</a></aside>
+          </div>
+
+          <div class="section-title"><h3>Accesos recomendados</h3><span>Lo más útil para continuar trabajando</span></div>
+          <div class="workspace searchable">
+            <div class="resource-grid">
+              <article class="resource" data-search="plugin wordpress panel producción php"><div class="resource-main"><span class="type">Producción</span><h3>Panel WordPress activo</h3><p>Plugin principal del sistema operativo editorial.</p><code>_ACTIVO/plugin/el-rufino-panel.php</code></div><div class="actions"><a class="button primary" href="_ACTIVO/plugin/el-rufino-panel.php" target="_blank">Abrir</a><button class="copy" data-copy="_ACTIVO\\plugin\\el-rufino-panel.php">Copiar</button></div></article>
+              <article class="resource" data-search="estado proyecto informe memoria vigente"><div class="resource-main"><span class="type">Estado</span><h3>Estado actual</h3><p>Resumen de situación, avances y decisiones del proyecto.</p><code>01_DOCUMENTOS_VIGENTES/el-rufino_estado-actual_v1-0-VIGENTE.html</code></div><div class="actions"><a class="button primary" href="01_DOCUMENTOS_VIGENTES/el-rufino_estado-actual_v1-0-VIGENTE.html" target="_blank">Abrir</a><button class="copy" data-copy="01_DOCUMENTOS_VIGENTES\\el-rufino_estado-actual_v1-0-VIGENTE.html">Copiar</button></div></article>
+              <article class="resource" data-search="prompt maestro ia agentes contexto"><div class="resource-main"><span class="type">IA</span><h3>Prompt maestro</h3><p>Contexto base para cualquier nueva sesión de trabajo.</p><code>00_CONTEXTO_IA/el-rufino_prompt-maestro_v1.8-VIGENTE.md</code></div><div class="actions"><a class="button primary" href="00_CONTEXTO_IA/el-rufino_prompt-maestro_v1.8-VIGENTE.md" target="_blank">Abrir</a><button class="copy" data-copy="00_CONTEXTO_IA\\el-rufino_prompt-maestro_v1.8-VIGENTE.md">Copiar</button></div></article>
+              <article class="resource" data-search="identidad marca diseño comunicación"><div class="resource-main"><span class="type">Marca</span><h3>Comunicación popular</h3><p>Guía vigente de tono, lenguaje e identidad editorial.</p><code>03_IDENTIDAD_MARCA/el-rufino_comunicacion-popular-adaptada_v1-0-VIGENTE.html</code></div><div class="actions"><a class="button primary" href="03_IDENTIDAD_MARCA/el-rufino_comunicacion-popular-adaptada_v1-0-VIGENTE.html" target="_blank">Abrir</a><button class="copy" data-copy="03_IDENTIDAD_MARCA\\el-rufino_comunicacion-popular-adaptada_v1-0-VIGENTE.html">Copiar</button></div></article>
+            </div>
+            <aside class="side-list"><h3>Rutas del proyecto</h3><a href="00_CONTEXTO_IA/"><span>00 · Contexto IA</span><small>base</small></a><a href="01_DOCUMENTOS_VIGENTES/"><span>01 · Documentos vigentes</span><small>consulta</small></a><a href="_ACTIVO/"><span>_ACTIVO · Producción</span><small>código</small></a><a href="_RELEASES/"><span>_RELEASES · Entregas</span><small>versiones</small></a></aside>
+          </div>
+          <p class="empty" id="empty-state">No se encontraron recursos con esa búsqueda.</p>
+        </section>
+
+        <section class="view" id="produccion">
+          <div class="area-head"><div><div class="eyebrow">Operación técnica</div><h2>Producción</h2></div><p>Componentes que sostienen el sitio: plugin editorial, tema WordPress, despliegues y paquetes de entrega.</p></div>
+          <div class="notice"><b>Estado:</b><span>El registro vigente informa un deploy exitoso del theme v2.3.6 el 29/06/2026. Para cambios individuales, la documentación recomienda el editor Ace del hosting.</span></div>
+          <div class="section-title"><h3>Componentes principales</h3><span>Código y registro de trabajo</span></div>
+          <div class="resource-grid">
+            <article class="resource"><div class="resource-main"><span class="type">Plugin</span><h3>El Rufino Panel</h3><p>Backend WordPress con handlers AJAX, datos y funciones operativas.</p><code>_ACTIVO/plugin/el-rufino-panel.php</code></div><div class="actions"><a class="button primary" href="_ACTIVO/plugin/el-rufino-panel.php" target="_blank">Abrir</a><button class="copy" data-copy="_ACTIVO\\plugin\\el-rufino-panel.php">Copiar</button></div></article>
+            <article class="resource"><div class="resource-main"><span class="type">Interfaz</span><h3>JavaScript del panel</h3><p>Comportamiento del panel administrativo del plugin.</p><code>_ACTIVO/plugin/assets/panel.js</code></div><div class="actions"><a class="button primary" href="_ACTIVO/plugin/assets/panel.js" target="_blank">Abrir</a><button class="copy" data-copy="_ACTIVO\\plugin\\assets\\panel.js">Copiar</button></div></article>
+            <article class="resource"><div class="resource-main"><span class="type">Theme</span><h3>Theme fuente activo</h3><p>Versión fuente usada para el deploy v2.3.6.</p><code>_ACTIVO/theme/el-rufino-theme-v2.3.5/</code></div><div class="actions"><a class="button primary" href="_ACTIVO/theme/el-rufino-theme-v2.3.5/style.css" target="_blank">Abrir</a><button class="copy" data-copy="_ACTIVO\\theme\\el-rufino-theme-v2.3.5">Copiar</button></div></article>
+            <article class="resource"><div class="resource-main"><span class="type">Deploy</span><h3>Tracking theme v2.3.6</h3><p>Qué cambió, verificación visual y procedimiento de despliegue.</p><code>00_CONTEXTO_IA/el-rufino_theme-v2.3.6-deploy-VIGENTE.md</code></div><div class="actions"><a class="button primary" href="00_CONTEXTO_IA/el-rufino_theme-v2.3.6-deploy-VIGENTE.md" target="_blank">Abrir</a><button class="copy" data-copy="00_CONTEXTO_IA\\el-rufino_theme-v2.3.6-deploy-VIGENTE.md">Copiar</button></div></article>
+            <article class="resource"><div class="resource-main"><span class="type">Pruebas</span><h3>Área WordPress de test</h3><p>Versiones, recursos y pruebas del sitio antes de producción.</p><code>02_WORDPRESS_TEST/</code></div><div class="actions"><a class="button primary" href="02_WORDPRESS_TEST/" target="_blank">Abrir</a><button class="copy" data-copy="02_WORDPRESS_TEST">Copiar</button></div></article>
+            <article class="resource"><div class="resource-main"><span class="type">Entregas</span><h3>Releases</h3><p>Paquetes y entregables versionados del proyecto.</p><code>_RELEASES/</code></div><div class="actions"><a class="button primary" href="_RELEASES/" target="_blank">Abrir</a><button class="copy" data-copy="_RELEASES">Copiar</button></div></article>
+          </div>
+        </section>
+
+        <section class="view" id="contenido">
+          <div class="area-head"><div><div class="eyebrow">Sistema editorial</div><h2>Contenido e IA</h2></div><p>Los documentos de contexto que ordenan agentes, tono editorial, fuentes y planificación de El Rufino.</p></div>
+          <div class="quick-grid">
+            <article class="quick" style="--accent:#c0271b"><span class="kicker">P01</span><h3>Lo que pasa</h3><p>Actualidad local, hechos y servicio.</p></article><article class="quick" style="--accent:#4a7c59"><span class="kicker">P02</span><h3>El campo habla</h3><p>Producción, ruralidad y voces del sector.</p></article><article class="quick" style="--accent:#2d5f8a"><span class="kicker">P03</span><h3>Barrio a barrio</h3><p>Problemáticas y protagonistas locales.</p></article><article class="quick" style="--accent:#7b4fa6"><span class="kicker">P04</span><h3>Generación Rufino</h3><p>Juventudes, cultura y nuevos formatos.</p></article><article class="quick" style="--accent:#1a1a1a"><span class="kicker">P05</span><h3>Poder y gestión</h3><p>Seguimiento de promesas y accountability.</p></article><article class="quick" style="--accent:#c8600a"><span class="kicker">P06</span><h3>Rufino en datos</h3><p>Contexto, indicadores y explicadores.</p></article>
+          </div>
+          <div class="section-title"><h3>Herramientas de trabajo</h3><span>Contexto operativo para producir</span></div>
+          <div class="resource-grid">
+            <article class="resource"><div class="resource-main"><span class="type">Contexto IA</span><h3>Prompt maestro v1.8</h3><p>Punto de partida para asistentes y sesiones de producción.</p><code>00_CONTEXTO_IA/el-rufino_prompt-maestro_v1.8-VIGENTE.md</code></div><div class="actions"><a class="button primary" href="00_CONTEXTO_IA/el-rufino_prompt-maestro_v1.8-VIGENTE.md" target="_blank">Abrir</a><button class="copy" data-copy="00_CONTEXTO_IA\\el-rufino_prompt-maestro_v1.8-VIGENTE.md">Copiar</button></div></article>
+            <article class="resource"><div class="resource-main"><span class="type">Agentes</span><h3>Sistema de agentes IA</h3><p>Roles, alcances y coordinación del equipo de inteligencia.</p><code>00_CONTEXTO_IA/el-rufino_agentes-ia_v1.7-VIGENTE.md</code></div><div class="actions"><a class="button primary" href="00_CONTEXTO_IA/el-rufino_agentes-ia_v1.7-VIGENTE.md" target="_blank">Abrir</a><button class="copy" data-copy="00_CONTEXTO_IA\\el-rufino_agentes-ia_v1.7-VIGENTE.md">Copiar</button></div></article>
+            <article class="resource"><div class="resource-main"><span class="type">Fuentes</span><h3>Fuentes para P06</h3><p>Referencias y metodología para contenido de datos.</p><code>01_DOCUMENTOS_VIGENTES/el-rufino_fuentes-p06_v1-1-VIGENTE.html</code></div><div class="actions"><a class="button primary" href="01_DOCUMENTOS_VIGENTES/el-rufino_fuentes-p06_v1-1-VIGENTE.html" target="_blank">Abrir</a><button class="copy" data-copy="01_DOCUMENTOS_VIGENTES\\el-rufino_fuentes-p06_v1-1-VIGENTE.html">Copiar</button></div></article>
+            <article class="resource"><div class="resource-main"><span class="type">Marca</span><h3>Comunicación popular</h3><p>Marco de lenguaje y tono para piezas editoriales.</p><code>03_IDENTIDAD_MARCA/el-rufino_comunicacion-popular-adaptada_v1-0-VIGENTE.html</code></div><div class="actions"><a class="button primary" href="03_IDENTIDAD_MARCA/el-rufino_comunicacion-popular-adaptada_v1-0-VIGENTE.html" target="_blank">Abrir</a><button class="copy" data-copy="03_IDENTIDAD_MARCA\\el-rufino_comunicacion-popular-adaptada_v1-0-VIGENTE.html">Copiar</button></div></article>
+          </div>
+        </section>
+
+        <section class="view" id="documentacion">
+          <div class="area-head"><div><div class="eyebrow">Fuente de verdad</div><h2>Documentación vigente</h2></div><p>Registros y acuerdos que permiten retomar el proyecto con el contexto correcto.</p></div>
+          <div class="resource-grid">
+            <article class="resource"><div class="resource-main"><span class="type">Estado</span><h3>Estado actual</h3><p>Situación integral del proyecto y próximos focos.</p><code>01_DOCUMENTOS_VIGENTES/el-rufino_estado-actual_v1-0-VIGENTE.html</code></div><div class="actions"><a class="button primary" href="01_DOCUMENTOS_VIGENTES/el-rufino_estado-actual_v1-0-VIGENTE.html" target="_blank">Abrir</a><button class="copy" data-copy="01_DOCUMENTOS_VIGENTES\\el-rufino_estado-actual_v1-0-VIGENTE.html">Copiar</button></div></article>
+            <article class="resource"><div class="resource-main"><span class="type">Memoria</span><h3>Informe memoria v4.0</h3><p>Antecedentes, decisiones y evolución documentada.</p><code>01_DOCUMENTOS_VIGENTES/el-rufino_informe-memoria_v4.0.html</code></div><div class="actions"><a class="button primary" href="01_DOCUMENTOS_VIGENTES/el-rufino_informe-memoria_v4.0.html" target="_blank">Abrir</a><button class="copy" data-copy="01_DOCUMENTOS_VIGENTES\\el-rufino_informe-memoria_v4.0.html">Copiar</button></div></article>
+            <article class="resource"><div class="resource-main"><span class="type">Contexto</span><h3>Repositorio IA v1.8</h3><p>Mapa de carpetas y funcionamiento del repositorio.</p><code>00_CONTEXTO_IA/el-rufino_repositorio-ia_v1.8-VIGENTE.md</code></div><div class="actions"><a class="button primary" href="00_CONTEXTO_IA/el-rufino_repositorio-ia_v1.8-VIGENTE.md" target="_blank">Abrir</a><button class="copy" data-copy="00_CONTEXTO_IA\\el-rufino_repositorio-ia_v1.8-VIGENTE.md">Copiar</button></div></article>
+            <article class="resource"><div class="resource-main"><span class="type">Arquitectura</span><h3>Funciones v2</h3><p>Especificación funcional vigente del sistema.</p><code>00_CONTEXTO_IA/el-rufino_functions-v2-VIGENTE.md</code></div><div class="actions"><a class="button primary" href="00_CONTEXTO_IA/el-rufino_functions-v2-VIGENTE.md" target="_blank">Abrir</a><button class="copy" data-copy="00_CONTEXTO_IA\\el-rufino_functions-v2-VIGENTE.md">Copiar</button></div></article>
+            <article class="resource"><div class="resource-main"><span class="type">Control</span><h3>Changelog principal</h3><p>Registro de cambios aplicados al proyecto.</p><code>01_DOCUMENTOS_VIGENTES/CHANGELOG.md</code></div><div class="actions"><a class="button primary" href="01_DOCUMENTOS_VIGENTES/CHANGELOG.md" target="_blank">Abrir</a><button class="copy" data-copy="01_DOCUMENTOS_VIGENTES\\CHANGELOG.md">Copiar</button></div></article>
+            <article class="resource"><div class="resource-main"><span class="type">Fundación</span><h3>Plan fundacional</h3><p>Documento base de concepción y desarrollo del medio.</p><code>01_DOCUMENTOS_VIGENTES/plan_fundacional_medio_rufino (1).html</code></div><div class="actions"><a class="button primary" href="01_DOCUMENTOS_VIGENTES/plan_fundacional_medio_rufino%20(1).html" target="_blank">Abrir</a><button class="copy" data-copy="01_DOCUMENTOS_VIGENTES\\plan_fundacional_medio_rufino (1).html">Copiar</button></div></article>
+          </div>
+        </section>
+
+        <section class="view" id="referencias">
+          <div class="area-head"><div><div class="eyebrow">Exploración y respaldo</div><h2>Referencias y archivo</h2></div><p>Tableros de exploración, material histórico, monitoreo y scripts de mantenimiento.</p></div>
+          <div class="resource-grid">
+            <article class="resource"><div class="resource-main"><span class="type">Dashboards</span><h3>Panel IA v8</h3><p>Referencia funcional de un panel operativo completo.</p><code>04_DASHBOARDS_REFERENCIA/el-rufino-panel-v8.html</code></div><div class="actions"><a class="button primary" href="04_DASHBOARDS_REFERENCIA/el-rufino-panel-v8.html" target="_blank">Abrir</a><button class="copy" data-copy="04_DASHBOARDS_REFERENCIA\\el-rufino-panel-v8.html">Copiar</button></div></article>
+            <article class="resource"><div class="resource-main"><span class="type">Dashboards</span><h3>Panel estratégico</h3><p>Vista de referencia para planificación y seguimiento.</p><code>04_DASHBOARDS_REFERENCIA/el-rufino_dash-estrategico.html</code></div><div class="actions"><a class="button primary" href="04_DASHBOARDS_REFERENCIA/el-rufino_dash-estrategico.html" target="_blank">Abrir</a><button class="copy" data-copy="04_DASHBOARDS_REFERENCIA\\el-rufino_dash-estrategico.html">Copiar</button></div></article>
+            <article class="resource"><div class="resource-main"><span class="type">Monitoreo</span><h3>Seguimiento y escucha</h3><p>Área para procesos de monitoreo del medio.</p><code>07_MONITOREO/</code></div><div class="actions"><a class="button primary" href="07_MONITOREO/" target="_blank">Abrir</a><button class="copy" data-copy="07_MONITOREO">Copiar</button></div></article>
+            <article class="resource"><div class="resource-main"><span class="type">Automatización</span><h3>Scripts</h3><p>Herramientas de orden, releases y mantenimiento del repositorio.</p><code>06_SCRIPTS/</code></div><div class="actions"><a class="button primary" href="06_SCRIPTS/" target="_blank">Abrir</a><button class="copy" data-copy="06_SCRIPTS">Copiar</button></div></article>
+            <article class="resource"><div class="resource-main"><span class="type">Histórico</span><h3>Material histórico</h3><p>Exploraciones, briefs y versiones que ya no son vigentes.</p><code>05_MATERIAL_HISTORICO/</code></div><div class="actions"><a class="button primary" href="05_MATERIAL_HISTORICO/" target="_blank">Abrir</a><button class="copy" data-copy="05_MATERIAL_HISTORICO">Copiar</button></div></article>
+            <article class="resource"><div class="resource-main"><span class="type">Archivo</span><h3>Archivo general</h3><p>Versiones y contenidos preservados del proyecto.</p><code>_ARCHIVO/</code></div><div class="actions"><a class="button primary" href="_ARCHIVO/" target="_blank">Abrir</a><button class="copy" data-copy="_ARCHIVO">Copiar</button></div></article>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+  <script>
+    const navButtons = document.querySelectorAll('.nav button');
+    const views = document.querySelectorAll('.view');
+    const crumb = document.getElementById('crumb');
+    const labels = { inicio:'Inicio', produccion:'Producción', contenido:'Contenido e IA', documentacion:'Documentación', referencias:'Referencias y archivo' };
+    function showView(viewId) {
+      views.forEach(view => view.classList.toggle('active', view.id === viewId));
+      navButtons.forEach(button => button.classList.toggle('active', button.dataset.view === viewId));
+      crumb.textContent = 'Central / ' + labels[viewId];
+      window.scrollTo({ top:0, behavior:'smooth' });
+    }
+    navButtons.forEach(button => button.addEventListener('click', () => showView(button.dataset.view)));
+    document.querySelectorAll('[data-target]').forEach(link => link.addEventListener('click', event => { event.preventDefault(); showView(link.dataset.target); }));
+    document.querySelectorAll('.copy').forEach(button => button.addEventListener('click', async () => {
+      const original = button.textContent;
+      try { await navigator.clipboard.writeText(button.dataset.copy); } catch (_) {
+        const text = document.createElement('textarea'); text.value = button.dataset.copy; document.body.appendChild(text); text.select(); document.execCommand('copy'); text.remove();
+      }
+      button.textContent = 'Copiado';
+      setTimeout(() => { button.textContent = original; }, 1400);
+    }));
+    const search = document.getElementById('global-search');
+    const searchable = document.querySelectorAll('#inicio .searchable .resource, #inicio .searchable .quick');
+    const empty = document.getElementById('empty-state');
+    search.addEventListener('input', () => {
+      const term = search.value.trim().toLowerCase(); let matches = 0;
+      searchable.forEach(item => { const found = !term || item.textContent.toLowerCase().includes(term) || (item.dataset.search || '').includes(term); item.classList.toggle('hidden-by-search', !found); if (found) matches++; });
+      empty.style.display = term && !matches ? 'block' : 'none';
+    });
+  </script>
+</body>
+</html>
