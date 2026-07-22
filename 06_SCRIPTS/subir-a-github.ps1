@@ -1,6 +1,14 @@
 # EL RUFINO - Subida de archivos a GitHub
-
-$TOKEN = "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"
+# OBSOLETO desde que el proyecto usa "git push" normal — script de la epoca
+# previa al repo git (abril 2026), referencia rutas/versiones que ya no
+# existen ($BASE, prompt-maestro v1.1). Se conserva solo como historial;
+# no ejecutar sin revisar y actualizar rutas antes.
+#
+# Token retirado de este archivo el 2026-07-22 (estaba hardcodeado en texto
+# plano y ya commiteado en el historial desde 0b0d43d, 2026-04-08 — pendiente
+# de revocar/regenerar en GitHub, ver hallazgo de la sesion de cierre).
+# Si se vuelve a usar este script, pasar el token por variable de entorno:
+$TOKEN = $env:EL_RUFINO_GITHUB_PAT
 $OWNER = "ElRufino"
 $REPO  = "el-rufino"
 $BASE  = "F:\HERRAMIENTAS DE IA\CLAUDE\EL RUFINO"
