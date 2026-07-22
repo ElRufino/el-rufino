@@ -132,12 +132,15 @@ reorganizacion_*.log
 
 # ─────────────────────────────────────────────────────────────────────────────
 #  CARPETAS DE ARCHIVO Y TRABAJO TEMPORAL
-#  _ARCHIVO\ tiene valor histórico pero no va al repo público
+#  _ARCHIVO\ (raíz del proyecto) tiene valor histórico pero no va al repo público.
+#  Anclada con "/" inicial a propósito: NO debe matchear _ARCHIVO/ anidada dentro
+#  de otras carpetas (ej. _ACTIVO/plugin/_ARCHIVO/), que sí se trackea normalmente
+#  (convención de archivo con fecha dentro del propio código versionado).
 #  _TEMP\ es trabajo volátil
 #  SYNC\ es workspace temporal de auditoría/normalización IA (Claude/Codex) —
 #  no es fuente de verdad ni entregable del proyecto (ver SYNC/CLAUDE_PROJECT_PACKAGE.md)
 # ─────────────────────────────────────────────────────────────────────────────
-_ARCHIVO/
+/_ARCHIVO/
 _RELEASES/
 _TEMP/
 _uploads/
