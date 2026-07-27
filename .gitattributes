@@ -1,0 +1,14 @@
+# PROPUESTA — limitada a la futura PWA v1.1.0.
+
+/_ACTIVO/pwa/el-rufino-pwa_v1.1.0/*.html text eol=lf
+/_ACTIVO/pwa/el-rufino-pwa_v1.1.0/*.json text eol=lf
+/_ACTIVO/pwa/el-rufino-pwa_v1.1.0/*.js text eol=lf
+/_ACTIVO/pwa/el-rufino-pwa_v1.1.0/*.md text eol=lf
+/_ACTIVO/pwa/el-rufino-pwa_v1.1.0/docs/*.json text eol=lf
+/_ACTIVO/pwa/el-rufino-pwa_v1.1.0/docs/*.md text eol=lf
+/_ACTIVO/pwa/el-rufino-pwa_v1.1.0/docs/*.txt text eol=lf
+/_ACTIVO/pwa/el-rufino-pwa_v1.1.0/docs/*.proposed text eol=lf
+/_ACTIVO/pwa/el-rufino-pwa_v1.1.0/icons/*.png binary
+/_ACTIVO/pwa/el-rufino-pwa_v1.1.0/fonts/*.ttf binary
+/_ACTIVO/pwa/el-rufino-pwa_v1.1.0/fonts/*.txt text eol=lf
+/_ACTIVO/pwa/el-rufino-pwa_v1.1.0/fonts/*.pb text eol=lf

@@ -211,3 +211,9 @@ credenciales.txt
 *.pdf
 *.psd
 *.ai
+
+# EL_RUFINO PWA v1.1.0 - excepciones acotadas aprobables.
+!/_ACTIVO/pwa/el-rufino-pwa_v1.1.0/icons/icon-192.png
+!/_ACTIVO/pwa/el-rufino-pwa_v1.1.0/icons/icon-512.png
+!/_ACTIVO/pwa/el-rufino-pwa_v1.1.0/icons/icon-apple-touch.png
+!/_ACTIVO/pwa/el-rufino-pwa_v1.1.0/icons/icon-maskable-512.png

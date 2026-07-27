@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>El Rufino</title>
+<meta name="description" content="Lo que pasa y lo que significa. Noticias de Rufino, Santa Fe.">
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1a1a1a">
+<link rel="apple-touch-icon" href="icons/icon-apple-touch.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="El Rufino">
+<link rel="icon" href="icons/icon-192.png">
+
+<style>
+  @font-face{
+    font-family:'Playfair Display';
+    src:url('fonts/PlayfairDisplay-Variable.ttf') format('truetype');
+    font-style:normal;
+    font-weight:400 900;
+    font-display:swap;
+  }
+  @font-face{
+    font-family:'Source Serif 4';
+    src:url('fonts/SourceSerif4-Variable.ttf') format('truetype');
+    font-style:normal;
+    font-weight:200 900;
+    font-display:swap;
+  }
+  @font-face{
+    font-family:'Source Serif 4';
+    src:url('fonts/SourceSerif4-Italic-Variable.ttf') format('truetype');
+    font-style:italic;
+    font-weight:200 900;
+    font-display:swap;
+  }
+
+  :root{
+    --papel:      #f5f0e8;
+    --tinta:      #1a1a1a;
+    --rojo:       #c0271b;
+    --tinta-60:   rgba(26,26,26,0.6);
+    --tinta-12:   rgba(26,26,26,0.12);
+    --papel-70:   rgba(245,240,232,0.7);
+
+    --f-display: 'Playfair Display', Georgia, serif;
+    --f-serif:   'Source Serif 4', Georgia, serif;
+    --f-ui:      'Source Serif 4', Georgia, serif;
+  }
+
+  *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html,body{ height:100%; }
+  body{
+    margin:0;
+    background:var(--tinta);
+    color:var(--tinta);
+    font-family:var(--f-serif);
+    overflow:hidden;
+    overscroll-behavior:none;
+  }
+
+  #app{
+    position:fixed; inset:0;
+    display:flex; flex-direction:column;
+    background:var(--papel);
+  }
+
+  /* ---------------------------------- */
+  /* SPLASH                              */
+  /* ---------------------------------- */
+  #splash{
+    position:fixed; inset:0; z-index:50;
+    background:var(--tinta);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:0 8vw;
+    transition:opacity .6s ease, visibility .6s ease;
+  }
+  #splash.hide{ opacity:0; visibility:hidden; pointer-events:none; }
+
+  .splash-mark{
+    font-family:var(--f-display);
+    font-weight:900;
+    color:var(--papel);
+    font-size:clamp(2.6rem, 11vw, 3.6rem);
+    letter-spacing:0.01em;
+    line-height:1;
+    text-align:center;
+    opacity:0;
+    animation:riseIn .7s ease forwards .15s;
+  }
+  .splash-rule{
+    width:44px; height:3px; background:var(--rojo);
+    margin:18px 0 16px;
+    transform:scaleX(0);
+    animation:growRule .5s ease forwards .55s;
+  }
+  .splash-claim{
+    font-family:var(--f-serif); font-style:italic;
+    color:var(--papel-70);
+    font-size:0.95rem;
+    text-align:center;
+    opacity:0;
+    animation:riseIn .7s ease forwards .7s;
+  }
+
+  @keyframes riseIn{
+    from{ opacity:0; transform:translateY(10px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+  @keyframes growRule{ to{ transform:scaleX(1); } }
+
+  .ticker-wrap{
+    position:absolute; left:0; right:0; bottom:0;
+    height:38px;
+    background:var(--rojo);
+    overflow:hidden;
+    display:flex; align-items:center;
+  }
+  .ticker-track{
+    display:flex; white-space:nowrap;
+    animation:tickerScroll 16s linear infinite;
+  }
+  .ticker-track span{
+    font-family:var(--f-ui); font-weight:700;
+    font-size:0.68rem; letter-spacing:0.12em;
+    color:var(--papel);
+    text-transform:uppercase;
+    padding:0 1.4rem;
+    display:inline-flex; align-items:center;
+    gap:1.4rem;
+  }
+  .ticker-track span::after{ content:'·'; opacity:.6; }
+  @keyframes tickerScroll{
+    from{ transform:translateX(0); }
+    to{ transform:translateX(-50%); }
+  }
+
+  /* ---------------------------------- */
+  /* HEADER                              */
+  /* ---------------------------------- */
+  header{
+    flex:0 0 auto;
+    padding:calc(env(safe-area-inset-top,0px) + 22px) 24px 16px;
+    background:var(--papel);
+    border-bottom:1px solid var(--tinta-12);
+  }
+  .brand-row{
+    display:flex; align-items:baseline; justify-content:space-between;
+  }
+  .wordmark{
+    font-family:var(--f-display); font-weight:900;
+    font-size:1.5rem; color:var(--tinta); letter-spacing:0.01em;
+  }
+  .today{
+    font-family:var(--f-ui); font-size:0.65rem; font-weight:600;
+    color:var(--tinta-60); text-transform:uppercase; letter-spacing:0.06em;
+  }
+  .claim{
+    font-family:var(--f-serif); font-style:italic;
+    color:var(--tinta-60); font-size:0.82rem; margin-top:4px;
+  }
+
+  /* ---------------------------------- */
+  /* MENU                                */
+  /* ---------------------------------- */
+  main{
+    flex:1 1 auto;
+    overflow-y:auto;
+    padding:8px 20px 28px;
+  }
+  .section-label{
+    font-family:var(--f-ui); font-size:0.62rem; font-weight:700;
+    letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--tinta-60);
+    margin:20px 4px 8px;
+  }
+  .menu-list{ list-style:none; margin:0; padding:0; }
+  .menu-item{
+    display:flex; align-items:center; gap:14px;
+    background:#fff;
+    border:1px solid var(--tinta-12);
+    border-radius:10px;
+    padding:14px 14px;
+    margin-bottom:10px;
+    text-decoration:none;
+    color:var(--tinta);
+    position:relative;
+    transition:transform .12s ease, border-color .12s ease;
+  }
+  .menu-item:active{ transform:scale(0.98); border-color:var(--rojo); }
+  .menu-item.disabled{ opacity:0.55; }
+
+  .icon-badge{
+    flex:0 0 auto;
+    width:38px; height:38px; border-radius:8px;
+    display:flex; align-items:center; justify-content:center;
+    background:var(--icon-bg, var(--tinta));
+  }
+  .icon-badge svg{ width:19px; height:19px; }
+
+  .item-copy{ flex:1 1 auto; min-width:0; }
+  .item-title{
+    font-family:var(--f-ui); font-weight:700; font-size:0.95rem;
+    display:flex; align-items:center; gap:8px;
+  }
+  .item-sub{
+    font-family:var(--f-ui); font-size:0.74rem;
+    color:var(--tinta-60); margin-top:2px;
+  }
+  .tag{
+    font-family:var(--f-ui); font-size:0.58rem; font-weight:700;
+    letter-spacing:0.08em; text-transform:uppercase;
+    padding:2px 7px; border-radius:20px;
+    background:var(--rojo); color:#fff;
+  }
+  .tag.live{ background:var(--rojo); }
+  .dot-live{
+    width:7px; height:7px; border-radius:50%;
+    background:var(--rojo);
+    display:inline-block;
+    animation:pulseDot 1.4s ease-in-out infinite;
+  }
+  @keyframes pulseDot{
+    0%,100%{ opacity:1; transform:scale(1); }
+    50%{ opacity:.4; transform:scale(0.75); }
+  }
+  .chevron{ flex:0 0 auto; opacity:.35; }
+
+  .cta-row{
+    display:flex; gap:10px; margin-top:6px;
+  }
+  .cta{
+    flex:1 1 0;
+    text-align:center;
+    font-family:var(--f-ui); font-weight:700; font-size:0.82rem;
+    padding:13px 10px;
+    border-radius:10px;
+    text-decoration:none;
+    border:1.5px solid var(--tinta);
+    color:var(--tinta);
+  }
+  .cta.primary{
+    background:var(--tinta); color:var(--papel); border-color:var(--tinta);
+  }
+  .cta:active{ transform:scale(0.98); }
+
+  .install-banner{
+    display:none;
+    align-items:center; gap:12px;
+    background:var(--tinta); color:var(--papel);
+    border-radius:10px; padding:12px 14px; margin-bottom:16px;
+    font-family:var(--f-ui);
+  }
+  .install-banner.show{ display:flex; }
+  .install-banner p{ margin:0; font-size:0.78rem; flex:1; line-height:1.35; }
+  .install-banner button{
+    font-family:var(--f-ui); font-weight:700; font-size:0.72rem;
+    background:var(--rojo); color:#fff; border:none;
+    padding:9px 12px; border-radius:7px; white-space:nowrap;
+  }
+
+  .footnote{
+    font-family:var(--f-ui); font-size:0.68rem; color:var(--tinta-60);
+    text-align:center; margin-top:22px; line-height:1.5;
+    padding:0 10px;
+  }
+  .footnote strong{ color:var(--tinta); }
+  .footnote a{ color:var(--rojo); }
+
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{
+      animation-duration:0.01ms !important;
+      animation-iteration-count:1 !important;
+      scroll-behavior:auto !important;
+    }
+    #splash{ transition:none; }
+  }
+</style>
+</head>
+<body>
+
+<div id="app">
+
+  <div id="splash">
+    <div class="splash-mark">El&nbsp;Rufino</div>
+    <div class="splash-rule"></div>
+    <div class="splash-claim">Lo que pasa y lo que significa</div>
+    <div class="ticker-wrap" aria-hidden="true">
+      <div class="ticker-track" id="tickerTrack"></div>
+    </div>
+  </div>
+
+  <header>
+    <div class="brand-row">
+      <span class="wordmark">El Rufino</span>
+      <span class="today" id="todayLabel"></span>
+    </div>
+    <div class="claim">Lo que pasa y lo que significa</div>
+  </header>
+
+  <main>
+
+    <div class="install-banner" id="installBanner">
+      <p>Instalá El Rufino en tu teléfono para acceder más rápido.</p>
+      <button id="installBtn">Instalar</button>
+    </div>
+
+    <div class="section-label">Al aire</div>
+    <ul class="menu-list">
+
+      <li>
+        <a class="menu-item disabled" href="#" onclick="return false;">
+          <span class="icon-badge" style="--icon-bg:var(--rojo)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2a10 10 0 0 1 10 10"/><path d="M12 6a6 6 0 0 1 6 6"/></svg>
+          </span>
+          <span class="item-copy">
+            <span class="item-title">En vivo <span class="tag">Próximamente</span></span>
+            <span class="item-sub">Transmisión en directo — en desarrollo</span>
+          </span>
+        </a>
+      </li>
+
+      <li>
+        <a class="menu-item disabled" href="#" onclick="return false;">
+          <span class="icon-badge" style="--icon-bg:var(--tinta)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><path d="M12 17v5M9 22h6"/></svg>
+          </span>
+          <span class="item-copy">
+            <span class="item-title">Podcast <span class="tag">Próximamente</span></span>
+            <span class="item-sub">Audio y entrevistas — en desarrollo</span>
+          </span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="section-label">Leer</div>
+    <ul class="menu-list">
+      <li>
+        <a class="menu-item" href="https://elrufino.com.ar" target="_blank" rel="noopener">
+          <span class="icon-badge" style="--icon-bg:var(--tinta)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z"/></svg>
+          </span>
+          <span class="item-copy">
+            <span class="item-title">Sitio web</span>
+            <span class="item-sub">elrufino.com.ar — todas las notas</span>
+          </span>
+          <span class="chevron">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+          </span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="section-label">Suscripción</div>
+    <div class="cta-row">
+      <a class="cta primary" href="https://wa.me/5493382511670?text=Quiero%20suscribirme%20a%20las%20novedades%20de%20El%20Rufino" target="_blank" rel="noopener">Suscribirse por WhatsApp</a>
+    </div>
+
+    <p class="footnote">
+      WhatsApp es un servicio externo de Meta.<br>
+      <a href="privacy.html">Política de privacidad de la app</a>
+    </p>
+
+  </main>
+</div>
+
+<script>
+  // Splash → menú
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('splash').classList.add('hide');
+    }, 1900);
+  });
+  document.getElementById('splash').addEventListener('click', () => {
+    document.getElementById('splash').classList.add('hide');
+  });
+
+  // Ticker con los 6 pilares editoriales (contenido real del medio)
+  const pilares = [
+    'RUFINO REAL', 'EL CAMPO HABLA', 'BARRIO A BARRIO',
+    'GENERACIÓN RUFINO', 'PODER Y GESTIÓN', 'RUFINO EN DATOS'
+  ];
+  const track = document.getElementById('tickerTrack');
+  const seq = [...pilares, ...pilares].map(p => `<span>${p}</span>`).join('');
+  track.innerHTML = seq;
+
+  // Fecha en español
+  const hoy = new Date();
+  document.getElementById('todayLabel').textContent =
+    hoy.toLocaleDateString('es-AR', { day:'numeric', month:'short' }).replace('.', '');
+
+  // Instalación PWA (Android/desktop Chrome)
+  let deferredPrompt;
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    document.getElementById('installBanner').classList.add('show');
+  });
+  document.getElementById('installBtn').addEventListener('click', async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    await deferredPrompt.userChoice;
+    deferredPrompt = null;
+    document.getElementById('installBanner').classList.remove('show');
+  });
+  window.addEventListener('appinstalled', () => {
+    document.getElementById('installBanner').classList.remove('show');
+  });
+
+  // Service worker
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js').catch((error) => {
+        console.error('No se pudo registrar el service worker.', error);
+      });
+    });
+  }
+</script>
+
+</body>
+</html>
